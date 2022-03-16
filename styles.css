@@ -1,0 +1,228 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap');
+
+:root {
+    --left-right-padding: 5%;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+html {
+    height: 100%;
+}
+
+/* DARK AND LIGHT MODE CLASSES */
+
+.dark-mode {
+    color: white;
+    background-color: rgb(32, 32, 32);
+}
+
+.light-mode {
+    background-color: #f8f8f8;
+    color: rgb(32, 32, 32);
+}
+
+nav .light-mode {
+    background: rgb(187, 187, 187);
+    border-color: #FF8AAE !important;
+    color: black;
+}
+
+nav .dark-mode {
+    background: rgb(218, 218, 218);
+    border-color: #FF8AAE !important;
+    color: rgb(0, 0, 0);
+}
+
+.link .dark-mode {
+    color: white;
+}
+
+.link .light-mode {
+    color: rgb(0, 0, 0);
+}
+
+/* DARK AND LIGHT MODE CLASSES END */
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    width: 100%;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    width: 100%;
+    padding: 0 var(--left-right-padding);
+    box-shadow: 0px 0px 15px 0px black;
+    justify-content: space-between;
+    height: 60px;
+}
+
+nav li {
+    display: inline;
+    font-size: 16px;
+    margin-left: 9px;
+    font-weight: bold;
+    border-radius: 6px;
+    background-color: rgb(53, 53, 53);
+    font-weight: 600;
+    padding: 5px 10px 5px 10px;
+}
+
+ul {
+    list-style-type: none;
+    padding-top: 3px;
+}
+
+nav a {
+    color: white;
+    padding: 4px;
+    width: 30px;
+}
+
+nav li:hover {
+    border-bottom: solid 4px #9ADCFF;
+    transition: 200ms;
+}
+
+.purple {
+    background-color: #b983ff;
+
+}
+
+.blue {
+    background-color: #9ADCFF;
+}
+
+.red {
+    background-color: #FF8AAE;
+}
+
+.yellow {
+    background-color: #FFF89A;
+}
+
+.green {
+    background-color: #41E8C0;
+}
+
+.title {
+    font-weight: 900;
+    font-size: 23px;
+    margin: 0;
+    margin-top: 13px;
+}
+
+main {
+    display: grid;
+    margin: 0 auto;
+    padding: 0 var(--left-right-padding);
+}
+
+.main-content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 100px;
+}
+
+
+footer {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    padding: 0 var(--left-right-padding);
+    box-shadow: -5px 0px 15px 0px black;
+    justify-content: space-between;
+    font-weight: 900;
+    bottom: 0;
+}
+
+.link {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+/*The Hamburger and it's animation*/
+
+.hamburger .line{
+    width: 50px;
+    height: 5px;
+    background-color: #ecf0f1;
+    display: block;
+    margin: 8px auto;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger:hover{
+    cursor: pointer;
+}
+
+#hamburger.is-active{
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.6s;
+    transform: rotate(45deg);
+}
+
+#hamburger.is-active .line:nth-child(2){
+    width: 0px;
+}
+
+#hamburger.is-active .line:nth-child(1),
+#hamburger.is-active .line:nth-child(3){
+    transition-delay: 0.3s;
+}
+
+#hamburger.is-active .line:nth-child(1){
+    transform: translateY(13px);
+}
+
+#hamburger.is-active .line:nth-child(3){
+    transform: translateY(-13px) rotate(90deg);
+}
+
+/*Hamburger end*/
+
+@media only screen and (min-width: 1300px) {
+    .extra-links {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(3, max-content);
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .main-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        padding-bottom:30vw;
+    }
+
+    nav ul {
+        display: none;
+    }
+
+    footer {
+        flex-direction: column;
+        text-align: center;
+        font-size: 2vw;
+    }
+}

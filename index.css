@@ -1,0 +1,65 @@
+
+.grid {
+  background-color: #353535;
+  padding: 20px;
+  border-radius: 20px;
+
+  display: grid;
+  gap: 1.5rem;
+
+}
+
+.block {
+  padding: 10px 30px;
+  border-radius: 20px;
+  color: black;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.block h2 {
+  font-weight: 900;
+  font-size: 23px;
+}
+
+.join-btn {
+  text-align: center;
+  padding: 40px;
+  background-color: #202020;
+  font-size: 4vw;
+  color: white;
+}
+
+
+main h1 {
+  font-size: 4vw;
+  margin: 1.4rem 0;
+  text-align: center;
+}
+
+@media only screen and (min-width: 1300px) {
+  .column {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+  }
+
+  .grid-col-span-2 {
+      grid-column: span 2;
+  }
+  
+  .grid-row-span-2 {
+      grid-row: span 2;
+  }
+
+  .grid {
+      grid-template-columns: repeat(4, 1fr);
+  }
+
+  .join-btn {
+      display: none;
+  }
+}
+
+

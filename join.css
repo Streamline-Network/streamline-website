@@ -1,0 +1,29 @@
+.main-header {
+  width: 111%;
+  height: 100px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5em;
+}
+
+.block {
+  padding: 10px 30px;
+  border-radius: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  position: relative;
+  top: -27px;
+}
+
+.num {
+  color: black;
+  width: 80px;
+  padding: 1px 22px;
+}
+
+.block h2 {
+  font-weight: 900;
+  font-size: 2rem;
+}
