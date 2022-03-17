@@ -2,6 +2,11 @@
 
 :root {
   --left-right-padding: 5%;
+
+  --bg-color: #202020;
+  --text-color: #fff;
+  --btn-color: #353535;
+  --btn-2-color: #eee;
 }
 
 *,
@@ -58,6 +63,8 @@ body {
   font-family: "M PLUS Rounded 1c", sans-serif;
   width: 100%;
   min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
 header {
@@ -69,13 +76,17 @@ header {
   height: 60px;
 }
 
-nav li {
+header a {
+  color: var(--text-color);
+}
+
+.main-navigation li {
   display: inline;
   font-size: 16px;
   margin-left: 9px;
   font-weight: bold;
   border-radius: 6px;
-  background-color: rgb(53, 53, 53);
+  background-color: var(--btn-color);
   font-weight: 600;
   padding: 5px 10px 5px 10px;
 }
@@ -86,7 +97,7 @@ ul {
 }
 
 nav a {
-  color: white;
+  color: var(--text-color);
   padding: 4px;
   width: 30px;
 }
@@ -136,6 +147,15 @@ main {
   padding-bottom: 100px;
 }
 
+.current-pg {
+  background: var(--btn-2-color) !important;
+  color: var(--bg-color) !important;
+}
+
+.current-pg:hover {
+  border-bottom: solid 4px #ff8aae;
+}
+
 footer {
   position: absolute;
   display: flex;
@@ -152,58 +172,28 @@ footer {
   margin: 0;
   text-align: center;
   text-decoration: underline;
+  color: var(--text-color);
 }
 
 .page-container {
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/*The Hamburger and it's animation*/
-
-.hamburger .line {
-  width: 50px;
-  height: 5px;
-  background-color: #ecf0f1;
-  display: block;
-  margin: 8px auto;
-  transition: all 0.3s ease-in-out;
+.menu-toggle {
+  display: none;
 }
-
-.hamburger:hover {
-  cursor: pointer;
-}
-
-#hamburger.is-active {
-  transition: all 0.3s ease-in-out;
-  transition-delay: 0.6s;
-  transform: rotate(45deg);
-}
-
-#hamburger.is-active .line:nth-child(2) {
-  width: 0px;
-}
-
-#hamburger.is-active .line:nth-child(1),
-#hamburger.is-active .line:nth-child(3) {
-  transition-delay: 0.3s;
-}
-
-#hamburger.is-active .line:nth-child(1) {
-  transform: translateY(13px);
-}
-
-#hamburger.is-active .line:nth-child(3) {
-  transform: translateY(-13px) rotate(90deg);
-}
-
-/*Hamburger end*/
 
 @media only screen and (min-width: 1300px) {
   .extra-links {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(3, max-content);
+  }
+
+  .line {
+    display: none;
   }
 }
 
@@ -215,8 +205,95 @@ footer {
     padding-bottom: 30vw;
   }
 
-  nav ul {
-    display: none;
+  .main-navigation {
+    display: block;
+    position: relative;
+    top: 6px;
+    left: 50px;
+
+    z-index: 1;
+  }
+
+  .main-navigation ul {
+    position: absolute;
+    width: 400px;
+    margin: -100px 0 0 -60px;
+    padding: 50px;
+    padding-top: 60px;
+    border-radius: 0 0 0 20px;
+
+    background: var(--text-color);
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    /* to stop flickering of text in safari */
+
+    transform-origin: 0% 0%;
+    transform: translate(100%, 0);
+
+    transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  }
+
+  .menu-toggle:checked ~ .nav-list {
+    transform: translate(-60%, 0);
+  }
+
+  .line {
+    width: 50px;
+    height: 5px;
+    background-color: var(--text-color);
+    display: block;
+    margin: 8px auto;
+    transition: all 0.3s ease-in-out;
+    z-index: 5;
+    position: relative;
+    margin-right: 50px;
+  }
+
+  .menu-toggle:checked ~ .line {
+    background-color: var(--bg-color);
+  }
+
+  /*The Hamburger and it's animation*/
+
+  .menu-toggle:checked ~ .hamburger {
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.6s;
+    transform: rotate(45deg);
+  }
+
+  .menu-toggle:checked ~ .secound-line {
+    width: 0px;
+  }
+
+  .menu-toggle:checked ~ .first-line {
+    transform: translateY(13px) rotate(-45deg);
+  }
+
+  .menu-toggle:checked ~ .third-line {
+    transform: translateY(-13px) rotate(45deg);
+  }
+
+  .menu-toggle {
+    display: block;
+    width: 50px;
+    height: 35px;
+    position: absolute;
+
+    opacity: 0;
+    z-index: 10;
+    cursor: pointer;
+  }
+
+  /*Hamburger end*/
+
+  .main-navigation li {
+    display: flex;
+    height: 100px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 23px;
+    margin: 20px 0;
   }
 
   footer {
