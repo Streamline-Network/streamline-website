@@ -23,40 +23,6 @@ html {
   height: 100%;
 }
 
-/* DARK AND LIGHT MODE CLASSES */
-
-.dark-mode {
-  color: white;
-  background-color: rgb(32, 32, 32);
-}
-
-.light-mode {
-  background-color: #f8f8f8;
-  color: rgb(32, 32, 32);
-}
-
-nav .light-mode {
-  background: rgb(187, 187, 187);
-  border-color: #ff8aae !important;
-  color: black;
-}
-
-nav .dark-mode {
-  background: rgb(218, 218, 218);
-  border-color: #ff8aae !important;
-  color: rgb(0, 0, 0);
-}
-
-.link .dark-mode {
-  color: white;
-}
-
-.link .light-mode {
-  color: rgb(0, 0, 0);
-}
-
-/* DARK AND LIGHT MODE CLASSES END */
-
 body {
   margin: 0;
   padding: 0;
@@ -74,6 +40,9 @@ header {
   box-shadow: 0px 0px 15px 0px black;
   justify-content: space-between;
   height: 60px;
+  position: fixed;
+  top: 0;
+  background: var(--bg-color);
 }
 
 header a {
@@ -145,6 +114,7 @@ main {
   align-items: center;
   flex-direction: column;
   padding-bottom: 100px;
+  margin-top: 60px;
 }
 
 .current-pg {
@@ -217,9 +187,8 @@ footer {
   .main-navigation ul {
     position: absolute;
     width: 400px;
-    margin: -100px 0 0 -60px;
-    padding: 50px;
-    padding-top: 60px;
+    margin: -50px 0 0 -60px;
+    padding: 30px 50px 10px 50px;
     border-radius: 0 0 0 20px;
 
     background: var(--text-color);
@@ -255,12 +224,6 @@ footer {
 
   /*The Hamburger and it's animation*/
 
-  .menu-toggle:checked ~ .hamburger {
-    transition: all 0.3s ease-in-out;
-    transition-delay: 0.6s;
-    transform: rotate(45deg);
-  }
-
   .menu-toggle:checked ~ .secound-line {
     width: 0px;
   }
@@ -288,12 +251,13 @@ footer {
 
   .main-navigation li {
     display: flex;
-    height: 100px;
+    height: 50px;
     text-align: center;
     justify-content: center;
     align-items: center;
     font-size: 23px;
-    margin: 20px 0;
+    margin: 10px 0;
+    border-width: 5px !important;
   }
 
   footer {
