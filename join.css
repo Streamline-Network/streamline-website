@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 100px;
+  padding-bottom: 60px;
   margin-top: 60px;
 }
 
@@ -13,12 +13,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3.5em;
+  font-size: 3.2em;
 }
 
 .block {
-  padding: 10px 30px;
-  border-radius: 15px;
+  border-radius: 10px;
   font-size: 1.5rem;
   font-weight: 600;
   position: relative;
@@ -27,11 +26,26 @@
 
 .num {
   color: black;
-  width: 80px;
-  padding: 1px 22px;
+  width: 8vw;
+  min-width: 40px;
 }
 
 .block h2 {
+  display: block;
   font-weight: 900;
   font-size: 2rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.video {
+  display: none;
+}
+
+@media only screen and (min-width: 900px) {
+  .video {
+    display: block;
+  }
 }

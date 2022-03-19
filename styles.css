@@ -120,7 +120,7 @@ main {
 }
 
 footer {
-  position: absolute;
+  position: relative;
   display: flex;
   width: 100%;
   padding: 0 var(--left-right-padding);
@@ -161,13 +161,6 @@ footer {
 }
 
 @media only screen and (max-width: 900px) {
-  .main-content {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-bottom: 30vw;
-  }
-
   .main-navigation {
     display: block;
     position: relative;
