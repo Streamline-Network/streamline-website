@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+}
+
+html {
+    background-color: rgb(36, 36, 36);
+    font-family: 'Rubik', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn-main-line {
+    width: 117px;
+
+}
+
+.btn-main {
+    width: 400px;
+}
