@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 60px;
+  padding-bottom: 20px;
   margin-top: 60px;
 }
 
@@ -18,34 +18,47 @@
 
 .block {
   border-radius: 10px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
   position: relative;
-  top: -27px;
-}
-
-.num {
-  color: black;
-  width: 8vw;
-  min-width: 40px;
+  margin-top: 20px;
 }
 
 .block h2 {
   display: block;
-  font-weight: 900;
-  font-size: 2rem;
+  font-weight: 800;
+  font-size: 1.7rem;
   width: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
+.num {
+  color: black;
+  width: fit-content;
+  padding: 0 20px;
+  min-width: 40px;
+}
 .video {
   display: none;
 }
 
+.button {
+  margin: 30px 0;
+}
+
 @media only screen and (min-width: 900px) {
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .video {
     display: block;
+  }
+
+  .video-txt {
+    display: none;
   }
 }
