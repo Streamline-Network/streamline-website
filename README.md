@@ -1,1 +1,1 @@
-This is the dev bratch, changes often and might break from time-to-time.
+This is the website for my Minecraft SMP called Streamline SMP
