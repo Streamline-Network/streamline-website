@@ -40,7 +40,7 @@
   padding: 0 20px;
   min-width: 40px;
 }
-.video {
+.show-desktop {
   display: none;
 }
 
@@ -48,17 +48,37 @@
   margin: 30px 0;
 }
 
-@media only screen and (min-width: 900px) {
+.grid {
+  display: grid;
+  gap: 30px;
+  margin: 30px 0 10px 0;
+}
+
+.grid > div {
+  background-color: #353535;
+  padding: 1px 20px;
+  border-radius: 20px;
+}
+
+.discord-embed {
+  grid-row-start: 1;
+  grid-row-end: 4;
+  grid-column-start: 2;
+  height: 100%;
+  width: 100%;
+}
+
+@media only screen and (min-width: 970px) {
   .grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 2fr 1fr;
+    grid-auto-flow: row;
   }
 
-  .video {
+  .show-desktop {
     display: block;
   }
 
-  .video-txt {
+  .hide-desktop {
     display: none;
   }
 }
