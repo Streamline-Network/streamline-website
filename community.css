@@ -1,0 +1,80 @@
+main {
+  margin: 80px 0;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  background-color: #353535;
+  padding: 20px;
+  border-radius: 20px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  padding: 0;
+}
+
+.button h2 {
+  display: inline-block;
+  margin: 5px;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: auto;
+  padding: 10px;
+}
+
+.button img {
+  display: inline-block;
+}
+
+.icon {
+  background-color: rgb(224, 224, 224);
+  height: 100%;
+  width: 100px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 0 0 10px;
+  transition: 300ms;
+}
+
+.button:hover > .icon {
+  background-color: #333;
+  width: 70%;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.616);
+}
+
+.discord {
+  height: 4.4rem;
+}
+
+.youtube {
+  height: 3.1rem;
+}
+
+.twitter {
+  height: 3.1rem;
+}
+
+.reddit {
+  height: 4rem;
+}
+
+.instagram {
+  height: 4rem;
+}
+
+.tiktok {
+  height: 5rem;
+}
+
+@media only screen and (max-width: 1200px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
