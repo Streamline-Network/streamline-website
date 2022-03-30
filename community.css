@@ -8,6 +8,7 @@ main {
   background-color: #353535;
   padding: 20px;
   border-radius: 20px;
+  grid-template-columns: 1fr 1fr;
 }
 
 .button {
@@ -70,4 +71,10 @@ main {
 
 .tiktok {
   height: 5rem;
+}
+
+@media only screen and (max-width: 1200px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
