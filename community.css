@@ -1,5 +1,24 @@
 main {
-  margin: 80px 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+.sub-header {
+  font-size: 2.5rem;
+  margin: 1.4rem 0;
+  text-align: center;
+}
+
+.main-header {
+  align-self: center;
+  width: 111%;
+  height: 100px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2em;
 }
 
 .grid {
@@ -9,6 +28,7 @@ main {
   padding: 20px;
   border-radius: 20px;
   grid-template-columns: 1fr 1fr;
+  margin-bottom: 40px;
 }
 
 .button {
@@ -18,13 +38,14 @@ main {
   padding: 0;
 }
 
-.button h2 {
+.button h3 {
   display: inline-block;
   margin: 5px;
-  font-size: 3rem;
+  font-size: 2.9rem;
   font-weight: 900;
   margin: auto;
   padding: 10px;
+  white-space: nowrap;
 }
 
 .button img {
@@ -70,6 +91,10 @@ main {
 }
 
 .tiktok {
+  height: 5rem;
+}
+
+.checkbox {
   height: 5rem;
 }
 
