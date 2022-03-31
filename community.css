@@ -1,5 +1,24 @@
 main {
-  margin: 80px 0;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+}
+
+.sub-header {
+  font-size: 2.5rem;
+  margin: 1.4rem 0;
+  text-align: center;
+}
+
+.main-header {
+  align-self: center;
+  width: 111%;
+  height: 100px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.2em;
 }
 
 .grid {
@@ -9,6 +28,7 @@ main {
   padding: 20px;
   border-radius: 20px;
   grid-template-columns: 1fr 1fr;
+  margin-bottom: 40px;
 }
 
 .button {
@@ -16,15 +36,17 @@ main {
   align-items: center;
   background: rgb(255, 255, 255);
   padding: 0;
+  min-height: 100px;
 }
 
-.button h2 {
+.button h3 {
   display: inline-block;
   margin: 5px;
-  font-size: 3rem;
+  font-size: 1.5rem;
   font-weight: 900;
   margin: auto;
   padding: 10px;
+  white-space: nowrap;
 }
 
 .button img {
@@ -45,7 +67,7 @@ main {
 
 .button:hover > .icon {
   background-color: #333;
-  width: 70%;
+  width: 60%;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.616);
 }
 
@@ -70,6 +92,10 @@ main {
 }
 
 .tiktok {
+  height: 5rem;
+}
+
+.checkbox {
   height: 5rem;
 }
 
