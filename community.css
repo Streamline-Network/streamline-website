@@ -103,4 +103,18 @@ main {
   .grid {
     grid-template-columns: 1fr;
   }
+
+  .main-header {
+    font-size: 2rem;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .main-header {
+    font-size: 1.5rem;
+  }
+
+  .sub-header {
+    font-size: 1.3rem;
+  }
 }
