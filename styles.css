@@ -45,10 +45,17 @@ header {
   top: 0;
   background: var(--bg-color);
   z-index: 4;
+  grid-area: header;
 }
 
 header a {
   color: var(--text-color);
+}
+
+main {
+  grid-area: main;
+  width: 100%;
+  align-self: start;
 }
 
 .main-navigation li {
@@ -125,14 +132,13 @@ main {
 }
 
 footer {
-  position: relative;
   display: flex;
   width: 100%;
   padding: 0 var(--left-right-padding);
   box-shadow: -5px 0px 15px 0px black;
   justify-content: space-between;
   font-weight: 900;
-  bottom: 0;
+  grid-area: footer;
 }
 
 .link {
@@ -144,9 +150,14 @@ footer {
 }
 
 .page-container {
+  display: grid;
   position: relative;
-  min-height: 100vh;
+  min-height: 100%;
   overflow-x: hidden;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
 }
 
 .menu-toggle {
