@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 :root {
   --left-right-padding: 5%;
@@ -87,6 +87,7 @@ nav li:hover {
 
 p {
   font-family: "Catamaran", sans-serif;
+  font-weight: 500;
 }
 
 .purple {
@@ -139,6 +140,12 @@ footer {
   justify-content: space-between;
   font-weight: 900;
   grid-area: footer;
+}
+
+hr {
+  display: block;
+  width: 100%;
+  border-color: var(--text-color);
 }
 
 .link {

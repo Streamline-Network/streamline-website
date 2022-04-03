@@ -72,12 +72,28 @@
   margin-bottom: 20px;
   height: 300px;
   width: 100%;
+  border-radius: 0px 0px 10px 10px;
 }
+
+.sub-header {
+  font-size: 2.5rem;
+  margin: 2.4rem 0;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+/* START OF DISCORD SYLEING */
+
+/* END OF DISCORD SYLEING */
 
 @media only screen and (min-width: 970px) {
   .grid {
     grid-template-columns: 2fr 1fr;
     grid-auto-flow: row;
+  }
+
+  .lower-grid {
+    grid-template-columns: 1fr;
   }
 
   .show-desktop {
@@ -86,5 +102,11 @@
 
   .hide-desktop {
     display: none;
+  }
+}
+
+@media screen and (min-width: 1500px) {
+  .lower-grid {
+    grid-template-columns: 1fr 1fr;
   }
 }
