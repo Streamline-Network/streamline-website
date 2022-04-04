@@ -35,14 +35,11 @@ body {
 }
 
 .page-container {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  grid-template-areas:
-    "header"
-    "main"
-    "footer";
 }
 header {
   display: flex;
@@ -55,7 +52,6 @@ header {
   top: 0;
   background: var(--bg-color);
   z-index: 4;
-  grid-area: header;
 }
 
 header a {
@@ -63,9 +59,7 @@ header a {
 }
 
 main {
-  grid-area: main;
   width: 100%;
-  align-self: start;
 }
 
 footer {
@@ -76,8 +70,7 @@ footer {
   box-shadow: -5px 0px 15px 0px black;
   justify-content: space-between;
   font-weight: 900;
-  grid-area: footer;
-  align-self: end;
+  margin-top: auto;
 }
 
 .main-navigation li {
