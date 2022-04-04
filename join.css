@@ -83,13 +83,22 @@
 }
 
 .more-block {
-  display: block;
+  display: flex;
   flex-direction: column;
+  height: 100%;
+  margin-top: 0;
+}
+
+.sub-block-txt {
+  margin-top: auto;
 }
 
 /* START OF DISCORD SYLEING */
-.disc {
+.disc-example {
   margin-top: auto;
+}
+
+.disc {
   background-color: #36393f;
   border-radius: 0 0 10px 10px;
   padding: 7px 5px 7px 0;
