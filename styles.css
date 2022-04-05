@@ -73,6 +73,11 @@ header a {
 
 main {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 60px;
+  padding: 0 var(--left-right-padding);
+  margin-bottom: 50px;
 }
 
 footer {
@@ -183,12 +188,6 @@ p {
   font-size: 23px;
   margin: 0;
   margin-top: 13px;
-}
-
-main {
-  display: grid;
-  margin: 0 auto;
-  padding: 0 var(--left-right-padding);
 }
 
 .current-pg {
