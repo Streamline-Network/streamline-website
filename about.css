@@ -6,17 +6,6 @@
   margin-top: 60px;
 }
 
-.main-header {
-  width: 111%;
-  height: 100px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3.2em;
-  color: black;
-}
-
 .sub-header {
   display: flex;
   flex-direction: column;
