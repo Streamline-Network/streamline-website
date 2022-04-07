@@ -28,8 +28,13 @@
 }
 
 .block {
-  padding: 0 20px;
+  padding: 20px 20px;
   border-radius: 10px;
+  height: min-content;
+}
+
+details[open] {
+  height: auto;
 }
 
 .block-link {

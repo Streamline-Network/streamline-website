@@ -123,6 +123,13 @@ p {
   font-weight: 500;
 }
 
+summary {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
 .purple {
   /* background-color: #b983ff; */
   background: rgb(125, 72, 254);
