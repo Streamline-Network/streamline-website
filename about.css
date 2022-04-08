@@ -33,6 +33,10 @@
   height: min-content;
 }
 
+.block > summary {
+  font-size: 1.2rem;
+}
+
 details[open] {
   height: auto;
 }
@@ -42,7 +46,7 @@ details[open] {
   text-decoration: underline;
 }
 
-@media only screen and (min-width: 650px) {
+@media only screen and (min-width: 780px) {
   .faq {
     grid-template-columns: 1fr 1fr;
   }

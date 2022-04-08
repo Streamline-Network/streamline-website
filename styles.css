@@ -113,11 +113,6 @@ nav a {
   width: 30px;
 }
 
-nav li:hover {
-  border-bottom: solid 4px #9adcff;
-  transition: 200ms;
-}
-
 p {
   font-family: "Catamaran", sans-serif;
   font-weight: 500;
@@ -238,14 +233,6 @@ hr {
   box-shadow: 0px 4px 5px 0px black;
 }
 
-.button:hover {
-  box-shadow: 0px 0px 0px 0px black;
-  transform: translateY(3px);
-  transform: scale(0.987);
-  color: var(--text-color);
-  background: var(--bg-color);
-}
-
 @media only screen and (min-width: 900px) {
   .extra-links {
     display: grid;
@@ -255,6 +242,19 @@ hr {
 
   .line {
     display: none;
+  }
+
+  .button:hover {
+    box-shadow: 0px 0px 0px 0px black;
+    transform: translateY(3px);
+    transform: scale(0.987);
+    color: var(--text-color);
+    background: var(--bg-color);
+  }
+
+  nav li:hover {
+    border-bottom: solid 4px #9adcff;
+    transition: 200ms;
   }
 }
 
