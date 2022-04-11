@@ -1,6 +1,7 @@
 .grid {
   display: grid;
   gap: 20px;
+  color: white;
 }
 
 .sub-header {

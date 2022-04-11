@@ -1,13 +1,26 @@
 @import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
-:root {
-  --left-right-padding: 5%;
+@media (prefers-color-scheme: light) {
+  :root {
+    --left-right-padding: 5%;
 
-  --bg-color: #202020;
-  --text-color: #fff;
-  --btn-color: #353535;
-  --btn-2-color: #eee;
+    --bg-color: #ffffff;
+    --text-color: #000;
+    --btn-color: #e3e3e3;
+    --btn-2-color: #222;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --left-right-padding: 5%;
+
+    --bg-color: #202020;
+    --text-color: #fff;
+    --btn-color: #353535;
+    --btn-2-color: #eee;
+  }
 }
 
 *,
