@@ -291,11 +291,11 @@ hr {
     position: absolute;
     width: 400px;
     margin: -53px 0 0 -60px;
-    padding: 30px 50px 10px 50px;
+    padding: 30px 50px 20px 50px;
     border-radius: 0 0 0 20px;
     box-shadow: 0 0 7px 5px rgba(0, 0, 0, 0.36);
 
-    background: var(--text-color);
+    background: var(--bg-color);
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     /* to stop flickering of text in safari */
@@ -313,7 +313,7 @@ hr {
   .line {
     width: 50px;
     height: 5px;
-    background-color: var(--text-color);
+    background-color: var(--btn-2-color) !important;
     display: block;
     margin: 8px auto;
     transition: all 0.3s ease-in-out;
