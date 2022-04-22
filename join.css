@@ -140,6 +140,7 @@
   display: flex;
   align-items: center;
   height: 50px;
+  cursor: not-allowed;
 }
 
 .disc-add-btn {
