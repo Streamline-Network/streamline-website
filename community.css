@@ -76,6 +76,14 @@
   height: 5rem;
 }
 
+.stats {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  width: 100%;
+  display: grid;
+  text-align: center;
+}
+
 @media only screen and (max-width: 1200px) {
   .grid {
     grid-template-columns: 1fr;
