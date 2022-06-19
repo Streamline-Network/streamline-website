@@ -1,16 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --left-right-padding: 5%;
-
-    --bg-color: #ffffff;
-    --text-color: #000;
-    --btn-color: #e3e3e3;
-    --btn-2-color: #222;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -20,6 +9,17 @@
     --text-color: #fff;
     --btn-color: #353535;
     --btn-2-color: #eee;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --left-right-padding: 5%;
+
+    --bg-color: #ffffff;
+    --text-color: #000;
+    --btn-color: #e3e3e3;
+    --btn-2-color: #222;
   }
 }
 
@@ -40,7 +40,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   width: 100%;
   min-height: 100vh;
   background: var(--bg-color);
@@ -127,12 +127,12 @@ nav a {
 }
 
 p {
-  font-family: "Catamaran", sans-serif;
+  font-family: 'Catamaran', sans-serif;
   font-weight: 500;
 }
 
 summary {
-  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-family: 'M PLUS Rounded 1c', sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
   cursor: pointer;
