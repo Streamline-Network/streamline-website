@@ -246,11 +246,16 @@ hr {
   box-shadow: 0px 4px 5px 0px black;
 }
 
+.extra-links > p > a {
+  padding-block: 0px;
+}
+
 @media only screen and (min-width: 900px) {
   .extra-links {
     display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(3, max-content);
+    gap: 1.5rem;
+    grid-template-columns: repeat(5, max-content);
+    font-size: large;
   }
 
   .line {
