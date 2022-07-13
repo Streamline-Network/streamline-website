@@ -13,7 +13,7 @@
   grid-template-columns: 1fr 1fr;
 }
 
-.button {
+.large-button {
   display: flex;
   align-items: center;
   background: white;
@@ -74,6 +74,14 @@
 
 .checkbox {
   height: 5rem;
+}
+
+.stats {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  width: 100%;
+  display: grid;
+  text-align: center;
 }
 
 @media only screen and (max-width: 1200px) {
