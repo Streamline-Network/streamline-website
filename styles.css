@@ -23,6 +23,10 @@
   }
 }
 
+:root {
+  --warn-color: #e9961b;
+}
+
 *,
 *::before,
 *::after {
@@ -55,26 +59,23 @@ body {
   overflow-x: hidden;
 }
 
-header {
+.header {
   display: flex;
   width: 100%;
   padding: 0 var(--left-right-padding);
   box-shadow: 0px 0px 15px 0px black;
   justify-content: space-between;
   height: 60px;
-  position: fixed;
-  top: 0;
   background: var(--bg-color);
-  z-index: 4;
 }
 
-header a {
+.header a {
   color: var(--text-color);
 }
 
 .main-header {
   align-self: center;
-  width: 111%;
+  width: 112%;
   height: 100px;
   margin: 0;
   display: flex;
@@ -82,15 +83,41 @@ header a {
   justify-content: center;
   font-size: 3.2em;
   color: black;
+  margin-top: -10px;
 }
 
 main {
   width: 100%;
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
   padding: 0 var(--left-right-padding);
-  margin-bottom: 50px;
+  margin-bottom: auto;
+}
+
+header {
+  position: static;
+  width: 100%;
+  top: 0;
+  margin-bottom: 10px;
+}
+
+.notifications {
+  width: 100%;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.notifications > * {
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  padding: 10px 30px;
+  color: var(--bg-color);
+  background-color: var(--btn-2-color);
+}
+
+.notifications > *:first-child {
+  box-shadow: inset 0px 5px 5px -2px var(--bg-color);
 }
 
 footer {
@@ -101,7 +128,7 @@ footer {
   box-shadow: -5px 0px 15px 0px black;
   justify-content: space-between;
   font-weight: 900;
-  margin-top: auto;
+  margin-top: 50px;
 }
 
 .main-navigation li {
