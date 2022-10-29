@@ -1,4 +1,10 @@
 import checkbox from './checkbox.png'
+import discord from './discord.png'
+import instagram from './instagram.png'
+import reddit from './reddit.png'
+import tiktok from './tiktok.png'
+import twitter from './twitter.png'
+import youtube from './youtube.png'
 
 export default function Page() {
   const sections = [
@@ -7,8 +13,8 @@ export default function Page() {
       links: [
         {
           href: 'https://discord.gg/EAe4S6HdVC',
-          src: 'Discord',
-          alt: '',
+          src: discord,
+          alt: 'Discord',
         },
       ],
     },
