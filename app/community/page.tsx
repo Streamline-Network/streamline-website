@@ -1,10 +1,10 @@
-import checkbox from './checkbox.png'
-import discord from './discord.png'
-import instagram from './instagram.png'
-import reddit from './reddit.png'
-import tiktok from './tiktok.png'
-import twitter from './twitter.png'
-import youtube from './youtube.png'
+import checkbox from './images/checkbox.png'
+import discord from './images/discord.png'
+import instagram from './images/instagram.png'
+import reddit from './images/reddit.png'
+import tiktok from './images/tiktok.png'
+import twitter from './images/twitter.png'
+import youtube from './images/youtube.png'
 
 export default function Page() {
   const sections = [
@@ -15,6 +15,31 @@ export default function Page() {
           href: 'https://discord.gg/EAe4S6HdVC',
           src: discord,
           alt: 'Discord',
+        },
+        {
+          href: 'https://www.youtube.com/channel/UCXg4U9_EQE_cKuU4PfZLn-w',
+          src: youtube,
+          alt: 'YouTube',
+        },
+        {
+          href: 'https://twitter.com/streamlinesmp',
+          src: twitter,
+          alt: 'Twitter',
+        },
+        {
+          href: 'https://www.reddit.com/r/StreamlineSMP/',
+          src: reddit,
+          alt: 'Reddit',
+        },
+        {
+          href: 'https://www.reddit.com/r/StreamlineSMP/',
+          src: instagram,
+          alt: 'Instagram',
+        },
+        {
+          href: 'https://www.reddit.com/r/StreamlineSMP/',
+          src: instagram,
+          alt: 'Instagram',
         },
       ],
     },
