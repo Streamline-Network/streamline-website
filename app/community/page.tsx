@@ -1,3 +1,7 @@
+import Image from 'next/image'
+import { Fragment } from 'react'
+
+import styles from './community.module.css'
 import checkbox from './images/checkbox.png'
 import discord from './images/discord.png'
 import instagram from './images/instagram.png'
@@ -37,15 +41,46 @@ export default function Page() {
           alt: 'Instagram',
         },
         {
-          href: 'https://www.reddit.com/r/StreamlineSMP/',
-          src: instagram,
-          alt: 'Instagram',
+          href: 'https://www.tiktok.com/@streamlinesmp',
+          src: tiktok,
+          alt: 'TikTok',
         },
       ],
     },
     {
       title: 'Vote For Us',
-      links: [],
+      links: [
+        {
+          href: 'https://topminecraftservers.org/vote/28132',
+          src: checkbox,
+          alt: 'Top MC Servers',
+        },
+        {
+          href: 'https://servers-minecraft.com/vote/1020',
+          src: checkbox,
+          alt: 'Servers MC',
+        },
+        {
+          href: 'https://minecraft-server-list.com/server/480202/vote/',
+          src: checkbox,
+          alt: 'MC Server List',
+        },
+        {
+          href: 'https://minecraft.buzz/vote/5307',
+          src: checkbox,
+          alt: 'MC Buzz',
+        },
+        {
+          href: 'https://servers-minecraft.net/server-streamline-smp.21149',
+          src: checkbox,
+          alt: 'MC Servers',
+        },
+        {
+          href: 'https://best-minecraft-servers.co/server-streamline-smp.9067/vote',
+          src: checkbox,
+          alt: 'Best MC',
+        },
+      ],
     },
     {
       title: 'Learn More',
@@ -56,107 +91,30 @@ export default function Page() {
   return (
     <>
       <h1 className="main-header red">Join The Conversation</h1>
-      {sections.map(({ title }, index) => (
-        <>
+      {sections.map(({ title, links }, i) => (
+        <Fragment key={i}>
           <h2 className="sub-header">{title}</h2>
           <div className="grid">
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://discord.gg/EAe4S6HdVC"
-              className="button large-button"
-            >
-              <div className="icon">
-                <img
-                  className="discord"
-                  src="./Images/Community/Discord-Logo-Color.png"
-                  alt="Discord Icon"
-                />
-              </div>
-              <h3>Discord</h3>
-            </a>
-
-            <a
-              href="https://www.youtube.com/channel/UCXg4U9_EQE_cKuU4PfZLn-w"
-              rel="noreferrer"
-              target="_blank"
-              className="button large-button"
-            >
-              <div className="icon">
-                <img
-                  className="youtube"
-                  src="./Images/Community/yt_icon_rgb.png"
-                  alt="YouTube Icon"
-                />
-              </div>
-              <h3>YouTube</h3>
-            </a>
-
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://twitter.com/streamlinesmp"
-              className="button large-button"
-            >
-              <div className="icon">
-                <img
-                  src="./Images/Community/2021 Twitter logo - blue.png"
-                  alt="Twitter Icon"
-                  className="twitter"
-                />
-              </div>
-              <h3>Twitter</h3>
-            </a>
-
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.reddit.com/r/StreamlineSMP/"
-              className="button large-button"
-            >
-              <div className="icon">
-                <img
-                  className="reddit"
-                  src="./Images/Community/Reddit_Mark_OnWhite.png"
-                  alt="Reddit Icon"
-                />
-              </div>
-              <h3>Reddit</h3>
-            </a>
-
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.instagram.com/streamlinesmp/"
-              className="button large-button"
-            >
-              <div className="icon">
-                <img
-                  src="./Images/Community/Instagram_Glyph_Gradient_RGB.png"
-                  alt="Instagram Icon"
-                  className="instagram"
-                />
-              </div>
-              <h3>Instagram</h3>
-            </a>
-
-            <a
-              target="_blank"
-              rel="noreferrer"
-              href="https://www.tiktok.com/@streamlinesmp"
-              className="button large-button"
-            >
-              <div className="icon">
-                <img
-                  src="./Images/Community/372102690_TIKTOK_LOGO_1080.png"
-                  alt="TikTok Icon"
-                  className="tiktok"
-                />
-              </div>
-              <h3>TikTok</h3>
-            </a>
+            {links.map(({ href, src, alt }, j) => (
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={href}
+                className="button large-button"
+                key={j}
+              >
+                <div className="icon">
+                  <Image
+                    className={alt.toLowerCase()}
+                    src={src}
+                    alt={alt + ' icon'}
+                  />
+                </div>
+                <h3>{alt}</h3>
+              </a>
+            ))}
           </div>
-        </>
+        </Fragment>
       ))}
     </>
   )

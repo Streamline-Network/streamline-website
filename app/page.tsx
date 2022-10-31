@@ -1,9 +1,10 @@
 import Link from 'next/link'
 
 import Block, { BlockProps } from './index/block/block'
+import styles from './index/index.module.scss'
 
 export default async function Home({}: HomeProps) {
-  const blocks = [
+  const blocks: BlockProps[] = [
     {
       title: 'Economy',
       paragraphs: [
@@ -58,7 +59,7 @@ export default async function Home({}: HomeProps) {
   ]
   return (
     <>
-      <h1>Welcome To Streamline</h1>
+      <h1 className={styles.title}>Welcome To Streamline</h1>
       <article className="grid">
         {blocks.map((block, index) => (
           <Block key={index} {...block} />

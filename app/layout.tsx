@@ -1,3 +1,5 @@
+import '/styles/style.scss'
+
 import React from 'react'
 
 import Banner, { BannerProps } from './components/banner/banner'
@@ -16,9 +18,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      {messages.map((message, index) => (
+      {/*messages.map((message, index) => (
         <Banner key={index} {...message} />
-      ))}
+      ))*/}
       <main>{children}</main>
       <Footer />
     </>
