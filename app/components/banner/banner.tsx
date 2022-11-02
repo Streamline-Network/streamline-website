@@ -1,16 +1,18 @@
-import styles from "./banner.module.scss";
+import banner from "./banner.module.scss";
 
 export default function Banner({ title, message, color }: BannerProps) {
 	return (
-		<div className={styles.notification}>
-			<div>{title}</div>
+		<div className={banner.notification}>
+			{
+				title && <div>{title}</div>
+			}
 			{message}
 		</div>
 	);
 }
 
 export interface BannerProps {
-	title: string;
+	title?: string;
 	message: string;
-	color: string;
+	color?: string;
 }

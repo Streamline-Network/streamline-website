@@ -2,7 +2,7 @@ import classnames from "classnames";
 import Link from "next/link";
 import React from "react";
 
-import styles from "./footer.module.scss";
+import footer from "./footer.module.scss";
 
 export default function Footer({ }: FooterProps) {
 	const links: [text: string, href: string, button: boolean][] = [
@@ -13,7 +13,7 @@ export default function Footer({ }: FooterProps) {
 	];
 
 	return (
-		<footer className={styles.footer}>
+		<footer className={footer.footer}>
 			<p>© {new Date().getFullYear()} All Rights Reserved</p>
 			<nav>
 				{links.map(([text, href, isBtn], i) => (
@@ -22,7 +22,7 @@ export default function Footer({ }: FooterProps) {
 						href={href}
 						className={classnames({
 							button: isBtn,
-							[styles.button]: isBtn,
+							[footer.button]: isBtn,
 						})}
 					>
 						{text}

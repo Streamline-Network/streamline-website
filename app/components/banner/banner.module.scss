@@ -6,7 +6,4 @@
 	padding: 10px 30px;
 	color: var(--bg-color);
 	background-color: var(--btn-2-color);
-	&:first-of-type {
-		box-shadow: inset 0 5px 5px -2px var(--bg-color);
-	}
 }

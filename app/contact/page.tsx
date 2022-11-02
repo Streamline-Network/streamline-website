@@ -2,7 +2,7 @@ import classnames from "classnames";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
-import styles from "./contact.module.scss";
+import contact from "./contact.module.scss";
 import discord from "./discord.svg";
 import email from "./email.svg";
 
@@ -41,23 +41,23 @@ export default function Contact() {
 
 	return (
 		<>
-			<h1 className="main-header orange">Contact</h1>
-			<article className={styles.grid}>
-				<div className={styles.subHeader}>
+			<h1 className="mainHeader orange">Contact</h1>
+			<article className={contact.grid}>
+				<div className={contact.subHeader}>
 					<h2>Have A Question?</h2>
 					<p>Check out our Q&A! Still lost? Contact us anytime.</p>
 				</div>
-				<div className={styles.contentGrid}>
+				<div className={contact.contentGrid}>
 					{
 						blocks.map(({ color, top, img: { src, alt }, label, button: { href, text }, bottom }, index) => (
-							<div className={styles.block} key={index}>
+							<div className={contact.block} key={index}>
 								<h3>{top}</h3>
-								<div className={classnames(styles.wrapperIconTxt, color)}>
+								<div className={classnames(contact.wrapperIconTxt, color)}>
 									<Image src={src} alt={alt} width={145}/>
-									<p className={styles.subText}>{label}</p>
+									<p className={contact.subText}>{label}</p>
 								</div>
 								<Link target="_blank" href={href} className="button">{text}</Link>
-								<p className={styles.responseTime}>{bottom}</p>
+								<p className={contact.responseTime}>{bottom}</p>
 							</div>
 						))
 					}

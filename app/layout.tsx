@@ -1,24 +1,22 @@
-import '/styles/style.scss';
+import "/styles/style.scss";
 
-import { Rubik } from '@next/font/google';
-import React from 'react';
+import { Rubik } from "@next/font/google";
+import React from "react";
 
-import Banner, { BannerProps } from './components/banner/banner';
-import Footer from './components/footer/footer';
-import Header from './components/header/header';
+import Banner, { BannerProps } from "./components/banner/banner";
+import Footer from "./components/footer/footer";
+import Header from "./components/header/header";
 
 const rubik = Rubik({
-	subsets: ['latin'],
+	subsets: ["latin"],
 	preload: true,
-	fallback: ['sans-serif'],
+	fallback: ["sans-serif"],
 });
 
 export default function Layout({ children }: LayoutProps) {
 	const messages: BannerProps[] = [
 		{
-			title: '',
-			message: 'We are currently in between seasons and are not accepting new people. Expect season four summer of 2023.',
-			color: '',
+			message: "We are currently in between seasons and are not accepting new people.\nExpect season four summer of 2023.",
 		},
 	];
 	return (

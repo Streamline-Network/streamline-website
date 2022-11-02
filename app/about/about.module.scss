@@ -1,4 +1,4 @@
-.sub-header {
+.subHeader {
 	display: flex;
 	flex-direction: column;
 	margin: 20px 0;
@@ -10,11 +10,11 @@
 	color: white;
 }
 
-.sub-header > * {
+.subHeader > * {
 	margin: 0;
 }
 
-.sub-header-link {
+.subHeaderLink {
 	color: white;
 	text-decoration: underline;
 }
@@ -26,35 +26,12 @@
 	background-color: #353535;
 	border-radius: 10px;
 	color: black;
-}
-
-.block {
-	padding: 20px 20px;
-	border-radius: 10px;
-	height: min-content;
-}
-
-.block > summary {
-	font-size: 1.2rem;
-}
-
-summary {
-	font-weight: 600;
-	font-size: 1.2rem;
-	cursor: pointer;
-}
-
-details[open] {
-	height: auto;
-}
-
-.block-link {
-	color: #000;
-	text-decoration: underline;
-}
-
-@media only screen and (min-width: 780px) {
-	.faq {
+	@media only screen and (min-width: 780px) {
 		grid-template-columns: 1fr 1fr;
 	}
+}
+
+.blockLink {
+	color: #000;
+	text-decoration: underline;
 }

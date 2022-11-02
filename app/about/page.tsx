@@ -1,8 +1,10 @@
-import classnames from "classnames";
 import Link from "next/link";
 
+import about from "./about.module.scss";
+import Question, { QuestionProps } from "./question/question";
+
 export default function About({ }: AboutProps) {
-	const questions: Question[] = [
+	const questions: QuestionProps[] = [
 		{
 			question: "What's the IP?",
 			answer: <>Streamline is a whitelist-only Minecraft server, meaning you will need to be accepted to join. If you have been accepted, you can connect with this IP: <strong>play.streamlinesmp.com</strong></>,
@@ -30,7 +32,7 @@ export default function About({ }: AboutProps) {
 		},
 		{
 			question: "How does this work?",
-			answer: <>Streamline SMP is a single Minecraft server located in New York City, NY. The software used by the server is <Link target="_blank" href="https://purpurmc.org/" className="block-link">Purpur</Link>, a branch of <Link target="_blank" href="https://papermc.io/" className="block-link">Paper MC</Link> which is a branch of <Link target="_blank" href="https://www.spigotmc.org/" className="block-link">Spigot</Link>.</>,
+			answer: <>Streamline SMP is a single Minecraft server located in New York City, NY. The software used by the server is <Link target="_blank" href="https://purpurmc.org/" className={about.blockLink}>Purpur</Link>, a branch of <Link target="_blank" href="https://papermc.io/" className={about.blockLink}>Paper MC</Link> which is a branch of <Link target="_blank" href="https://www.spigotmc.org/" className={about.blockLink}>Spigot</Link>.</>,
 			color: "orange",
 		},
 		{
@@ -50,48 +52,43 @@ export default function About({ }: AboutProps) {
 		},
 		{
 			question: "Can I redo my application?",
-			answer: <>Absolutely, yes you can definitely redo your application! Just go back to the <Link target="_blank" href="https://dyno.gg/form/8ac19b49" className="block-link">application</Link> and as long as your old one has been reviewed you will have the ability to submit a new one.</>,
+			answer: <>Absolutely, yes you can definitely redo your application! Just go back to the <Link target="_blank" href="https://dyno.gg/form/8ac19b49" className={about.blockLink}>application</Link> and as long as your old one has been reviewed you will have the ability to submit a new one.</>,
 			color: "red",
 		},
 		{
 			question: "What are the rules?",
-			answer: <>You can check the basic rules <Link target="_blank" href="https://discord.com/channels/775831180086870096/970418128737665095" className="block-link">here</Link>. You can get a more detailed look at the rules <Link target="_blank" href="https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing" className="block-link">here</Link>. The rules are also subject to change, however you will be notified to the change if you are in the Discord server.</>,
+			answer: <>You can check the basic rules <Link target="_blank" href="https://discord.com/channels/775831180086870096/970418128737665095" className={about.blockLink}>here</Link>. You can get a more detailed look at the rules <Link target="_blank" href="https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing" className={about.blockLink}>here</Link>. The rules are also subject to change, however you will be notified to the change if you are in the Discord server.</>,
 			color: "red",
 		},
 		{
 			question: "Can I get banned for____?",
-			answer: <>If you have any questions about what is against the rules or allowed, <Link href="./contact" className="block-link">please contact a staff member to ask!</Link> That is the best way to make sure that you stay safe and don&amp;t risk getting banned!</>,
+			answer: <>If you have any questions about what is against the rules or allowed, <Link href="/contact" className={about.blockLink}>please contact a staff member to ask!</Link> That is the best way to make sure that you stay safe and don&amp;t risk getting banned!</>,
 			color: "green",
 		},
 		{
 			question: "Are clients allowed?",
-			answer: <>Yes, clients are somewhat allowed. However, clients that break the <Link target="_blank" href="https://discord.com/channels/775831180086870096/776140370568020020" className="block-link">rules</Link>, like Wurst client are not allowed for obvious reasons. However, Fabric, Badlion, Lunar, and most other similar clients are allowed.</>,
+			answer: <>Yes, clients are somewhat allowed. However, clients that break the <Link target="_blank" href="https://discord.com/channels/775831180086870096/776140370568020020" className={about.blockLink}>rules</Link>, like Wurst client are not allowed for obvious reasons. However, Fabric, Badlion, Lunar, and most other similar clients are allowed.</>,
 			color: "orange",
 		},
 		{
 			question: "Is there minimum age?",
-			answer: <>Yes, the minimum age is 13. The reason we picked this age is because we felt as a community that this was a reasonable age for the server. The server is a <Link target="_blank" href="https://en.wiktionary.org/wiki/SFW#:~:text=(Internet%2C%20initialism)%20Safe%20for,to%20employers%20or%20co%2Dworkers." className="block-link">SFW</Link> server safe for <strong>anyone 13+</strong>!</>,
+			answer: <>Yes, the minimum age is 13. The reason we picked this age is because we felt as a community that this was a reasonable age for the server. The server is a <Link target="_blank" href="https://en.wiktionary.org/wiki/SFW#:~:text=(Internet%2C%20initialism)%20Safe%20for,to%20employers%20or%20co%2Dworkers." className={about.blockLink}>SFW</Link> server safe for <strong>anyone 13+</strong>!</>,
 			color: "blue",
 		},
 	];
 
 	return (
 		<>
-			<h1 className="main-header yellow">ABOUT</h1>
+			<h1 className="mainHeader yellow">About</h1>
 			<article>
-				<div className="sub-header">
-					<h2>FREQUENTLY ASKED QUESTIONS</h2>
+				<div className={about.subHeader}>
+					<h2>Frequently Asked Questions</h2>
 					<p>
-						Have a question? We have the answer! If you don&amp;t see your question here you can always hit us up at our <Link className="sub-header-link" href="./contact">Contact Page</Link>.
+						Have a question? We have the answer! If you don&amp;t see your question here you can always hit us up at our <Link className={about.subHeaderLink} href="/contact">Contact Page</Link>.
 					</p>
 				</div>
-				<div className="faq">
-					{questions.map(({ color, question, answer }, index) => (
-						<details className={classnames("block", color)} key={index}>
-							<summary>{question}</summary>
-							<p>{answer}</p>
-						</details>
-					))}
+				<div className={about.faq}>
+					{questions.map((question, index) => <Question {...question} key={index} />)}
 				</div>
 			</article>
 		</>
@@ -100,9 +97,3 @@ export default function About({ }: AboutProps) {
 }
 
 interface AboutProps { }
-
-interface Question {
-	question: string;
-	answer: React.ReactNode;
-	color: string;
-}

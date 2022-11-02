@@ -1,7 +1,10 @@
-.sub-header {
+.subHeader {
 	font-size: 2.2rem;
 	margin: 1.4rem 0;
 	text-align: center;
+	@media only screen and (max-width: 500px) {
+		font-size: 1.3rem;
+	}
 }
 
 .grid {
@@ -11,9 +14,12 @@
 	padding: 20px;
 	border-radius: 20px;
 	grid-template-columns: 1fr 1fr;
+	@media only screen and (max-width: 1200px) {
+		grid-template-columns: 1fr;
+	}
 }
 
-.large-button {
+.largeButton {
 	display: flex;
 	align-items: center;
 	background: white;
@@ -22,18 +28,25 @@
 	min-height: 100px;
 }
 
-.button h3 {
-	display: inline-block;
-	margin: 5px;
-	font-size: 1.5rem;
-	font-weight: 900;
-	margin: auto;
-	padding: 10px;
-	white-space: nowrap;
-}
-
-.button img {
-	display: inline-block;
+.button {
+	h3 {
+		display: inline-block;
+		font-size: 1.5rem;
+		font-weight: 900;
+		margin: auto;
+		padding: 10px;
+		white-space: nowrap;
+	}
+	img {
+		display: inline-block;
+	}
+	&:hover > .icon {
+		@media only screen and (min-width: 800px) {
+			background-color: #333;
+			width: 60%;
+			box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.616);
+		}
+	}
 }
 
 .icon {
@@ -48,58 +61,10 @@
 	transition: 300ms;
 }
 
-.discord {
-	height: 4.4rem;
-}
-
-.youtube {
-	height: 3.1rem;
-}
-
-.twitter {
-	height: 3.1rem;
-}
-
-.reddit {
-	height: 4rem;
-}
-
-.instagram {
-	height: 4rem;
-}
-
-.tiktok {
-	height: 5rem;
-}
-
-.checkbox {
-	height: 5rem;
-}
-
 .stats {
 	grid-column-start: 1;
 	grid-column-end: 3;
 	width: 100%;
 	display: grid;
 	text-align: center;
-}
-
-@media only screen and (max-width: 1200px) {
-	.grid {
-		grid-template-columns: 1fr;
-	}
-}
-
-@media only screen and (max-width: 500px) {
-	.sub-header {
-		font-size: 1.3rem;
-	}
-}
-
-@media only screen and (min-width: 800px) {
-	.button:hover > .icon {
-		background-color: #333;
-		width: 60%;
-		box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.616);
-	}
 }

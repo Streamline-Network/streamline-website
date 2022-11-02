@@ -3,6 +3,12 @@
 	--text-color: #fff;
 	--btn-color: #353535;
 	--btn-2-color: #eee;
+	@media (prefers-color-scheme: light) {
+		--bg-color: #ffffff;
+		--text-color: #000;
+		--btn-color: #e3e3e3;
+		--btn-2-color: #222;
+	}
 
 	--left-right-padding: 5%;
 }
@@ -40,7 +46,7 @@ body {
 		flex-direction: column;
 		margin-bottom: auto;
 
-		> .main-header {
+		> .mainHeader {
 			align-self: center;
 			width: 112%;
 			height: 100px;
@@ -80,81 +86,72 @@ body {
 
 .purple {
 	/* background-color: #b983ff; */
-	background: rgb(125, 72, 254);
+	background: #7d48fe;
 	background: linear-gradient(
 		90deg,
-		rgb(144, 102, 251) 0%,
-		rgb(203, 164, 253) 100%
+		#9066fb 0%,
+		#cba4fd 100%
 	);
 }
 
 .blue {
 	/* background-color: #9adcff; */
-	background: rgb(77, 127, 255);
+	background: #4d7fff;
 	background: linear-gradient(
 		90deg,
-		rgb(101, 144, 255) 0%,
-		rgb(116, 211, 255) 100%
+		#6590ff 0%,
+		#74d3ff 100%
 	);
 }
 
 .red {
 	/* background-color: #ff8aae; */
-	background: rgb(255, 85, 85);
+	background: #ff5555;
 	background: linear-gradient(
 		90deg,
-		rgb(255, 103, 103) 0%,
-		rgb(255, 162, 131) 100%
+		#ff6767 0%,
+		#ffa283 100%
 	);
 }
 
 .yellow {
 	/* background-color: #fff89a; */
-	background: rgb(255, 85, 85);
+	background: #ff5555;
 	background: linear-gradient(
 		90deg,
-		rgb(252, 221, 81) 0%,
-		rgb(255, 248, 143) 100%
+		#fcdd51 0%,
+		#fff88f 100%
 	);
 }
 
 .green {
 	/* background-color: #41e889; */
-	background: rgb(255, 85, 85);
+	background: #ff5555;
 	background: linear-gradient(
 		90deg,
-		rgb(94, 222, 100) 0%,
-		rgb(182, 249, 140) 100%
+		#5ede64 0%,
+		#b6f98c 100%
 	);
 }
 
 .orange {
 	/* background-color: #fdac55; */
-	background: rgb(255, 85, 85);
+	background: #ff5555;
 	background: linear-gradient(
 		90deg,
-		rgb(247, 149, 73) 0%,
-		rgb(255, 203, 131) 100%
+		#f79549 0%,
+		#ffcb83 100%
 	);
 }
 
-@media only screen and (max-width: 1200px) {
-	.main-header {
+.mainHeader {
+	@media only screen and (max-width: 1200px) {
 		font-size: 2rem;
 	}
 }
 
-@media only screen and (max-width: 500px) {
-	.main-header {
+.mainHeader {
+	@media only screen and (max-width: 500px) {
 		font-size: 1.5rem;
-	}
-}
-
-@media (prefers-color-scheme: light) {
-	:root {
-		--bg-color: #ffffff;
-		--text-color: #000;
-		--btn-color: #e3e3e3;
-		--btn-2-color: #222;
 	}
 }
