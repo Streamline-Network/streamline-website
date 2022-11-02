@@ -16,18 +16,17 @@ const rubik = Rubik({
 export default function Layout({ children }: LayoutProps) {
 	const messages: BannerProps[] = [
 		{
-			message: "We are currently in between seasons and are not accepting new people.\nExpect season four summer of 2023.",
+			message:
+				"We are currently in between seasons and are not accepting new people. Expect season four summer of 2023.",
 		},
 	];
 	return (
 		<html>
 			<body className={rubik.className}>
 				<Header />
-				{
-					messages.map((message, index) => (
-						<Banner key={index} {...message} />
-					))
-				}
+				{messages.map((message, index) => (
+					<Banner key={index} {...message} />
+				))}
 				<main>{children}</main>
 				<Footer />
 			</body>

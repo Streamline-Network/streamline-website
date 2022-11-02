@@ -1,10 +1,11 @@
 import "/styles/style.scss";
+import style from "./index/index.module.scss";
 
 import Link from "next/link";
 
 import Block, { BlockProps } from "./index/block/block";
 
-export default async function Home({ }: HomeProps) {
+export default async function Home({}: HomeProps) {
 	const blocks: BlockProps[] = [
 		{
 			title: "Economy",
@@ -28,8 +29,9 @@ export default async function Home({ }: HomeProps) {
 			paragraphs: [
 				"Our community is by far one of the number one reasons to join Streamline. We have a very active and talented community of people making incredible things everyday on the server! With over 100 players and growing, there's always somebody to hang out with.",
 				<>
-					We appreciate every new addition to our community and can&apos;t wait
-					to see you join it! Feel free to check any of the{" "}
+					We appreciate every new addition to our community and
+					can&apos;t wait to see you join it! Feel free to check any
+					of the{" "}
 					<Link
 						style={{ color: "black", textDecoration: "underline" }}
 						href="/community"
@@ -60,12 +62,12 @@ export default async function Home({ }: HomeProps) {
 	];
 	return (
 		<>
-			<h1 className="title">Welcome To Streamline</h1>
-			<article className="grid">
+			<h1 className={style.title}>Welcome To Streamline</h1>
+			<article className={style.grid}>
 				{blocks.map((block, index) => (
 					<Block key={index} {...block} />
 				))}
-				<Link className="button hideDesktop" href="/join">
+				<Link className="button" href="/join">
 					Join
 				</Link>
 			</article>
@@ -73,4 +75,4 @@ export default async function Home({ }: HomeProps) {
 	);
 }
 
-interface HomeProps { }
+interface HomeProps {}

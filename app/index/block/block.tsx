@@ -5,12 +5,12 @@ import block from "./block.module.scss";
 
 export default function Block({ title, paragraphs, color }: BlockProps) {
 	return (
-		<div className={classnames("block column gridRowSpan2", color)}>
+		<section className={classnames(block.block, color)}>
 			<h2>{title}:</h2>
 			{paragraphs.map((paragraph, i) => (
 				<p key={i}>{paragraph}</p>
 			))}
-		</div>
+		</section>
 	);
 }
 

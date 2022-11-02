@@ -1,0 +1,12 @@
+.block {
+	padding: 10px 30px;
+	border-radius: 10px;
+	color: black;
+	font-size: 1rem;
+	font-weight: 600;
+	> h2 {
+		font-weight: 900;
+		font-size: 23px;
+		margin-bottom: 0;
+	}
+}
