@@ -119,3 +119,12 @@ header.header {
     }
   }
 }
+
+.current-pg {
+  background: var(--btn-2-color) !important;
+  color: var(--bg-color) !important;
+
+  &:hover {
+    border-bottom: solid 4px #ff8aae;
+  }
+}
