@@ -45,10 +45,8 @@ body {
 		display: flex;
 		flex-direction: column;
 		margin-bottom: auto;
-
-		> .mainHeader {
+		.mainHeader {
 			align-self: center;
-			width: 112%;
 			height: 100px;
 			margin: 0;
 			display: flex;
@@ -56,7 +54,13 @@ body {
 			justify-content: center;
 			font-size: 3.2em;
 			color: black;
-			margin-top: -10px;
+			text-transform: uppercase;
+			@media only screen and (max-width: 1200px) {
+				font-size: 2rem;
+			}
+			@media only screen and (max-width: 500px) {
+				font-size: 1.5rem;
+			}
 		}
 	}
 
@@ -73,8 +77,8 @@ body {
 		transition: 200ms ease-in-out;
 		box-shadow: 0 4px 5px 0 black;
 
-		@media only screen and (min-width: 900px) {
-			&:hover {
+		&:hover {
+			@media only screen and (min-width: 900px) {
 				box-shadow: 0 0 0 0 black;
 				transform: translateY(3px) scale(0.987);
 				color: var(--text-color) !important;
@@ -87,71 +91,35 @@ body {
 .purple {
 	/* background-color: #b983ff; */
 	background: #7d48fe;
-	background: linear-gradient(
-		90deg,
-		#9066fb 0%,
-		#cba4fd 100%
-	);
+	background: linear-gradient(90deg, #9066fb 0%, #cba4fd 100%);
 }
 
 .blue {
 	/* background-color: #9adcff; */
 	background: #4d7fff;
-	background: linear-gradient(
-		90deg,
-		#6590ff 0%,
-		#74d3ff 100%
-	);
+	background: linear-gradient(90deg, #6590ff 0%, #74d3ff 100%);
 }
 
 .red {
 	/* background-color: #ff8aae; */
 	background: #ff5555;
-	background: linear-gradient(
-		90deg,
-		#ff6767 0%,
-		#ffa283 100%
-	);
+	background: linear-gradient(90deg, #ff6767 0%, #ffa283 100%);
 }
 
 .yellow {
 	/* background-color: #fff89a; */
 	background: #ff5555;
-	background: linear-gradient(
-		90deg,
-		#fcdd51 0%,
-		#fff88f 100%
-	);
+	background: linear-gradient(90deg, #fcdd51 0%, #fff88f 100%);
 }
 
 .green {
 	/* background-color: #41e889; */
 	background: #ff5555;
-	background: linear-gradient(
-		90deg,
-		#5ede64 0%,
-		#b6f98c 100%
-	);
+	background: linear-gradient(90deg, #5ede64 0%, #b6f98c 100%);
 }
 
 .orange {
 	/* background-color: #fdac55; */
 	background: #ff5555;
-	background: linear-gradient(
-		90deg,
-		#f79549 0%,
-		#ffcb83 100%
-	);
-}
-
-.mainHeader {
-	@media only screen and (max-width: 1200px) {
-		font-size: 2rem;
-	}
-}
-
-.mainHeader {
-	@media only screen and (max-width: 500px) {
-		font-size: 1.5rem;
-	}
+	background: linear-gradient(90deg, #f79549 0%, #ffcb83 100%);
 }
