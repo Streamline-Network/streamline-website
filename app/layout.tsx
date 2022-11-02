@@ -1,6 +1,7 @@
 import '/styles/style.scss';
 
 import { Rubik } from '@next/font/google';
+import Head from "next/head";
 import React from 'react';
 
 import Banner, { BannerProps } from './components/banner/banner';
@@ -24,12 +25,15 @@ export default function Layout({ children }: LayoutProps) {
 	];
 	return (
 		<html className={rubik.className}>
-			<Header />
-			{/*messages.map((message, index) => (
-        <Banner key={index} {...message} />
-      ))*/}
-			<main>{children}</main>
-			<Footer />
+			<Head><></></Head>
+			<body>
+				<Header />
+				{/*messages.map((message, index) => (
+					<Banner key={index} {...message} />
+				))*/}
+				<main>{children}</main>
+				<Footer />
+			</body>
 		</html>
 	);
 }

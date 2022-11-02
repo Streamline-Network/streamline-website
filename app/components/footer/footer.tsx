@@ -4,7 +4,7 @@ import React from "react";
 
 import styles from "./footer.module.scss";
 
-export default function Footer({}: FooterProps) {
+export default function Footer({ }: FooterProps) {
 	const links: [text: string, href: string, button: boolean][] = [
 		["Map", "http://map.streamlinesmp.com", true],
 		["Stats", "http://stats.streamlinesmp.com", true],
@@ -14,7 +14,7 @@ export default function Footer({}: FooterProps) {
 
 	return (
 		<footer className={styles.footer}>
-			<p>© 2023 All Rights Reserved</p>
+			<p>© {new Date().getFullYear()} All Rights Reserved</p>
 			<nav>
 				{links.map(([text, href, isBtn], i) => (
 					<Link
@@ -33,4 +33,4 @@ export default function Footer({}: FooterProps) {
 	);
 }
 
-interface FooterProps {}
+interface FooterProps { }

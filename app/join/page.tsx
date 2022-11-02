@@ -117,7 +117,7 @@ export default function Join({ }: JoinProps) {
 							<p>{description}</p>
 							<div className="disc-example">
 								<p>{caption}</p>
-								<Discord {...discord}/>
+								<Discord {...discord} />
 							</div>
 						</div>
 					))
