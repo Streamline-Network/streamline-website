@@ -1,5 +1,15 @@
 {
   "typescript.tsdk": ".\\node_modules\\typescript\\lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "cSpell.words": ["Minecraft"]
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "cSpell.words": [
+	"Badlion",
+	"instagram",
+	"Minecraft",
+	"Purpur",
+	"reddit",
+	"streamlinesmp",
+	"tiktok",
+	"youtube"
+]
 }
