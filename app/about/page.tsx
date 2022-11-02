@@ -82,9 +82,7 @@ export default function About({ }: AboutProps) {
 				<div className="sub-header">
 					<h2>FREQUENTLY ASKED QUESTIONS</h2>
 					<p>
-						Have a question? We have the answer! If you don&amp;t see your
-						question here you can always hit us up at our
-						<Link className="sub-header-link" href="./contact">Contact Page</Link>.
+						Have a question? We have the answer! If you don&amp;t see your question here you can always hit us up at our <Link className="sub-header-link" href="./contact">Contact Page</Link>.
 					</p>
 				</div>
 				<div className="faq">
