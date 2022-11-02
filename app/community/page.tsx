@@ -1,17 +1,18 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { Fragment } from 'react'
+import classnames from "classnames";
+import Image, { StaticImageData } from 'next/image';
+import Link from 'next/link';
+import { Fragment } from 'react';
 
-import checkbox from './images/checkbox.png'
-import discord from './images/discord.png'
-import instagram from './images/instagram.png'
-import reddit from './images/reddit.png'
-import tiktok from './images/tiktok.png'
-import twitter from './images/twitter.png'
-import youtube from './images/youtube.png'
+import checkbox from './images/checkbox.png';
+import discord from './images/discord.png';
+import instagram from './images/instagram.png';
+import reddit from './images/reddit.png';
+import tiktok from './images/tiktok.png';
+import twitter from './images/twitter.png';
+import youtube from './images/youtube.png';
 
 export default function Page() {
-  const sections = [
+  const sections: Section[] = [
     {
       title: 'Our Social Media',
       links: [
@@ -84,9 +85,14 @@ export default function Page() {
     },
     {
       title: 'Learn More',
-      links: [],
+      links: [
+        {
+          href: 'https://streamlinesmp.fandom.com/wiki/Streamline_SMP_Wiki',
+          alt: 'Check Out The Wiki'
+        }
+      ],
     },
-  ]
+  ];
 
   return (
     <>
@@ -100,23 +106,43 @@ export default function Page() {
                 target="_blank"
                 rel="noreferrer"
                 href={href}
-                className="button large-button"
+                className={classnames("button", "large-button", { "stats": !src })}
                 key={j}
               >
-                <div className="icon">
-                  <Image
-                    className={alt.toLowerCase()}
-                    src={src}
-                    alt={alt + ' icon'}
-					height={50}
-                  />
-                </div>
-                <h3>{alt}</h3>
+                {
+                  src && (
+                    <>
+                      <div className="icon">
+                        <Image
+                          className={alt.toLowerCase()}
+                          src={src}
+                          alt={alt + ' Icon'}
+                          height={50}
+                        />
+                      </div>
+                      <h3>{alt}</h3>
+                    </>
+                  )
+                }
+                {
+                  !src && alt
+                }
               </Link>
             ))}
           </div>
         </Fragment>
       ))}
     </>
-  )
+  );
+}
+
+interface Section {
+  title: string;
+  links: Link[];
+}
+
+interface Link {
+  href: string;
+  src?: StaticImageData;
+  alt: string;
 }
