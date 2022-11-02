@@ -11,7 +11,7 @@ import tiktok from './images/tiktok.png';
 import twitter from './images/twitter.png';
 import youtube from './images/youtube.png';
 
-export default function Page() {
+export default function Community({  }: CommunityProps) {
   const sections: Section[] = [
     {
       title: 'Our Social Media',
@@ -135,6 +135,8 @@ export default function Page() {
     </>
   );
 }
+
+interface CommunityProps {}
 
 interface Section {
   title: string;

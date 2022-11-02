@@ -8,7 +8,7 @@ export default function Banner({ title, message, color }: BannerProps) {
 }
 
 export interface BannerProps {
-  title: string
-  message: string
-  color: string
+  title: string;
+  message: string;
+  color: string;
 }

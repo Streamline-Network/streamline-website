@@ -1,7 +1,7 @@
 import '/styles/style.scss'
 
-import React from 'react'
 import { Rubik } from '@next/font/google'
+import React from 'react'
 
 import Banner, { BannerProps } from './components/banner/banner'
 import Footer from './components/footer/footer'
@@ -9,7 +9,7 @@ import Header from './components/header/header'
 
 const rubik = Rubik()
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: LayoutProps) {
   const messages: BannerProps[] = [
     {
       title: '',
@@ -28,4 +28,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Footer />
     </html>
   )
+}
+
+interface LayoutProps {
+	children: React.ReactNode;
 }

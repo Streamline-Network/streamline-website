@@ -13,7 +13,7 @@ export default function Block({ title, paragraphs, color }: BlockProps) {
 }
 
 export interface BlockProps {
-  title: string
-  paragraphs: React.ReactNode[]
-  color: string
+  title: string;
+  paragraphs: React.ReactNode[];
+  color: string;
 }
