@@ -1,15 +1,15 @@
-import classnames from 'classnames';
-import Link from 'next/link';
-import React from 'react';
+import classnames from "classnames";
+import Link from "next/link";
+import React from "react";
 
-import styles from './footer.module.scss';
+import styles from "./footer.module.scss";
 
-export default function Footer({ }: FooterProps) {
+export default function Footer({}: FooterProps) {
 	const links: [text: string, href: string, button: boolean][] = [
-		['Map', 'http://map.streamlinesmp.com', true],
-		['Stats', 'http://stats.streamlinesmp.com', true],
-		['Donate', '/donate', false],
-		['Contact Us', '/contact', false],
+		["Map", "http://map.streamlinesmp.com", true],
+		["Stats", "http://stats.streamlinesmp.com", true],
+		["Donate", "/donate", false],
+		["Contact Us", "/contact", false],
 	];
 
 	return (
@@ -20,7 +20,10 @@ export default function Footer({ }: FooterProps) {
 					<Link
 						key={i}
 						href={href}
-						className={classnames('link', { button: isBtn })}
+						className={classnames({
+							button: isBtn,
+							[styles.button]: isBtn,
+						})}
 					>
 						{text}
 					</Link>
@@ -30,4 +33,4 @@ export default function Footer({ }: FooterProps) {
 	);
 }
 
-interface FooterProps { }
+interface FooterProps {}

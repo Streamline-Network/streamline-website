@@ -32,7 +32,7 @@ body {
 	min-height: 100vh;
 	overflow-x: hidden;
 
-	>* {
+	> * {
 		padding: 0 var(--left-right-padding);
 	}
 
@@ -42,7 +42,7 @@ body {
 		flex-direction: column;
 		margin-bottom: auto;
 
-		>.main-header {
+		> .main-header {
 			align-self: center;
 			width: 112%;
 			height: 100px;
@@ -64,8 +64,8 @@ body {
 		border-radius: 10px;
 		font-size: 1.3rem;
 		font-weight: 800;
-		color: var(--bg-color);
-		background: var(--btn-2-color);
+		color: var(--bg-color) !important;
+		background: var(--btn-2-color) !important;
 		transition: 200ms ease-in-out;
 		box-shadow: 0px 4px 5px 0px black;
 
@@ -74,8 +74,8 @@ body {
 				box-shadow: 0px 0px 0px 0px black;
 				transform: translateY(3px);
 				transform: scale(0.987);
-				color: var(--text-color);
-				background: var(--bg-color);
+				color: var(--text-color) !important;
+				background: var(--bg-color) !important;
 			}
 		}
 	}
@@ -84,49 +84,61 @@ body {
 .purple {
 	/* background-color: #b983ff; */
 	background: rgb(125, 72, 254);
-	background: linear-gradient(90deg,
-			rgb(144, 102, 251) 0%,
-			rgb(203, 164, 253) 100%);
+	background: linear-gradient(
+		90deg,
+		rgb(144, 102, 251) 0%,
+		rgb(203, 164, 253) 100%
+	);
 }
 
 .blue {
 	/* background-color: #9adcff; */
 	background: rgb(77, 127, 255);
-	background: linear-gradient(90deg,
-			rgb(101, 144, 255) 0%,
-			rgb(116, 211, 255) 100%);
+	background: linear-gradient(
+		90deg,
+		rgb(101, 144, 255) 0%,
+		rgb(116, 211, 255) 100%
+	);
 }
 
 .red {
 	/* background-color: #ff8aae; */
 	background: rgb(255, 85, 85);
-	background: linear-gradient(90deg,
-			rgb(255, 103, 103) 0%,
-			rgb(255, 162, 131) 100%);
+	background: linear-gradient(
+		90deg,
+		rgb(255, 103, 103) 0%,
+		rgb(255, 162, 131) 100%
+	);
 }
 
 .yellow {
 	/* background-color: #fff89a; */
 	background: rgb(255, 85, 85);
-	background: linear-gradient(90deg,
-			rgb(252, 221, 81) 0%,
-			rgb(255, 248, 143) 100%);
+	background: linear-gradient(
+		90deg,
+		rgb(252, 221, 81) 0%,
+		rgb(255, 248, 143) 100%
+	);
 }
 
 .green {
 	/* background-color: #41e889; */
 	background: rgb(255, 85, 85);
-	background: linear-gradient(90deg,
-			rgb(94, 222, 100) 0%,
-			rgb(182, 249, 140) 100%);
+	background: linear-gradient(
+		90deg,
+		rgb(94, 222, 100) 0%,
+		rgb(182, 249, 140) 100%
+	);
 }
 
 .orange {
 	/* background-color: #fdac55; */
 	background: rgb(255, 85, 85);
-	background: linear-gradient(90deg,
-			rgb(247, 149, 73) 0%,
-			rgb(255, 203, 131) 100%);
+	background: linear-gradient(
+		90deg,
+		rgb(247, 149, 73) 0%,
+		rgb(255, 203, 131) 100%
+	);
 }
 
 @media only screen and (max-width: 1200px) {
