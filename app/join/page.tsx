@@ -102,20 +102,18 @@ export default function Join({ }: JoinProps) {
 		</article>
 		<h2 className={join.subHeader}>More</h2>
 		<article className={classnames(join.grid, join.lowerGrid)}>
-			<div>
-				{
-					mores.map(({ color, title, description, caption, discord }, index) => (
-						<div className={classnames("block", join.moreBlocks)} key={index}>
-							<div className={classnames("block", join.num, color)}>
-								<h2>{title}</h2>
-							</div>
-							<p>{description}</p>
-							<p>{caption}</p>
-							<Discord {...discord} />
+			{
+				mores.map(({ color, title, description, caption, discord }, index) => (
+					<div className={classnames("block", join.moreBlocks)} key={index}>
+						<div className={classnames("block", join.num, color)}>
+							<h2>{title}</h2>
 						</div>
-					))
-				}
-			</div>
+						<p>{description}</p>
+						<p>{caption}</p>
+						<Discord {...discord} />
+					</div>
+				))
+			}
 		</article>
 
 	</>);

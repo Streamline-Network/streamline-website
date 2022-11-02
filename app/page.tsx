@@ -1,11 +1,11 @@
 import "/styles/style.scss";
-import style from "./index/index.module.scss";
 
 import Link from "next/link";
 
 import Block, { BlockProps } from "./index/block/block";
+import index from "./index/index.module.scss";
 
-export default async function Home({}: HomeProps) {
+export default async function Home({ }: HomeProps) {
 	const blocks: BlockProps[] = [
 		{
 			title: "Economy",
@@ -62,17 +62,13 @@ export default async function Home({}: HomeProps) {
 	];
 	return (
 		<>
-			<h1 className={style.title}>Welcome To Streamline</h1>
-			<article className={style.grid}>
-				{blocks.map((block, index) => (
-					<Block key={index} {...block} />
-				))}
-				<Link className="button" href="/join">
-					Join
-				</Link>
+			<h1 className={index.title}>Welcome To Streamline</h1>
+			<article className={index.grid}>
+				{blocks.map((block, index) => <Block key={index} {...block} />)}
+				<Link className="button" href="/join">Join</Link>
 			</article>
 		</>
 	);
 }
 
-interface HomeProps {}
+interface HomeProps { }

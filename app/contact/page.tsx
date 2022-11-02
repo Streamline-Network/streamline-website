@@ -53,7 +53,7 @@ export default function Contact() {
 							<div className={contact.block} key={index}>
 								<h3>{top}</h3>
 								<div className={classnames(contact.wrapperIconTxt, color)}>
-									<Image src={src} alt={alt} width={145}/>
+									<Image src={src} alt={alt} width={145} />
 									<p className={contact.subText}>{label}</p>
 								</div>
 								<Link target="_blank" href={href} className="button">{text}</Link>
