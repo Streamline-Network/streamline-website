@@ -101,7 +101,7 @@ export default function About({ }: AboutProps) {
 	);
 }
 
-interface AboutProps {}
+interface AboutProps { }
 
 interface Question {
 	question: string;
