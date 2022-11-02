@@ -1,8 +1,7 @@
 import Image from 'next/image'
-import { Fragment } from 'react'
 import Link from 'next/link'
+import { Fragment } from 'react'
 
-import styles from './community.module.css'
 import checkbox from './images/checkbox.png'
 import discord from './images/discord.png'
 import instagram from './images/instagram.png'
@@ -109,6 +108,7 @@ export default function Page() {
                     className={alt.toLowerCase()}
                     src={src}
                     alt={alt + ' icon'}
+					height={50}
                   />
                 </div>
                 <h3>{alt}</h3>
