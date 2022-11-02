@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import { Fragment } from 'react'
+import Link from 'next/link'
 
 import styles from './community.module.css'
 import checkbox from './images/checkbox.png'
@@ -96,7 +97,7 @@ export default function Page() {
           <h2 className="sub-header">{title}</h2>
           <div className="grid">
             {links.map(({ href, src, alt }, j) => (
-              <a
+              <Link
                 target="_blank"
                 rel="noreferrer"
                 href={href}
@@ -111,7 +112,7 @@ export default function Page() {
                   />
                 </div>
                 <h3>{alt}</h3>
-              </a>
+              </Link>
             ))}
           </div>
         </Fragment>
