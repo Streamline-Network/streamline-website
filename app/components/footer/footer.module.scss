@@ -1,56 +1,56 @@
 footer.footer {
-    display: flex;
-    width: 100%;
-    height: fit-content;
-    padding: 0 var(--left-right-padding);
-    box-shadow: -5px 0px 15px 0px black;
-    justify-content: space-between;
-    font-weight: 900;
-    margin-top: 50px;
-    height: 60px;
-    text-align: center;
+	display: flex;
+	width: 100%;
+	height: fit-content;
+	padding: 0 var(--left-right-padding);
+	box-shadow: -5px 0px 15px 0px black;
+	justify-content: space-between;
+	font-weight: 900;
+	margin-top: 50px;
+	height: 60px;
+	text-align: center;
 
-    font-weight: 500;
+	font-weight: 500;
 
-    > nav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
+	> nav {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
 
-        gap: 1.3rem;
-        font-size: large;
+		gap: 1.3rem;
+		font-size: large;
 
-        > a {
-            width: max-content;
-            text-align: center;
-            text-decoration: underline;
-            color: var(--text-color);
-            width: 100%;
-        }
+		> a {
+			width: max-content;
+			text-align: center;
+			text-decoration: underline;
+			color: var(--text-color);
+			width: 100%;
+		}
 
-        @media only screen and (min-width: 900px) {
-            & {
-                flex-direction: row;
+		@media only screen and (min-width: 900px) {
+			& {
+				flex-direction: row;
 
-                > a {
-                    width: max-content;
-                }
-            }
-        }
-    }
+				> a {
+					width: max-content;
+				}
+			}
+		}
+	}
 
-    @media only screen and (max-width: 900px) {
-        & {
-            flex-direction: column;
-            text-align: center;
-            font-size: 2vw;
-            height: min-content;
-            padding-bottom: 20px;
-        }
-    }
+	@media only screen and (max-width: 900px) {
+		& {
+			flex-direction: column;
+			text-align: center;
+			font-size: 2vw;
+			height: min-content;
+			padding-bottom: 20px;
+		}
+	}
 }
 
 .button {
-    padding: 7px 15px !important;
+	padding: 7px 15px !important;
 }
