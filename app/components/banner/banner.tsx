@@ -1,6 +1,8 @@
+import styles from "./banner.module.scss";
+
 export default function Banner({ title, message, color }: BannerProps) {
 	return (
-		<div className="notifications">
+		<div className={styles.notification}>
 			<div>{title}</div>
 			{message}
 		</div>

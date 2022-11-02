@@ -26,7 +26,7 @@ export default function Header({ }: HeaderProps) {
 					{pages.map(([name, url], i) => (
 						<li
 							key={i}
-							className={classnames({ [style['current-pg']]: url === path })}
+							className={classnames({ [style.currentPg]: url === path })}
 						>
 							<Link href={url}>{name}</Link>
 						</li>

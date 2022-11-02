@@ -8,7 +8,7 @@ header.header {
 	height: 60px;
 	margin-bottom: 10px;
 
-	box-shadow: 0px 0px 15px 0px black;
+	box-shadow: 0 0 15px 0 black;
 	background: var(--bg-color);
 
 	> a {
@@ -16,6 +16,7 @@ header.header {
 		font-weight: 800;
 		font-size: 23px;
 		margin: 0;
+		text-transform: uppercase;
 	}
 
 	> nav {
@@ -29,14 +30,13 @@ header.header {
 				> a {
 					width: 30px;
 					color: var(--text-color);
-					padding: 4px;
 					font-size: 16px;
 					margin-left: 9px;
-					font-weight: bold;
 					border-radius: 6px;
 					background-color: var(--btn-color);
 					font-weight: 600;
 					padding: 5px 10px 5px 10px;
+					text-transform: uppercase;
 
 					&:hover {
 						border-bottom: solid 4px #9adcff;
@@ -109,7 +109,7 @@ header.header {
 				}
 
 				&:nth-child(2) {
-					width: 0px;
+					width: 0;
 				}
 
 				&:nth-child(3) {

@@ -1,10 +1,9 @@
 :root {
-	--left-right-padding: 5%;
-
 	--bg-color: #202020;
 	--text-color: #fff;
 	--btn-color: #353535;
 	--btn-2-color: #eee;
+
 	--left-right-padding: 5%;
 }
 
@@ -23,7 +22,6 @@ body {
 	padding: 0;
 
 	width: 100%;
-	min-height: 100vh;
 	background: var(--bg-color);
 	color: var(--text-color);
 	display: flex;
@@ -67,13 +65,12 @@ body {
 		color: var(--bg-color) !important;
 		background: var(--btn-2-color) !important;
 		transition: 200ms ease-in-out;
-		box-shadow: 0px 4px 5px 0px black;
+		box-shadow: 0 4px 5px 0 black;
 
 		@media only screen and (min-width: 900px) {
 			&:hover {
-				box-shadow: 0px 0px 0px 0px black;
-				transform: translateY(3px);
-				transform: scale(0.987);
+				box-shadow: 0 0 0 0 black;
+				transform: translateY(3px) scale(0.987);
 				color: var(--text-color) !important;
 				background: var(--bg-color) !important;
 			}

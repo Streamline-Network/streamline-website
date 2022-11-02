@@ -25,9 +25,11 @@ export default function Layout({ children }: LayoutProps) {
 		<html>
 			<body className={rubik.className}>
 				<Header />
-				{/*messages.map((message, index) => (
-					<Banner key={index} {...message} />
-				))*/}
+				{
+					messages.map((message, index) => (
+						<Banner key={index} {...message} />
+					))
+				}
 				<main>{children}</main>
 				<Footer />
 			</body>

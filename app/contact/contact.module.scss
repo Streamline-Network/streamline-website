@@ -1,0 +1,75 @@
+.grid {
+	display: grid;
+	gap: 20px;
+	color: white;
+}
+
+.sub-header {
+	background-color: #353535;
+	padding: 20px;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 20px;
+}
+
+.sub-header > * {
+	margin: 0;
+}
+
+.block {
+	background-color: #353535;
+	padding: 20px;
+	border-radius: 10px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.wrapper-icon-txt {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: space-around;
+	margin-top: auto;
+
+	padding: 50px;
+	border-radius: 10px;
+	margin-bottom: 30px;
+	height: 200px;
+}
+
+.disc-svg {
+	max-height: 7rem;
+}
+
+.email-svg {
+	max-height: 10rem;
+	fill: #353535;
+}
+
+.sub-text {
+	display: inline;
+	text-align: center;
+	font-size: 1.3rem;
+	color: #353535;
+	font-weight: 800;
+}
+
+.response-time {
+	text-align: center;
+	font-weight: lighter;
+	font-style: italic;
+	color: #c2c2c2;
+}
+
+.content-grid {
+	display: grid;
+	gap: 20px;
+}
+
+@media only screen and (min-width: 1100px) {
+	.content-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}

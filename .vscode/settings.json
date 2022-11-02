@@ -1,16 +1,16 @@
 {
-	"typescript.tsdk": "./node_modules/typescript/lib",
-	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
-	"cSpell.words": [
-		"Badlion",
-		"dozoe",
-		"instagram",
-		"Minecraft",
-		"Purpur",
-		"reddit",
-		"streamlinesmp",
-		"tiktok",
-		"youtube"
-	]
+  "typescript.tsdk": ".\\node_modules\\typescript\\lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+  "cSpell.words": [
+    "Badlion",
+    "dozoe",
+    "instagram",
+    "Minecraft",
+    "Purpur",
+    "reddit",
+    "streamlinesmp",
+    "tiktok",
+    "youtube"
+  ]
 }

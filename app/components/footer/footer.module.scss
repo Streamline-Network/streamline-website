@@ -1,15 +1,12 @@
 footer.footer {
 	display: flex;
 	width: 100%;
-	height: fit-content;
 	padding: 0 var(--left-right-padding);
-	box-shadow: -5px 0px 15px 0px black;
+	box-shadow: -5px 0 15px 0 black;
 	justify-content: space-between;
-	font-weight: 900;
 	margin-top: 50px;
 	height: 60px;
 	text-align: center;
-
 	font-weight: 500;
 
 	> nav {
@@ -22,7 +19,6 @@ footer.footer {
 		font-size: large;
 
 		> a {
-			width: max-content;
 			text-align: center;
 			text-decoration: underline;
 			color: var(--text-color);
