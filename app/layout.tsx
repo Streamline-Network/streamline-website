@@ -1,7 +1,6 @@
 import '/styles/style.scss';
 
 import { Rubik } from '@next/font/google';
-import Head from "next/head";
 import React from 'react';
 
 import Banner, { BannerProps } from './components/banner/banner';
@@ -18,15 +17,13 @@ export default function Layout({ children }: LayoutProps) {
 	const messages: BannerProps[] = [
 		{
 			title: '',
-			message:
-				'We are currently in between seasons and are not accepting new people. Expect season four summer of 2023.',
+			message: 'We are currently in between seasons and are not accepting new people. Expect season four summer of 2023.',
 			color: '',
 		},
 	];
 	return (
-		<html className={rubik.className}>
-			<Head><></></Head>
-			<body>
+		<html>
+			<body className={rubik.className}>
 				<Header />
 				{/*messages.map((message, index) => (
 					<Banner key={index} {...message} />

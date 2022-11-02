@@ -10,7 +10,7 @@
 	color: white;
 }
 
-.sub-header>* {
+.sub-header > * {
 	margin: 0;
 }
 
@@ -34,7 +34,7 @@
 	height: min-content;
 }
 
-.block>summary {
+.block > summary {
 	font-size: 1.2rem;
 }
 
