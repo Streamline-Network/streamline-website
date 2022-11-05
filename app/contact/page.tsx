@@ -1,10 +1,11 @@
 import classnames from "classnames";
+import { PageConfig } from "next";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
 import contact from "./contact.module.scss";
-import discord from "./discord.svg";
-import email from "./email.svg";
+import discord from "./images/discord.png";
+import email from "./images/email.png";
 
 export default function Contact() {
 
@@ -41,7 +42,7 @@ export default function Contact() {
 
 	return (
 		<>
-			<h1 className="mainHeader orange">Contact</h1>
+			<h1 className={classnames("orange", contact.title)}>Contact</h1>
 			<article className={contact.grid}>
 				<div className={contact.subHeader}>
 					<h2>Have A Question?</h2>
@@ -56,7 +57,7 @@ export default function Contact() {
 									<Image src={src} alt={alt} width={145} />
 									<p className={contact.subText}>{label}</p>
 								</div>
-								<Link target="_blank" href={href} className="button">{text}</Link>
+								<Link target="_blank" href={href} className={contact.button}>{text}</Link>
 								<p className={contact.responseTime}>{bottom}</p>
 							</div>
 						))
@@ -83,3 +84,7 @@ interface Block {
 	},
 	bottom: string;
 }
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
+};

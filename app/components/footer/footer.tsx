@@ -6,28 +6,30 @@ import footer from "./footer.module.scss";
 
 export default function Footer({ }: FooterProps) {
 	const links: [text: string, href: string, button: boolean][] = [
-		["Map", "http://map.streamlinesmp.com", true],
-		["Stats", "http://stats.streamlinesmp.com", true],
+		["Map", "/map", true], // ["Map", "http://map.streamlinesmp.com", true],
+		["Stats", "/stats", true], // ["Stats", "http://stats.streamlinesmp.com", true],
 		["Donate", "/donate", false],
 		["Contact Us", "/contact", false],
 	];
 
 	return (
 		<footer className={footer.footer}>
-			<p>© {new Date().getFullYear()} All Rights Reserved</p>
+			<span>© {new Date().getFullYear()} All Rights Reserved</span>
 			<nav>
-				{links.map(([text, href, isBtn], i) => (
-					<Link
-						key={i}
-						href={href}
-						className={classnames({
-							button: isBtn,
-							[footer.button]: isBtn,
-						})}
-					>
-						{text}
-					</Link>
-				))}
+				<ul>
+					{links.map(([text, href, isBtn], i) => (
+						<li key={i}>
+							<Link
+								href={href}
+								className={classnames({
+									[footer.button]: isBtn,
+								})}
+							>
+								{text}
+							</Link>
+						</li>
+					))}
+				</ul>
 			</nav>
 		</footer>
 	);

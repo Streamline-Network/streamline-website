@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { PageConfig } from "next";
 import Link from "next/link";
 
 import dozoe from "./axolotl-pfp.png";
@@ -15,15 +16,15 @@ export default function Join({ }: JoinProps) {
 			paragraphs: [
 				<>Join the Discord if you haven&apos;t already. Having a Discord account is required to join, if you do not have one, you can make one for free on <Link style={{ color: "white", textDecoration: "underline" }} target="_blank" href="https://www.discord.com">Discord&apos;s website</Link>.</>,
 				<>Once you have joined the Discord go to the <Link style={{ color: "white", textDecoration: "underline" }} target="_blank" href="https://discord.gg/EAe4S6HdVC">#applications-and-info</Link> channel.</>,
-				<><Link className="button largeButton" target="_blank" href="https://discord.gg/EAe4S6HdVC">Join the Discord</Link></>,
+				<><Link className={join.largeButton} target="_blank" href="https://discord.gg/EAe4S6HdVC">Join the Discord</Link></>,
 			],
 		},
 		{
 			title: "Fill out the application",
-			color: "green",
+			color: "yellow",
 			paragraphs: [
 				<>The questions aren&apos;t that difficult but try to be as detailed as possible. We have an acceptance rate of about 70% so good luck! The questions are here to make sure that everyone who joins Streamline will follow the rules and contribute to the server.</>,
-				<><Link className="button largeButton" target="_blank" href="https://dyno.gg/form/8ac19b49">Fill out the form</Link></>,
+				<><Link className={join.largeButton} target="_blank" href="https://dyno.gg/form/8ac19b49">Fill out the form</Link></>,
 			],
 		},
 		{
@@ -32,8 +33,8 @@ export default function Join({ }: JoinProps) {
 			paragraphs: [
 				<>The form has been submitted. Next a staff member will review your application. The wait is usually no more than 24 hours. If you have any questions please ask our staff or you can DM me directly.</>,
 				<>Here&apos;s a video explanation in case you get lost:</>,
-				<><Link className={classnames("button", "largeButton", join.hideDesktop)} target="_blank" href="https://www.youtube.com/watch?v=3">Tutorial Video</Link></>,
-				<><iframe className="video showDesktop" src="https://www.youtube.com/embed/dQw4w9WgXdcQ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></>,
+				<><Link className={classnames(join.largeButton, join.hideDesktop)} target="_blank" href="https://www.youtube.com/watch?v=3">Tutorial Video</Link></>,
+				<><iframe className={classnames(join.video, join.showDesktop)} src="https://www.youtube.com/embed/dQw4w9WgXdcQ" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe></>,
 			],
 		}
 	];
@@ -84,12 +85,12 @@ export default function Join({ }: JoinProps) {
 	];
 
 	return (<>
-		<h1 className="mainHeader green">How To Join</h1>
+		<h1 className={classnames("green", join.title)}>How To Join</h1>
 		<article className={join.grid}>
 			{
 				blocks.map(({ title, color, paragraphs }, index) => (
-					<div className="block" key={index}>
-						<div className={classnames("block", "num", color)}>
+					<div className={join.block} key={index}>
+						<div className={classnames(join.block, color)}>
 							<h2>{title}</h2>
 						</div>
 						{
@@ -104,18 +105,15 @@ export default function Join({ }: JoinProps) {
 		<article className={classnames(join.grid, join.lowerGrid)}>
 			{
 				mores.map(({ color, title, description, caption, discord }, index) => (
-					<div className={classnames("block", join.moreBlocks)} key={index}>
-						<div className={classnames("block", join.num, color)}>
-							<h2>{title}</h2>
-						</div>
+					<div className={classnames(join.block)} key={index}>
+						<h2 className={color}>{title}</h2>
 						<p>{description}</p>
-						<p>{caption}</p>
+						<span>{caption}</span>
 						<Discord {...discord} />
 					</div>
 				))
 			}
 		</article>
-
 	</>);
 }
 
@@ -134,3 +132,7 @@ interface More {
 	caption: string;
 	discord: DiscordProps;
 }
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
+};

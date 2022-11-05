@@ -9,7 +9,7 @@ const nextConfig = {
 			permanent: true,
 		}
 	],
-
+	outputFileTracing: false,
 	experimental: {
 		appDir: true,
 	},

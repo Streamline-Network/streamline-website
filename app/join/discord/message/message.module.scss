@@ -1,32 +1,40 @@
-.discMessage {
+.message {
 	padding: 5px;
-	display: grid;
-	grid-template-columns: 50px 1fr;
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
 }
 
-.discAccepted {
+.mentioned {
 	background-color: #49443c;
 }
 
-.discAccount {
-	background-color: #555;
+.profilePicture {
+	background-color: #555555;
 	border-radius: 50%;
 	width: 50px;
 	height: 50px;
 }
 
-.discMessageText {
-	margin-left: 20px;
+.content {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 }
 
-.discTopText {
-	& > * {
-		display: inline;
-		margin: 0;
-		font-weight: 100;
+.details {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+	> * {
 		color: #a3a6a0;
-	}
-	> p:first-child {
-		font-weight: 400;
+		&:first-child {
+			font-weight: 400;
+		}
+		&:last-child {
+			font-weight: 100;
+			flex-grow: 1;
+		}
 	}
 }

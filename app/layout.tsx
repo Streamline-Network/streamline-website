@@ -1,6 +1,7 @@
-import "/styles/style.scss";
+import "../styles/style.scss";
 
 import { Rubik } from "@next/font/google";
+import { PageConfig } from "next";
 import React from "react";
 
 import Banner, { BannerProps } from "./components/banner/banner";
@@ -16,8 +17,7 @@ const rubik = Rubik({
 export default function Layout({ children }: LayoutProps) {
 	const messages: BannerProps[] = [
 		{
-			message:
-				"We are currently in between seasons and are not accepting new people. Expect season four summer of 2023.",
+			message: "We are currently in between seasons and are not accepting new people. Expect season four summer of 2023.",
 		},
 	];
 	return (
@@ -37,3 +37,7 @@ export default function Layout({ children }: LayoutProps) {
 interface LayoutProps {
 	children: React.ReactNode;
 }
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
+};

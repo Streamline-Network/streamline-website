@@ -1,35 +1,51 @@
-.block {
-	border-radius: 10px;
-	font-size: 1rem;
-	position: relative;
-	margin-top: 20px;
+@use "../../styles/mixins.scss" as mixins;
 
-	& h2 {
-		display: block;
-		font-weight: 800;
+.title {
+	@include mixins.title;
+}
+
+.block {
+	background-color: #353535;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	font-size: 1rem;
+	gap: 16px;
+	padding: 16px;
+
+	> h2 {
+		color: black;
 		font-size: 1.4rem;
-		width: 100%;
 		margin: 0;
 		padding: 0;
 		text-align: center;
+		width: 100%;
+		border-radius: 10px;
 	}
-}
 
-.num {
-	color: black;
-	padding: 0 20px;
-	width: 100%;
+	> p {
+		flex-grow: 1;
+		line-height: 1.25rem;
+		text-align: justify;
+	}
+	> span {
+	}
+
+	> *:not(:last-child) {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 .showDesktop {
 	display: none;
-	@media only screen and (min-width: 970px) {
+	@include mixins.desktop {
 		display: block;
 	}
 }
 
 .largeButton {
-	margin: 30px 0;
+	@include mixins.button;
 }
 
 .grid {
@@ -37,12 +53,7 @@
 	display: grid;
 	gap: 1.5rem;
 	margin: 30px 0 0 0;
-	& > div {
-		background-color: #353535;
-		padding: 1px 20px;
-		border-radius: 20px;
-	}
-	@media only screen and (min-width: 970px) {
+	@include mixins.desktop {
 		grid-template-columns: 2fr 1fr;
 		grid-auto-flow: row;
 	}
@@ -70,14 +81,6 @@
 	margin: 2.4rem 0;
 	margin-bottom: 0;
 	text-align: center;
-	text-transform: uppercase;
-}
-
-.moreBlock {
-	display: flex;
-	flex-direction: column;
-	height: 100%;
-	margin-top: 0;
 }
 
 .subBlockTxt {
@@ -85,19 +88,19 @@
 }
 
 .lowerGrid {
-	@media only screen and (min-width: 970px) {
+	@include mixins.desktop {
 		grid-template-columns: 1fr 1fr;
 	}
 }
 
 .hideDesktop {
-	@media only screen and (min-width: 970px) {
+	@include mixins.desktop {
 		display: none;
 	}
 }
 
 .discExample {
-	@media only screen and (min-width: 970px) {
+	@include mixins.desktop {
 		margin-top: auto;
 	}
 }

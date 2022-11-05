@@ -1,9 +1,13 @@
+"use client";
+
 import classnames from "classnames";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 import header from "./header.module.scss";
+import hamburger from "./images/hamburger.png";
 
 export default function Header({ }: HeaderProps) {
 	const pages = [
@@ -13,16 +17,14 @@ export default function Header({ }: HeaderProps) {
 		["Join", "/join"],
 	];
 
-	// const path = usePathname();
-	const path = "";
+	const path = usePathname();
+	const [isOpen, setIsOpen] = React.useState(false);
+	const toggle = () => setIsOpen(isOpen => !isOpen);
 
 	return (
 		<header className={header.header}>
 			<Link href="/">Streamline SMP</Link>
-			<nav>
-				<span></span>
-				<span></span>
-				<span></span>
+			<nav className={classnames({ [header.open]: isOpen })}>
 				<ul>
 					{pages.map(([name, url], i) => (
 						<li
@@ -33,6 +35,9 @@ export default function Header({ }: HeaderProps) {
 						</li>
 					))}
 				</ul>
+				<button onClick={toggle}>
+					<Image src={hamburger} alt="Menu" width={40} />
+				</button>
 			</nav>
 		</header>
 	);

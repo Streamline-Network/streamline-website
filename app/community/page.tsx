@@ -1,6 +1,7 @@
 import classnames from "classnames";
+import { PageConfig } from "next";
 import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
+import { default as NextLink } from "next/link";
 import { Fragment } from "react";
 
 import community from "./community.module.scss";
@@ -21,31 +22,37 @@ export default function Community({ }: CommunityProps) {
 					href: "https://discord.gg/EAe4S6HdVC",
 					src: discord,
 					alt: "Discord",
+					classes: [community.button],
 				},
 				{
 					href: "https://www.youtube.com/channel/UCXg4U9_EQE_cKuU4PfZLn-w",
 					src: youtube,
 					alt: "YouTube",
+					classes: [community.button],
 				},
 				{
 					href: "https://twitter.com/streamlinesmp",
 					src: twitter,
 					alt: "Twitter",
+					classes: [community.button],
 				},
 				{
 					href: "https://www.reddit.com/r/StreamlineSMP/",
 					src: reddit,
 					alt: "Reddit",
+					classes: [community.button],
 				},
 				{
 					href: "https://www.reddit.com/r/StreamlineSMP/",
 					src: instagram,
 					alt: "Instagram",
+					classes: [community.button],
 				},
 				{
 					href: "https://www.tiktok.com/@streamlinesmp",
 					src: tiktok,
 					alt: "TikTok",
+					classes: [community.button],
 				},
 			],
 		},
@@ -56,31 +63,37 @@ export default function Community({ }: CommunityProps) {
 					href: "https://topminecraftservers.org/vote/28132",
 					src: checkbox,
 					alt: "Top MC Servers",
+					classes: [community.button],
 				},
 				{
 					href: "https://servers-minecraft.com/vote/1020",
 					src: checkbox,
 					alt: "Servers MC",
+					classes: [community.button],
 				},
 				{
 					href: "https://minecraft-server-list.com/server/480202/vote/",
 					src: checkbox,
 					alt: "MC Server List",
+					classes: [community.button],
 				},
 				{
 					href: "https://minecraft.buzz/vote/5307",
 					src: checkbox,
 					alt: "MC Buzz",
+					classes: [community.button],
 				},
 				{
 					href: "https://servers-minecraft.net/server-streamline-smp.21149",
 					src: checkbox,
 					alt: "MC Servers",
+					classes: [community.button],
 				},
 				{
 					href: "https://best-minecraft-servers.co/server-streamline-smp.9067/vote",
 					src: checkbox,
 					alt: "Best MC",
+					classes: [community.button],
 				},
 			],
 		},
@@ -89,7 +102,8 @@ export default function Community({ }: CommunityProps) {
 			links: [
 				{
 					href: "https://streamlinesmp.fandom.com/wiki/Streamline_SMP_Wiki",
-					alt: "Check Out The Wiki"
+					alt: "Check Out The Wiki",
+					classes: [community.wikiButton],
 				}
 			],
 		},
@@ -97,17 +111,17 @@ export default function Community({ }: CommunityProps) {
 
 	return (
 		<>
-			<h1 className="mainHeader red">Join The Conversation</h1>
+			<h1 className={classnames("red", community.title)}>Join The Conversation</h1>
 			{sections.map(({ title, links }, i) => (
 				<Fragment key={i}>
 					<h2 className={community.subHeader}>{title}</h2>
 					<div className={community.grid}>
-						{links.map(({ href, src, alt }, j) => (
-							<Link
+						{links.map(({ href, src, alt, classes }, j) => (
+							<NextLink
 								target="_blank"
 								rel="noreferrer"
 								href={href}
-								className={classnames(community.button, community.largeButton, { [community.stats]: !src })}
+								className={classnames(...(classes ?? []), { [community.stats]: !src })}
 								key={j}
 							>
 								{
@@ -128,7 +142,7 @@ export default function Community({ }: CommunityProps) {
 								{
 									!src && alt
 								}
-							</Link>
+							</NextLink>
 						))}
 					</div>
 				</Fragment>
@@ -148,4 +162,9 @@ interface Link {
 	href: string;
 	src?: StaticImageData;
 	alt: string;
+	classes?: string[];
 }
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
+};

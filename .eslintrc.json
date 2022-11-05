@@ -1,12 +1,17 @@
 {
+	"root": true,
+	"parser": "@typescript-eslint/parser",
 	"extends": [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
 		"next/core-web-vitals"
 	],
-	"parser": "@typescript-eslint/parser",
 	"plugins": [
 		"@typescript-eslint"
 	],
-	"root": true
+	"rules": {
+		"no-empty-pattern": "warn",
+		"@typescript-eslint/no-empty-interface": "warn"
+	}
 }

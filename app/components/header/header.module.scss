@@ -1,12 +1,14 @@
-header.header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	height: 60px;
+@use "../../../styles/mixins.scss" as mixins;
 
-	box-shadow: 0 0 15px 0 black;
-	z-index: 1;
+.header {
+	align-items: center;
 	background: var(--bg-color);
+	box-shadow: 0 0 15px 0 black;
+	display: flex;
+	height: 60px;
+	justify-content: space-between;
+	text-align: center;
+	z-index: 1;
 
 	> a {
 		color: var(--text-color);
@@ -16,25 +18,29 @@ header.header {
 	}
 
 	> nav {
+		display: flex;
+		flex-direction: row;
+		gap: 10px;
 		> ul {
-			list-style-type: none;
-			padding-inline-start: 0;
+			align-items: center;
+			justify-content: center;
 			display: flex;
 			flex-direction: row;
 			gap: 10px;
-
+			list-style-type: none;
+			margin: 0;
+			padding-inline-start: 0;
 			> li {
 				display: inline;
-
 				> a {
-					width: 30px;
+					background-color: var(--btn-color);
+					border-radius: 6px;
 					color: var(--text-color);
 					font-size: 16px;
-					border-radius: 6px;
-					background-color: var(--btn-color);
 					font-weight: 600;
 					padding: 5px 10px 5px 10px;
 					text-transform: uppercase;
+					width: 30px;
 
 					&:hover {
 						border-bottom: solid 4px #9adcff;
@@ -43,9 +49,18 @@ header.header {
 				}
 			}
 		}
+		> button {
+			background: none;
+			border: none;
+			padding: 0;
+			cursor: pointer;
+			@include mixins.desktop {
+				display: none;
+			}
+		}
 	}
 
-	@media only screen and (max-width: 900px) {
+	@include mixins.mobile {
 		> nav {
 			display: block;
 			position: relative;
@@ -116,11 +131,17 @@ header.header {
 	}
 }
 
-.currentPg {
-	background: var(--btn-2-color) !important;
-	color: var(--bg-color) !important;
+.open {
+	background-color: red;
+}
 
-	&:hover {
-		border-bottom: solid 4px #ff8aae;
+.currentPg {
+	> a {
+		background: var(--btn-2-color) !important;
+		color: var(--bg-color) !important;
+
+		&:hover {
+			border-bottom: solid 4px #ff8aae;
+		}
 	}
 }

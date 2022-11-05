@@ -1,3 +1,5 @@
+import classnames from "classnames";
+import { PageConfig } from "next";
 import Link from "next/link";
 
 import about from "./about.module.scss";
@@ -79,7 +81,7 @@ export default function About({ }: AboutProps) {
 
 	return (
 		<>
-			<h1 className="mainHeader yellow">About</h1>
+			<h1 className={classnames("yellow", about.title)}>About</h1>
 			<article>
 				<div className={about.subHeader}>
 					<h2>Frequently Asked Questions</h2>
@@ -97,3 +99,7 @@ export default function About({ }: AboutProps) {
 }
 
 interface AboutProps { }
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
+};

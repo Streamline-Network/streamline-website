@@ -2,11 +2,11 @@
 	padding: 20px 20px;
 	border-radius: 10px;
 	height: min-content;
-	& > summary {
+	> summary {
 		font-size: 1.2rem;
 		font-weight: 600;
 		cursor: pointer;
-		& > details[open] {
+		> details[open] {
 			height: auto;
 		}
 	}
