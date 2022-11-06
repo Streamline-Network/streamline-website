@@ -1,0 +1,30 @@
+.notification {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+
+	font-size: 1.2em;
+	text-align: center;
+	padding-block: 10px;
+	color: var(--bg-color);
+	background-color: var(--btn-2-color);
+
+	span {
+		flex-grow: 1;
+	}
+
+	button {
+		display: block;
+		width: 25px;
+		aspect-ratio: 1;
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+}
+
+.title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	text-decoration: underline;
+}

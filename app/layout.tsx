@@ -1,7 +1,6 @@
 import "../styles/style.scss";
 
-import Banner, { BannerProps } from "./components/banner/banner";
-
+import Banners from "./components/banners/banners";
 import Footer from "./components/footer/footer";
 import Header from "./components/header/header";
 import { PageConfig } from "next";
@@ -15,19 +14,11 @@ const rubik = Rubik({
 });
 
 export default function Layout({ children }: LayoutProps) {
-	const messages: BannerProps[] = [
-		{
-			message:
-				"We are currently in between seasons and are not accepting new people. Season 4 releases November the 11th!",
-		},
-	];
 	return (
 		<html>
 			<body className={rubik.className}>
 				<Header />
-				{messages.map((message, index) => (
-					<Banner key={index} {...message} />
-				))}
+				<Banners />
 				<main>{children}</main>
 				<Footer />
 			</body>
