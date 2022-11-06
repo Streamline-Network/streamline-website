@@ -19,12 +19,12 @@ export default function Nav({}: NavProps) {
 	const toggle = () => {
 		setIsOpen((isOpen) => !isOpen);
 
-		if (document && isOpen) document.body.style.overflow = "visible";
+		if (document && isOpen) document.body.style.overflow = "";
 		if (document && !isOpen) document.body.style.overflow = "hidden";
 	};
 
 	const close = () => {
-		if (document) document.body.style.overflow = "visible";
+		if (document) document.body.style.overflow = "";
 		setIsOpen(false);
 	};
 
