@@ -1,17 +1,15 @@
 import { PageConfig } from "next";
-
 import map from "./map.module.scss";
+export default async function Map({}: MapProps) {
+	const url = process.env.MAP_URL || "";
+	// const url = "https://google.com";
 
-export default function Map({ }: MapProps) {
-	return (
-		<div>
-			<iframe className={map.mapFrame} src={process.env.MAP_URL} />
-		</div>
-	);
+	await fetch(url);
+
+	return <iframe className={map.mapFrame} src={url} />;
 }
 
-interface MapProps {
-}
+interface MapProps {}
 
 export const config: PageConfig = {
 	unstable_runtimeJS: false,
