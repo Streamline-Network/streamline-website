@@ -43,13 +43,41 @@ footer.footer {
 			}
 		}
 	}
-
 	@include mixins.mobile {
+		height: max-content;
+		display: flex;
 		flex-direction: column;
-		text-align: center;
-		font-size: 2vw;
-		height: min-content;
-		padding-bottom: 20px;
+		align-items: center;
+		padding-block: 50px !important;
+
+		gap: 10px;
+
+		nav {
+			width: 80%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			> ul {
+				display: flex;
+				flex-direction: column;
+				text-align: center;
+				justify-content: center;
+				align-items: center;
+				width: 80%;
+				font-size: 2vw;
+				margin: 0;
+
+				height: max-content;
+
+				li {
+					width: 100%;
+					> a {
+						padding: 10px 0 !important;
+						width: 100%;
+					}
+				}
+			}
+		}
 	}
 }
 
