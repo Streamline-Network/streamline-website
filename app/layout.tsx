@@ -18,7 +18,7 @@ export default function Layout({ children }: LayoutProps) {
 	return (
 		<html lang="en">
 			<body className={rubik.className}>
-				<div style={{ overflowX: "hidden" }}>
+				<div className="wrapper">
 					<Header />
 					<Banners />
 					<main>{children}</main>

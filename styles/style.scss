@@ -31,16 +31,18 @@ a {
 	text-decoration: none;
 }
 
-body {
+.wrapper {
 	margin: 0;
 	background: var(--bg-color);
 	color: var(--text-color);
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
+	overflow-x: hidden;
+	position: relative;
 
-	> div > *:not(main),
-	> div > main div[data-nextjs-scroll-focus-boundary=""] > *:not(h1) {
+	> *:not(main),
+	> main div[data-nextjs-scroll-focus-boundary=""] > *:not(h1) {
 		padding: 0 var(--left-right-padding);
 	}
 
@@ -48,6 +50,10 @@ body {
 		flex-grow: 1;
 		margin-bottom: 50px;
 	}
+}
+
+body {
+	margin: 0;
 }
 
 .purple {
