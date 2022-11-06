@@ -115,35 +115,37 @@ export default function Community({ }: CommunityProps) {
 			{sections.map(({ title, links }, i) => (
 				<Fragment key={i}>
 					<h2 className={community.subHeader}>{title}</h2>
-					<div className={community.grid}>
-						{links.map(({ href, src, alt, classes }, j) => (
-							<NextLink
-								target="_blank"
-								rel="noreferrer"
-								href={href}
-								className={classnames(...(classes ?? []), { [community.stats]: !src })}
-								key={j}
-							>
-								{
-									src && (
-										<>
-											<div className={community.icon}>
-												<Image
-													className={alt.toLowerCase()}
-													src={src}
-													alt={alt + " Icon"}
-													height={50}
-												/>
-											</div>
-											<h3>{alt}</h3>
-										</>
-									)
-								}
-								{
-									!src && alt
-								}
-							</NextLink>
-						))}
+					<div>
+						<div className={community.grid}>
+							{links.map(({ href, src, alt, classes }, j) => (
+								<NextLink
+									target="_blank"
+									rel="noreferrer"
+									href={href}
+									className={classnames(...(classes ?? []), { [community.stats]: !src })}
+									key={j}
+								>
+									{
+										src && (
+											<>
+												<div className={community.icon}>
+													<Image
+														className={alt.toLowerCase()}
+														src={src}
+														alt={alt + " Icon"}
+														height={50}
+													/>
+												</div>
+												<h3>{alt}</h3>
+											</>
+										)
+									}
+									{
+										!src && alt
+									}
+								</NextLink>
+							))}
+						</div>
 					</div>
 				</Fragment>
 			))}

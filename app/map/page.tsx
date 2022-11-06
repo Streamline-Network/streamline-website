@@ -1,10 +1,18 @@
+import { PageConfig } from "next";
+
 import map from "./map.module.scss";
 
 export default function Map({ }: MapProps) {
-	return (<>
-		<iframe className={map.mapFrame} src="https://142.44.255.252:8024/server/Streamline SMP" />
-	</>);
+	return (
+		<div>
+			<iframe className={map.mapFrame} src={process.env.MAP_URL} />
+		</div>
+	);
 }
 
 interface MapProps {
 }
+
+export const config: PageConfig = {
+	unstable_runtimeJS: false,
+};
