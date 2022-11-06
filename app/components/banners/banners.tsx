@@ -10,7 +10,7 @@ export default function Banners() {
 	const lsKey = "closedBannerIds";
 
 	const lsAccess = (setting?: boolean, item?: string[]) => {
-		if (!window) return [];
+		if (typeof window === "undefined") return [];
 		if (setting) {
 			localStorage.setItem(lsKey, JSON.stringify(item));
 		} else {
