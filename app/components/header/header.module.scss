@@ -133,6 +133,10 @@
 					> a {
 						display: block;
 						width: 100%;
+
+						&:hover {
+							border-bottom: none !important;
+						}
 					}
 				}
 			}
@@ -146,7 +150,7 @@
 		color: var(--bg-color) !important;
 
 		&:hover {
-			border-bottom: solid 4px var(--unknown2);
+			border-bottom: solid 4px #d36868 !important;
 		}
 	}
 }

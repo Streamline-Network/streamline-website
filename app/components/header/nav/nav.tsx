@@ -16,7 +16,12 @@ export default function Nav({}: NavProps) {
 
 	const path = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
-	const toggle = () => setIsOpen((isOpen) => !isOpen);
+	const toggle = () => {
+		setIsOpen((isOpen) => !isOpen);
+
+		if (document && isOpen) document.body.style.overflow = "visible";
+		if (document && !isOpen) document.body.style.overflow = "hidden";
+	};
 
 	return (
 		<nav className={classnames({ [header.open]: isOpen })}>
@@ -28,7 +33,9 @@ export default function Nav({}: NavProps) {
 			<ul>
 				{pages.map(([name, url], i) => (
 					<li key={i} className={classnames({ [header.currentPg]: url === path })}>
-						<Link href={url}>{name}</Link>
+						<Link onClick={toggle} href={url}>
+							{name}
+						</Link>
 					</li>
 				))}
 			</ul>
