@@ -7,11 +7,9 @@
 		"plugin:@typescript-eslint/eslint-recommended",
 		"next/core-web-vitals"
 	],
-	"plugins": [
-		"@typescript-eslint"
-	],
+	"plugins": ["@typescript-eslint"],
 	"rules": {
-		"no-empty-pattern": "warn",
-		"@typescript-eslint/no-empty-interface": "warn"
+		"no-empty-pattern": "off",
+		"@typescript-eslint/no-empty-interface": "off"
 	}
 }
