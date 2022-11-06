@@ -7,11 +7,19 @@ import { useState } from "react";
 
 export default function Banners() {
 	type Messages = Omit<BannerProps, "close" | "index">[];
-
 	const lsKey = "closedBannerIds";
 
+	const lsAccess = (setting?: boolean, item?: string[]) => {
+		if (!window) return [];
+		if (setting) {
+			localStorage.setItem(lsKey, JSON.stringify(item));
+		} else {
+			return JSON.parse(localStorage.getItem(lsKey) || "[]");
+		}
+	};
+
 	const existing = banners.map(({ id }) => id);
-	const closed: string[] = JSON.parse(localStorage.getItem(lsKey) ?? "[]");
+	const closed: string[] = lsAccess();
 	const existingClosed = closed.filter((id) => existing.includes(id));
 	const bannersToDisplay = banners.filter((banner) => !closed.includes(banner.id));
 
@@ -19,7 +27,7 @@ export default function Banners() {
 
 	const close = (id: string) => {
 		setMessages((messages) => [...messages.filter((message) => message.id !== id)]);
-		localStorage.setItem(lsKey, JSON.stringify([...existingClosed, id]));
+		lsAccess(true, [...existingClosed, id]);
 	};
 
 	return (

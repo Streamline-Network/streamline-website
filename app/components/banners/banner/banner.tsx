@@ -1,9 +1,6 @@
-"use client";
-
-import classnames from "classnames";
 import Image from "next/image";
-
 import banner from "./banner.module.scss";
+import classnames from "classnames";
 import closeIcon from "./images/close.png";
 
 export default function Banner({ title, message, color, close, id }: BannerProps) {
