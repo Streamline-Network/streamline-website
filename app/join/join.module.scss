@@ -5,7 +5,7 @@
 }
 
 .block {
-	background-color: #353535;
+	background-color: var(--btn-color);
 	border-radius: 10px;
 	display: flex;
 	flex-direction: column;

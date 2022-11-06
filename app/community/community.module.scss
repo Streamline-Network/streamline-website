@@ -15,7 +15,7 @@
 .grid {
 	display: grid;
 	gap: 1.5rem;
-	background-color: #353535;
+	background-color: var(--btn-color);
 	padding: 20px;
 	border-radius: 20px;
 	grid-template-columns: 1fr 1fr;
@@ -61,7 +61,7 @@
 }
 
 .icon {
-	background-color: rgb(224, 224, 224);
+	background-color: var(--unknown4);
 	height: 100%;
 	width: 100px;
 	display: flex;
