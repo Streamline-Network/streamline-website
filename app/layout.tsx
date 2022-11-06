@@ -1,5 +1,6 @@
 import "../styles/style.scss";
 
+import { AnalyticsWrapper } from "./components/analytics/analytics";
 import Banners from "./components/banners/banners";
 import Footer from "./components/footer/footer";
 import Header from "./components/header/header";
@@ -21,6 +22,8 @@ export default function Layout({ children }: LayoutProps) {
 				<Banners />
 				<main>{children}</main>
 				<Footer />
+
+				<AnalyticsWrapper />
 			</body>
 		</html>
 	);
