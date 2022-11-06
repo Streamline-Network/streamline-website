@@ -29,7 +29,8 @@ body {
 	flex-direction: column;
 	min-height: 100vh;
 
-	> * {
+	> *:not(main),
+	> main div[data-nextjs-scroll-focus-boundary=""] > *:not(h1) {
 		padding: 0 var(--left-right-padding);
 	}
 
@@ -75,6 +76,6 @@ body {
 	background: linear-gradient(90deg, #f79549 0%, #ffcb83 100%);
 }
 
-.data-nextjs-scroll-focus-boundary {
+div[data-nextjs-scroll-focus-boundary=""] {
 	display: contents;
 }

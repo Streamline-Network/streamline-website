@@ -67,9 +67,11 @@ export default function Index({ }: IndexProps) {
 	return (
 		<>
 			<h1 className={index.title}>Welcome To Streamline</h1>
-			<div className={index.grid}>
-				{blocks.map((block, index) => <Block {...block} key={index} />)}
-				<Link href="/join">Join</Link>
+			<div>
+				<div className={index.grid}>
+					{blocks.map((block, index) => <Block {...block} key={index} />)}
+					<Link href="/join">Join</Link>
+				</div>
 			</div>
 		</>
 	);
