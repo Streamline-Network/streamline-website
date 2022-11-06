@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "npx rimraf .next && next dev",
+		"localDev": "npx rimraf .next && next dev -p 3000 -H 192.168.1.130",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint"
