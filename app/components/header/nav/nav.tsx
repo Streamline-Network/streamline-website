@@ -29,22 +29,28 @@ export default function Nav({}: NavProps) {
 	};
 
 	return (
-		<nav className={classnames({ [header.open]: isOpen })}>
-			<button onClick={toggle}>
-				<span />
-				<span />
-				<span />
-			</button>
-			<ul>
-				{pages.map(([name, url], i) => (
-					<li key={i} className={classnames({ [header.currentPg]: url === path })}>
-						<Link onClick={close} href={url}>
-							{name}
-						</Link>
-					</li>
-				))}
-			</ul>
-		</nav>
+		<>
+			<Link onClick={close} href="/">
+				Streamline SMP
+			</Link>
+
+			<nav className={classnames({ [header.open]: isOpen })}>
+				<button onClick={toggle}>
+					<span />
+					<span />
+					<span />
+				</button>
+				<ul>
+					{pages.map(([name, url], i) => (
+						<li key={i} className={classnames({ [header.currentPg]: url === path })}>
+							<Link onClick={close} href={url}>
+								{name}
+							</Link>
+						</li>
+					))}
+				</ul>
+			</nav>
+		</>
 	);
 }
 
