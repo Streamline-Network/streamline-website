@@ -23,6 +23,11 @@ export default function Nav({}: NavProps) {
 		if (document && !isOpen) document.body.style.overflow = "hidden";
 	};
 
+	const close = () => {
+		if (document) document.body.style.overflow = "visible";
+		setIsOpen(false);
+	};
+
 	return (
 		<nav className={classnames({ [header.open]: isOpen })}>
 			<button onClick={toggle}>
@@ -33,7 +38,7 @@ export default function Nav({}: NavProps) {
 			<ul>
 				{pages.map(([name, url], i) => (
 					<li key={i} className={classnames({ [header.currentPg]: url === path })}>
-						<Link onClick={toggle} href={url}>
+						<Link onClick={close} href={url}>
 							{name}
 						</Link>
 					</li>

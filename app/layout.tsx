@@ -15,7 +15,7 @@ const rubik = Rubik({
 
 export default function Layout({ children }: LayoutProps) {
 	return (
-		<html>
+		<html lang="en">
 			<body className={rubik.className}>
 				<Header />
 				<Banners />
