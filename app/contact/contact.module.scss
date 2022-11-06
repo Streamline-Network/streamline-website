@@ -11,7 +11,7 @@
 }
 
 .subHeader {
-	background-color: #353535;
+	background-color: var(--btn-color);
 	padding: 20px;
 	text-align: center;
 	border-radius: 10px;
@@ -26,7 +26,7 @@
 }
 
 .block {
-	background-color: #353535;
+	background-color: var(--btn-color);
 	padding: 20px;
 	border-radius: 10px;
 
@@ -53,14 +53,14 @@
 
 .emailSvg {
 	max-height: 10rem;
-	fill: #353535;
+	fill: var(--btn-color);
 }
 
 .subText {
 	display: inline;
 	text-align: center;
 	font-size: 1.3rem;
-	color: #353535;
+	color: var(--btn-color);
 	font-weight: 800;
 }
 
@@ -68,7 +68,7 @@
 	text-align: center;
 	font-weight: lighter;
 	font-style: italic;
-	color: #c2c2c2;
+	color: var(--unknown3);
 }
 
 .contentGrid {

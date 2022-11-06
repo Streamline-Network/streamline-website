@@ -1,7 +1,7 @@
 .disc {
 	background-color: #36393f;
 	border-radius: 0 0 10px 10px;
-	box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 4px 1px var(--shadow);
 	display: flex;
 	flex-direction: column;
 	gap: 20px;

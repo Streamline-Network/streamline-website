@@ -5,15 +5,15 @@
 }
 
 .subHeader {
+	align-items: center;
+	background-color: var(--btn-color);
+	border-radius: 10px;
+	color: var(--text-color);
 	display: flex;
 	flex-direction: column;
 	margin: 20px 0;
-	background-color: #353535;
-	border-radius: 10px;
 	padding: 20px;
-	align-items: center;
 	text-align: center;
-	color: white;
 	> h2 {
 		text-transform: uppercase;
 	}
@@ -23,7 +23,7 @@
 }
 
 .subHeaderLink {
-	color: white;
+	color: var(--text-color);
 	text-decoration: underline;
 }
 
@@ -31,7 +31,7 @@
 	display: grid;
 	padding: 20px;
 	gap: 1.5rem;
-	background-color: #353535;
+	background-color: var(--btn-color);
 	border-radius: 10px;
 	color: black;
 	@include mixins.desktop {
