@@ -45,6 +45,8 @@
 	border-radius: 10px;
 	margin-bottom: 30px;
 	height: 200px;
+	gap: 5px;
+	padding-inline: 20px;
 }
 
 .discSvg {
@@ -62,6 +64,10 @@
 	font-size: 1.3rem;
 	color: var(--btn-color);
 	font-weight: 800;
+
+	@include mixins.mobile {
+		display: none;
+	}
 }
 
 .responseTime {
