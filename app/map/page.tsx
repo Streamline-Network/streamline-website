@@ -1,21 +1,26 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 import { PageConfig } from "next";
 import map from "./map.module.scss";
 
-export default async function Map() {
-	const url = process.env.MAP_URL || "";
-	// const url = "https://example.com";
+export default function Map() {
+	// const url = process.env.MAP_URL || "";
+	const url = "https://example.com";
+	const iframeRef = useRef<HTMLIFrameElement>(null);
 
-	try {
-		await fetch(url).then((res) => {
-			console.log(res);
+	useEffect(() => {
+		console.log(iframeRef.current?.contentWindow);
+
+		iframeRef.current?.contentWindow?.addEventListener("DOMContentLoaded", () => {
+			console.log("something in the console");
 		});
-	} catch (error) {
-		console.log(error);
-	}
+	}, []);
 
 	return (
 		<>
-			<iframe className={map.mapFrame} src={url} />
+			<iframe ref={iframeRef} className={map.mapFrame} src={url} />
 		</>
 	);
 }
