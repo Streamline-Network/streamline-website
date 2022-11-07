@@ -16,9 +16,7 @@
 		"next": "^13.0.1",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"sass": "^1.55.0",
-		"url-exists": "^1.0.3",
-		"valid-url": "^1.0.9"
+		"sass": "^1.55.0"
 	},
 	"devDependencies": {
 		"@types/node": "^18.11.7",
