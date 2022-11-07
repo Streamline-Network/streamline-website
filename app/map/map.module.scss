@@ -3,3 +3,9 @@
 	height: calc(100% - 2px);
 	width: 100%;
 }
+
+.loading {
+	> h1 {
+		text-transform: uppercase;
+	}
+}

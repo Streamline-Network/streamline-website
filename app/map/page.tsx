@@ -2,9 +2,12 @@ import { PageConfig } from "next";
 import map from "./map.module.scss";
 export default async function Map({}: MapProps) {
 	const url = process.env.MAP_URL || "";
-	// const url = "https://google.com";
 
-	await fetch(url);
+	try {
+		await fetch(url);
+	} catch (error) {
+		throw new Error("error");
+	}
 
 	return <iframe className={map.mapFrame} src={url} />;
 }
