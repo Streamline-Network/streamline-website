@@ -1,12 +1,29 @@
+$padding: 7px;
+
 .message {
-	padding: 5px;
+	padding: $padding;
 	display: flex;
 	flex-direction: row;
-	gap: 20px;
+	gap: 15px;
+	&::before {
+		background-color: transparent;
+		width: 0.5rem;
+		height: calc($padding + 100% + $padding);
+		content: " ";
+		position: relative;
+		bottom: $padding;
+		right: $padding;
+	}
+	&>:first-child {
+		margin-left: -5px;
+	}
 }
 
 .mentioned {
 	background-color: #49443c;
+	&::before {
+		background-color: #FAA81A;
+	}
 }
 
 .profilePicture {
