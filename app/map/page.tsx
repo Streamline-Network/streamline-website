@@ -2,11 +2,13 @@
 
 import { useEffect, useRef } from "react";
 
+import Link from "next/link";
 import { PageConfig } from "next";
 import map from "./map.module.scss";
 
 export default function Map() {
-	// const url = process.env.MAP_URL || "";
+	/*
+	const url = process.env.MAP_URL || "";
 	const url = "https://example.com";
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -17,10 +19,15 @@ export default function Map() {
 			console.log("something in the console");
 		});
 	}, []);
+	*/
 
 	return (
 		<>
-			<iframe ref={iframeRef} className={map.mapFrame} src={url} />
+			<section className={map.tempWarning}>
+				<h1>We apologize but this page isn&lsquo;t set-up yet.</h1>
+				<Link href={"/"}>Return home</Link>
+			</section>
+			{/* <iframe ref={iframeRef} className={map.mapFrame} src={url} /> */}
 		</>
 	);
 }
