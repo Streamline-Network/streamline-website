@@ -1,3 +1,5 @@
+"use client";
+
 import "../styles/style.scss";
 
 import { AnalyticsWrapper } from "./components/analytics/analytics";
@@ -7,6 +9,8 @@ import Header from "./components/header/header";
 import { PageConfig } from "next";
 import React from "react";
 import { Rubik } from "@next/font/google";
+import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
 
 const rubik = Rubik({
 	subsets: ["latin"],
@@ -14,17 +18,19 @@ const rubik = Rubik({
 	fallback: ["sans-serif"],
 });
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, session }: LayoutProps) {
 	return (
 		<html lang="en">
 			<body className={rubik.className}>
-				<div className="wrapper">
-					<Header />
-					<Banners />
-					<main>{children}</main>
-					<Footer />
-					<AnalyticsWrapper />
-				</div>
+				<SessionProvider session={session}>
+					<div className="wrapper">
+						<Header />
+						<Banners />
+						<main>{children}</main>
+						<Footer />
+						<AnalyticsWrapper />
+					</div>
+				</SessionProvider>
 			</body>
 		</html>
 	);
@@ -32,6 +38,7 @@ export default function Layout({ children }: LayoutProps) {
 
 interface LayoutProps {
 	children: React.ReactNode;
+	session: Session;
 }
 
 export const config: PageConfig = {
