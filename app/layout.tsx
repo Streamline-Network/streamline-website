@@ -20,15 +20,13 @@ export default function Layout({ children, session }: LayoutProps) {
 	return (
 		<html lang="en">
 			<body className={rubik.className}>
-				<div className="wrapper">
-					<Wrapper session={session}>
-						<Header />
-						<Banners />
-						<main>{children}</main>
-						<Footer />
-						<AnalyticsWrapper />
-					</Wrapper>
-				</div>
+				<Wrapper session={session}>
+					<Header />
+					<Banners />
+					<main>{children}</main>
+					<Footer />
+					<AnalyticsWrapper />
+				</Wrapper>
 			</body>
 		</html>
 	);

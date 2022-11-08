@@ -5,7 +5,11 @@ import { Session } from "next-auth/core/types";
 import { SessionProvider } from "next-auth/react";
 
 export default function Wrapper({ children, session }: WrapperProps) {
-	return <SessionProvider session={session}>{children}</SessionProvider>;
+	return (
+		<div className="wrapper">
+			<SessionProvider session={session}>{children}</SessionProvider>
+		</div>
+	);
 }
 
 interface WrapperProps {
