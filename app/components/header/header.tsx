@@ -17,16 +17,16 @@ export default function Header({ }: HeaderProps) {
 
 	const path = usePathname();
 	const [isOpen, setIsOpen] = React.useState(false);
-	const toggle = (_event?: MouseEvent, close?: true) => {
+	const toggle = (_event?: MouseEvent, open?: false) => {
 		setIsOpen((isOpen) => {
-			document && (document.body.style.overflow = (document && isOpen) ? "" : "hidden"); // TODO: use CSS :has() selector
-			return close ? false : !isOpen;
+			document && (document.body.style.overflow = (open ?? (!document || !isOpen)) ? "hidden" : ""); // TODO: use CSS :has() selector
+			return open ?? !isOpen;
 		});
 	};
 
 	return (
 		<header className={header.header}>
-			<Link onClick={() => toggle(undefined, true)} href="/">
+			<Link onClick={() => toggle(undefined, false)} href="/">
 				Streamline SMP
 			</Link>
 
@@ -39,7 +39,7 @@ export default function Header({ }: HeaderProps) {
 				<ul>
 					{pages.map(([name, url], i) => (
 						<li key={i} className={classnames({ [header.currentPg]: url === path })}>
-							<Link onClick={() => toggle(undefined, true)} href={url}>
+							<Link onClick={() => toggle(undefined, false)} href={url}>
 								{name}
 							</Link>
 						</li>
