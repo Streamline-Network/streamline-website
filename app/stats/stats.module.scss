@@ -1,5 +1,28 @@
+@use "../../styles/mixins.scss" as mixins;
+
 .mapFrame {
 	border: 1px solid #000;
 	height: calc(100% - 2px);
 	width: 100%;
+}
+
+.tempWarning {
+	padding: 40px;
+	margin: 40px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	text-align: center;
+
+	> h1 {
+		text-transform: uppercase;
+	}
+
+	> a {
+		@include mixins.button;
+		margin-top: 30px;
+	}
 }
