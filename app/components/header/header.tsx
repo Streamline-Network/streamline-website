@@ -1,13 +1,14 @@
 "use client";
 
-import classnames from "classnames";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import React, { MouseEvent } from "react";
 
+import Link from "next/link";
+import ProfileButton from "./profile-button/profile-button";
+import classnames from "classnames";
 import header from "./header.module.scss";
+import { usePathname } from "next/navigation";
 
-export default function Header({ }: HeaderProps) {
+export default function Header({}: HeaderProps) {
 	const pages = [
 		["Home", "/"],
 		["Community", "/community"],
@@ -19,7 +20,8 @@ export default function Header({ }: HeaderProps) {
 	const [isOpen, setIsOpen] = React.useState(false);
 	const toggle = (_event?: MouseEvent, open?: false) => {
 		setIsOpen((isOpen) => {
-			document && (document.body.style.overflow = (open ?? (!document || !isOpen)) ? "hidden" : ""); // TODO: use CSS :has() selector
+			document &&
+				(document.body.style.overflow = open ?? (!document || !isOpen) ? "hidden" : ""); // TODO: use CSS :has() selector
 			return open ?? !isOpen;
 		});
 	};
@@ -45,9 +47,10 @@ export default function Header({ }: HeaderProps) {
 						</li>
 					))}
 				</ul>
+				<ProfileButton />
 			</nav>
 		</header>
 	);
 }
 
-interface HeaderProps { }
+interface HeaderProps {}

@@ -3,7 +3,9 @@
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"typescript.tsserver.experimental.enableProjectDiagnostics": true,
 	"cSpell.words": [
+		"Ascor",
 		"Badlion",
+		"discordapp",
 		"dozoe",
 		"gameplay",
 		"instagram",
@@ -12,7 +14,6 @@
 		"reddit",
 		"streamlinesmp",
 		"tiktok",
-		"youtube",
-		"Ascor"
+		"youtube"
 	]
 }
