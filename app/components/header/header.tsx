@@ -46,8 +46,8 @@ export default function Header({}: HeaderProps) {
 							</Link>
 						</li>
 					))}
+					<ProfileButton />
 				</ul>
-				<ProfileButton />
 			</nav>
 		</header>
 	);
