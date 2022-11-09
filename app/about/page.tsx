@@ -55,7 +55,7 @@ export default function About({}: AboutProps) {
 			answer: (
 				<>
 					No, there is no way to buy ways forward in the server using real money, if you
-					donate you only get things that don&amp;t affect your survival experience.
+					donate you only get things that don&lsquo;t affect your survival experience.
 				</>
 			),
 			color: "green",
@@ -171,8 +171,8 @@ export default function About({}: AboutProps) {
 					<Link href="/contact" className={about.blockLink}>
 						please contact a staff member to ask!
 					</Link>{" "}
-					That is the best way to make sure that you stay safe and don&amp;t risk getting
-					banned!
+					That is the best way to make sure that you stay safe and don&lsquo;t risk
+					getting banned!
 				</>
 			),
 			color: "green",
