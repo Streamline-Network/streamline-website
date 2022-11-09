@@ -1,17 +1,16 @@
-import classnames from "classnames";
-import { PageConfig } from "next";
 import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
 
+import Link from "next/link";
+import { PageConfig } from "next";
+import classnames from "classnames";
 import contact from "./contact.module.scss";
 import discord from "./images/discord.png";
 import email from "./images/email.png";
 
 export default function Contact() {
-
 	const blocks: Block[] = [
 		{
-			color: "green",
+			color: "blue",
 			top: "Want a fast response? Start a support ticket and one of our staff will contact you within minutes.",
 			img: {
 				src: discord,
@@ -25,7 +24,7 @@ export default function Contact() {
 			bottom: "Average response: less than 7 hours",
 		},
 		{
-			color: "blue",
+			color: "green",
 			top: "Got something more important or business related? Send us an email!",
 			img: {
 				src: email,
@@ -49,26 +48,38 @@ export default function Contact() {
 					<p>Check out our Q&A! Still lost? Contact us anytime.</p>
 				</div>
 				<div className={contact.contentGrid}>
-					{
-						blocks.map(({ color, top, img: { src, alt }, label, button: { href, text }, bottom }, index) => (
+					{blocks.map(
+						(
+							{
+								color,
+								top,
+								img: { src, alt },
+								label,
+								button: { href, text },
+								bottom,
+							},
+							index
+						) => (
 							<div className={contact.block} key={index}>
 								<h3>{top}</h3>
 								<div className={classnames(contact.wrapperIconTxt, color)}>
 									<Image src={src} alt={alt} width={145} />
 									<p className={contact.subText}>{label}</p>
 								</div>
-								<Link target="_blank" href={href} className={contact.button}>{text}</Link>
+								<Link target="_blank" href={href} className={contact.button}>
+									{text}
+								</Link>
 								<p className={contact.responseTime}>{bottom}</p>
 							</div>
-						))
-					}
+						)
+					)}
 				</div>
 			</article>
 		</>
 	);
 }
 
-interface ContactProps { }
+interface ContactProps {}
 
 interface Block {
 	color: string;
@@ -76,12 +87,12 @@ interface Block {
 	img: {
 		src: StaticImageData;
 		alt: string;
-	},
+	};
 	label: string;
 	button: {
 		href: string;
 		text: string;
-	},
+	};
 	bottom: string;
 }
 
