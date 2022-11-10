@@ -31,4 +31,6 @@
 	@include mixins.button;
 	text-transform: uppercase;
 	padding-inline: 20px;
+
+	cursor: pointer;
 }
