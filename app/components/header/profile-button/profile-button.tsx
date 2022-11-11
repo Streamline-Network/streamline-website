@@ -26,7 +26,7 @@ export default function ProfileButton({}: ProfileButtonProps) {
 		}
 	};
 
-	document.addEventListener("click", handleOutsideClick);
+	if (typeof window !== "undefined") document.addEventListener("click", handleOutsideClick);
 
 	const handleClick = () => {
 		setClicked(!isClicked);
