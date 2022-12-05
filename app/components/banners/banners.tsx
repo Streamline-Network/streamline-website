@@ -6,7 +6,7 @@ import Banner, { BannerProps } from "./banner/banner";
 import banners from "./banners.json";
 
 export default function Banners() {
- if (!banners) return <></>
+ if (JSON.parse(banners).length === 0) return <></>
 	type Messages = Omit<BannerProps, "close" | "index">[];
 	const lsKey = "closedBannerIds";
 
