@@ -6,6 +6,7 @@ import banners from "./banners.json";
 import { useState } from "react";
 
 export default function Banners() {
+ if (!banners) return <></>
 	type Messages = Omit<BannerProps, "close" | "index">[];
 	const lsKey = "closedBannerIds";
 
