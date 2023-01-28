@@ -26,18 +26,17 @@ $rounded-radius: 10px;
 }
 
 @mixin title {
-	align-items: center;
 	color: black;
-	display: flex;
 	font-size: 3.2em;
 	font-weight: 600;
-	height: 100px;
-	justify-content: center;
+
 	margin: 0;
+
+	padding: 1rem;
+
 	text-transform: uppercase;
-	@include mobile {
-		font-size: 1.3rem;
-	}
+	text-align: center;
+
 	@include mobile {
 		font-size: 2rem;
 	}
