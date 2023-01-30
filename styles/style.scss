@@ -1,97 +1,92 @@
-@use "./mixins.scss" as mixins;
+@use './mixins.scss' as mixins;
 
 :root {
-	@include mixins.dark-theme {
-		--bg-color: #202020;
-		--text-color: #fff;
-		--btn-color: #353535;
-		--btn-2-color: #eee;
-		--unknown1: #9adcff;
-		--unknown2: #ff8aae;
-		--unknown3: #c2c2c2;
-		--unknown4: #e0e0e0;
-		--shadow: #0000005c;
-	}
-	@include mixins.light-theme {
-		--bg-color: #ffffff;
-		--text-color: #000;
-		--btn-color: #e3e3e3;
-		--btn-2-color: #222;
-		--unknown1: #9adcff;
-		--unknown2: #ff8aae;
-		--unknown3: #c2c2c2;
-		--unknown4: #e0e0e0;
-		--shadow: #0000005c;
-	}
+  @include mixins.dark-theme {
+    --bg-color: #202020;
+    --text-color: #fff;
+    --btn-color: #353535;
+    --btn-2-color: #eee;
+    --unknown1: #9adcff;
+    --unknown2: #ff8aae;
+    --unknown3: #c2c2c2;
+    --unknown4: #e0e0e0;
+    --shadow: #0000005c;
+  }
+  @include mixins.light-theme {
+    --bg-color: #ffffff;
+    --text-color: #000;
+    --btn-color: #e3e3e3;
+    --btn-2-color: #222;
+    --unknown1: #9adcff;
+    --unknown2: #ff8aae;
+    --unknown3: #c2c2c2;
+    --unknown4: #e0e0e0;
+    --shadow: #0000005c;
+  }
 
-	--left-right-padding: 5%;
+  --left-right-padding: 5%;
 }
 
 a {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 .wrapper {
-	margin: 0;
-	background: var(--bg-color);
-	color: var(--text-color);
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
-	overflow-x: hidden;
-	position: relative;
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
 
-	> *:not(main),
-	> main div[data-nextjs-scroll-focus-boundary=""] > *:not(h1) {
-		padding: 0 var(--left-right-padding);
-	}
+  > * > * {
+    padding: 0 var(--left-right-padding);
+  }
 
-	main {
-		flex-grow: 1;
-		margin-bottom: 50px;
-	}
+  main {
+    flex-grow: 1;
+    margin-bottom: 50px;
+  }
 }
 
 body {
-	margin: 0;
+  margin: 0;
 }
 
 .purple {
-	/* background-color: #b983ff; */
-	background: #7d48fe;
-	background: linear-gradient(90deg, #9066fb 0%, #cba4fd 100%);
+  /* background-color: #b983ff; */
+  background: #7d48fe;
+  background: linear-gradient(90deg, #9066fb 0%, #cba4fd 100%);
 }
 
 .blue {
-	/* background-color: #9adcff; */
-	background: #4d7fff;
-	background: linear-gradient(90deg, #6590ff 0%, #74d3ff 100%);
+  /* background-color: #9adcff; */
+  background: #4d7fff;
+  background: linear-gradient(90deg, #6590ff 0%, #74d3ff 100%);
 }
 
 .red {
-	/* background-color: #ff8aae; */
-	background: #ff5555;
-	background: linear-gradient(90deg, #ff6767 0%, #ffa283 100%);
+  /* background-color: #ff8aae; */
+  background: #ff5555;
+  background: linear-gradient(90deg, #ff6767 0%, #ffa283 100%);
 }
 
 .yellow {
-	/* background-color: #fff89a; */
-	background: #ff5555;
-	background: linear-gradient(90deg, #fcdd51 0%, #fff88f 100%);
+  /* background-color: #fff89a; */
+  background: #ff5555;
+  background: linear-gradient(90deg, #fcdd51 0%, #fff88f 100%);
 }
 
 .green {
-	/* background-color: #41e889; */
-	background: #ff5555;
-	background: linear-gradient(90deg, #5ede64 0%, #b6f98c 100%);
+  /* background-color: #41e889; */
+  background: #ff5555;
+  background: linear-gradient(90deg, #5ede64 0%, #b6f98c 100%);
 }
 
 .orange {
-	/* background-color: #fdac55; */
-	background: #ff5555;
-	background: linear-gradient(90deg, #f79549 0%, #ffcb83 100%);
-}
-
-div[data-nextjs-scroll-focus-boundary=""] {
-	display: contents;
+  /* background-color: #fdac55; */
+  background: #ff5555;
+  background: linear-gradient(90deg, #f79549 0%, #ffcb83 100%);
 }
