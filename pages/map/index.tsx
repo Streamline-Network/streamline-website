@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 
 import Link from 'next/link'
-import { PageConfig } from 'next'
 import map from './map.module.scss'
 
 export default function Map() {

@@ -12,9 +12,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     <Wrapper session={session}>
       <Header />
       <Banners />
-      <main>
+      <div className="main">
         <Component {...pageProps} />
-      </main>
+      </div>
       <Footer />
       <AnalyticsWrapper />
     </Wrapper>

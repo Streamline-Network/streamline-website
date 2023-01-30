@@ -10,7 +10,6 @@ const nextConfig = {
       permanent: true,
     },
   ],
-  outputFileTracing: false,
   env: {
     MAP_URL: 'https://142.44.255.252:8024/server/Streamline SMP',
     STATS_URL: 'https://142.44.255.252:8024/server/Streamline SMP',

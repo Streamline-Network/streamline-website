@@ -1,7 +1,6 @@
 import Block, { BlockProps } from '../components/block/block'
 
 import Link from 'next/link'
-import { PageConfig } from 'next'
 import index from './index.module.scss'
 
 export default function Index({}: IndexProps) {
@@ -76,7 +75,3 @@ export default function Index({}: IndexProps) {
 }
 
 interface IndexProps {}
-
-export const config: PageConfig = {
-  unstable_runtimeJS: false,
-}
