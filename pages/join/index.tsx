@@ -3,7 +3,6 @@ import Discord, { DiscordProps } from '../../components/discord/discord'
 import Link from 'next/link'
 import Mention from '../../components/discord/mention/mention'
 import classnames from 'classnames'
-import dozoe from './axolotl-pfp.png'
 import join from './join.module.scss'
 
 export default function Join({}: JoinProps) {
@@ -103,11 +102,6 @@ export default function Join({}: JoinProps) {
         messages: [
           {
             at: 'Today at 9:00',
-            from: {
-              username: 'Dozoe',
-              profilePicture: dozoe,
-              color: '#ff4bf0',
-            },
             mentioned: false,
             content: (
               <>
@@ -130,11 +124,6 @@ export default function Join({}: JoinProps) {
         messages: [
           {
             at: 'Today at 9:00',
-            from: {
-              username: 'Dozoe',
-              profilePicture: dozoe,
-              color: '#ff4bf0',
-            },
             mentioned: true,
             content: (
               <>
@@ -200,4 +189,8 @@ interface More {
   description: string
   caption: string
   discord: DiscordProps
+}
+
+export const config: PageConfig = {
+  unstable_runtimeJS: false,
 }
