@@ -1,4 +1,4 @@
-import Block, { BlockProps } from './components/block/block'
+import Block, { BlockProps } from '../components/block/block'
 
 import Link from 'next/link'
 import { PageConfig } from 'next'
