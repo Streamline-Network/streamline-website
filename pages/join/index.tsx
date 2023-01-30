@@ -1,7 +1,7 @@
-import Discord, { DiscordProps } from './discord/discord'
+import Discord, { DiscordProps } from '../../components/discord/discord'
 
 import Link from 'next/link'
-import Mention from './discord/mention/mention'
+import Mention from '../../components/discord/mention/mention'
 import classnames from 'classnames'
 import dozoe from './axolotl-pfp.png'
 import join from './join.module.scss'

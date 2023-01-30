@@ -1,4 +1,4 @@
-import Question, { QuestionProps } from './question/question'
+import Question, { QuestionProps } from '../../components/question/question'
 
 import Link from 'next/link'
 import about from './about.module.scss'
