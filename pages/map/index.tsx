@@ -28,7 +28,3 @@ export default function Map() {
     </>
   )
 }
-
-export const config: PageConfig = {
-  unstable_runtimeJS: false,
-}
