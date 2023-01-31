@@ -70,6 +70,10 @@ export default function Index({}: IndexProps) {
           content="Experience the ultimate Minecraft adventure with the best Vanilla SMP Whitelist-Only Server 1.19.3. Join now for a guaranteed great time. Apply today!"
         />
         <meta name="keywords" content="minecraft-server vanilla smp whitelist-only 1.19.3" />
+        <meta
+          name="google-site-verification"
+          content="xfNSYxrRZ6uD9-uX0zoGMzyj_90lDdaLDihkRCLDdA0"
+        />
       </Head>
       <h1 className={index.title}>Welcome To Streamline</h1>
       <div>
