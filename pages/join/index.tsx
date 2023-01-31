@@ -1,5 +1,6 @@
 import Discord, { DiscordProps } from '../../components/discord/discord'
 
+import Head from 'next/head'
 import Link from 'next/link'
 import Mention from '../../components/discord/mention/mention'
 import classnames from 'classnames'
@@ -151,6 +152,14 @@ export default function Join({}: JoinProps) {
 
   return (
     <>
+      <Head>
+        <title>Join the Best Vanilla SMP Whitelist-Only Minecraft Server Today</title>
+        <meta
+          name="description"
+          content="Take the first step towards an amazing Minecraft experience. Join the best Vanilla SMP Whitelist-Only Minecraft Server now. Apply today!"
+        />
+        <meta name="keywords" content="Joining the Minecraft server" />
+      </Head>
       <h1 className={classnames('green', join.title)}>How To Join</h1>
       <article className={join.grid}>
         {blocks.map(({ title, color, paragraphs }, index) => (

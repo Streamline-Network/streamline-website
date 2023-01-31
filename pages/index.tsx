@@ -1,5 +1,6 @@
 import Block, { BlockProps } from '../components/block/block'
 
+import Head from 'next/head'
 import Link from 'next/link'
 import index from './index.module.scss'
 
@@ -59,8 +60,17 @@ export default function Index({}: IndexProps) {
       classes: [index.column],
     },
   ]
+
   return (
     <>
+      <Head>
+        <title>Join the Best Vanilla SMP Whitelist-Only Minecraft Server 1.19.3</title>
+        <meta
+          name="description"
+          content="Experience the ultimate Minecraft adventure with the best Vanilla SMP Whitelist-Only Server 1.19.3. Join now for a guaranteed great time. Apply today!"
+        />
+        <meta name="keywords" content="minecraft-server vanilla smp whitelist-only 1.19.3" />
+      </Head>
       <h1 className={index.title}>Welcome To Streamline</h1>
       <div>
         <div className={index.grid}>

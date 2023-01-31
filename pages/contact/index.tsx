@@ -1,5 +1,6 @@
 import Image, { StaticImageData } from 'next/image'
 
+import Head from 'next/head'
 import Link from 'next/link'
 import classnames from 'classnames'
 import contact from './contact.module.scss'
@@ -40,6 +41,14 @@ export default function Contact() {
 
   return (
     <>
+      <Head>
+        <title>Get in Touch with Streamline SMP</title>
+        <meta
+          name="description"
+          content="Become a part of a thriving Minecraft community on a Whitelist-Only Server. Meet new players, join crews and more. Apply today!"
+        />
+        <meta name="keywords" content="Contact the Minecraft server" />
+      </Head>
       <h1 className={classnames('orange', contact.title)}>Contact</h1>
       <article className={contact.grid}>
         <div className={contact.subHeader}>

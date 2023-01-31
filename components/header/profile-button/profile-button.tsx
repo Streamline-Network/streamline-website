@@ -1,17 +1,26 @@
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore'
 import { signIn, signOut, useSession } from 'next-auth/react'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
+import { GetServerSideProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { firestore } from '../../../config/firebase'
 import profileButton from './profile-button.module.scss'
 import profilePlaceholder from './images/profile-placeholder.webp'
+import { server } from '../../../config/index'
+import { useCollectionOnce } from 'react-firebase-hooks/firestore'
 
 export default function ProfileButton({}: ProfileButtonProps) {
   const { data: session } = useSession()
-  // const session = true;
   const [isClicked, setClicked] = useState(false)
   const ref = useRef<HTMLElement>(null)
   const ref2 = useRef<HTMLImageElement>(null)
+
+  /*   fetch(`${server}/api/test`, {
+    method: 'POST',
+    body: session?.user?.name,
+  }).then(res => res.json().then(res => console.log(res))) */
 
   const handleOutsideClick = (e: Event) => {
     if (
@@ -46,6 +55,16 @@ export default function ProfileButton({}: ProfileButtonProps) {
       )
     })
   }
+
+  async function test() {
+    await setDoc(doc(firestore, 'cities', 'DD'), {
+      name: 'Los Angeles',
+      state: 'CA',
+      country: 'USA',
+    })
+  }
+
+  test()
 
   return (
     <li>

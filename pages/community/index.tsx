@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from 'next/image'
 
 import { Fragment } from 'react'
+import Head from 'next/head'
 import { default as NextLink } from 'next/link'
 import checkbox from './images/checkbox.png'
 import classnames from 'classnames'
@@ -110,6 +111,14 @@ export default function Community({}: CommunityProps) {
 
   return (
     <>
+      <Head>
+        <title>Join the Exciting Minecraft Community on a Whitelist-Only Server</title>
+        <meta
+          name="description"
+          content="Become a part of a thriving Minecraft community on a Whitelist-Only Server. Meet new players, join crews and more. Apply today!"
+        />
+        <meta name="keywords" content="Minecraft community" />
+      </Head>
       <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
       {sections.map(({ title, links }, i) => (
         <Fragment key={i}>

@@ -1,5 +1,6 @@
 import Question, { QuestionProps } from '../../components/question/question'
 
+import Head from 'next/head'
 import Link from 'next/link'
 import about from './about.module.scss'
 import classnames from 'classnames'
@@ -202,6 +203,14 @@ export default function About({}: AboutProps) {
 
   return (
     <>
+      <Head>
+        <title>Get to Know the Best Vanilla SMP Whitelist-Only Minecraft Server</title>
+        <meta name="keywords" content="About the Minecraft server" />
+        <meta
+          name="description"
+          content="Discover what makes our Vanilla SMP Whitelist-Only Minecraft Server the best. Learn about our history, mission and values. Read now!"
+        />
+      </Head>
       <h1 className={classnames('yellow', about.title)}>About</h1>
       <article>
         <div className={about.subHeader}>
