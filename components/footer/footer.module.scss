@@ -1,0 +1,87 @@
+@use '../../styles/mixins.scss' as mixins;
+
+footer.footer {
+  align-items: center;
+  background: var(--bg-color);
+  box-shadow: -5px 0 15px 0 black;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  text-align: center;
+  z-index: 1;
+
+  > nav {
+    > ul {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      gap: 1.3rem;
+      list-style-type: none;
+      margin: 0;
+      padding-inline-start: 0;
+      > li {
+        display: inline;
+        > a {
+          color: var(--text-color);
+          text-align: center;
+          text-decoration: underline;
+          text-transform: uppercase;
+          width: 100%;
+        }
+      }
+    }
+
+    @include mixins.desktop {
+      flex-direction: row;
+      > ul {
+        > li {
+          > a {
+            width: max-content;
+          }
+        }
+      }
+    }
+  }
+  @include mixins.mobile {
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 50px !important;
+
+    gap: 10px;
+
+    nav {
+      width: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > ul {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        font-size: 2vw;
+        margin: 0;
+
+        height: max-content;
+
+        li {
+          width: 100%;
+          > a {
+            padding: 10px 0 !important;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.button {
+  @include mixins.button;
+  padding: 7px 15px !important;
+}

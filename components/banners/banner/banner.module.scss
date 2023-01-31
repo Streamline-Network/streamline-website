@@ -1,0 +1,31 @@
+.notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  font-size: 1.2em;
+  text-align: center;
+  color: var(--bg-color);
+  background-color: var(--btn-2-color);
+  padding: 10px var(--left-right-padding);
+
+  span {
+    flex-grow: 1;
+  }
+
+  button {
+    width: min-content;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+
+    height: 100%;
+  }
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: underline;
+}

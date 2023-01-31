@@ -2,65 +2,64 @@ $mobile-desktop-limit: 800px;
 $rounded-radius: 10px;
 
 @mixin mobile {
-	@media only screen and (max-width: $mobile-desktop-limit) {
-		@content;
-	}
+  @media only screen and (max-width: $mobile-desktop-limit) {
+    @content;
+  }
 }
 
 @mixin desktop {
-	@media only screen and (min-width: $mobile-desktop-limit) {
-		@content;
-	}
+  @media only screen and (min-width: $mobile-desktop-limit) {
+    @content;
+  }
 }
 
 @mixin light-theme {
-	@media (prefers-color-scheme: light) {
-		@content;
-	}
+  @media (prefers-color-scheme: light) {
+    @content;
+  }
 }
 
 @mixin dark-theme {
-	@media (prefers-color-scheme: dark) {
-		@content;
-	}
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
 }
 
 @mixin title {
-	align-items: center;
-	color: black;
-	display: flex;
-	font-size: 3.2em;
-	font-weight: 600;
-	height: 100px;
-	justify-content: center;
-	margin: 0;
-	text-transform: uppercase;
-	@include mobile {
-		font-size: 1.3rem;
-	}
-	@include mobile {
-		font-size: 2rem;
-	}
+  color: black;
+  font-size: 3.2em;
+  font-weight: 600;
+
+  margin: 0;
+
+  padding-block: 1rem;
+
+  text-transform: uppercase;
+  text-align: center;
+
+  @include mobile {
+    font-size: 2rem;
+  }
 }
 
 @mixin button {
-	background: var(--btn-2-color) !important;
-	border-radius: 10px;
-	box-shadow: 0 4px 5px 0 black;
-	color: var(--bg-color) !important;
-	display: block;
-	font-size: 1.3rem;
-	font-weight: 600;
-	padding: 10px;
-	text-align: center;
-	transition: 200ms ease-in-out;
+  background: var(--btn-2-color) !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 5px 0 black;
+  color: var(--bg-color) !important;
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 10px;
+  text-align: center;
+  transition: 200ms ease-in-out;
 
-	&:hover {
-		@media only screen and (min-width: 900px) {
-			box-shadow: 0 0 0 0 black;
-			transform: translateY(3px) scale(0.987);
-			color: var(--text-color) !important;
-			background: var(--bg-color) !important;
-		}
-	}
+  &:hover {
+    @media only screen and (min-width: 900px) {
+      box-shadow: 0 0 0 0 black;
+      transform: translateY(3px) scale(0.987);
+      color: var(--text-color) !important;
+      background: var(--bg-color) !important;
+    }
+  }
 }
