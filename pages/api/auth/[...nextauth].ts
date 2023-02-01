@@ -1,7 +1,11 @@
+import { getAuth, signInWithCustomToken } from '@firebase/auth'
+import { useEffect, useState } from 'react'
+
 import DiscordProvider from 'next-auth/providers/discord'
 import { FirestoreAdapter } from '@next-auth/firebase-adapter'
 import NextAuth from 'next-auth'
 import { firebaseConfig } from 'config/firebase'
+import { useSession } from 'next-auth/react'
 
 export default NextAuth({
   providers: [
@@ -10,11 +14,12 @@ export default NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET || '',
     }),
   ],
-  adapter: FirestoreAdapter(firebaseConfig),
+  // adapter: FirestoreAdapter(firebaseConfig),
   session: {
     strategy: 'jwt',
   },
   callbacks: {
+    // There is no email or credentials because the Discord Provider does not provide them.
     async signIn({ user, account, profile }) {
       console.log(user, account, profile)
       return true
@@ -22,31 +27,29 @@ export default NextAuth({
   },
 })
 
-/* const auth = getAuth()
+// const auth = getAuth()
 
-export function useFirebaseSession() {
-  const useFirebaseSession = () => {
-    const session = useSession()
-    const [status, setStatus] = useState(session.status)
+// export function useFirebaseSession() {
+//   const session = useSession()
+//   const [status, setStatus] = useState(session.status)
 
-    useEffect(() => {
-      if (session && session.status === 'authenticated') {
-        signInWithCustomToken(auth, session.customToken).then(() => {
-          setStatus('authenticated')
-        })
-      }
-    }, [session])
+//   useEffect(() => {
+//     if (session && session.status === 'authenticated') {
+//       signInWithCustomToken(auth, session.customToken).then(() => {
+//         setStatus('authenticated')
+//       })
+//     }
+//   }, [session])
 
-    useEffect(() => {
-      if (session.status !== 'authenticated') {
-        setStatus(session.status)
-      }
-    }, [session.status])
+//   useEffect(() => {
+//     if (session.status !== 'authenticated') {
+//       setStatus(session.status)
+//     }
+//   }, [session.status])
 
-    return { data: session.data, status }
-  }
-}
- */
+//   return { data: session.data, status }
+// }
+
 /*
 export default NextAuth({
   providers: [
