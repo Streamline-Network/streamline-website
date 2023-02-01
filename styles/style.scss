@@ -13,10 +13,22 @@
     --shadow: #0000005c;
   }
   @include mixins.light-theme {
-    --bg-color: #ffffff;
-    --text-color: #000;
-    --btn-color: #e3e3e3;
-    --btn-2-color: #222;
+    // --bg-color: #ffffff;
+    // --text-color: #000;
+    // --btn-color: #e3e3e3;
+    // --btn-2-color: #222;
+    // --unknown1: #9adcff;
+    // --unknown2: #ff8aae;
+    // --unknown3: #c2c2c2;
+    // --unknown4: #e0e0e0;
+    // --shadow: #0000005c;
+
+    // Dark mode to temp remove light-mode:
+
+    --bg-color: #202020;
+    --text-color: #fff;
+    --btn-color: #353535;
+    --btn-2-color: #eee;
     --unknown1: #9adcff;
     --unknown2: #ff8aae;
     --unknown3: #c2c2c2;
