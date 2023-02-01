@@ -21,7 +21,8 @@ export default NextAuth({
   callbacks: {
     // There is no email or credentials because the Discord Provider does not provide them.
     async signIn({ user, account, profile }) {
-      console.log(user, account, profile)
+      // console.log(user, account, profile)
+
       return true
     },
   },
