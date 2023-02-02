@@ -1,106 +1,106 @@
-@use "../../styles/mixins.scss" as mixins;
+@use '../../styles/mixins.scss' as mixins;
 
 .title {
-	@include mixins.title;
+  @include mixins.title;
 }
 
 .block {
-	background-color: var(--btn-color);
-	border-radius: 10px;
-	display: flex;
-	flex-direction: column;
-	font-size: 1rem;
-	gap: 16px;
-	padding: 16px;
+  background-color: var(--btn-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  gap: 16px;
+  padding: 16px;
 
-	> h2 {
-		color: black;
-		font-size: 1.4rem;
-		margin: 0;
-		padding: 0;
-		text-align: center;
-		width: 100%;
-		border-radius: 10px;
-	}
+  > h2 {
+    color: black;
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 1rem 0 !important;
+    text-align: center;
+    width: 100%;
+    border-radius: 10px;
+  }
 
-	> p {
-		flex-grow: 1;
-		line-height: 1.25rem;
-		text-align: justify;
-	}
-	> span {
-	}
+  > p {
+    flex-grow: 1;
+    line-height: 1.25rem;
+    text-align: justify;
+  }
+  > span {
+  }
 
-	> *:not(:last-child) {
-		margin: 0;
-		padding: 0;
-	}
+  > *:not(:last-child) {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .showDesktop {
-	display: none;
-	@include mixins.desktop {
-		display: block;
-	}
+  display: none;
+  @include mixins.desktop {
+    display: block;
+  }
 }
 
 .largeButton {
-	@include mixins.button;
+  @include mixins.button;
 }
 
 .grid {
-	color: white;
-	display: grid;
-	gap: 1.5rem;
-	margin: 30px 0 0 0;
-	@include mixins.desktop {
-		grid-template-columns: 2fr 1fr;
-		grid-auto-flow: row;
-	}
+  color: white;
+  display: grid;
+  gap: 1.5rem;
+  margin: 30px 0 0 0;
+  @include mixins.desktop {
+    grid-template-columns: 2fr 1fr;
+    grid-auto-flow: row;
+  }
 }
 
 .discordEmbed {
-	grid-row-start: 1;
-	grid-row-end: 4;
-	grid-column-start: 2;
-	height: 100%;
-	width: 100%;
-	border-radius: 10px;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  grid-column-start: 2;
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
 }
 
 .video {
-	margin: auto;
-	margin-bottom: 20px;
-	height: 300px;
-	width: 100%;
-	border-radius: 0 0 10px 10px;
+  margin: auto;
+  margin-bottom: 20px;
+  height: 300px;
+  width: 100%;
+  border-radius: 0 0 10px 10px;
 }
 
 .subHeader {
-	font-size: 2.5rem;
-	margin: 2.4rem 0;
-	margin-bottom: 0;
-	text-align: center;
+  font-size: 2.5rem;
+  margin: 2.4rem 0;
+  margin-bottom: 0;
+  text-align: center;
 }
 
 .subBlockTxt {
-	margin-top: auto;
+  margin-top: auto;
 }
 
 .lowerGrid {
-	@include mixins.desktop {
-		grid-template-columns: 1fr 1fr;
-	}
+  @include mixins.desktop {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .hideDesktop {
-	@include mixins.desktop {
-		display: none;
-	}
+  @include mixins.desktop {
+    display: none;
+  }
 }
 
 .discExample {
-	@include mixins.desktop {
-		margin-top: auto;
-	}
+  @include mixins.desktop {
+    margin-top: auto;
+  }
 }
