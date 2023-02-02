@@ -12,11 +12,6 @@ export default function ProfileButton({}: ProfileButtonProps) {
   const ref = useRef<HTMLElement>(null)
   const ref2 = useRef<HTMLImageElement>(null)
 
-  /*   fetch(`${server}/api/test`, {
-    method: 'POST',
-    body: session?.user?.name,
-  }).then(res => res.json().then(res => console.log(res))) */
-
   const handleOutsideClick = (e: Event) => {
     if (
       ref.current &&
@@ -36,7 +31,7 @@ export default function ProfileButton({}: ProfileButtonProps) {
 
   const createItems = () => {
     const items = [
-      { name: 'Check Application Status', link: '/apply' },
+      { name: 'Application', link: '/apply' },
       { name: 'Settings', link: '/settings' },
     ]
 

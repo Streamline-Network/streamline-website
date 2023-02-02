@@ -26,9 +26,9 @@ $rounded-radius: 10px;
 }
 
 @mixin title {
-  color: black;
+  color: var(--bg-color);
   font-size: 3.2em;
-  font-weight: 600;
+  font-weight: 800;
 
   margin: 0;
 

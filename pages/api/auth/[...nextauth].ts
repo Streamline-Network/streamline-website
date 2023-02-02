@@ -11,5 +11,7 @@ export default NextAuth({
   session: {
     strategy: 'jwt',
   },
-  callbacks: {},
 })
+
+//!? I am going to do custom server-side permission validation for accessing the Firestore database. (This method doesn't require using Firebase's Auth)
+
