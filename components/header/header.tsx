@@ -1,6 +1,7 @@
 import React, { MouseEvent } from 'react'
 
 import Link from 'next/link'
+import ProfileButton from './profile-button/profile-button'
 import classnames from 'classnames'
 import header from './header.module.scss'
 import { usePathname } from 'next/navigation'
@@ -42,6 +43,7 @@ export default function Header({}: HeaderProps) {
               </Link>
             </li>
           ))}
+          {/* <ProfileButton /> */}
         </ul>
       </nav>
     </header>

@@ -10,7 +10,7 @@ import email from './images/email.png'
 export default function Contact() {
   const blocks: Block[] = [
     {
-      color: 'green',
+      color: 'blue',
       top: 'Want a fast response? Start a support ticket and one of our staff will contact you within minutes.',
       img: {
         src: discord,
@@ -24,7 +24,7 @@ export default function Contact() {
       bottom: 'Average response: less than 7 hours',
     },
     {
-      color: 'blue',
+      color: 'green',
       top: 'Got something more important or business related? Send us an email!',
       img: {
         src: email,
