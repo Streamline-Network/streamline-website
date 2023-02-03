@@ -6,8 +6,6 @@ import { getServerSession } from 'next-auth/next'
 const handler = async (req: CustomRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions)
 
-  req.body.test
-
   if (!session)
     return res.status(401).send({ error: 'Authentication is required to make this request.' })
 
