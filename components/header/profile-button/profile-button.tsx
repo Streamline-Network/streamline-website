@@ -31,8 +31,8 @@ export default function ProfileButton({}: ProfileButtonProps) {
 
   const createItems = () => {
     const items = [
-      { name: 'Application', link: '/apply' },
-      { name: 'Settings', link: '/settings' },
+      { name: 'Application', link: '/account/apply' },
+      { name: 'Settings', link: '/account/settings' },
     ]
 
     return items.map((item, index) => {

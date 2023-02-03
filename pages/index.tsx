@@ -1,4 +1,4 @@
-import Block, { BlockProps } from '../components/block/block'
+import TitleBlock, { BlockProps } from '../components/title-block/title-block'
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -79,7 +79,7 @@ export default function Index({}: IndexProps) {
       <div>
         <div className={index.grid}>
           {blocks.map((block, index) => (
-            <Block {...block} key={index} />
+            <TitleBlock {...block} key={index} />
           ))}
           <Link href="/join">Join</Link>
         </div>

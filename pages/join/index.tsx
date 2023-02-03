@@ -1,3 +1,4 @@
+import Blocks, { Block } from 'components/blocks/blocks'
 import Discord, { DiscordProps } from '../../components/discord/discord'
 
 import Head from 'next/head'
@@ -11,7 +12,6 @@ export default function Join({}: JoinProps) {
   const blocks: Block[] = [
     {
       title: 'Join the Discord',
-      color: 'purple',
       paragraphs: [
         <>
           Join the Discord if you haven&apos;t already. Having a Discord account is required to
@@ -22,10 +22,7 @@ export default function Join({}: JoinProps) {
             href="https://www.discord.com">
             Discord&apos;s website
           </Link>
-          .
-        </>,
-        <>
-          Once you have joined the Discord go to the{' '}
+          . Once you have joined the Discord go to the{' '}
           <Link
             style={{ color: 'white', textDecoration: 'underline' }}
             target="_blank"
@@ -43,7 +40,6 @@ export default function Join({}: JoinProps) {
     },
     {
       title: 'Fill out the application',
-      color: 'yellow',
       paragraphs: [
         <>
           The questions aren&apos;t that difficult but try to be as detailed as possible. We have an
@@ -59,7 +55,6 @@ export default function Join({}: JoinProps) {
     },
     {
       title: "That's it!",
-      color: 'blue',
       paragraphs: [
         <>
           The form has been submitted. Next a staff member will review your application. The wait is
@@ -162,16 +157,7 @@ export default function Join({}: JoinProps) {
       </Head>
       <h1 className={classnames('green', join.title)}>How To Join</h1>
       <article className={join.grid}>
-        {blocks.map(({ title, color, paragraphs }, index) => (
-          <div className={join.block} key={index}>
-            <div className={classnames(join.block, color)}>
-              <h2>{title}</h2>
-            </div>
-            {paragraphs.map((paragraph, index) => (
-              <p key={index}>{paragraph}</p>
-            ))}
-          </div>
-        ))}
+        <Blocks blockArr={blocks} />
         <iframe
           className={classnames(join.showDesktop, join.discordEmbed)}
           src="https://discord.com/widget?id=775831180086870096&theme=dark"
@@ -196,12 +182,6 @@ export default function Join({}: JoinProps) {
 }
 
 interface JoinProps {}
-
-interface Block {
-  title: string
-  color: string
-  paragraphs: React.ReactNode[]
-}
 
 interface More {
   color: string
