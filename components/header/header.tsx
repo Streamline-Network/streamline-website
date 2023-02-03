@@ -12,6 +12,7 @@ export default function Header({}: HeaderProps) {
     ['Community', '/community'],
     ['About', '/about'],
     ['Join', '/join'],
+    ['Testing', '/test'],
   ]
 
   const path = usePathname()
