@@ -1,90 +1,73 @@
-@use "../../styles/mixins.scss" as mixins;
+@use '../../styles/mixins.scss' as mixins;
 
 .title {
-	@include mixins.title;
-}
-
-.grid {
-	display: grid;
-	gap: 20px;
-	color: white;
+  @include mixins.title;
 }
 
 .subHeader {
-	background-color: var(--btn-color);
-	padding: 20px;
-	text-align: center;
-	border-radius: 10px;
-	margin-top: 20px;
-	> h2 {
-		text-transform: uppercase;
-	}
-}
-
-.subHeader > * {
-	margin: 0;
+  @include mixins.information-block;
 }
 
 .block {
-	background-color: var(--btn-color);
-	padding: 20px;
-	border-radius: 10px;
+  background-color: var(--btn-color);
+  padding: 20px;
+  border-radius: 10px;
 
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .wrapperIconTxt {
-	display: flex;
-	text-align: center;
-	align-items: center;
-	justify-content: space-around;
-	margin-top: auto;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: auto;
 
-	border-radius: 10px;
-	margin-bottom: 30px;
-	height: 200px;
-	gap: 5px;
-	padding-inline: 20px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  height: 200px;
+  gap: 5px;
+  padding-inline: 20px;
 }
 
 .discSvg {
-	max-height: 7rem;
+  max-height: 7rem;
 }
 
 .emailSvg {
-	max-height: 10rem;
-	fill: var(--btn-color);
+  max-height: 10rem;
+  fill: var(--btn-color);
 }
 
 .subText {
-	display: inline;
-	text-align: center;
-	font-size: 1.3rem;
-	color: var(--btn-color);
-	font-weight: 800;
+  display: inline;
+  text-align: center;
+  font-size: 1.3rem;
+  color: var(--btn-color);
+  font-weight: 800;
 
-	@include mixins.mobile {
-		display: none;
-	}
+  @include mixins.mobile {
+    display: none;
+  }
 }
 
 .responseTime {
-	text-align: center;
-	font-weight: lighter;
-	font-style: italic;
-	color: var(--unknown3);
+  text-align: center;
+  font-weight: lighter;
+  font-style: italic;
+  color: var(--light-gray);
 }
 
 .contentGrid {
-	display: grid;
-	gap: 20px;
-	@include mixins.desktop {
-		grid-template-columns: 1fr 1fr;
-	}
+  display: grid;
+  gap: 20px;
+  @include mixins.desktop {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .button {
-	@include mixins.button;
+  @include mixins.button;
 }

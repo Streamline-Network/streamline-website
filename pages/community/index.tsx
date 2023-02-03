@@ -122,7 +122,7 @@ export default function Community({}: CommunityProps) {
       <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
       {sections.map(({ title, links }, i) => (
         <Fragment key={i}>
-          <h2 className={community.subHeader}>{title}</h2>
+          <h2 className={community.subheader}>{title}</h2>
           <div>
             <div className={community.grid}>
               {links.map(({ href, src, alt, classes }, j) => (

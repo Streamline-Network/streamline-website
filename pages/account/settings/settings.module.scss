@@ -1,0 +1,13 @@
+@use '../../../styles/mixins.scss' as mixins;
+
+.title {
+  @include mixins.title;
+}
+
+.subheader {
+  @include mixins.subheader;
+}
+
+.informationBlock {
+  @include mixins.information-block;
+}

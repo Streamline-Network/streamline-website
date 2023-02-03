@@ -73,4 +73,39 @@ $rounded-radius: 10px;
   font-weight: 600;
   padding: 10px;
   text-align: center;
+  border: none;
+
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+@mixin subheader {
+  color: white;
+  font-size: 35.2px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@mixin information-block {
+  align-items: center;
+  background-color: var(--btn-color);
+  border-radius: 10px;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  margin: 20px 0;
+  padding: 20px;
+  text-align: center;
+  > h2 {
+    text-transform: uppercase;
+  }
+  > * {
+    margin: 0;
+  }
+  & a {
+    text-decoration: underline;
+  }
 }

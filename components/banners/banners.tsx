@@ -1,7 +1,7 @@
 import Banner, { BannerProps } from './banner/banner'
 import { useEffect, useRef, useState } from 'react'
 
-const LS_KEY = 'closedBannerIds'
+export const LS_KEY = 'closedBannerIds'
 
 export default function Banners() {
   const [messages, setMessages] = useState<Messages>([])

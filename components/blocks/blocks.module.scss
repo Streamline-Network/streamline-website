@@ -1,3 +1,5 @@
+@use '../../styles/mixins.scss' as mixins;
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -9,7 +11,7 @@
 
 .block {
   background-color: var(--btn-color);
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 0px;
 
   display: flex;
@@ -28,4 +30,34 @@
 .block p {
   padding: 0;
   margin: 0;
+}
+
+.blockToggle {
+  & .block {
+    flex-direction: column;
+    align-items: center;
+
+    @include mixins.desktop {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  & .description {
+    color: var(--light-gray);
+    margin-bottom: 1rem;
+
+    @include mixins.desktop {
+      margin-right: auto;
+      margin-bottom: 0;
+    }
+  }
+
+  & button {
+    @include mixins.block-button;
+
+    @include mixins.mobile {
+      width: 100%;
+    }
+  }
 }

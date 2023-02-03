@@ -166,7 +166,7 @@ export default function Join({}: JoinProps) {
           frameBorder="0"
           sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
       </article>
-      <h2 className={join.subHeader}>More</h2>
+      <h2 className={join.subheader}>More</h2>
       <article className={classnames(join.grid, join.lowerGrid)}>
         {mores.map(({ color, title, description, caption, discord }, index) => (
           <div className={classnames(join.block)} key={index}>

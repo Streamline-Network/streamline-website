@@ -71,11 +71,8 @@
   border-radius: 0 0 10px 10px;
 }
 
-.subHeader {
-  font-size: 2.5rem;
-  margin: 2.4rem 0;
-  margin-bottom: 0;
-  text-align: center;
+.subheader {
+  @include mixins.subheader;
 }
 
 .subBlockTxt {

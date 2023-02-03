@@ -1,81 +1,77 @@
-@use "../../styles/mixins.scss" as mixins;
+@use '../../styles/mixins.scss' as mixins;
 
 .title {
-	@include mixins.title;
+  @include mixins.title;
 }
 
-.subHeader {
-	color: white;
-	font-size: 35.2px;
-	font-weight: 700;
-	text-align: center;
-	text-transform: uppercase;
+.subheader {
+  @include mixins.subheader;
 }
 
 .grid {
-	display: grid;
-	gap: 1.5rem;
-	background-color: var(--btn-color);
-	padding: 20px;
-	border-radius: 20px;
-	grid-template-columns: 1fr 1fr;
-	@include mixins.mobile {
-		grid-template-columns: 1fr;
-	}
+  display: grid;
+  gap: 1.5rem;
+  background-color: var(--btn-color);
+  padding: 20px;
+  border-radius: 20px;
+  grid-template-columns: 1fr 1fr;
+  @include mixins.mobile {
+    grid-template-columns: 1fr;
+  }
 }
 
 @mixin largeButton {
-	@include mixins.button;
-	padding: 0;
-	display: flex;
-	align-items: center;
-	background: white;
-	color: black;
-	min-height: 100px;
+  @include mixins.button;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  background: white;
+  color: black;
+  min-height: 100px;
 }
 
 .button {
-	@include largeButton;
-	border-radius: 10px;
-	h3 {
-		display: inline-block;
-		font-size: 1.5rem;
-		font-weight: 600;
-		margin: auto;
-		white-space: nowrap;
-	}
-	img {
-		display: inline-block;
-	}
-	&:hover > .icon {
-		@include mixins.desktop {
-			background-color: var(--bg-color);
-			border-right: 10px solid var(--btn-color);
-		}
-	}
+  @include largeButton;
+  border-radius: 10px;
+  h3 {
+    display: inline-block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: auto;
+    white-space: nowrap;
+  }
+  img {
+    display: inline-block;
+  }
+  &:hover > .icon {
+    @include mixins.desktop {
+      background-color: var(--bg-color);
+      border-right: 10px solid var(--btn-color);
+    }
+  }
 }
 
 .wikiButton {
-	@include largeButton;
-	text-transform: uppercase;
+  @include largeButton;
+  text-transform: uppercase;
 }
 
 .icon {
-	background-color: var(--unknown4);
-	height: 100%;
-	width: 100px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	border-radius: 10px 0 0 10px;
-	transition: 300ms;
-	border-right: 10px solid var(--btn-2-color);
+  background-color: var(--light-gray);
+  height: 100%;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px 0 0 10px;
+  transition: 300ms;
+  border-right: 10px solid var(--btn-2-color);
 }
 
 .stats {
-	grid-column-start: 1;
-	grid-column-end: 3;
-	width: 100%;
-	display: grid;
-	text-align: center;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  width: 100%;
+  display: grid;
+  text-align: center;
 }
