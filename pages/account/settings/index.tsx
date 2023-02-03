@@ -1,5 +1,6 @@
 import { BlockToggle, BlockToggles } from 'components/blocks/blocks'
 
+import Head from 'next/head'
 import { LS_KEY } from 'components/banners/banners'
 import classnames from 'classnames'
 import settings from './settings.module.scss'
@@ -40,6 +41,10 @@ export default function Stats({}: StatsProps) {
 
   return (
     <>
+      <Head>
+        <title>Account Settings</title>
+      </Head>
+
       <h1 className={classnames('purple', settings.title)}>Settings</h1>
 
       <div>
