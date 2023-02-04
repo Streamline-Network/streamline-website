@@ -5,6 +5,17 @@ import Link from 'next/link'
 import map from './map.module.scss'
 
 export default function Map() {
+  const mapDomain = 'http://104.238.222.147:7782'
+
+  useEffect(() => {
+    try {
+      window.open(mapDomain, '_blank')
+      window.location.href = '/'
+    } catch (err) {
+      console.log(err)
+    }
+  }, [])
+
   return (
     <>
       <Head>
@@ -15,16 +26,11 @@ export default function Map() {
         />
         <meta name="keywords" content="Minecraft server map" />
       </Head>
-      {/* <section className={map.tempWarning}>
-        <h1>We apologize but this page isn&lsquo;t set-up yet.</h1>
+      <section className={map.tempWarning}>
+        <h1>Something went wrong when getting the map. The server may be down.</h1>
         <Link href={'/'}>Return home</Link>
-      </section> */}
-      <div className={map.mapWrapper}>
-        <iframe
-          className={map.mapFrame}
-          src="http://104.238.222.147:7782"
-          allow="unsafe-inline; unsafe-eval"></iframe>
-      </div>
+        <Link href={mapDomain}>Try again</Link>
+      </section>
     </>
   )
 }
