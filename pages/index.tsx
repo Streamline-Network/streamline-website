@@ -9,9 +9,8 @@ export default function Index({}: IndexProps) {
     {
       title: 'Economy',
       paragraphs: [
-        'The economy on Streamline is based on diamonds, it works much like its real-world counterpart, with buys and sales using one central currency.',
-        'You can become a tycoon and make thousands of diamonds, or you can just stop by the shopping district whenever you need some materials.',
-        "The economy adds incredible potential to everyone's experience and it speeds up the survival gameplay allowing you to skip to what you love!",
+        'The economy on Streamline operates just like the real world, with diamonds as the central currency for buying and selling goods. Players have the opportunity to become tycoons by accumulating wealth or simply visit the shopping district for materials. The economy adds excitement to the survival gameplay and offers endless possibilities for players to grow and thrive.',
+        'You can choose to specialize in crafting, trading, or simply enjoy the convenience of having a single currency to manage. The economy allows players to focus on what they love and skip the grind.',
       ],
       color: 'purple',
       classes: [index.column, index.gridRowSpan2],
@@ -19,8 +18,7 @@ export default function Index({}: IndexProps) {
     {
       title: 'No Claiming',
       paragraphs: [
-        'Streamline is a whitelist-only Minecraft server, meaning there is no need for those annoying claim features you find on public SMPs.',
-        'Just choose a place and start building!',
+        "Streamline's whitelist feature eliminates the need for claim features common in public SMPs, giving players freedom to build wherever they choose.",
       ],
       color: 'blue',
       classes: [index.column],
@@ -28,24 +26,24 @@ export default function Index({}: IndexProps) {
     {
       title: 'Community',
       paragraphs: [
-        "Our community is by far one of the number one reasons to join Streamline. We have a very active and talented community of people making incredible things everyday on the server! With over 100 players and growing, there's always somebody to hang out with.",
         <>
-          We appreciate every new addition to our community and can&apos;t wait to see you join it!
-          Feel free to check any of the{' '}
+          Streamline boasts a lively and talented community of over 100 players from all over the
+          world. They create incredible things every day and are always happy to welcome new
+          members. Check out the{' '}
           <Link style={{ color: 'black', textDecoration: 'underline' }} href="/community">
             Streamline social media
           </Link>{' '}
-          to talk with us!
+          to connect with the community.
         </>,
       ],
       color: 'red',
       classes: [index.gridColSpan2],
     },
     {
-      title: 'A Server For All',
+      title: 'For Everyone',
       paragraphs: [
-        'The entire point of Streamline in the first place was to create a whitelist server that anyone who wants to join, can. We have overwhelmingly accomplished that goal, with an incredibly diverse community of people all around the world and all different backgrounds!',
-        "It doesn't matter where you're from or who you are, we support everyone! We love each and every player that joins Streamline and look forward to anyone that wants to be a part of our community.",
+        'Streamline SMP was created to provide a whitelist server for players of all backgrounds and locations. The server is inclusive and welcomes everyone with open arms. The community is diverse, with players from all over the world, making Streamline a melting pot of talent and creativity.',
+        "At Streamline, it doesn't matter where you're from or who you are, everyone is supported and valued. The server's aim is to create a friendly and welcoming environment for all players, where everyone can feel at home. Whether you're a seasoned Minecraft player or just starting out, Streamline is the perfect place for you.",
       ],
       color: 'yellow',
       classes: [index.gridColSpan2],
@@ -53,8 +51,7 @@ export default function Index({}: IndexProps) {
     {
       title: 'Trust-Based Rules',
       paragraphs: [
-        'With trust-based rules there is no need for pesky plugins or limitations getting in the way of your gameplay.',
-        'Streamliners never need to deal with getting around build restrictions or annoying alerts.',
+        'Streamline operates with trust-based rules, allowing players to play without restrictions from plugins or limitations. Enjoy seamless gameplay without worrying about build restrictions or annoying alerts.',
       ],
       color: 'green',
       classes: [index.column],
@@ -75,8 +72,13 @@ export default function Index({}: IndexProps) {
           content="xfNSYxrRZ6uD9-uX0zoGMzyj_90lDdaLDihkRCLDdA0"
         />
       </Head>
-      <h1 className={index.title}>Welcome To Streamline</h1>
+      <h1 className={index.title}>Welcome to Streamline SMP</h1>
       <div>
+        <p className={index.subtitle}>
+          Streamline SMP is a whitelist-only Minecraft server that offers an economy based on
+          diamonds, a thriving community, and trust-based rules. With no claiming restrictions and
+          over 100 players, there&apos;s always someone to play with.
+        </p>
         <div className={index.grid}>
           {blocks.map((block, index) => (
             <Block {...block} key={index} />
