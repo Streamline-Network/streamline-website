@@ -23,7 +23,7 @@ export const authOptions: AuthOptions = {
         session.role = 'user'
 
         await setDoc(
-          doc(db, 'users', token.sub!),
+          docRef,
           {
             role: 'user',
           },
