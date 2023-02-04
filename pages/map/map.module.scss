@@ -1,34 +1,25 @@
-@use "../../styles/mixins.scss" as mixins;
+@use '../../styles/mixins.scss' as mixins;
 
-.mapFrame {
-	border: 1px solid #000;
-	height: calc(100% - 2px);
-	width: 100%;
-}
+.container {
+  padding: 40px;
+  margin: 40px;
 
-.loading {
-	> h1 {
-		text-transform: uppercase;
-	}
-}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
-.tempWarning {
-	padding: 40px;
-	margin: 40px;
+  text-align: center;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
+  > h1 {
+    text-transform: uppercase;
+  }
 
-	text-align: center;
-
-	> h1 {
-		text-transform: uppercase;
-	}
-
-	> a {
-		@include mixins.button;
-		margin-top: 30px;
-	}
+  > .button {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    @include mixins.button;
+    margin-top: 30px;
+  }
 }
