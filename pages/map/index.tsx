@@ -15,11 +15,16 @@ export default function Map() {
         />
         <meta name="keywords" content="Minecraft server map" />
       </Head>
-      <section className={map.tempWarning}>
+      {/* <section className={map.tempWarning}>
         <h1>We apologize but this page isn&lsquo;t set-up yet.</h1>
         <Link href={'/'}>Return home</Link>
-      </section>
-      <iframe className={map.mapFrame} src={'http://dynmap.streamlinesmp.com/'} />
+      </section> */}
+      <div className={map.mapWrapper}>
+        <iframe
+          className={map.mapFrame}
+          src="http://104.238.222.147:7782"
+          allow="unsafe-inline; unsafe-eval"></iframe>
+      </div>
     </>
   )
 }
