@@ -5,6 +5,13 @@ import { authOptions } from '../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth/next'
 
+//! POSSIBLE IDEA:
+// Make a system that lets me say what properties can be accessed by what role,
+// then all the properties that are not specified will be programmatically not allowed.
+
+// This would make all of this reparative code be generated programmatically!
+//! --- --- ---
+
 const SERVER_UNEXPECTED_ERROR =
   'Something unexpected went wrong with the server, please report this to the Streamline SMP owner.'
 const COULD_NOT_FIND_DOCUMENT =
