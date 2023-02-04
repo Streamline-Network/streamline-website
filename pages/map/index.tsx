@@ -1,23 +1,19 @@
-import { useEffect, useRef } from 'react'
-
 import Head from 'next/head'
 import Link from 'next/link'
 import map from './map.module.scss'
+import { useState } from 'react'
 
 export default function Map() {
-  /*
-	const url = process.env.MAP_URL || "";
-	const url = "https://example.com";
-	const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [hasTried, setHasTried] = useState(false)
+  const mapDomain = 'http://104.238.222.147:7782'
 
-	useEffect(() => {
-		console.log(iframeRef.current?.contentWindow);
-
-		iframeRef.current?.contentWindow?.addEventListener("DOMContentLoaded", () => {
-			console.log("something in the console");
-		});
-	}, []);
-	*/
+  function handleCLick() {
+    try {
+      window.open(mapDomain, '_blank')
+    } catch (err) {
+      setHasTried(true)
+    }
+  }
 
   return (
     <>
@@ -29,11 +25,29 @@ export default function Map() {
         />
         <meta name="keywords" content="Minecraft server map" />
       </Head>
-      <section className={map.tempWarning}>
-        <h1>We apologize but this page isn&lsquo;t set-up yet.</h1>
-        <Link href={'/'}>Return home</Link>
-      </section>
-      {/* <iframe ref={iframeRef} className={map.mapFrame} src={url} /> */}
+
+      {!hasTried ? (
+        <section className={map.container}>
+          <h1>Continue to map:</h1>
+          <button className={map.button} onClick={handleCLick}>
+            Go to map
+          </button>
+        </section>
+      ) : (
+        <section className={map.container}>
+          <h1>Something went wrong when getting the map. The server may be down.</h1>
+          <Link className={map.button} href={'/'}>
+            Return home
+          </Link>
+          <button
+            className={map.button}
+            onClick={() => {
+              setHasTried(false)
+            }}>
+            Try again
+          </button>
+        </section>
+      )}
     </>
   )
 }

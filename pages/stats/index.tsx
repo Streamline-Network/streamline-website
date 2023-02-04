@@ -1,8 +1,20 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import stats from './stats.module.scss'
+import { useState } from 'react'
 
-export default function Stats({}: StatsProps) {
+export default function Map() {
+  const [hasTried, setHasTried] = useState(false)
+  const mapDomain = 'http://104.238.222.147:7781'
+
+  function handleCLick() {
+    try {
+      window.open(mapDomain, '_blank')
+    } catch (err) {
+      setHasTried(true)
+    }
+  }
+
   return (
     <>
       <Head>
@@ -15,13 +27,29 @@ export default function Stats({}: StatsProps) {
         />
         <meta name="keywords" content="Minecraft server stats" />
       </Head>
-      <section className={stats.tempWarning}>
-        <h1>We apologize but this page isn&lsquo;t set-up yet.</h1>
-        <Link href={'/'}>Return home</Link>
-      </section>
-      {/* <iframe ref={iframeRef} className={map.mapFrame} src={url} /> */}
+
+      {!hasTried ? (
+        <section className={stats.container}>
+          <h1>Continue to stats:</h1>
+          <button className={stats.button} onClick={handleCLick}>
+            Go to stats
+          </button>
+        </section>
+      ) : (
+        <section className={stats.container}>
+          <h1>Something went wrong when getting the stats. The server may be down.</h1>
+          <Link className={stats.button} href={'/'}>
+            Return home
+          </Link>
+          <button
+            className={stats.button}
+            onClick={() => {
+              setHasTried(false)
+            }}>
+            Try again
+          </button>
+        </section>
+      )}
     </>
   )
 }
-
-interface StatsProps {}
