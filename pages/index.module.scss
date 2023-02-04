@@ -7,6 +7,14 @@
   text-transform: uppercase;
 }
 
+.subtitle {
+  text-align: center;
+  padding: 20px;
+  background-color: var(--btn-color);
+  border-radius: 20px;
+  font-size: 1.4rem;
+}
+
 .grid {
   background-color: var(--btn-color);
   border-radius: 20px;
