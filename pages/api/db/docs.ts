@@ -1,6 +1,7 @@
 import { DocumentData, DocumentReference, doc, getDoc } from 'firebase/firestore'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+import { Roles } from './../../../types/index.d'
 import { authOptions } from '../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth/next'
@@ -38,66 +39,6 @@ async function getData(
  * `PUT` is for just requesting data and `POST` is for changing data.
  */
 const handler = async (req: CustomRequest, res: NextApiResponse) => {
-  if (!(req.method === 'PUT' || req.method === 'POST')) {
-    return res.status(405).send({ error: WRONG_METHOD })
-  }
-
-  const session = await getServerSession(req, res, authOptions)
-
-  if (!session) return res.status(401).send({ error: NOT_AUTHENTICATED })
-
-  const reqBody: DocsReqBody = JSON.parse(req.body)
-
-  // Logic for permissions
-
-  if ((req.method = 'PUT')) {
-    // Ensuring the user requested a valid collection.
-    // if (!(reqBody.collection === 'accounts')) return res.status(403).send({ error: NOT_AUTHORIZED })
-    switch (reqBody.collection) {
-      case 'accounts': {
-        // Ensuring the user has sufficient roles for this collection
-        if (session.role !== 'admin') return res.status(403).send({ error: NOT_AUTHORIZED })
-
-        // Ensuring the user requested a valid document.
-        if (reqBody.document !== 'userId')
-          return res.status(403).send({ error: NOT_AUTHORIZED, debug: reqBody.collection })
-
-        const finalData = await getData(
-          doc(db, reqBody.collection, reqBody.uniqueId),
-          res,
-          reqBody.document
-        )
-
-        return res.status(200).send({ data: finalData })
-      }
-      case 'users': {
-        if (reqBody.documentOrCollection.type === 'document') {
-          // TODO make all valid checks use arrays
-          const allowedDocuments = ['image', 'name', 'role']
-
-          // Ensuring the user requested a valid document.
-          if (!allowedDocuments.includes(reqBody.documentOrCollection.document))
-            return res.status(403).send({ error: NOT_AUTHORIZED })
-
-          const finalData = await getData(
-            doc(db, reqBody.collection, reqBody.userId),
-            res,
-            reqBody.documentOrCollection.document
-          )
-
-          return res.status(200).send({ data: finalData })
-        }
-
-        if (reqBody.documentOrCollection.type === 'collection') {
-          // TODO
-        }
-      }
-      default: {
-        return res.status(403).send({ error: NOT_AUTHORIZED })
-      }
-    }
-  }
-
   return res.status(500).send({ error: SERVER_UNEXPECTED_ERROR })
 }
 
@@ -129,5 +70,28 @@ export type DocsReqBody =
       uniqueId: string
     }
 
-// if (session.role !== 'admin')
-// return res.status(403).send({ error: 'You are not authorized to make this request.' })
+type Segment =
+  | {
+      type: 'collection'
+
+      collectionId: string
+      segment: Segment
+
+      specialCases: [
+        {
+          type: 'user-id-must-be-identical'
+          rolesAppliedTo: Roles[]
+        }
+      ]
+
+      readPermissions: Roles[]
+      writePermissions: Roles[]
+    }
+  | {
+      type: 'document'
+
+      documentId: string[]
+
+      readPermissions: Roles[]
+      writePermissions: Roles[]
+    }
