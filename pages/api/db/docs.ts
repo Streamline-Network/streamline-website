@@ -1,4 +1,4 @@
-import { DocumentData, DocumentReference, doc, getDoc } from 'firebase/firestore'
+import { DocumentData, DocumentReference, collection, doc, getDoc } from 'firebase/firestore'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { Roles } from './../../../types/index.d'
@@ -20,6 +20,57 @@ const COULD_NOT_FIND_DOCUMENT =
 const WRONG_METHOD = 'Only "GET" and "POST" methods are supported by this API.'
 const NOT_AUTHENTICATED = 'Authentication is required to make this request.'
 const NOT_AUTHORIZED = 'You are not authorized to make this request.'
+
+const permissionsConfig: Segment[] = [
+  {
+    type: 'collection',
+    collectionId: 'accounts',
+
+    readPermissions: ['admin'],
+  },
+  {
+    type: 'collection',
+    collectionId: 'users',
+
+    readPermissions: ['user', 'reviewer', 'admin'],
+
+    specialCases: [
+      {
+        type: 'user-id-must-be-identical',
+        rolesAppliedTo: ['user'],
+      },
+    ],
+
+    segment: {
+      type: 'collection',
+      collectionId: 'forms',
+
+      readPermissions: ['user', 'reviewer', 'admin'],
+      writePermissions: ['user', 'admin'],
+
+      segment: {
+        type: 'document',
+
+        fieldPermissions: [
+          {
+            fieldId: 'acceptanceState',
+
+            writePermissions: ['reviewer', 'admin'],
+            readPermissions: ['user', 'reviewer', 'admin'],
+          },
+          {
+            fieldId: 'answers',
+
+            writePermissions: ['user', 'admin'],
+            readPermissions: ['user', 'reviewer', 'admin'],
+          },
+        ],
+      },
+    },
+  },
+]
+
+function permissionHandler(permissionsConfig: Segment, req: CustomRequest) {}
 
 async function getData(
   docRef: DocumentReference<DocumentData>,
@@ -48,50 +99,105 @@ interface CustomRequest extends NextApiRequest {
   method: 'PUT' | 'POST' | string
 }
 
-export type DocsReqBody =
-  | {
-      collection: 'users'
-      userId: string
-
-      documentOrCollection:
-        | { type: 'document'; document: 'role' | 'image' | 'name' }
-        | {
-            type: 'collection'
-            collection: {
-              collectionName: 'forms'
-              document: 'acceptanceState' | 'answers'
-              content?: string
-            }
-          }
-    }
-  | {
-      collection: 'accounts'
-      document: 'userId'
-      uniqueId: string
-    }
-
 type Segment =
   | {
       type: 'collection'
 
       collectionId: string
-      segment: Segment
+      segment?: Segment
 
-      specialCases: [
+      specialCases?: [
         {
           type: 'user-id-must-be-identical'
           rolesAppliedTo: Roles[]
         }
       ]
 
-      readPermissions: Roles[]
-      writePermissions: Roles[]
+      readPermissions?: Roles[]
+      writePermissions?: Roles[]
     }
   | {
       type: 'document'
 
-      documentId: string[]
+      fieldPermissions: {
+        fieldId: string
 
-      readPermissions: Roles[]
-      writePermissions: Roles[]
+        readPermissions?: Roles[]
+        writePermissions?: Roles[]
+      }[]
     }
+
+type ReqBody = { type: 'read'; path: reqReadSegment } | { type: 'write'; path: reqWriteSegment }
+
+type reqReadSegment =
+  | {
+      type: 'collection'
+
+      collectionId: string
+      segment?: reqReadSegment
+    }
+  | {
+      type: 'document'
+
+      documentId: string
+      segment?: reqReadSegment
+
+      fields?: string[]
+    }
+
+type reqWriteSegment =
+  | {
+      type: 'collection'
+
+      collectionId: string
+      segment?: reqWriteSegment
+    }
+  | {
+      type: 'document'
+
+      documentId: string
+      segment?: reqWriteSegment
+
+      field?: string
+      content?: any
+    }
+
+const test: ReqBody = {
+  type: 'read',
+  path: {
+    type: 'collection',
+    collectionId: 'users',
+
+    segment: {
+      type: 'document',
+      documentId: 'lwRobA9rEAeC5zedIPir',
+
+      fields: ['email', 'name'],
+    },
+  },
+}
+
+const test2: ReqBody = {
+  type: 'read',
+  path: {
+    type: 'collection',
+    collectionId: 'users',
+
+    segment: {
+      type: 'document',
+      documentId: 'lwRobA9rEAeC5zedIPir',
+
+      segment: {
+        type: 'collection',
+        collectionId: 'forms',
+
+        segment: {
+          type: 'document',
+          documentId: 'joinForm',
+
+          fields: ['acceptanceState', 'answers'],
+        },
+      },
+    },
+  },
+}
