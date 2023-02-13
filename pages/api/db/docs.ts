@@ -70,7 +70,87 @@ const permissionsConfig: Segment[] = [
   },
 ]
 
-function permissionHandler(permissionsConfig: Segment, req: CustomRequest) {}
+const testWriteReq: ReqBody = {
+  type: 'read',
+  path: {
+    type: 'collection',
+    collectionId: 'users',
+
+    segment: {
+      type: 'document',
+      documentId: 'lwRobA9rEAeC5zedIPir',
+
+      field: 'name',
+    },
+  },
+}
+
+const testWriteReqNested: ReqBody = {
+  type: 'read',
+  path: {
+    type: 'collection',
+    collectionId: 'users',
+
+    segment: {
+      type: 'document',
+      documentId: 'lwRobA9rEAeC5zedIPir',
+
+      segment: {
+        type: 'collection',
+        collectionId: 'forms',
+
+        segment: {
+          type: 'document',
+          documentId: 'joinForm',
+
+          field: 'acceptanceState',
+        },
+      },
+    },
+  },
+}
+
+const testReadReqNested: ReqBody = {
+  type: 'write',
+  path: {
+    type: 'collection',
+    collectionId: 'users',
+
+    segment: {
+      type: 'document',
+      documentId: 'lwRobA9rEAeC5zedIPir',
+
+      segment: {
+        type: 'collection',
+        collectionId: 'forms',
+
+        segment: {
+          type: 'document',
+          documentId: 'joinForm',
+
+          field: 'OwO',
+          content: 'wd',
+        },
+      },
+    },
+  },
+}
+
+function isAuthorized(config: Segment[], reqBody: ReqBody) {
+  function findRelatedConfig(document: string) {
+    function recursiveFindDocument() {}
+
+    for (const configEntry of config) {
+      if (configEntry.type === 'document') break
+    }
+  }
+
+  function canRead(segment: Segment) {
+    if (segment.type === 'collection') {
+      segment.collectionId
+    }
+  }
+}
 
 async function getData(
   docRef: DocumentReference<DocumentData>,
@@ -97,6 +177,7 @@ export default handler
 
 interface CustomRequest extends NextApiRequest {
   method: 'PUT' | 'POST' | string
+  body: ReqBody
 }
 
 type Segment =
@@ -142,7 +223,7 @@ type reqReadSegment =
       documentId: string
       segment?: reqReadSegment
 
-      fields?: string[]
+      field?: string
     }
 
 type reqWriteSegment =
@@ -161,43 +242,3 @@ type reqWriteSegment =
       field?: string
       content?: any
     }
-
-const test: ReqBody = {
-  type: 'read',
-  path: {
-    type: 'collection',
-    collectionId: 'users',
-
-    segment: {
-      type: 'document',
-      documentId: 'lwRobA9rEAeC5zedIPir',
-
-      fields: ['email', 'name'],
-    },
-  },
-}
-
-const test2: ReqBody = {
-  type: 'read',
-  path: {
-    type: 'collection',
-    collectionId: 'users',
-
-    segment: {
-      type: 'document',
-      documentId: 'lwRobA9rEAeC5zedIPir',
-
-      segment: {
-        type: 'collection',
-        collectionId: 'forms',
-
-        segment: {
-          type: 'document',
-          documentId: 'joinForm',
-
-          fields: ['acceptanceState', 'answers'],
-        },
-      },
-    },
-  },
-}

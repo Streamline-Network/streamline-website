@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
-import profileButton from './profile-button.module.scss'
+import profileButton from './profile.module.scss'
 import profilePlaceholder from './images/profile-placeholder.webp'
 
 export default function ProfileButton({}: ProfileButtonProps) {
@@ -38,7 +38,12 @@ export default function ProfileButton({}: ProfileButtonProps) {
     return items.map((item, index) => {
       return (
         <li key={index}>
-          <Link className={profileButton.button} href={item.link}>
+          <Link
+            onClick={() => {
+              setClicked(false)
+            }}
+            className={profileButton.button}
+            href={item.link}>
             {item.name}
           </Link>
         </li>
