@@ -1,10 +1,10 @@
 import '../styles/style.scss'
 
-import AnalyticsWrapper from '../components/analytics/analytics'
+import AnalyticsWrapper from '../components/layout/analytics/analytics'
 import type { AppProps } from 'next/app'
-import Banners from '../components/banners/banners'
-import Footer from '../components/footer/footer'
-import Header from '../components/header/header'
+import Banners from '../components/layout/banners/banners'
+import Footer from '../components/layout/footer/footer'
+import Header from '../components/layout/header/header'
 import Wrapper from '../components/wrapper'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {

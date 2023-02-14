@@ -1,4 +1,4 @@
-import TitleBlock, { BlockProps } from '../components/title-block/title-block'
+import TitleBlock, { BlockProps } from '../components/fragments/title-block/title-block'
 
 import Head from 'next/head'
 import Link from 'next/link'

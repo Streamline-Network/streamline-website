@@ -1,7 +1,7 @@
-import { BlockToggle, BlockToggles } from 'components/blocks/blocks'
+import { BlockToggle, BlockToggles } from 'components/fragments/blocks/blocks'
 
 import Head from 'next/head'
-import { LS_KEY } from 'components/banners/banners'
+import { LS_KEY } from 'components/layout/banners/banners'
 import classnames from 'classnames'
 import settings from './settings.module.scss'
 
