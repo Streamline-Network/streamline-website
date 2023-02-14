@@ -6,11 +6,16 @@ import Link from 'next/link'
 import profileButton from './profile.module.scss'
 import profilePlaceholder from './images/profile-placeholder.webp'
 
-export default function ProfileButton({}: ProfileButtonProps) {
+export default function ProfileButton({ toggle }: ProfileButtonProps) {
   const { data: session } = useSession()
   const [isClicked, setClicked] = useState(false)
   const ref = useRef<HTMLElement>(null)
   const ref2 = useRef<HTMLImageElement>(null)
+
+  const items = [
+    { name: 'Application', link: '/account/apply' },
+    { name: 'Settings', link: '/account/settings' },
+  ]
 
   const handleOutsideClick = (e: Event) => {
     if (
@@ -29,12 +34,12 @@ export default function ProfileButton({}: ProfileButtonProps) {
     setClicked(!isClicked)
   }
 
-  const createItems = () => {
-    const items = [
-      { name: 'Application', link: '/account/apply' },
-      { name: 'Settings', link: '/account/settings' },
-    ]
+  const handleLogOut = async () => {
+    await signOut()
+    window.open('/', '_top')
+  }
 
+  const createItems = () => {
     return items.map((item, index) => {
       return (
         <li key={index}>
@@ -52,7 +57,7 @@ export default function ProfileButton({}: ProfileButtonProps) {
   }
 
   return (
-    <li>
+    <li className={profileButton.profileWrapper}>
       {session ? (
         <>
           <div ref={ref2} onClick={() => handleClick()}>
@@ -64,16 +69,27 @@ export default function ProfileButton({}: ProfileButtonProps) {
               height={30}
             />
           </div>
-          <a onClick={() => signIn('discord')} className={profileButton.profileButton}>
-            Account
+
+          {items.map(item => (
+            <Link
+              onClick={() => toggle(false)}
+              key={item.name}
+              href={item.link}
+              className={profileButton.profileButton}>
+              {item.name}
+            </Link>
+          ))}
+          <a onClick={handleLogOut} className={profileButton.profileButton}>
+            Sign Out
           </a>
+
           {isClicked ? (
             <nav ref={ref} className={profileButton.dropdown}>
               <ul>
                 {createItems()}
                 <li>
-                  <a className={profileButton.button} onClick={() => signOut()}>
-                    Logout
+                  <a className={profileButton.button} onClick={handleLogOut}>
+                    Sign Out
                   </a>
                 </li>
               </ul>
@@ -82,11 +98,13 @@ export default function ProfileButton({}: ProfileButtonProps) {
         </>
       ) : (
         <a onClick={() => signIn('discord')} className={profileButton.loginButton}>
-          Login
+          Log in
         </a>
       )}
     </li>
   )
 }
 
-interface ProfileButtonProps {}
+interface ProfileButtonProps {
+  toggle: (open?: boolean) => void
+}

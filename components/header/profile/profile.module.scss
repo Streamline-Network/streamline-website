@@ -1,58 +1,68 @@
-@use "/styles/mixins.scss";
+@use '/styles/mixins.scss';
 
 .profileImg {
-	border-radius: 50%;
-	margin-top: 4px;
-	cursor: pointer;
+  border-radius: 50%;
+  margin-top: 4px;
+  cursor: pointer;
 
-	@include mixins.mobile {
-		display: none;
-	}
+  @include mixins.mobile {
+    display: none;
+  }
 }
 
 .loginButton {
-	cursor: pointer;
+  cursor: pointer;
+}
+
+.profileWrapper {
+  @include mixins.mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-inline: 10px;
+  }
 }
 
 .profileButton {
-	display: none;
+  display: none;
 
-	@include mixins.mobile {
-		display: block;
-	}
+  @include mixins.mobile {
+    cursor: pointer;
+    display: block;
+  }
 }
 
 .dropdown {
-	position: absolute;
-	top: 100%;
-	right: 5%;
+  position: absolute;
+  top: 100%;
+  right: 5%;
 
-	padding: 20px;
-	border-radius: 10px;
-	box-shadow: 0 0 15px 0 black;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 0 black;
 
-	background-color: var(--btn-color);
+  background-color: var(--btn-color);
 
-	> ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
+  > ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 
-		display: grid;
-		gap: 10px;
+    display: grid;
+    gap: 10px;
 
-		> li {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-		}
-	}
+    > li {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
 .button {
-	@include mixins.button;
-	text-transform: uppercase;
-	padding-inline: 20px;
+  @include mixins.button;
+  text-transform: uppercase;
+  padding-inline: 20px;
 
-	cursor: pointer;
+  cursor: pointer;
 }

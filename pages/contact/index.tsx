@@ -4,8 +4,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import classnames from 'classnames'
 import contact from './contact.module.scss'
-import discord from './images/discord.png'
-import email from './images/email.png'
+import discord from '/images/discord.png'
+import email from '/images/email.png'
 
 export default function Contact() {
   const blocks: Block[] = [

@@ -16,21 +16,21 @@ export default function Header({}: HeaderProps) {
 
   const path = usePathname()
   const [isOpen, setIsOpen] = React.useState(false)
-  const toggle = (_event?: MouseEvent, open?: false) => {
+  const toggle = (open?: boolean) => {
     setIsOpen(isOpen => {
-      document && (document.body.style.overflow = open ?? (!document || !isOpen) ? 'hidden' : '') // TODO: use CSS :has() selector
+      document && (document.body.style.overflow = open ?? (!document || !isOpen) ? 'hidden' : '')
       return open ?? !isOpen
     })
   }
 
   return (
     <header className={header.header}>
-      <Link onClick={() => toggle(undefined, false)} href="/">
+      <Link onClick={() => toggle(false)} href="/">
         Streamline SMP
       </Link>
 
       <nav className={classnames({ [header.open]: isOpen })}>
-        <button onClick={toggle}>
+        <button onClick={() => toggle()}>
           <span />
           <span />
           <span />
@@ -38,12 +38,12 @@ export default function Header({}: HeaderProps) {
         <ul>
           {pages.map(([name, url], i) => (
             <li key={i} className={classnames({ [header.currentPg]: url === path })}>
-              <Link onClick={() => toggle(undefined, false)} href={url}>
+              <Link onClick={() => toggle(false)} href={url}>
                 {name}
               </Link>
             </li>
           ))}
-          <ProfileButton />
+          <ProfileButton toggle={toggle} />
         </ul>
       </nav>
     </header>
