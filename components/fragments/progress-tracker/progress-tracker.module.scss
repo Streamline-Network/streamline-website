@@ -1,0 +1,70 @@
+.wrapper {
+  --indicator-width: 200px;
+
+  background-color: var(--btn-color);
+  border-radius: 10px;
+  position: relative;
+}
+
+.line {
+  --percent-filled: 0%;
+
+  transition: all 200ms ease;
+
+  height: 20px;
+  width: calc(100% - (((var(--indicator-width)) * 2)));
+  margin-inline: calc(var(--indicator-width));
+
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: linear-gradient(90deg, #fff var(--percent-filled), #202020 var(--percent-filled));
+}
+
+.indicatorWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px;
+
+  > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+  }
+}
+
+.indicator {
+  z-index: 0;
+
+  display: block;
+  width: var(--indicator-width);
+  padding: 20px 10px;
+  height: 70px;
+  border-radius: 100vh;
+  background-color: var(--bg-color);
+
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 200ms;
+  transition-delay: 500ms;
+}
+
+.fill {
+  background-color: white;
+  color: var(--bg-color);
+}

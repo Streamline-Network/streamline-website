@@ -5,12 +5,18 @@ import Image from 'next/image'
 import Link from 'next/link'
 import profileButton from './profile.module.scss'
 import profilePlaceholder from './images/profile-placeholder.webp'
+import { useRouter } from 'next/router'
 
 export default function ProfileButton({ toggle }: ProfileButtonProps) {
   const { data: session } = useSession()
   const [isClicked, setClicked] = useState(false)
   const ref = useRef<HTMLElement>(null)
   const ref2 = useRef<HTMLImageElement>(null)
+  const router = useRouter()
+
+  const callbackUrl = (router.query.callbackUrl ?? '/') as string
+
+  console.log(callbackUrl)
 
   const items = [
     { name: 'Application', link: '/account/apply' },
@@ -37,6 +43,10 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
   const handleLogOut = async () => {
     await signOut()
     window.open('/', '_top')
+  }
+
+  const handleSignIn = async () => {
+    await signIn('discord', { callbackUrl })
   }
 
   const createItems = () => {
@@ -97,7 +107,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
           ) : null}
         </>
       ) : (
-        <a onClick={() => signIn('discord')} className={profileButton.loginButton}>
+        <a onClick={handleSignIn} className={profileButton.loginButton}>
           Log in
         </a>
       )}

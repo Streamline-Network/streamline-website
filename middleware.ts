@@ -1,5 +1,7 @@
-export { default } from 'next-auth/middleware'
+import authCheck, { NextRequestWithAuth } from 'next-auth/middleware'
 
-export const config = {
-  matcher: '/account/:path*',
+export function middleware(request: NextRequestWithAuth) {
+  if (request.nextUrl.pathname.startsWith('/account')) {
+    return authCheck(request)
+  }
 }

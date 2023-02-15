@@ -20,7 +20,7 @@ export default function SignIn({
       <Head>
         <title>Sign in to Streamline SMP</title>
       </Head>
-      <h1 className={classnames('blue', signin.title)}>Sign In</h1>
+      <h1 className={classnames('orange', signin.title)}>Sign In</h1>
       <div>
         <div className={signin.informationBlock}>
           <h2>You must sign in to continue</h2>

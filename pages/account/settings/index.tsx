@@ -48,11 +48,11 @@ export default function Stats({}: StatsProps) {
       <h1 className={classnames('purple', settings.title)}>Settings</h1>
 
       <div>
-        <h1 className={settings.subheader}>Site</h1>
+        <h2 className={settings.subheader}>Site</h2>
         <BlockToggles blockArr={controls} />
-        <h1 className={settings.subheader}>Profile</h1>
+        <h2 className={settings.subheader}>Profile</h2>
         <div className={settings.informationBlock}>
-          <h2>Your profile is connected</h2>
+          <h3>Your profile is connected</h3>
           <p>
             Your profile is connected to Discord, to edit your profile go to{' '}
             <a target="_blank" rel="noreferrer" href="https://discord.com/">

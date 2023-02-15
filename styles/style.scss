@@ -1,5 +1,11 @@
 @use './mixins.scss' as mixins;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 :root {
   @include mixins.dark-theme {
     --bg-color: #202020;

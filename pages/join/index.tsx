@@ -89,7 +89,7 @@ export default function Join({}: JoinProps) {
 
   const mores: More[] = [
     {
-      color: 'green',
+      color: 'purple',
       title: 'Was I accepted?',
       description:
         'The way that you know if your application has been accepted is you will receive a message that says you have been whitelisted in the #general channel. If you have been denied, you will get a private DM from a staff member saying that your application has not been accepted. However, you are more than welcome to redo your application.',
