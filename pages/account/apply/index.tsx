@@ -25,7 +25,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       return { redirect: { destination: context.resolvedUrl + '/status' } }
     case 2:
       return { redirect: { destination: context.resolvedUrl + '/reviewed' } }
+    default:
+      return { redirect: { destination: context.resolvedUrl + '/submit' } }
   }
-
-  return { props: { serverSession: session } }
 }
