@@ -1,0 +1,16 @@
+@use '/styles/mixins.scss' as mixins;
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 2rem;
+}
+
+.button {
+  cursor: pointer;
+  border: none;
+  @include mixins.button;
+  width: 100%;
+}

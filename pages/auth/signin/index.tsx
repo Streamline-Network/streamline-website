@@ -1,4 +1,5 @@
-import { GetServerSidePropsContext } from 'next'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+
 import Head from 'next/head'
 import Image from 'next/image'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
@@ -8,7 +9,9 @@ import { getServerSession } from 'next-auth'
 import { signIn as signInFunc } from 'next-auth/react'
 import signin from './signin.module.scss'
 
-export default function Stats({}: StatsProps) {
+export default function Stats({
+  callbackUrl,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <Head>
@@ -25,7 +28,7 @@ export default function Stats({}: StatsProps) {
             <Image width="300" src={discord} alt="The Discord logo" />
             <span>Sign in with Discord to continue.</span>
           </div>
-          <button onClick={() => signInFunc('discord')} className={signin.button}>
+          <button onClick={() => signInFunc('discord', { callbackUrl })} className={signin.button}>
             Sign in with Discord
           </button>
         </div>
@@ -33,8 +36,6 @@ export default function Stats({}: StatsProps) {
     </>
   )
 }
-
-interface StatsProps {}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -46,5 +47,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return { redirect: { destination: '/' } }
   }
 
-  return { props: { ...{} } }
+  const callbackUrl = (context.query.callbackUrl ?? '/') as string
+
+  return { props: { callbackUrl } }
 }

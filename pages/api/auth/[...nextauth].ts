@@ -1,9 +1,40 @@
+import {
+  DocumentData,
+  DocumentReference,
+  DocumentSnapshot,
+  doc,
+  getDoc,
+  setDoc,
+} from 'firebase/firestore'
 import NextAuth, { AuthOptions } from 'next-auth'
 import { db, firebaseConfig } from './../../../config/firebase'
-import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 import DiscordProvider from 'next-auth/providers/discord'
 import { FirestoreAdapter } from '@next-auth/firebase-adapter'
+
+type DBDefaults = {
+  [key: string]: any
+}
+
+const DB_DEFAULTS: DBDefaults = {
+  role: 'user',
+  applicationStage: 0,
+}
+
+function checkForDBData(
+  docSnap: DocumentSnapshot<DocumentData>,
+  docRef: DocumentReference<DocumentData>
+) {
+  Object.keys(DB_DEFAULTS).forEach(key => {
+    if (docSnap.data()![key] === undefined) {
+      setDoc(docRef, { [key]: DB_DEFAULTS[key] }, { merge: true })
+    }
+  })
+}
+
+async function setDBDefaults(docRef: DocumentReference<DocumentData>) {
+  await setDoc(docRef, DB_DEFAULTS, { merge: true })
+}
 
 export const authOptions: AuthOptions = {
   providers: [
@@ -19,20 +50,16 @@ export const authOptions: AuthOptions = {
       const docSnap = await getDoc(docRef)
       const dataExists = docSnap.exists()
 
-      if (!dataExists || !docSnap.data().role) {
+      if (!dataExists) {
         session.role = 'user'
+        session.applicationStage = 0
 
-        await setDoc(
-          docRef,
-          {
-            role: 'user',
-          },
-          { merge: true }
-        )
+        await setDBDefaults(docRef)
       } else {
+        checkForDBData(docSnap, docRef)
         session.role = docSnap.data().role
+        session.applicationStage = docSnap.data().applicationStage
       }
-
       return session
     },
   },
