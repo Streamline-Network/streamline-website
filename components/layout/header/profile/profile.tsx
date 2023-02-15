@@ -108,7 +108,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
         </>
       ) : (
         <a onClick={handleSignIn} className={profileButton.loginButton}>
-          Log in
+          Sign in
         </a>
       )}
     </li>
