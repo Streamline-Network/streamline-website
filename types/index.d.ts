@@ -9,3 +9,11 @@ declare module 'next-auth' {
     applicationStage: 0 | 1 | 2 | 3
   }
 }
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    [key: string]: void
+    role: Roles
+    applicationStage: 0 | 1 | 2 | 3
+  }
+}

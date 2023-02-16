@@ -10,22 +10,3 @@ export default function Apply() {
     </div>
   )
 }
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const session = await getServerSession(context.req, context.res, authOptions)
-
-  if (!session) {
-    return { redirect: { destination: '/' } }
-  }
-
-  switch (session.applicationStage) {
-    case 0:
-      return { redirect: { destination: context.resolvedUrl + '/submit' } }
-    case 1:
-      return { redirect: { destination: context.resolvedUrl + '/status' } }
-    case 2:
-      return { redirect: { destination: context.resolvedUrl + '/reviewed' } }
-    default:
-      return { redirect: { destination: context.resolvedUrl + '/submit' } }
-  }
-}

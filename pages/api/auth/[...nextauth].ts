@@ -11,6 +11,7 @@ import { db, firebaseConfig } from './../../../config/firebase'
 
 import DiscordProvider from 'next-auth/providers/discord'
 import { FirestoreAdapter } from '@next-auth/firebase-adapter'
+import { JWT } from 'next-auth/jwt'
 
 type DBDefaults = {
   [key: string]: any
@@ -22,7 +23,7 @@ const DB_DEFAULTS: DBDefaults = {
 }
 
 async function loadFromDB(
-  session: Session,
+  token: JWT,
   docSnap: DocumentSnapshot<DocumentData>,
   docRef: DocumentReference<DocumentData>
 ) {
@@ -31,10 +32,16 @@ async function loadFromDB(
 
     if (docData === undefined) {
       await setDoc(docRef, { [key]: DB_DEFAULTS[key] }, { merge: true })
-      session[key] = DB_DEFAULTS[key]
+      token[key] = DB_DEFAULTS[key]
     } else {
-      session[key] = docData
+      token[key] = docData
     }
+  }
+}
+
+function copyToSession(session: Session, token: JWT) {
+  for (const key of Object.keys(DB_DEFAULTS)) {
+    session[key] = token[key]
   }
 }
 
@@ -47,12 +54,16 @@ export const authOptions: AuthOptions = {
   ],
   adapter: FirestoreAdapter(firebaseConfig),
   callbacks: {
-    async session({ session, token }) {
+    async jwt({ token }) {
       const docRef = doc(db, 'users', token.sub!)
       const docSnap = await getDoc(docRef)
 
-      await loadFromDB(session, docSnap, docRef)
+      await loadFromDB(token, docSnap, docRef)
 
+      return token
+    },
+    async session({ session, token }) {
+      copyToSession(session, token)
       return session
     },
   },

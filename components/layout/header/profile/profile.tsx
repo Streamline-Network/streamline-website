@@ -16,8 +16,6 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
 
   const callbackUrl = (router.query.callbackUrl ?? '/') as string
 
-  console.log(callbackUrl)
-
   const items = [
     { name: 'Application', link: '/account/apply' },
     { name: 'Settings', link: '/account/settings' },
