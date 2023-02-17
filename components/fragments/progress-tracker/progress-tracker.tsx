@@ -22,11 +22,14 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
 
     // Check if at the beginning or end step. If so, just scroll as much as possible.
     if (steps.length - 1 !== currentStepIndex || !currentSectionElem) {
-      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center' })
+      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'end' })
     } else {
       currentSectionElem
         ? wrapperElem.scrollTo({ left: wrapperElem.scrollWidth, behavior: 'smooth' })
         : wrapperElem.scrollTo({ left: 0, behavior: 'smooth' })
+
+      document.body.scrollTo({ top: 0, behavior: 'smooth' })
+      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
     }
 
     const previousPercentage = (() => {
