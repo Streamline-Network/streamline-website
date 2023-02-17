@@ -4,6 +4,8 @@
   background-color: var(--btn-color);
   border-radius: 10px;
   overflow-x: auto;
+
+  border: var(--btn-color) 10px solid;
 }
 
 .indicatorWrapper {
@@ -14,7 +16,7 @@
   gap: 2rem;
   position: relative;
 
-  padding: 20px;
+  padding: 10px;
 
   min-width: max-content;
 
@@ -36,6 +38,7 @@
   margin-inline: calc(var(--indicator-width) - 5px);
 
   position: absolute;
+
   top: 50%;
   transform: translateY(-50%);
 
