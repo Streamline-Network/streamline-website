@@ -24,7 +24,34 @@
   margin: 0;
 
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 1.7rem;
+}
+
+.questionWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+
+  > span {
+    color: var(--light-gray);
+  }
+}
+
+.input {
+  background-color: var(--bg-color);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  font-family: inherit;
+  padding: 1rem;
+}
+
+.textarea {
+  resize: vertical;
+  height: 6.5rem;
 }
 
 .block p {

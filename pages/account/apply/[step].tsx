@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 
 import Head from 'next/head'
 import ProgressTracker from 'components/fragments/progress-tracker/progress-tracker'
+import Reviewed from 'components/fragments/application/reviewed'
+import Status from 'components/fragments/application/status'
+import Submit from 'components/fragments/application/submit'
 import apply from './apply.module.scss'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
@@ -18,11 +21,26 @@ function StepSwitcher({ stage }: { stage?: number }) {
   if (stage === undefined) return <p>Loading...</p>
   switch (stage) {
     case 0:
-      return <h2 className={apply.subTitle}>Submit</h2>
+      return (
+        <>
+          <h2 className={apply.subTitle}>Apply to join</h2>
+          <Submit />
+        </>
+      )
     case 1:
-      return <h2 className={apply.subTitle}>Status</h2>
+      return (
+        <>
+          <h2 className={apply.subTitle}>Status</h2>
+          <Status />
+        </>
+      )
     case 2:
-      return <h2 className={apply.subTitle}>What&apos;s Next</h2>
+      return (
+        <>
+          <h2 className={apply.subTitle}>Reviewed</h2>
+          <Reviewed />
+        </>
+      )
     default:
       return <h2>Oh no, something went wrong!</h2>
   }

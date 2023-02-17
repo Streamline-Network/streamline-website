@@ -17,6 +17,15 @@ export default function Blocks({ blockArr }: BlockProps) {
   )
 }
 
+interface BlockProps {
+  blockArr: Block[]
+}
+
+export interface Block {
+  title: string
+  paragraphs: React.ReactNode[]
+}
+
 export function BlockToggles({ blockArr }: BlockToggleProps) {
   function control(block: BlockToggle) {
     switch (block.controlType) {
@@ -46,10 +55,6 @@ export function BlockToggles({ blockArr }: BlockToggleProps) {
   )
 }
 
-interface BlockProps {
-  blockArr: Block[]
-}
-
 interface BlockToggleProps {
   blockArr: BlockToggle[]
 }
@@ -63,7 +68,75 @@ export type BlockToggle = {
   | { controlType: 'message'; message: string }
 )
 
-export interface Block {
-  title: string
-  paragraphs: React.ReactNode[]
+export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
+  function input(question: Question) {
+    switch (question.type) {
+      case 'short-answer':
+        return (
+          <input
+            className={blocks.input}
+            placeholder={question.placeholderText || 'Answer here...'}
+          />
+        )
+      case 'paragraph':
+        return (
+          <textarea
+            className={classNames(blocks.input, blocks.textarea)}
+            placeholder={question.placeholderText || 'Answer here...'}
+          />
+        )
+    }
+
+    return <p>{question.type}</p>
+  }
+
+  return (
+    <div className={blocks.wrapper}>
+      {questions.map((question, i) => (
+        <div className={blocks.block} key={i}>
+          <div className={blocks.questionWrapper}>
+            <h3 className={blocks.title}>{(numbered ? `${i + 1}. ` : '') + question.question}</h3>
+            {question.required && <span>required</span>}
+          </div>
+
+          {question.description && <p>{question.description}</p>}
+          {input(question)}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+interface BlockFormProps {
+  numbered: boolean
+  questions: Question[]
+  autosaveCallback?: (formInfo: FormInfo) => void
+
+  submit: {
+    agreements?: { agreement: string; link?: string; required?: boolean }[]
+    submitCallback: (formInfo: FormInfo) => void | Error
+  }
+}
+
+export type Question = {
+  question: string
+  description?: string
+  required: boolean
+} & (
+  | { type: 'checkboxes' | 'multiple-choice'; options: string[] }
+  | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
+)
+
+export type FormInfo = {
+  submissionTime: number
+  lastUpdate: number
+  answers: {
+    question: Question
+    answer?: string | string[]
+  }[]
+}
+
+export type FormError = {
+  message: string
+  question?: Question
 }

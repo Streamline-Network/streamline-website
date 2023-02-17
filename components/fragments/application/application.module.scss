@@ -1,0 +1,10 @@
+@use '/styles/mixins.scss' as mixins;
+
+.wrapper {
+  background-color: var(--btn-color);
+  border-radius: 10px;
+}
+
+.informationBlock {
+  @include mixins.information-block;
+}
