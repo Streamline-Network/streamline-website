@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react'
+
 import Head from 'next/head'
 import ProgressTracker from 'components/fragments/progress-tracker/progress-tracker'
 import apply from './apply.module.scss'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 
 type Steps = { [key: string]: number }
 
@@ -13,15 +14,29 @@ export const STEPS: Steps = {
   reviewed: 2,
 }
 
-function StepSwitcher({ stage }: { stage: number }) {
-  return <h1>{stage}</h1>
+function StepSwitcher({ stage }: { stage?: number }) {
+  if (stage === undefined) return <p>Loading...</p>
+  switch (stage) {
+    case 0:
+      return <h2 className={apply.subTitle}>Submit</h2>
+    case 1:
+      return <h2 className={apply.subTitle}>Status</h2>
+    case 2:
+      return <h2 className={apply.subTitle}>What&apos;s Next</h2>
+    default:
+      return <h2>Oh no, something went wrong!</h2>
+  }
 }
 
 export default function Stats({}: StatsProps) {
-  const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const router = useRouter()
-
   const step = router.query.step as string
+  const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(undefined)
+
+  useEffect(() => {
+    if (step === undefined) return
+    setCurrentStepIndex(STEPS[step])
+  }, [step])
 
   return (
     <>
@@ -30,11 +45,24 @@ export default function Stats({}: StatsProps) {
       </Head>
       <h1
         onClick={() => {
-          setCurrentStepIndex(currentStepIndex + 1)
+          router.push(
+            {
+              pathname: '/account/apply/status',
+            },
+            undefined,
+            { shallow: true }
+          )
         }}
         onContextMenu={e => {
           e.preventDefault()
-          setCurrentStepIndex(currentStepIndex - 1)
+
+          router.push(
+            {
+              pathname: '/account/apply/submit',
+            },
+            undefined,
+            { shallow: true }
+          )
         }}
         className={classNames('red', apply.header)}>
         Application
@@ -43,10 +71,10 @@ export default function Stats({}: StatsProps) {
       <div className={apply.wrapper}>
         <ProgressTracker
           steps={['Apply', 'Applied', 'Application Reviewed', "What's next?"]}
-          currentStepIndex={currentStepIndex}
+          currentStepIndex={currentStepIndex === 2 ? 3 : currentStepIndex}
         />
 
-        <StepSwitcher stage={STEPS[step]} />
+        <StepSwitcher stage={currentStepIndex} />
       </div>
     </>
   )

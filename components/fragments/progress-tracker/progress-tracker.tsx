@@ -8,10 +8,13 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
   const indicatorWrapperRef = useRef(null)
   const lineRef = useRef(null)
 
-  if (currentStepIndex > steps.length - 1) currentStepIndex = steps.length - 1
-  if (currentStepIndex < 0) currentStepIndex = 0
+  if (currentStepIndex !== undefined) {
+    if (currentStepIndex > steps.length - 1) currentStepIndex = steps.length - 1
+    if (currentStepIndex < 0) currentStepIndex = 0
+  }
 
   useEffect(() => {
+    if (currentStepIndex === undefined) return
     const percent = (currentStepIndex / (steps.length - 1)) * 100
 
     const wrapperElem: HTMLDivElement = wrapperRef.current!
@@ -79,7 +82,7 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
             <span
               className={classNames(
                 progressTracker.indicator,
-                i <= currentStepIndex && progressTracker.fill
+                currentStepIndex !== undefined && i <= currentStepIndex && progressTracker.fill
               )}>
               {step}
             </span>
@@ -92,5 +95,5 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
 
 interface ProgressTrackerProps {
   steps: string[]
-  currentStepIndex: number
+  currentStepIndex?: number
 }

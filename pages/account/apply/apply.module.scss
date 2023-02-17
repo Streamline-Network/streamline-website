@@ -4,6 +4,10 @@
   margin-top: 2rem;
 }
 
+.subTitle {
+  @include mixins.subheader;
+}
+
 .header {
   @include mixins.title;
 }
