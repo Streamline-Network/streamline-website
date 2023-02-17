@@ -3,7 +3,27 @@
 
   background-color: var(--btn-color);
   border-radius: 10px;
+  overflow-x: auto;
+}
+
+.indicatorWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
   position: relative;
+
+  padding: 20px;
+
+  min-width: max-content;
+
+  > section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .line {
@@ -13,31 +33,13 @@
 
   height: 20px;
   width: calc(100% - (((var(--indicator-width)) * 2)));
-  margin-inline: calc(var(--indicator-width));
+  margin-inline: calc(var(--indicator-width) - 5px);
 
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
 
   background: linear-gradient(90deg, #fff var(--percent-filled), #202020 var(--percent-filled));
-}
-
-.indicatorWrapper {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 20px;
-
-  > section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    gap: 8px;
-  }
 }
 
 .indicator {
@@ -60,8 +62,8 @@
   align-items: center;
   justify-content: center;
 
-  transition: all 200ms;
-  transition-delay: 500ms;
+  transition: color 200ms, background 200ms;
+  transition-delay: 380ms;
 }
 
 .fill {
