@@ -29,7 +29,13 @@ export default function Stats({}: StatsProps) {
         <title>Apply to join</title>
       </Head>
       <h1
-        onClick={() => setCurrentStepIndex(currentStepIndex + 1)}
+        onClick={() => {
+          setCurrentStepIndex(currentStepIndex + 1)
+        }}
+        onContextMenu={e => {
+          e.preventDefault()
+          setCurrentStepIndex(currentStepIndex - 1)
+        }}
         className={classNames('red', apply.header)}>
         Application
       </h1>

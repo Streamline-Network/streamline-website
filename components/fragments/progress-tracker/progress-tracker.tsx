@@ -8,10 +8,10 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
   const indicatorWrapperRef = useRef(null)
   const lineRef = useRef(null)
 
-  useEffect(() => {
-    // Don't update anything if max step is already reached.
-    if (currentStepIndex > steps.length - 1) return
+  if (currentStepIndex > steps.length - 1) currentStepIndex = steps.length - 1
+  if (currentStepIndex < 0) currentStepIndex = 0
 
+  useEffect(() => {
     const percent = (currentStepIndex / (steps.length - 1)) * 100
 
     const wrapperElem: HTMLDivElement = wrapperRef.current!
@@ -20,22 +20,26 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
       indicatorWrapperElem.querySelectorAll<HTMLDivElement>('section')[currentStepIndex]!
     const lineElem: HTMLDivElement = lineRef.current!
 
+    const previousPercentage = (() => {
+      const x = lineElem.style.getPropertyValue('--percent-filled')
+      return parseInt(x.slice(0, x.length - 1))
+    })()
+
+    if (isNaN(previousPercentage))
+      return lineElem.style.setProperty('--percent-filled', percent + '%')
+
+    if (previousPercentage === null || previousPercentage === percent) return
+
     // Check if at the beginning or end step. If so, just scroll as much as possible.
     if (steps.length - 1 !== currentStepIndex || !currentSectionElem) {
-      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'end' })
+      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' })
     } else {
       currentSectionElem
         ? wrapperElem.scrollTo({ left: wrapperElem.scrollWidth, behavior: 'smooth' })
         : wrapperElem.scrollTo({ left: 0, behavior: 'smooth' })
 
-      document.body.scrollTo({ top: 0, behavior: 'smooth' })
-      document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+      wrapperElem.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
-
-    const previousPercentage = (() => {
-      const x = lineElem.style.getPropertyValue('--percent-filled')
-      return parseInt(x.slice(0, x.length - 1))
-    })()
 
     function tween() {
       let newValue = previousPercentage
@@ -50,13 +54,20 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
         lineElem.style.setProperty('--percent-filled', newValue + '%')
       }
 
-      incr()
+      function decr() {
+        newValue--
+        if (newValue > percent) {
+          setTimeout(decr)
+        } else {
+          newValue = percent
+        }
+        lineElem.style.setProperty('--percent-filled', newValue + '%')
+      }
+
+      previousPercentage < percent ? incr() : decr()
     }
 
-    lineElem.style.setProperty('--percent-filled', percent + '%')
-
-    if (!isNaN(previousPercentage) && previousPercentage !== null && previousPercentage !== percent)
-      tween()
+    tween()
   }, [currentStepIndex, steps.length])
 
   return (
