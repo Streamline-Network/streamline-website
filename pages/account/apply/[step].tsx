@@ -82,7 +82,7 @@ export default function Stats({}: StatsProps) {
             { shallow: true }
           )
         }}
-        className={classNames('red', apply.header)}>
+        className={classNames('blue', apply.header)}>
         Application
       </h1>
 
