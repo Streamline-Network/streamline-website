@@ -85,6 +85,23 @@ export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
             placeholder={question.placeholderText || 'Answer here...'}
           />
         )
+      case 'checkboxes':
+        return (
+          <div>
+            {question.options.map((option, i) => (
+              <div className={blocks.checkboxWrapper} key={i}>
+                <input type="checkbox" name={option} /> <span>{option}</span>
+              </div>
+            ))}
+          </div>
+        )
+      case 'minecraft-skin':
+        return (
+          <div className={blocks.minecraftSkinWrapper}>
+            <div className={blocks.minecraftSkin} />
+            <input className={blocks.input} placeholder={question.placeholderText} />
+          </div>
+        )
     }
 
     return <p>{question.type}</p>
@@ -103,6 +120,24 @@ export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
           {input(question)}
         </div>
       ))}
+      <div className={blocks.block}>
+        {submit.agreements?.map(({ agreement, link, required }, i) => (
+          <div className={blocks.checkboxWrapper} key={i}>
+            <input type="checkbox" name={agreement} />
+            {link ? (
+              <span>
+                <a target="_blank" rel="noreferrer" href={link}>
+                  {agreement}
+                </a>
+              </span>
+            ) : (
+              <span>{agreement}</span>
+            )}
+            {(required === undefined || required !== false) && '*'}
+          </div>
+        ))}
+        <button>Submit</button>
+      </div>
     </div>
   )
 }
@@ -114,7 +149,7 @@ interface BlockFormProps {
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
-    submitCallback: (formInfo: FormInfo) => void | Error
+    submitCallback: (formInfo: FormInfo) => void | FormError
   }
 }
 
@@ -125,6 +160,7 @@ export type Question = {
 } & (
   | { type: 'checkboxes' | 'multiple-choice'; options: string[] }
   | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
+  | { type: 'button'; buttonText: string; buttonCallback: () => void | FormError }
 )
 
 export type FormInfo = {

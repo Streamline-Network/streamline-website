@@ -61,6 +61,7 @@ export default function Stats({}: StatsProps) {
       <Head>
         <title>Apply to join</title>
       </Head>
+
       <h1
         onClick={() => {
           router.push(
