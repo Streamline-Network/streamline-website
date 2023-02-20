@@ -120,7 +120,7 @@ export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
           {input(question)}
         </div>
       ))}
-      <div className={blocks.block}>
+      <div className={classNames(blocks.block, blocks.submitWrapper)}>
         {submit.agreements?.map(({ agreement, link, required }, i) => (
           <div className={blocks.checkboxWrapper} key={i}>
             <input type="checkbox" name={agreement} />
