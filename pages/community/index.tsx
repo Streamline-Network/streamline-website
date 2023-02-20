@@ -78,7 +78,7 @@ export default function Community({}: CommunityProps) {
           classes: [community.button],
         },
         {
-          href: 'https://minecraft.buzz/vote/5307',
+          href: 'https://minecraft.buzz/vote/7012',
           src: checkbox,
           alt: 'MC Buzz',
           classes: [community.button],
