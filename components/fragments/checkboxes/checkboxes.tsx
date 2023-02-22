@@ -1,21 +1,25 @@
 import { Dispatch, SetStateAction } from 'react'
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 
 import checkboxes from './checkboxes.module.scss'
 
 export default function Checkboxes({
   direction,
   checkboxArray,
-  checkedCheckboxes,
-  setCheckedCheckboxes,
+  setCheckboxArray,
 }: CheckboxesProps) {
   return (
     <div className={checkboxes.wrapper}>
-      {checkboxArray.map((checkbox, i) => (
+      {checkboxArray.map(({ content, isChecked }, i) => (
         <div key={i}>
-          <input type="checkbox" name={checkbox} />
-          <span></span>
-          <span></span>
-          <label htmlFor={checkbox}>{checkbox}</label>
+          <input type="checkbox" name={content} />
+          <span>
+            <MdCheckBox />
+          </span>
+          <span>
+            <MdCheckBoxOutlineBlank />
+          </span>
+          <label htmlFor={content}>{content}</label>
         </div>
       ))}
     </div>
@@ -24,8 +28,11 @@ export default function Checkboxes({
 
 interface CheckboxesProps {
   direction: 'vertical' | 'horizontal' | 'auto'
-  checkboxArray: string[]
-  checkedCheckboxes: string[]
-  setCheckedCheckboxes: Dispatch<SetStateAction<string[]>>
-  onChangeCallback: (selected: string[]) => void
+  checkboxArray: Checkbox[]
+  setCheckboxArray: Dispatch<SetStateAction<Checkbox[]>>
+}
+
+export type Checkbox = {
+  content: string
+  isChecked: boolean
 }
