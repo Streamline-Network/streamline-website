@@ -121,6 +121,8 @@
         top: 0;
         left: 100%;
 
+        will-change: left;
+
         background: var(--bg-color);
         list-style-type: none;
         -webkit-font-smoothing: antialiased;
