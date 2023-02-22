@@ -1,3 +1,4 @@
+import Checkboxes from '../checkboxes/checkboxes'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
 
@@ -88,11 +89,7 @@ export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
       case 'checkboxes':
         return (
           <div>
-            {question.options.map((option, i) => (
-              <div className={blocks.checkboxWrapper} key={i}>
-                <input type="checkbox" name={option} /> <span>{option}</span>
-              </div>
-            ))}
+            <Checkboxes direction={'auto'} checkboxArray={question.options.map(option => { content: option, isSelected: false})} />
           </div>
         )
       case 'minecraft-skin':
