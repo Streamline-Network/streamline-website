@@ -1,4 +1,6 @@
-import Checkboxes from '../checkboxes/checkboxes'
+import Checkboxes, { Checkbox } from '../checkboxes/checkboxes'
+import { SetStateAction, useCallback, useEffect, useState } from 'react'
+
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
 
@@ -70,6 +72,37 @@ export type BlockToggle = {
 )
 
 export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
+  const [checkboxes, setCheckboxes] = useState<Checkbox[][]>(getCheckboxes())
+  const checkboxRefresh = useCallback(
+    () => (updatedCheckboxes: Checkbox[]) => {
+      console.log('Test')
+      setCheckboxes([...checkboxes, updatedCheckboxes])
+    },
+    [checkboxes]
+  )
+
+  function getCheckboxes() {
+    const allCheckboxes: Checkbox[][] = []
+
+    for (const question of questions) {
+      if (question.type === 'checkboxes') {
+        const checkboxes: Checkbox[] = []
+
+        for (const option of question.options) {
+          checkboxes.push({ content: option, isChecked: false })
+        }
+
+        allCheckboxes.push(checkboxes)
+      }
+    }
+
+    return allCheckboxes
+  }
+
+  useEffect(() => {
+    console.log(checkboxes)
+  }, [checkboxes])
+
   function input(question: Question) {
     switch (question.type) {
       case 'short-answer':
@@ -89,7 +122,14 @@ export function BlockForm({ numbered, questions, submit }: BlockFormProps) {
       case 'checkboxes':
         return (
           <div>
-            <Checkboxes direction={'auto'} checkboxArray={question.options.map(option => { content: option, isSelected: false})} />
+            <Checkboxes
+              direction={'auto'}
+              checkboxArray={question.options.map(option => ({
+                content: option,
+                isChecked: false,
+              }))}
+              onChangeCallback={checkboxRefresh}
+            />
           </div>
         )
       case 'minecraft-skin':
