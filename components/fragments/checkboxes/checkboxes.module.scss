@@ -1,7 +1,20 @@
-.wrapper {
+@use '/styles/mixins.scss' as mixins;
+
+.wrapperAuto,
+.wrapperHorizontal,
+.wrapperVertical {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+.wrapperAuto {
+  @include mixins.desktop {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.wrapperHorizontal {
+  grid-template-columns: 1fr 1fr;
 }
 
 .checkboxesWrapper {

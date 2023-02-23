@@ -14,8 +14,19 @@ export default function Checkboxes({
     onChangeCallback(currentCheckboxes)
   }, [currentCheckboxes, onChangeCallback])
 
+  function getDirection() {
+    switch (direction) {
+      case 'auto':
+        return checkboxes.wrapperAuto
+      case 'horizontal':
+        return checkboxes.wrapperHorizontal
+      case 'vertical':
+        return checkboxes.wrapperVertical
+    }
+  }
+
   return (
-    <div className={checkboxes.wrapper}>
+    <div className={getDirection()}>
       {currentCheckboxes.map(({ content, isChecked, link }, i) => (
         <div className={checkboxes.checkboxesWrapper} key={i}>
           <div className={checkboxes.checkboxWrapper}>
