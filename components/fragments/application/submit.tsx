@@ -1,4 +1,4 @@
-import { BlockForm, Question } from '../blocks/blocks'
+import FormBlocks, { Question } from '../blocks/form-blocks'
 
 import application from './application.module.scss'
 import submit from './submit.module.scss'
@@ -78,7 +78,7 @@ export default function Submit() {
         </p>
       </div>
 
-      <BlockForm
+      <FormBlocks
         questions={questions}
         numbered={true}
         submit={{

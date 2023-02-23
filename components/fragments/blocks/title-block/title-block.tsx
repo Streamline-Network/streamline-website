@@ -1,8 +1,8 @@
 import React from 'react'
-import block from './block.module.scss'
+import block from './tile-block.module.scss'
 import classnames from 'classnames'
 
-export default function TitleBlock({ title, paragraphs, color, classes = [] }: BlockProps) {
+export default function TitleBlocks({ title, paragraphs, color, classes = [] }: BlockProps) {
   return (
     <section className={classnames(block.block, color, ...classes)}>
       <h2>{title}:</h2>

@@ -1,4 +1,4 @@
-import { BlockToggle, BlockToggles } from 'components/fragments/blocks/blocks'
+import ToggleBlocks, { BlockToggle } from 'components/fragments/blocks/toggle-blocks'
 
 import Head from 'next/head'
 import { LS_KEY } from 'components/layout/banners/banners'
@@ -49,7 +49,7 @@ export default function Stats({}: StatsProps) {
 
       <div>
         <h2 className={settings.subheader}>Site</h2>
-        <BlockToggles blockArr={controls} />
+        <ToggleBlocks blockArr={controls} />
         <h2 className={settings.subheader}>Profile</h2>
         <div className={settings.informationBlock}>
           <h3>Your profile is connected</h3>
