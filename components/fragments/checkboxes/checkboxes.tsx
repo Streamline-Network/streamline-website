@@ -16,26 +16,25 @@ export default function Checkboxes({
 
   return (
     <div className={checkboxes.wrapper}>
-      {currentCheckboxes.map(({ content, isChecked }, i) => (
-        <div key={i}>
-          <input
-            type="checkbox"
-            name={content}
-            onChange={() =>
-              setCurrentCheckboxes(() => {
-                const newArr = [...currentCheckboxes]
-                newArr[i].isChecked = !isChecked
-                return newArr
-              })
-            }
-          />
-          <span>
-            <MdCheckBox />
-          </span>
-          <span>
-            <MdCheckBoxOutlineBlank />
-          </span>
-          <label htmlFor={content}>{content}</label>
+      {currentCheckboxes.map(({ content, isChecked, link }, i) => (
+        <div className={checkboxes.checkboxesWrapper} key={i}>
+          <div className={checkboxes.checkboxWrapper}>
+            {isChecked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+
+            <input
+              type="checkbox"
+              name={content}
+              onChange={() =>
+                setCurrentCheckboxes(() => {
+                  const newArr = [...currentCheckboxes]
+                  newArr[i].isChecked = !isChecked
+                  return newArr
+                })
+              }
+            />
+          </div>
+
+          <label htmlFor={content}>{link ? <a href={link}>{content}</a> : content}</label>
         </div>
       ))}
     </div>
@@ -51,4 +50,6 @@ interface CheckboxesProps {
 export type Checkbox = {
   content: string
   isChecked: boolean
+
+  link?: string
 }

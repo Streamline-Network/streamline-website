@@ -8,10 +8,16 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
   const [checkboxes, setCheckboxes] = useState<Checkbox[][]>(getCheckboxes())
   const checkboxRefresh = useCallback(
     () => (updatedCheckboxes: Checkbox[]) => {
-      console.log('Test')
       setCheckboxes([...checkboxes, updatedCheckboxes])
     },
     [checkboxes]
+  )
+  const [agreements, setAgreements] = useState<Checkbox[] | undefined>(
+    submit.agreements?.map(agreement => ({
+      content: agreement.agreement,
+      link: agreement.link,
+      isChecked: false,
+    }))
   )
 
   function getCheckboxes() {
@@ -31,10 +37,6 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
 
     return allCheckboxes
   }
-
-  useEffect(() => {
-    console.log(checkboxes)
-  }, [checkboxes])
 
   function input(question: Question) {
     switch (question.type) {
@@ -91,21 +93,13 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
         </div>
       ))}
       <div className={classNames(blocks.block, blocks.submitWrapper)}>
-        {submit.agreements?.map(({ agreement, link, required }, i) => (
-          <div className={blocks.checkboxWrapper} key={i}>
-            <input type="checkbox" name={agreement} />
-            {link ? (
-              <span>
-                <a target="_blank" rel="noreferrer" href={link}>
-                  {agreement}
-                </a>
-              </span>
-            ) : (
-              <span>{agreement}</span>
-            )}
-            {(required === undefined || required !== false) && '*'}
-          </div>
-        ))}
+        {agreements && (
+          <Checkboxes
+            checkboxArray={agreements}
+            direction={'auto'}
+            onChangeCallback={setAgreements}
+          />
+        )}
         <button>Submit</button>
       </div>
     </div>
