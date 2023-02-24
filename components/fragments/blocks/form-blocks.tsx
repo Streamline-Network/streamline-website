@@ -11,8 +11,6 @@ function MinecraftSkin({ question }: { question: Question }) {
 
   if (question.type !== 'minecraft-skin') throw new Error()
 
-  // const request = fetch('https://api.mojang.com/users/profiles/minecraft/' + e.)
-
   async function handleInput(e: KeyboardEvent<HTMLInputElement>) {
     const name = e.currentTarget.value
     if (!name) {
@@ -32,8 +30,6 @@ function MinecraftSkin({ question }: { question: Question }) {
       if (uuid.error) return setCurrentImage(false)
 
       setCurrentImage(uuid.uuid)
-
-      console.log(uuid.uuid)
     }, 500)
   }
 

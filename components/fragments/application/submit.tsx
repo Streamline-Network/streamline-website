@@ -80,7 +80,7 @@ export default function Submit() {
 
       <FormBlocks
         questions={questions}
-        numbered={true}
+        numbered
         submit={{
           agreements: [
             {
