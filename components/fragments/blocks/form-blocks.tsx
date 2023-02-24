@@ -1,8 +1,60 @@
 import Checkboxes, { Checkbox } from '../checkboxes/checkboxes'
-import { useCallback, useEffect, useState } from 'react'
+import { KeyboardEvent, useCallback, useRef, useState } from 'react'
 
+import Image from 'next/image'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
+
+function MinecraftSkin({ question }: { question: Question }) {
+  const timeoutRef = useRef<NodeJS.Timeout>()
+  const [currentImage, setCurrentImage] = useState<string | false>(false)
+
+  if (question.type !== 'minecraft-skin') throw new Error()
+
+  // const request = fetch('https://api.mojang.com/users/profiles/minecraft/' + e.)
+
+  async function handleInput(e: KeyboardEvent<HTMLInputElement>) {
+    const name = e.currentTarget.value
+    if (!name) return
+    if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
+
+    timeoutRef.current = setTimeout(async () => {
+      const uuid = await (
+        await fetch('/api/minecraft/profiles', {
+          method: 'POST',
+          body: JSON.stringify({ name: name }),
+        })
+      ).json()
+
+      if (uuid.error) return setCurrentImage(false)
+
+      setCurrentImage(uuid.uuid)
+
+      console.log(uuid.uuid)
+    }, 500)
+  }
+
+  return (
+    <div className={blocks.minecraftSkinWrapper}>
+      {currentImage ? (
+        <Image
+          className={blocks.minecraftSkin}
+          src={`https://crafatar.com/avatars/${currentImage}/?overlay`}
+          alt="A MC Skin"
+          width={50}
+          height={50}
+        />
+      ) : (
+        <div className={blocks.minecraftSkin} />
+      )}
+      <input
+        onKeyUp={handleInput}
+        className={blocks.input}
+        placeholder={question.placeholderText}
+      />
+    </div>
+  )
+}
 
 export default function FormBlocks({ numbered, questions, submit }: BlockFormProps) {
   const [checkboxes, setCheckboxes] = useState<Checkbox[][]>(getCheckboxes())
@@ -40,21 +92,23 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
 
   function input(question: Question) {
     switch (question.type) {
-      case 'short-answer':
+      case 'short-answer': {
         return (
           <input
             className={blocks.input}
             placeholder={question.placeholderText || 'Answer here...'}
           />
         )
-      case 'paragraph':
+      }
+      case 'paragraph': {
         return (
           <textarea
             className={classNames(blocks.input, blocks.textarea)}
             placeholder={question.placeholderText || 'Answer here...'}
           />
         )
-      case 'checkboxes':
+      }
+      case 'checkboxes': {
         return (
           <div>
             <Checkboxes
@@ -67,13 +121,10 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
             />
           </div>
         )
-      case 'minecraft-skin':
-        return (
-          <div className={blocks.minecraftSkinWrapper}>
-            <div className={blocks.minecraftSkin} />
-            <input className={blocks.input} placeholder={question.placeholderText} />
-          </div>
-        )
+      }
+      case 'minecraft-skin': {
+        return <MinecraftSkin question={question} />
+      }
     }
 
     return <p>{question.type}</p>
