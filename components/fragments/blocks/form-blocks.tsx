@@ -15,7 +15,10 @@ function MinecraftSkin({ question }: { question: Question }) {
 
   async function handleInput(e: KeyboardEvent<HTMLInputElement>) {
     const name = e.currentTarget.value
-    if (!name) return setCurrentImage(false)
+    if (!name) {
+      clearTimeout(timeoutRef.current)
+      return setCurrentImage(false)
+    }
     if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 
     timeoutRef.current = setTimeout(async () => {
