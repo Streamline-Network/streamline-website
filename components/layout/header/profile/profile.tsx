@@ -3,12 +3,14 @@ import { useRef, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import colorImage from './images/colors.png'
+import hexagon from './images/hexagon.svg'
 import profileButton from './profile.module.scss'
 import profilePlaceholder from './images/profile-placeholder.webp'
 import { useRouter } from 'next/router'
 
 export default function ProfileButton({ toggle }: ProfileButtonProps) {
-  const { data: session } = useSession()
+  const data = useSession()
   const [isClicked, setClicked] = useState(false)
   const ref = useRef<HTMLElement>(null)
   const ref2 = useRef<HTMLImageElement>(null)
@@ -64,53 +66,68 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
     })
   }
 
-  return (
-    <li className={profileButton.profileWrapper}>
-      {session ? (
-        <>
-          <div ref={ref2} onClick={() => handleClick()}>
-            <Image
-              src={session.user?.image || profilePlaceholder}
-              className={profileButton.profileImg}
-              alt="Profile Placeholder"
-              width={30}
-              height={30}
-            />
-          </div>
+  function statusSwitcher() {
+    switch (data.status) {
+      case 'authenticated':
+        return (
+          <>
+            <div ref={ref2} onClick={() => handleClick()}>
+              <Image
+                src={data.data.user?.image || profilePlaceholder}
+                className={profileButton.profileImg}
+                alt="Profile Placeholder"
+                width={30}
+                height={30}
+              />
+            </div>
 
-          {items.map(item => (
-            <Link
-              onClick={() => toggle(false)}
-              key={item.name}
-              href={item.link}
-              className={profileButton.profileButton}>
-              {item.name}
-            </Link>
-          ))}
-          <a onClick={handleLogOut} className={profileButton.profileButton}>
-            Sign Out
+            {items.map(item => (
+              <Link
+                onClick={() => toggle(false)}
+                key={item.name}
+                href={item.link}
+                className={profileButton.profileButton}>
+                {item.name}
+              </Link>
+            ))}
+            <a onClick={handleLogOut} className={profileButton.profileButton}>
+              Sign Out
+            </a>
+
+            {isClicked ? (
+              <nav ref={ref} className={profileButton.dropdown}>
+                <ul>
+                  {createItems()}
+                  <li>
+                    <a className={profileButton.button} onClick={handleLogOut}>
+                      Sign Out
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            ) : null}
+          </>
+        )
+
+      case 'unauthenticated':
+        return (
+          <a onClick={handleSignIn} className={profileButton.loginButton}>
+            Sign in
           </a>
+        )
 
-          {isClicked ? (
-            <nav ref={ref} className={profileButton.dropdown}>
-              <ul>
-                {createItems()}
-                <li>
-                  <a className={profileButton.button} onClick={handleLogOut}>
-                    Sign Out
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          ) : null}
-        </>
-      ) : (
-        <a onClick={handleSignIn} className={profileButton.loginButton}>
-          Sign in
-        </a>
-      )}
-    </li>
-  )
+      case 'loading':
+        return (
+          <>
+            <div className={profileButton.loading}>
+              <Image className={profileButton.colors} src={colorImage} alt="" />
+            </div>
+          </>
+        )
+    }
+  }
+
+  return <li className={profileButton.profileWrapper}>{statusSwitcher()}</li>
 }
 
 interface ProfileButtonProps {
