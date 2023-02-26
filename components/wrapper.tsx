@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Rubik } from '@next/font/google'
+import { Rubik } from 'next/font/google'
 import { Session } from 'next-auth/core/types'
 import { SessionProvider } from 'next-auth/react'
 import classNames from 'classnames'

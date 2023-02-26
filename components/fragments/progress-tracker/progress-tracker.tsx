@@ -80,10 +80,9 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
         {steps.map((step, i) => (
           <section key={i}>
             <span
-              className={classNames(
-                progressTracker.indicator,
-                currentStepIndex !== undefined && i <= currentStepIndex && progressTracker.fill
-              )}>
+              className={classNames(progressTracker.indicator, {
+                [progressTracker.fill]: currentStepIndex !== undefined && i <= currentStepIndex,
+              })}>
               {step}
             </span>
           </section>

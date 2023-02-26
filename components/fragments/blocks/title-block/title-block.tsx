@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 export default function TitleBlocks({ title, paragraphs, color, classes = [] }: BlockProps) {
   return (
-    <section className={classnames(block.block, color, ...classes)}>
+    <section className={classnames(block.block, color, classes)}>
       <h2>{title}:</h2>
       {paragraphs.map((paragraph, i) => (
         <p key={i}>{paragraph}</p>

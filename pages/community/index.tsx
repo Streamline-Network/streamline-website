@@ -130,7 +130,7 @@ export default function Community({}: CommunityProps) {
                   target="_blank"
                   rel="noreferrer"
                   href={href}
-                  className={classnames(...(classes ?? []), { [community.stats]: !src })}
+                  className={classnames(classes, { [community.stats]: !src })}
                   key={j}>
                   {src && (
                     <>
