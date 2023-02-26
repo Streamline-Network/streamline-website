@@ -4,7 +4,7 @@ import Link from 'next/link'
 import ProfileButton from './profile-button/profile-button'
 import classnames from 'classnames'
 import header from './header.module.scss'
-import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 export default function Header({}: HeaderProps) {
   const pages = [
@@ -14,7 +14,7 @@ export default function Header({}: HeaderProps) {
     ['Join', '/join'],
   ]
 
-  const path = usePathname()
+  const path = useRouter().asPath
   const [isOpen, setIsOpen] = React.useState(false)
   const toggle = (_event?: MouseEvent, open?: false) => {
     setIsOpen(isOpen => {
