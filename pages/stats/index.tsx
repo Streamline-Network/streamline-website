@@ -3,7 +3,7 @@ import Link from 'next/link'
 import stats from './stats.module.scss'
 import { useState } from 'react'
 
-export default function Map() {
+export default function Stats() {
   const [hasTried, setHasTried] = useState(false)
   const mapDomain = 'http://104.243.40.122:7779/'
 
