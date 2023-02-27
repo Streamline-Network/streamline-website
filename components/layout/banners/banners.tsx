@@ -18,8 +18,8 @@ export default function Banners() {
   useEffect(() => {
     const banners = [
       {
-        message: 'Season 4 starts Feb 5th! Join now!',
-        id: 'Season 4 Starting',
+        message: 'Season 4 is live! Join now!',
+        id: 'Season 4 is live',
       },
     ]
 
