@@ -21,10 +21,6 @@ export default function Banners() {
         message: 'Season 4 is live! Join now!',
         id: 'Season 4 is live',
       },
-      {
-        message: 'The map and stats page are currently under maintenance.',
-        id: 'under-maintenance-stats-map'
-      }
     ]
 
     const existingIds = banners.map(({ id }) => id)
