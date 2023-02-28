@@ -2,6 +2,7 @@ import ToggleBlocks, { BlockToggle } from 'components/fragments/blocks/toggle-bl
 
 import Head from 'next/head'
 import { LS_KEY } from 'components/layout/banners/banners'
+import Link from 'next/link'
 import classnames from 'classnames'
 import settings from './settings.module.scss'
 
@@ -55,9 +56,9 @@ export default function Stats({}: StatsProps) {
           <h3>Your profile is connected</h3>
           <p>
             Your profile is connected to Discord, to edit your profile go to{' '}
-            <a target="_blank" rel="noreferrer" href="https://discord.com/">
+            <Link target="_blank" rel="noreferrer" href="https://discord.com/">
               Discord
-            </a>
+            </Link>
             .
           </p>
         </div>

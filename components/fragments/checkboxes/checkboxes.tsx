@@ -1,6 +1,7 @@
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 import { useEffect, useState } from 'react'
 
+import Link from 'next/link'
 import checkboxes from './checkboxes.module.scss'
 
 export default function Checkboxes({
@@ -45,7 +46,15 @@ export default function Checkboxes({
             />
           </div>
 
-          <label htmlFor={content}>{link ? <a href={link}>{content}</a> : content}</label>
+          <label htmlFor={content}>
+            {link ? (
+              <Link target={'_blank'} href={link}>
+                {content}
+              </Link>
+            ) : (
+              content
+            )}
+          </label>
         </div>
       ))}
     </div>
