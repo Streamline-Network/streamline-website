@@ -6,7 +6,7 @@ const nextConfig = {
   redirects: () => [
     {
       source: '/donate',
-      destination: 'https://patreon.com/streamlinesmp/',
+      destination: 'https://discord.com/channels/775831180086870096/role-subscriptions',
       permanent: true,
     },
   ],
