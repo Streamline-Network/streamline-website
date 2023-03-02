@@ -6,6 +6,8 @@ import { authOptions } from '../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth/next'
 
+// import { db } from 'config/firebase'
+
 //! POSSIBLE IDEA:
 // Make a system that lets me say what properties can be accessed by what role,
 // then all the properties that are not specified will be programmatically not allowed.
@@ -90,6 +92,8 @@ async function getData(
  * `PUT` is for just requesting data and `POST` is for changing data.
  */
 const handler = async (req: CustomRequest, res: NextApiResponse) => {
+  db.collection('users').doc('4').set({ test: 'test' }, { merge: true })
+
   return res.status(500).send({ error: SERVER_UNEXPECTED_ERROR })
 }
 
