@@ -62,21 +62,7 @@ export default function Stats({}: StatsProps) {
         <title>Apply to join</title>
       </Head>
 
-      <h1
-        onContextMenu={e => {
-          e.preventDefault()
-
-          router.push(
-            {
-              pathname: '/account/apply/submit',
-            },
-            undefined,
-            { shallow: true }
-          )
-        }}
-        className={classNames('blue', apply.header)}>
-        Application
-      </h1>
+      <h1 className={classNames('blue', apply.header)}>Application</h1>
 
       <div className={apply.wrapper}>
         <ProgressTracker
