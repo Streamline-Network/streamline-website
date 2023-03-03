@@ -30,14 +30,14 @@ function StepSwitcher({ stage }: { stage?: number }) {
     case 1:
       return (
         <>
-          <h2 className={apply.subTitle}>Status</h2>
+          <h2 className={apply.subTitle}>Application Status</h2>
           <Status />
         </>
       )
     case 2:
       return (
         <>
-          <h2 className={apply.subTitle}>Reviewed</h2>
+          <h2 className={apply.subTitle}>What&apos;s Next?</h2>
           <Reviewed />
         </>
       )

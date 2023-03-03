@@ -1,10 +1,127 @@
 @use '/styles/mixins.scss' as mixins;
 
 .wrapper {
+  display: grid;
+  gap: 20px;
+
+  @include mixins.desktop {
+    grid-auto-flow: column;
+  }
+}
+
+.block {
+  display: grid;
   background-color: var(--btn-color);
   border-radius: 10px;
+  padding: 30px;
+
+  gap: 1rem;
+  > * {
+    margin: 0;
+  }
+}
+
+.colorBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1rem;
+
+  color: var(--btn-color);
+  font-size: min(1.5rem, 1vw);
+  font-weight: 800;
+
+  margin-top: auto;
+
+  > img {
+    width: 145px;
+    height: 145px;
+    object-fit: contain;
+  }
+
+  > p {
+    @include mixins.mobile {
+      display: none;
+    }
+  }
 }
 
 .informationBlock {
   @include mixins.information-block;
+}
+
+.button {
+  @include mixins.button;
+  outline: none;
+  border: none;
+  width: 100%;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.blockButton {
+  @include mixins.block-button;
+}
+
+.subTitle {
+  @include mixins.subheader;
+}
+
+.serverIp {
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: min(1.5rem, 4.4vw);
+
+  padding-left: 5rem;
+
+  position: relative;
+
+  cursor: pointer;
+}
+
+.serverIp::before {
+  content: 'IP:';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  font-weight: 900;
+  font-size: min(1.5rem, 4.4vw);
+  padding: 1rem;
+
+  background-color: var(--text-color);
+  color: var(--btn-color);
+
+  border-radius: 10px 0px 0px 10px;
+}
+
+.serverIp::after {
+  content: 'Click to copy the server IP!';
+
+  width: max-content;
+
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  opacity: 0;
+  transition: opacity 100ms ease;
+  pointer-events: none;
+
+  background-color: var(--text-color);
+  color: var(--btn-color);
+
+  font-weight: 500;
+
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+.serverIp:hover::after {
+  opacity: 1;
 }

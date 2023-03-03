@@ -1,7 +1,6 @@
 import FormBlocks, { Question } from '../blocks/form-blocks'
 
 import application from './application.module.scss'
-import submit from './submit.module.scss'
 
 export default function Submit() {
   const questions: Question[] = [

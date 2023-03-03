@@ -7,7 +7,9 @@ const redirectToStep = async (applicationStage: number, req: NextRequest) => {
   for (const step of Object.keys(STEPS)) {
     if (STEPS[step] === applicationStage) {
       const newPathname = `/account/apply/${step}`
+
       if (req.nextUrl.pathname === newPathname) return
+
       const url = new URL(newPathname, req.nextUrl.origin)
       return NextResponse.redirect(url)
     }
