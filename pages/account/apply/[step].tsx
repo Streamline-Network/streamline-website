@@ -63,15 +63,6 @@ export default function Stats({}: StatsProps) {
       </Head>
 
       <h1
-        onClick={() => {
-          router.push(
-            {
-              pathname: '/account/apply/status',
-            },
-            undefined,
-            { shallow: true }
-          )
-        }}
         onContextMenu={e => {
           e.preventDefault()
 
