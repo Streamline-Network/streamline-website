@@ -135,7 +135,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
         <div className={blocks.block} key={i}>
           <div className={blocks.questionWrapper}>
             <h3 className={blocks.title}>{(numbered ? `${i + 1}. ` : '') + question.question}</h3>
-            {question.required && <span>required</span>}
+            {!question.required && <span>optional</span>}
           </div>
 
           {question.description && <p>{question.description}</p>}

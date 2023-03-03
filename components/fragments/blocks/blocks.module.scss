@@ -32,14 +32,18 @@
   margin: 0;
 
   font-weight: 800;
-  font-size: 1.7rem;
+  font-size: 1.6rem;
+
+  @include mixins.mobile {
+    font-size: 1rem;
+  }
 }
 
 .questionWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1rem;
 
   > span {
     color: var(--light-gray);

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 
 import classNames from 'classnames'
 import progressTracker from './progress-tracker.module.scss'
@@ -13,6 +13,20 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
     if (currentStepIndex < 0) currentStepIndex = 0
   }
 
+  function scrollToElem(currentSectionElem: HTMLDivElement, wrapperElem: HTMLDivElement) {
+    // Check if at the beginning or end step. If so, just scroll as much as possible.
+
+    if (steps.length - 1 !== currentStepIndex || !currentSectionElem) {
+      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' })
+    } else {
+      currentSectionElem
+        ? wrapperElem.scrollTo({ left: wrapperElem.scrollWidth, behavior: 'smooth' })
+        : wrapperElem.scrollTo({ left: 0, behavior: 'smooth' })
+
+      wrapperElem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+
   useEffect(() => {
     if (currentStepIndex === undefined) return
     const percent = (currentStepIndex / (steps.length - 1)) * 100
@@ -23,6 +37,8 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
       indicatorWrapperElem.querySelectorAll<HTMLDivElement>('section')[currentStepIndex]!
     const lineElem: HTMLDivElement = lineRef.current!
 
+    scrollToElem(currentSectionElem, wrapperElem)
+
     const previousPercentage = (() => {
       const x = lineElem.style.getPropertyValue('--percent-filled')
       return parseInt(x.slice(0, x.length - 1))
@@ -32,17 +48,6 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
       return lineElem.style.setProperty('--percent-filled', percent + '%')
 
     if (previousPercentage === null || previousPercentage === percent) return
-
-    // Check if at the beginning or end step. If so, just scroll as much as possible.
-    if (steps.length - 1 !== currentStepIndex || !currentSectionElem) {
-      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' })
-    } else {
-      currentSectionElem
-        ? wrapperElem.scrollTo({ left: wrapperElem.scrollWidth, behavior: 'smooth' })
-        : wrapperElem.scrollTo({ left: 0, behavior: 'smooth' })
-
-      wrapperElem.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }
 
     function tween() {
       let newValue = previousPercentage
