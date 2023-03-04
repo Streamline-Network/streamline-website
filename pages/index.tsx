@@ -3,6 +3,7 @@ import TitleBlock, { BlockProps } from '../components/fragments/blocks/title-blo
 import Head from 'next/head'
 import Link from 'next/link'
 import index from './index.module.scss'
+import { useEffect } from 'react'
 
 export default function Index({}: IndexProps) {
   const blocks: BlockProps[] = [
@@ -57,6 +58,13 @@ export default function Index({}: IndexProps) {
       classes: [index.column],
     },
   ]
+
+  useEffect(() => {
+    fetch('/api/db/docs', {
+      method: 'PUT',
+      body: JSON.stringify({ path: 'users/{user}' }),
+    }).then(r => r.json().then(r => console.log(r)))
+  }, [])
 
   return (
     <>

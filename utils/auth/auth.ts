@@ -1,5 +1,3 @@
-import { DocumentData, DocumentReference, DocumentSnapshot, setDoc } from 'firebase/firestore'
-
 import { JWT } from 'next-auth/jwt'
 import { Session } from 'next-auth'
 
@@ -31,7 +29,13 @@ export async function loadFromDB(
 }
 
 export function copyToSession(session: Session, token: JWT) {
+  const OTHERS = ['sub']
+
   for (const key of Object.keys(DB_DEFAULTS)) {
     session[key] = token[key]
+  }
+
+  for (const other of OTHERS) {
+    session[other] = token[other]
   }
 }

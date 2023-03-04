@@ -23,7 +23,6 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }) {
       copyToSession(session, token)
-
       return session
     },
   },

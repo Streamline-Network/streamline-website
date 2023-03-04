@@ -7,6 +7,7 @@ declare module 'next-auth' {
     [key: string]: void
     role: Roles
     applicationStage: 0 | 1 | 2 | 3
+    sub: string
   }
 }
 
