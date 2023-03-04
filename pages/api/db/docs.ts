@@ -69,13 +69,17 @@ async function getDoc(documentPath: string) {
  */
 export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
-  const path = (JSON.parse(req.body) as ReqBody).path
 
   // Check if the user is logged in.
   if (!session) return res.status(401).send({ error: NOT_AUTHENTICATED })
 
   // Check the method.
   if (!['PUT', 'POST'].includes(req.method)) return res.status(405).send({ error: WRONG_METHOD })
+
+  // Check for body.
+  if (!req.body) return res.status(422).send({ error: MISSING_INFORMATION })
+
+  const path = (JSON.parse(req.body) as ReqBody).path
 
   // Check if a path is included.
   if (!path) return res.status(422).send({ error: MISSING_INFORMATION })
