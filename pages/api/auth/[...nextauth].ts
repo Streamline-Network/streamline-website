@@ -3,7 +3,6 @@ import { copyToSession, loadFromDB } from 'utils/auth/auth'
 
 import DiscordProvider from 'next-auth/providers/discord'
 import { FirestoreAdapter } from '@next-auth/firebase-adapter'
-import { db } from 'config/firebase'
 
 const discordProvider = DiscordProvider({
   clientId: process.env.DISCORD_CLIENT_ID || '',
@@ -15,10 +14,7 @@ export const authOptions: AuthOptions = {
   adapter: FirestoreAdapter(),
   callbacks: {
     async jwt({ token }) {
-      const docRef = db.collection('users').doc(token.sub!)
-      const docSnap = await docRef.get()
-
-      await loadFromDB(token, docSnap, docRef)
+      await loadFromDB(token)
       return token
     },
     async session({ session, token }) {

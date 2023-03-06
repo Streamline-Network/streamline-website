@@ -1,5 +1,5 @@
-import { Session } from "next-auth"
-import { db } from "config/firebase"
+import { Session } from 'next-auth'
+import { db } from 'config/firebase'
 
 export function getPathArray(path: string) {
   const pathArr = path.split('/')
@@ -12,15 +12,43 @@ export function getPathArray(path: string) {
   return trimmedPathArr
 }
 
-export function hasPermission(parsedPath: string, session: Session) {
+export function hasPermission(parsedPath: string, session: Session, writing = false): boolean {
   const pathArr = getPathArray(parsedPath)
 
-  switch (pathArr[0]) {
-    case 'users':
-      if (pathArr[1] === session.sub) return true
+  if (writing) {
+    switch (pathArr[0]) {
+      case 'applications':
+        if (pathArr[1] === session.sub) return true
 
-    default:
-      return false
+      case 'applicationData':
+        if (session.role === 'reviewer') return true
+
+      case 'userState':
+        if (pathArr[1] === session.sub) return true
+
+      default:
+        return false
+    }
+  } else {
+    switch (pathArr[0]) {
+      case 'users':
+        if (session.role === 'reviewer') return true
+        if (pathArr[1] === session.sub) return true
+
+      case 'applications':
+        if (session.role === 'reviewer') return true
+        if (pathArr[1] === session.sub) return true
+
+      case 'applicationData':
+        if (session.role === 'reviewer') return true
+        if (pathArr[1] === session.sub) return true
+
+      case 'userState':
+        if (pathArr[1] === session.sub) return true
+
+      default:
+        return false
+    }
   }
 }
 
@@ -47,6 +75,8 @@ export function parsePath(path: string, session: Session) {
       case '{role}':
         parsedPath.push(session.role)
         break
+      default:
+        return false
     }
   }
 

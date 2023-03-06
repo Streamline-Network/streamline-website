@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getDoc, getPathArray, hasPermission, parsePath } from 'utils/db/docs'
 
+import { RateLimiter } from 'limiter'
 import { authOptions } from '../auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 
-const SERVER_UNEXPECTED_ERROR =
-  'Something unexpected went wrong with the server, please report this to the Streamline SMP owner.'
 const COULD_NOT_FIND_DOCUMENT =
   'Could not find the request document, please check spelling and try again.'
 const WRONG_METHOD = 'Only "PUT" and "POST" methods are supported by this API.'
@@ -13,6 +12,9 @@ const NOT_AUTHENTICATED = 'Authentication is required to make this request.'
 const NOT_AUTHORIZED = 'You are not authorized to make this request.'
 const MISSING_INFORMATION = 'The request is missing required information to be processed.'
 const INCORRECT_DOC_LENGTH = 'Expected an even length path, got an one odd instead.'
+const INVALID_VARIABLE = 'An unexpected variable was provided.'
+
+const limiter = new RateLimiter({ tokensPerInterval: 60, interval: 'hour' })
 
 /**
  * `API` for handling firestore docs, accepts `PUT` and `POST` methods.
@@ -20,6 +22,8 @@ const INCORRECT_DOC_LENGTH = 'Expected an even length path, got an one odd inste
  * `PUT` is for just requesting data and `POST` is for changing data.
  */
 export default async function docs(req: CustomRequest, res: NextApiResponse) {
+  const remainingRequests = await limiter.removeTokens(1)
+
   const session = await getServerSession(req, res, authOptions)
 
   // Check if the user is logged in.
@@ -42,6 +46,8 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
 
   const parsedPath = parsePath(path, session)
 
+  if (!parsedPath) return res.status(422).send({ error: INVALID_VARIABLE })
+
   // Check their permissions.
   if (!hasPermission(parsedPath, session)) return res.status(403).send({ error: NOT_AUTHORIZED })
 
@@ -50,8 +56,8 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const data = await getDoc(parsedPath)
 
   return data
-    ? res.status(200).send({ data })
-    : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT })
+    ? res.status(200).send({ data, remainingRequests })
+    : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT, remainingRequests })
 }
 
 interface CustomRequest extends NextApiRequest {

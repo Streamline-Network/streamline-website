@@ -1,5 +1,6 @@
 import { JWT } from 'next-auth/jwt'
 import { Session } from 'next-auth'
+import { db } from 'config/firebase'
 
 export type DBDefaults = {
   [key: string]: any
@@ -10,13 +11,19 @@ const DB_DEFAULTS: DBDefaults = {
   applicationStage: 0,
 }
 
-export async function loadFromDB(
-  token: JWT,
-  docSnap: FirebaseFirestore.DocumentSnapshot<FirebaseFirestore.DocumentData>,
-  docRef: FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>
-) {
+const STATE = ['applicationStage']
+
+export async function loadFromDB(token: JWT) {
+  let docRef = db.doc(`users/${token.sub!}`)
+  let docSnap = await docRef.get()
+
   for (const key of Object.keys(DB_DEFAULTS)) {
-    const docData = docSnap.data()![key]
+    if (STATE.includes(key)) {
+      docRef = db.doc(`userState/${token.sub!}`)
+      docSnap = await docRef.get()
+    }
+
+    const docData = docSnap.exists ? docSnap.data()![key] : undefined
 
     if (docData === undefined) {
       await docRef.set({ [key]: DB_DEFAULTS[key] }, { merge: true })
