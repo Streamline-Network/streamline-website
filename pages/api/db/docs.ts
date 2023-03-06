@@ -15,13 +15,31 @@ const NOT_AUTHORIZED = 'You are not authorized to make this request.'
 const MISSING_INFORMATION = 'The request is missing required information to be processed.'
 const INCORRECT_DOC_LENGTH = 'Expected an even length path, got an one odd instead.'
 
+function getPathArray(path: string) {
+  const pathArr = path.split('/')
+
+  const trimmedPathArr: string[] = []
+  for (const pathSegment of pathArr) {
+    if (pathSegment !== '') trimmedPathArr.push(pathSegment)
+  }
+
+  return trimmedPathArr
+}
+
 function hasPermission(parsedPath: string, session: Session) {
-  if (parsedPath.split('/')[0] === 'users') return true
-  return false
+  const pathArr = getPathArray(parsedPath)
+
+  switch (pathArr[0]) {
+    case 'users':
+      if (pathArr[1] === session.sub) return true
+
+    default:
+      return false
+  }
 }
 
 function parsePath(path: string, session: Session) {
-  const pathArr = path.split('/')
+  const pathArr = getPathArray(path)
 
   let parsedPath: string[] = []
   for (const pathSegment of pathArr) {
@@ -79,13 +97,13 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
   // Check for body.
   if (!req.body) return res.status(422).send({ error: MISSING_INFORMATION })
 
-  const path = (JSON.parse(req.body) as ReqBody).path
+  let path = (JSON.parse(req.body) as ReqBody).path
 
   // Check if a path is included.
   if (!path) return res.status(422).send({ error: MISSING_INFORMATION })
 
   // Check if the path is correct length.
-  if (!(path.split('/').length % 2 === 0))
+  if (!(getPathArray(path).length % 2 === 0))
     return res.status(422).send({ error: INCORRECT_DOC_LENGTH })
 
   const parsedPath = parsePath(path, session)
