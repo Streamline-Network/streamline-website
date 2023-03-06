@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Session, getServerSession } from 'next-auth'
+import { getDoc, getPathArray, hasPermission, parsePath } from 'utils/db/docs'
 
-import { Roles } from 'types/index.d'
 import { authOptions } from '../auth/[...nextauth]'
-import { db } from 'config/firebase'
+import { getServerSession } from 'next-auth'
 
 const SERVER_UNEXPECTED_ERROR =
   'Something unexpected went wrong with the server, please report this to the Streamline SMP owner.'
@@ -14,71 +13,6 @@ const NOT_AUTHENTICATED = 'Authentication is required to make this request.'
 const NOT_AUTHORIZED = 'You are not authorized to make this request.'
 const MISSING_INFORMATION = 'The request is missing required information to be processed.'
 const INCORRECT_DOC_LENGTH = 'Expected an even length path, got an one odd instead.'
-
-function getPathArray(path: string) {
-  const pathArr = path.split('/')
-
-  const trimmedPathArr: string[] = []
-  for (const pathSegment of pathArr) {
-    if (pathSegment !== '') trimmedPathArr.push(pathSegment)
-  }
-
-  return trimmedPathArr
-}
-
-function hasPermission(parsedPath: string, session: Session) {
-  const pathArr = getPathArray(parsedPath)
-
-  switch (pathArr[0]) {
-    case 'users':
-      if (pathArr[1] === session.sub) return true
-
-    default:
-      return false
-  }
-}
-
-function parsePath(path: string, session: Session) {
-  const pathArr = getPathArray(path)
-
-  let parsedPath: string[] = []
-  for (const pathSegment of pathArr) {
-    const variableRegex = `\{[^\{\}]*\}`
-
-    const matchedVariable = pathSegment.match(variableRegex)
-
-    if (matchedVariable === null) {
-      parsedPath.push(pathSegment)
-      continue
-    }
-
-    const variable = matchedVariable[0]
-
-    switch (variable) {
-      case '{user}':
-        parsedPath.push(session.sub)
-        break
-      case '{role}':
-        parsedPath.push(session.role)
-        break
-    }
-  }
-
-  let final = ''
-  for (const path of parsedPath) {
-    final === '' ? (final = path) : (final += '/' + path)
-  }
-
-  return final
-}
-
-async function getDoc(documentPath: string) {
-  const docRef = await db.doc(documentPath).get()
-
-  if (!docRef.exists) return false
-
-  return docRef.data()
-}
 
 /**
  * `API` for handling firestore docs, accepts `PUT` and `POST` methods.
