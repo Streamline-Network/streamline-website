@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getDoc, getPathArray, hasPermission, parsePath } from 'utils/db/docs'
 
-import { RateLimiter } from 'limiter'
 import { authOptions } from '../auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 
@@ -14,16 +13,12 @@ const MISSING_INFORMATION = 'The request is missing required information to be p
 const INCORRECT_DOC_LENGTH = 'Expected an even length path, got an one odd instead.'
 const INVALID_VARIABLE = 'An unexpected variable was provided.'
 
-const limiter = new RateLimiter({ tokensPerInterval: 60, interval: 'hour' })
-
 /**
  * `API` for handling firestore docs, accepts `PUT` and `POST` methods.
  *
  * `PUT` is for just requesting data and `POST` is for changing data.
  */
 export default async function docs(req: CustomRequest, res: NextApiResponse) {
-  const remainingRequests = await limiter.removeTokens(1)
-
   const session = await getServerSession(req, res, authOptions)
 
   // Check if the user is logged in.
@@ -56,8 +51,8 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const data = await getDoc(parsedPath)
 
   return data
-    ? res.status(200).send({ data, remainingRequests })
-    : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT, remainingRequests })
+    ? res.status(200).send({ data })
+    : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT })
 }
 
 interface CustomRequest extends NextApiRequest {
