@@ -89,9 +89,15 @@ export function parsePath(path: string, session: Session) {
 }
 
 export async function getDoc(documentPath: string) {
-  const docRef = await db.doc(documentPath).get()
+  const docSnap = await db.doc(documentPath).get()
 
-  if (!docRef.exists) return false
+  if (!docSnap.exists) return false
 
-  return docRef.data()
+  return docSnap.data()
+}
+
+export async function setDoc(path: string, data: object, merge = false) {
+  const docRef = db.doc(path)
+
+  docRef.set(data, { merge })
 }

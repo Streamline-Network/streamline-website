@@ -7,15 +7,20 @@ export default function Test() {
   const [data, setData] = useState('')
 
   useEffect(() => {
-    fetch('/api/db/docs', {
-      method: isWriting ? 'POST' : 'PUT',
-      body: JSON.stringify(isWriting ? { path } : { path, data, isMerge: true }),
-    }).then(r => r.json().then(r => setResult(JSON.stringify(r))))
+    fetch(
+      '/api/db/docs?path=' + path,
+      isWriting
+        ? {
+            method: 'PUT',
+            body: JSON.stringify({ data: { test: data }, isMerge: true }),
+          }
+        : {}
+    ).then(r => r.json().then(r => setResult(JSON.stringify(r))))
   }, [path, isWriting, data])
 
   return (
     <div>
-      <h2>Debugging site for testing.</h2>
+      <h2>Testing page</h2>
       <input type="checkbox" onChange={() => setIsWriting(!isWriting)} /> <label>Is Writing?</label>
       <input style={{ width: '60vw' }} type="text" onChange={e => setPath(e.currentTarget.value)} />
       <label>Set path</label>

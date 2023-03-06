@@ -16,7 +16,7 @@ const INVALID_VARIABLE = 'An unexpected variable was provided.'
 /**
  * `API` for handling firestore docs, accepts `PUT` and `POST` methods.
  *
- * `PUT` is for just requesting data and `POST` is for changing data.
+ * `GET` is for just requesting data and `POST` is for changing data.
  */
 export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
@@ -25,12 +25,9 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
   if (!session) return res.status(401).send({ error: NOT_AUTHENTICATED })
 
   // Check the method.
-  if (!['PUT', 'POST'].includes(req.method)) return res.status(405).send({ error: WRONG_METHOD })
+  if (!['PUT', 'GET'].includes(req.method)) return res.status(405).send({ error: WRONG_METHOD })
 
-  // Check for body.
-  if (!req.body) return res.status(422).send({ error: MISSING_INFORMATION })
-
-  let path = (JSON.parse(req.body) as ReqBody).path
+  let path = (req.query as Query).path
 
   // Check if a path is included.
   if (!path) return res.status(422).send({ error: MISSING_INFORMATION })
@@ -43,23 +40,32 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
 
   if (!parsedPath) return res.status(422).send({ error: INVALID_VARIABLE })
 
-  // Check their permissions.
-  if (!hasPermission(parsedPath, session)) return res.status(403).send({ error: NOT_AUTHORIZED })
-
   console.log(parsedPath)
 
-  const data = await getDoc(parsedPath)
+  if (req.method === 'GET') {
+    // Check their permissions.
+    if (!hasPermission(parsedPath, session)) return res.status(403).send({ error: NOT_AUTHORIZED })
 
-  return data
-    ? res.status(200).send({ data })
-    : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT })
+    const data = await getDoc(parsedPath)
+
+    return data
+      ? res.status(200).send({ data })
+      : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT })
+  } else {
+    // Check for body.
+    if (!req.body) return res.status(422).send({ error: MISSING_INFORMATION })
+    if (!hasPermission(parsedPath, session, true))
+      return res.status(403).send({ error: NOT_AUTHORIZED })
+
+    return res.status(500).send({ error: 'Oh no, this part of the API is not finished!' })
+  }
 }
 
 interface CustomRequest extends NextApiRequest {
-  method: 'PUT' | 'POST'
+  method: string
 }
 
-type ReqBody = {
+type Query = {
   /**
    * ### The path should look like this:
    * @example
