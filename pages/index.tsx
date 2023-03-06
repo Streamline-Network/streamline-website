@@ -59,13 +59,6 @@ export default function Index({}: IndexProps) {
     },
   ]
 
-  useEffect(() => {
-    fetch('/api/db/docs', {
-      method: 'PUT',
-      body: JSON.stringify({ path: 'users/{user}' }),
-    }).then(r => r.json().then(r => console.log(r)))
-  }, [])
-
   return (
     <>
       <Head>
