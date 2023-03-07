@@ -52,6 +52,16 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
       ? res.status(200).send({ data })
       : res.status(404).send({ error: COULD_NOT_FIND_DOCUMENT })
   } else {
+    //! IDEA:
+    // Instead of the client being able to change the DB, just have specific commands available.
+    // For example: create-application, update-application, change-application-stage, and lastly update-application-status.
+    // These could include the data that needs updated, it wouldn't need the path in the database.
+    // In some situations it could include options about the command, an example would be which application you are creating or updating.
+    //? Example fetch code:
+    //? fetch('/api/db/commands', { method: 'PUT', body: JSON.stringify({ command: 'update-application', application: 'apply', payload: {stuff: 'lots of data'} }) })
+    //* Types could be used for inline data validation and for a better developer experience.
+    //! ----
+
     // Check for body.
     if (!req.body) return res.status(422).send({ error: MISSING_INFORMATION })
     if (!hasPermission(parsedPath, session, true))
