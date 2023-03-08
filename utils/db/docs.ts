@@ -54,38 +54,30 @@ export function hasPermission(parsedPath: string, session: Session, writing = fa
 
 export function parsePath(path: string, session: Session) {
   const pathArr = getPathArray(path)
+  const VAR_REGEX = `\{[^\{\}]*\}`
 
-  let parsedPath: string[] = []
-  for (const pathSegment of pathArr) {
-    const variableRegex = `\{[^\{\}]*\}`
+  const parsedPath = pathArr.map(pathSegment => {
+    const matchedVariable = pathSegment.match(VAR_REGEX)
 
-    const matchedVariable = pathSegment.match(variableRegex)
-
-    if (matchedVariable === null) {
-      parsedPath.push(pathSegment)
-      continue
-    }
+    if (matchedVariable === null) return pathSegment
 
     const variable = matchedVariable[0]
 
     switch (variable) {
       case '{id}':
-        parsedPath.push(session.sub)
-        break
+        return session.sub
+
       case '{role}':
-        parsedPath.push(session.role)
-        break
+        return session.role
+
       default:
         return false
     }
-  }
+  })
 
-  let final = ''
-  for (const path of parsedPath) {
-    final === '' ? (final = path) : (final += '/' + path)
-  }
+  if (parsedPath.find(pathSegment => pathSegment === false)) return false
 
-  return final
+  return parsedPath.reduce((previousValue, currentValue) => previousValue + '/' + currentValue)
 }
 
 export async function getDoc(documentPath: string) {
