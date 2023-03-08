@@ -61,6 +61,10 @@
   padding: 1rem;
 }
 
+.input:focus-visible {
+  outline: solid white 2px;
+}
+
 .textarea {
   resize: vertical;
   height: 6.5rem;

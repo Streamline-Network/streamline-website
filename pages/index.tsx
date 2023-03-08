@@ -3,7 +3,6 @@ import TitleBlock, { BlockProps } from '../components/fragments/blocks/title-blo
 import Head from 'next/head'
 import Link from 'next/link'
 import index from './index.module.scss'
-import { useEffect } from 'react'
 
 export default function Index({}: IndexProps) {
   const blocks: BlockProps[] = [

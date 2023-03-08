@@ -69,7 +69,7 @@ export function parsePath(path: string, session: Session) {
     const variable = matchedVariable[0]
 
     switch (variable) {
-      case '{user}':
+      case '{id}':
         parsedPath.push(session.sub)
         break
       case '{role}':

@@ -41,6 +41,10 @@
     cursor: pointer;
   }
 
+  > input:focus-visible ~ svg {
+    outline: 2px solid white;
+  }
+
   > svg {
     font-size: 3rem;
   }

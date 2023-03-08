@@ -31,19 +31,29 @@ export default function Checkboxes({
       {currentCheckboxes.map(({ content, isChecked, link }, i) => (
         <div className={checkboxes.checkboxesWrapper} key={i}>
           <div className={checkboxes.checkboxWrapper}>
-            {isChecked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
-
             <input
               type="checkbox"
               name={content}
-              onChange={() =>
+              id={content}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setCurrentCheckboxes(() => {
+                    const newArr = [...currentCheckboxes]
+                    newArr[i].isChecked = !isChecked
+                    return newArr
+                  })
+                }
+              }}
+              onClick={() => {
                 setCurrentCheckboxes(() => {
                   const newArr = [...currentCheckboxes]
                   newArr[i].isChecked = !isChecked
                   return newArr
                 })
-              }
+              }}
             />
+
+            {isChecked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
           </div>
 
           <label htmlFor={content}>

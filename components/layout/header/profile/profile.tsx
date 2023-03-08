@@ -13,7 +13,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
   const data = useSession()
   const [isClicked, setClicked] = useState(false)
   const ref = useRef<HTMLElement>(null)
-  const ref2 = useRef<HTMLImageElement>(null)
+  const ref2 = useRef<HTMLButtonElement>(null)
   const router = useRouter()
 
   const callbackUrl = (router.query.callbackUrl ?? '/') as string
@@ -71,7 +71,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
       case 'authenticated':
         return (
           <>
-            <div ref={ref2} onClick={() => handleClick()}>
+            <button className={profileButton.profileIcon} ref={ref2} onClick={handleClick}>
               <Image
                 src={data.data.user?.image || profilePlaceholder}
                 className={profileButton.profileImg}
@@ -79,7 +79,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
                 width={30}
                 height={30}
               />
-            </div>
+            </button>
 
             {items.map(item => (
               <Link
@@ -99,7 +99,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
                 <ul>
                   {createItems()}
                   <li>
-                    <a className={profileButton.button} onClick={handleLogOut}>
+                    <a href="#" className={profileButton.button} onClick={handleLogOut}>
                       Sign Out
                     </a>
                   </li>
