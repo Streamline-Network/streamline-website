@@ -52,6 +52,18 @@ export default function Stats({}: StatsProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(undefined)
 
   useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetch('/api/db/docs?path=userState/{id}')
+        .then(r => r.json())
+        .then(r => {
+          setCurrentStepIndex(r.data.applicationStage)
+        })
+    }, 5000)
+
+    return () => clearInterval(intervalId)
+  }, [])
+
+  useEffect(() => {
     if (step === undefined) return
     setCurrentStepIndex(STEPS[step])
   }, [step])

@@ -1,3 +1,4 @@
+import { NextApiResponse } from 'next'
 import { Session } from 'next-auth'
 import { db } from 'config/firebase'
 
@@ -12,10 +13,10 @@ export function getPathArray(path: string) {
   return trimmedPathArr
 }
 
-export function hasPermission(parsedPath: string, session: Session, writing = false): boolean {
+export function hasPermission(parsedPath: string, session: Session, res: NextApiResponse): boolean {
   const pathArr = getPathArray(parsedPath)
 
-  if (writing) {
+  /*   if (writing) {
     switch (pathArr[0]) {
       case 'applications':
         if (pathArr[1] === session.sub) return true
@@ -29,26 +30,31 @@ export function hasPermission(parsedPath: string, session: Session, writing = fa
       default:
         return false
     }
-  } else {
-    switch (pathArr[0]) {
-      case 'users':
-        if (session.role === 'reviewer') return true
-        if (pathArr[1] === session.sub) return true
+  } */
 
-      case 'applications':
-        if (session.role === 'reviewer') return true
-        if (pathArr[1] === session.sub) return true
+  switch (pathArr[0]) {
+    case 'users':
+      res.setHeader('Cache-Control', `max-age=${60 * 30} private`)
 
-      case 'applicationData':
-        if (session.role === 'reviewer') return true
-        if (pathArr[1] === session.sub) return true
+      if (session.role === 'reviewer') return true
+      if (pathArr[1] === session.sub) return true
 
-      case 'userState':
-        if (pathArr[1] === session.sub) return true
+    case 'applications':
+      res.setHeader('Cache-Control', `max-age=${60 * 5} private`)
+      if (session.role === 'reviewer') return true
+      if (pathArr[1] === session.sub) return true
 
-      default:
-        return false
-    }
+    case 'applicationData':
+      res.setHeader('Cache-Control', `max-age=${60 * 0.5} private`)
+      if (session.role === 'reviewer') return true
+      if (pathArr[1] === session.sub) return true
+
+    case 'userState':
+      res.setHeader('Cache-Control', `max-age=${60 * 0.1} private`)
+      if (pathArr[1] === session.sub) return true
+
+    default:
+      return false
   }
 }
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function Test() {
   const [path, setPath] = useState('')
@@ -15,7 +15,9 @@ export default function Test() {
             body: JSON.stringify({ data: { test: data }, isMerge: true }),
           }
         : {}
-    ).then(r => r.json().then(r => setResult(JSON.stringify(r))))
+    )
+      .then(r => r.json())
+      .then(r => setResult(JSON.stringify(r)))
   }, [path, isWriting, data])
 
   return (

@@ -31,7 +31,7 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
   console.log(parsedPath)
 
   // Check their permissions.
-  if (!hasPermission(parsedPath, session))
+  if (!hasPermission(parsedPath, session, res))
     return res.status(403).send({ error: message.NOT_AUTHORIZED })
 
   const data = await getDoc(parsedPath)
