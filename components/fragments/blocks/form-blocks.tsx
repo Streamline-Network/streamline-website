@@ -1,11 +1,25 @@
 import Checkboxes, { Checkbox } from '../checkboxes/checkboxes'
+import {
+  FieldErrors,
+  FieldValues,
+  Resolver,
+  SubmitHandler,
+  UseFormRegister,
+  useForm,
+} from 'react-hook-form'
 import { KeyboardEvent, useCallback, useRef, useState } from 'react'
 
 import Image from 'next/image'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
 
-function MinecraftSkin({ question }: { question: Question }) {
+function MinecraftSkin({
+  state: { register, errors },
+  question,
+}: {
+  state: { register: UseFormRegister<FieldValues>; errors: FieldErrors<FieldValues> }
+  question: Question
+}) {
   const timeoutRef = useRef<NodeJS.Timeout>()
   const [currentImage, setCurrentImage] = useState<string | false>(false)
 
@@ -46,17 +60,31 @@ function MinecraftSkin({ question }: { question: Question }) {
       ) : (
         <div className={blocks.minecraftSkin} />
       )}
-      <input
-        onKeyUp={handleInput}
-        className={blocks.input}
-        placeholder={question.placeholderText}
-      />
+      <>
+        <input
+          {...register(question.question, { required: question.required })}
+          onKeyUp={handleInput}
+          className={blocks.input}
+          placeholder={question.placeholderText}
+        />
+      </>
     </div>
   )
 }
 
+function generateError(errors: FieldErrors<FieldValues>, question: Question) {
+  console.log(errors[question.question]?.type)
+
+  return errors[question.question] && <span>This question is required!</span>
+}
+
 export default function FormBlocks({ numbered, questions, submit }: BlockFormProps) {
   const [checkboxes, setCheckboxes] = useState<Checkbox[][]>(getCheckboxes())
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
   const checkboxRefresh = useCallback(
     () => (updatedCheckboxes: Checkbox[]) => {
       setCheckboxes([...checkboxes, updatedCheckboxes])
@@ -70,6 +98,20 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
       isChecked: false,
     }))
   )
+
+  // const resolver: Resolver<FormValues> = async (values) => {
+  //   return {
+  //     values: values. ? values : {},
+  //     errors: !values.firstName
+  //       ? {
+  //           firstName: {
+  //             type: 'required',
+  //             message: 'This is required.',
+  //           },
+  //         }
+  //       : {},
+  //   };
+  // };
 
   function getCheckboxes() {
     const allCheckboxes: Checkbox[][] = []
@@ -93,18 +135,26 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
     switch (question.type) {
       case 'short-answer': {
         return (
-          <input
-            className={blocks.input}
-            placeholder={question.placeholderText || 'Answer here...'}
-          />
+          <>
+            <input
+              {...register(question.question, { required: question.required })}
+              className={blocks.input}
+              placeholder={question.placeholderText || 'Answer here...'}
+            />
+            {generateError(errors, question)}
+          </>
         )
       }
       case 'paragraph': {
         return (
-          <textarea
-            className={classNames(blocks.input, blocks.textarea)}
-            placeholder={question.placeholderText || 'Answer here...'}
-          />
+          <>
+            <textarea
+              {...register(question.question, { required: question.required })}
+              className={classNames(blocks.input, blocks.textarea)}
+              placeholder={question.placeholderText || 'Answer here...'}
+            />
+            {generateError(errors, question)}
+          </>
         )
       }
       case 'checkboxes': {
@@ -122,15 +172,24 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
         )
       }
       case 'minecraft-skin': {
-        return <MinecraftSkin question={question} />
+        return (
+          <>
+            <MinecraftSkin state={{ register, errors }} question={question} />
+            {generateError(errors, question)}
+          </>
+        )
       }
     }
 
     return <p>{question.type}</p>
   }
 
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    console.log(data)
+  }
+
   return (
-    <form method="POST" action="/api/forms/apply" className={blocks.wrapper}>
+    <form onSubmit={handleSubmit(onSubmit)} className={blocks.wrapper}>
       {questions.map((question, i) => (
         <div className={blocks.block} key={i}>
           <div className={blocks.questionWrapper}>
