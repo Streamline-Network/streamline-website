@@ -9,6 +9,8 @@ import { getServerSession } from 'next-auth'
 export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
+  console.log(session)
+
   // Check if the user is logged in.
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 

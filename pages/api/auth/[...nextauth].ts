@@ -10,9 +10,13 @@ const discordProvider = DiscordProvider({
 })
 
 export const authOptions: AuthOptions = {
-  providers: [{ ...discordProvider }],
+  providers: [discordProvider],
   adapter: FirestoreAdapter(),
   callbacks: {
+    async signIn(params) {
+      console.log(params.account)
+      return true
+    },
     async jwt({ token }) {
       await loadFromDB(token)
       return token

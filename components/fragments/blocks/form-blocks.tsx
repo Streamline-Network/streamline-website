@@ -130,7 +130,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
   }
 
   return (
-    <div className={blocks.wrapper}>
+    <form method="POST" action="/api/forms/apply" className={blocks.wrapper}>
       {questions.map((question, i) => (
         <div className={blocks.block} key={i}>
           <div className={blocks.questionWrapper}>
@@ -150,9 +150,9 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
             onChangeCallback={setAgreements}
           />
         )}
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </div>
-    </div>
+    </form>
   )
 }
 
