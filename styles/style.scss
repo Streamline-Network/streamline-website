@@ -7,6 +7,11 @@
 }
 
 :root {
+  scroll-behavior: smooth;
+
+  @include mixins.prefers-reduced-motion {
+    scroll-behavior: unset;
+  }
   @include mixins.dark-theme {
     --bg-color: #202020;
     --text-color: #fff;
