@@ -1,6 +1,5 @@
 import Image, { StaticImageData } from 'next/image'
 
-import React from 'react'
 import classnames from 'classnames'
 import message from './message.module.scss'
 

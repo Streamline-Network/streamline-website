@@ -1,4 +1,3 @@
-import React from 'react'
 import block from './tile-block.module.scss'
 import classnames from 'classnames'
 

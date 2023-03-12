@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react'
+import { MouseEvent, useRef, useState } from 'react'
 
 import Link from 'next/link'
 import ProfileButton from './profile/profile'
@@ -15,11 +15,33 @@ export default function Header({}: HeaderProps) {
   ]
 
   const path = useRouter().asPath
-  const [isOpen, setIsOpen] = React.useState(false)
+  const ulRef = useRef(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+
   const toggle = (open?: boolean) => {
     setIsOpen(isOpen => {
-      document && (document.body.style.overflow = open ?? (!document || !isOpen) ? 'hidden' : '')
+      document.body.style.overflow = open ?? !isOpen ? 'hidden' : ''
       return open ?? !isOpen
+    })
+  }
+
+  function closeHandler() {
+    const elem = ulRef.current as HTMLElement | null
+    if (!elem) return
+    elem.removeEventListener('transitionend', closeHandler)
+    elem.style.display = 'none'
+    setIsAnimating(false)
+  }
+
+  function openHandler() {
+    const elem = ulRef.current as HTMLElement | null
+    if (!elem) return
+    elem.removeEventListener('transitionend', openHandler)
+    elem.style.display = ''
+    setTimeout(() => {
+      toggle()
+      setIsAnimating(false)
     })
   }
 
@@ -30,12 +52,34 @@ export default function Header({}: HeaderProps) {
       </Link>
 
       <nav className={classnames({ [header.open]: isOpen })}>
-        <button onClick={() => toggle()}>
+        <button
+          onClick={() => {
+            const elem = ulRef.current as HTMLElement | null
+            if (!elem) return
+
+            if (isAnimating) {
+              elem.addEventListener('transitionend', openHandler)
+              return
+            }
+
+            setIsAnimating(true)
+
+            if (isOpen) {
+              toggle()
+              elem.addEventListener('transitionend', closeHandler)
+            } else {
+              elem.style.display = ''
+              setTimeout(() => {
+                toggle()
+                setIsAnimating(false)
+              })
+            }
+          }}>
           <span />
           <span />
           <span />
         </button>
-        <ul>
+        <ul ref={ulRef}>
           {pages.map(([name, url], i) => (
             <li key={i} className={classnames({ [header.currentPg]: url === path })}>
               <Link onClick={() => toggle(false)} href={url}>
