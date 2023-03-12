@@ -1,3 +1,4 @@
+import { FieldValues, UseFormRegister } from 'react-hook-form'
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 import { useEffect, useState } from 'react'
 
@@ -8,11 +9,12 @@ export default function Checkboxes({
   direction,
   checkboxArray,
   onChangeCallback,
+  register,
 }: CheckboxesProps) {
   const [currentCheckboxes, setCurrentCheckboxes] = useState(checkboxArray)
 
   useEffect(() => {
-    onChangeCallback(currentCheckboxes)
+    if (onChangeCallback) onChangeCallback(currentCheckboxes)
   }, [currentCheckboxes, onChangeCallback])
 
   function getDirection() {
@@ -74,7 +76,8 @@ export default function Checkboxes({
 interface CheckboxesProps {
   direction: 'vertical' | 'horizontal' | 'auto'
   checkboxArray: Checkbox[]
-  onChangeCallback: (updatedCheckboxes: Checkbox[]) => void
+  register: UseFormRegister<FieldValues>
+  onChangeCallback?: (updatedCheckboxes: Checkbox[]) => void
 }
 
 export type Checkbox = {

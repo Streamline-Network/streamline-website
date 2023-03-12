@@ -9,7 +9,7 @@ import { getServerSession } from 'next-auth'
 export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
-  console.log(session)
+  //! console.log(session)
 
   // Check if the user is logged in.
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
@@ -30,7 +30,7 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
 
   if (!parsedPath) return res.status(422).send({ error: message.INVALID_VARIABLE })
 
-  console.log(parsedPath)
+  //! console.log(parsedPath)
 
   // Check their permissions.
   if (!hasPermission(parsedPath, session, res))

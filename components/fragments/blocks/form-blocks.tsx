@@ -1,5 +1,6 @@
 import Checkboxes, { Checkbox } from '../checkboxes/checkboxes'
 import {
+  Controller,
   FieldErrors,
   FieldValues,
   Resolver,
@@ -14,10 +15,10 @@ import blocks from './blocks.module.scss'
 import classNames from 'classnames'
 
 function MinecraftSkin({
-  state: { register, errors },
+  state: register,
   question,
 }: {
-  state: { register: UseFormRegister<FieldValues>; errors: FieldErrors<FieldValues> }
+  state: UseFormRegister<FieldValues>
   question: Question
 }) {
   const timeoutRef = useRef<NodeJS.Timeout>()
@@ -73,9 +74,28 @@ function MinecraftSkin({
 }
 
 function generateError(errors: FieldErrors<FieldValues>, question: Question) {
-  console.log(errors[question.question]?.type)
+  //! console.log(errors[question.question]?.type)
 
   return errors[question.question] && <span>This question is required!</span>
+}
+
+type FormValues = {
+  [key: string]: string
+}
+
+const resolver: Resolver<FormValues> = async values => {
+  console.log(values)
+  return {
+    values: values.firstName ? values : {},
+    errors: !values.firstName
+      ? {
+          firstName: {
+            type: 'required',
+            message: 'This is required.',
+          },
+        }
+      : {},
+  }
 }
 
 export default function FormBlocks({ numbered, questions, submit }: BlockFormProps) {
@@ -83,35 +103,11 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm()
-  const checkboxRefresh = useCallback(
-    () => (updatedCheckboxes: Checkbox[]) => {
-      setCheckboxes([...checkboxes, updatedCheckboxes])
-    },
-    [checkboxes]
-  )
-  const [agreements, setAgreements] = useState<Checkbox[] | undefined>(
-    submit.agreements?.map(agreement => ({
-      content: agreement.agreement,
-      link: agreement.link,
-      isChecked: false,
-    }))
-  )
 
-  // const resolver: Resolver<FormValues> = async (values) => {
-  //   return {
-  //     values: values. ? values : {},
-  //     errors: !values.firstName
-  //       ? {
-  //           firstName: {
-  //             type: 'required',
-  //             message: 'This is required.',
-  //           },
-  //         }
-  //       : {},
-  //   };
-  // };
+  watch(values => console.log(values))
 
   function getCheckboxes() {
     const allCheckboxes: Checkbox[][] = []
@@ -161,12 +157,12 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
         return (
           <div>
             <Checkboxes
+              register={register}
               direction={'auto'}
               checkboxArray={question.options.map(option => ({
                 content: option,
                 isChecked: false,
               }))}
-              onChangeCallback={checkboxRefresh}
             />
           </div>
         )
@@ -174,7 +170,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
       case 'minecraft-skin': {
         return (
           <>
-            <MinecraftSkin state={{ register, errors }} question={question} />
+            <MinecraftSkin state={register} question={question} />
             {generateError(errors, question)}
           </>
         )
@@ -202,11 +198,12 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
         </div>
       ))}
       <div className={classNames(blocks.block, blocks.submitWrapper)}>
-        {agreements && (
+        {submit.agreements && (
           <Checkboxes
-            checkboxArray={agreements}
+            register={register}
+            checkboxArray={submit.agreements.map(a => ({ content: a.agreement, isChecked: false }))}
             direction={'auto'}
-            onChangeCallback={setAgreements}
+            onChangeCallback={() => {}}
           />
         )}
         <button type="submit">Submit</button>

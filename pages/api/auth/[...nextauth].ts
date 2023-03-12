@@ -14,7 +14,7 @@ export const authOptions: AuthOptions = {
   adapter: FirestoreAdapter(),
   callbacks: {
     async signIn(params) {
-      console.log(params.account)
+      //! console.log(params.account)
       return true
     },
     async jwt({ token }) {
