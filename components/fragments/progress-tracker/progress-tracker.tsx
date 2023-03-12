@@ -17,13 +17,13 @@ export default function ProgressTracker({ steps, currentStepIndex }: ProgressTra
     // Check if at the beginning or end step. If so, just scroll as much as possible.
 
     if (steps.length - 1 !== currentStepIndex || !currentSectionElem) {
-      currentSectionElem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'center' })
+      currentSectionElem.scrollIntoView({ inline: 'center', block: 'center' })
     } else {
       currentSectionElem
-        ? wrapperElem.scrollTo({ left: wrapperElem.scrollWidth, behavior: 'smooth' })
-        : wrapperElem.scrollTo({ left: 0, behavior: 'smooth' })
+        ? wrapperElem.scrollTo({ left: wrapperElem.scrollWidth })
+        : wrapperElem.scrollTo({ left: 0 })
 
-      wrapperElem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      wrapperElem.scrollIntoView({ block: 'center' })
     }
   }
 

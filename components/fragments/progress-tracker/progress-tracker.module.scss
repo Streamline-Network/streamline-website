@@ -1,9 +1,16 @@
+@use '/styles/mixins.scss' as mixins;
+
 .wrapper {
   --indicator-width: 200px;
 
   background-color: var(--btn-color);
   border-radius: 10px;
   overflow-x: auto;
+  scroll-behavior: smooth;
+
+  @include mixins.prefers-reduced-motion {
+    scroll-behavior: unset;
+  }
 
   border: var(--btn-color) 10px solid;
 }
