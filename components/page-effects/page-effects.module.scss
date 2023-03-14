@@ -1,0 +1,17 @@
+.wrapper {
+  padding: 0;
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+  z-index: 999;
+
+  overflow: hidden;
+
+  > span {
+    position: absolute;
+
+    font-size: 3rem;
+    display: inline-block;
+  }
+}
