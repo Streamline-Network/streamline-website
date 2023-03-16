@@ -46,7 +46,7 @@ function StepSwitcher({ stage }: { stage?: number }) {
   }
 }
 
-export default function Stats({}: StatsProps) {
+export default function Stats() {
   const router = useRouter()
   const step = router.query.step as string
   const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(undefined)
@@ -87,5 +87,3 @@ export default function Stats({}: StatsProps) {
     </>
   )
 }
-
-interface StatsProps {}

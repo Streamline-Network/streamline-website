@@ -1,6 +1,7 @@
-import Blocks, { Block } from 'components/fragments/blocks/blocks'
 import Discord, { DiscordProps } from '../../components/fragments/discord/discord'
 
+import { Block } from 'components/fragments/blocks/block-types'
+import Blocks from 'components/fragments/blocks/blocks'
 import Head from 'next/head'
 import Link from 'next/link'
 import Mention from '../../components/fragments/discord/mention/mention'
@@ -8,7 +9,7 @@ import classnames from 'classnames'
 import dozoe from './axolotl-pfp.png'
 import join from './join.module.scss'
 
-export default function Join({}: JoinProps) {
+export default function Join() {
   const blocks: Block[] = [
     {
       title: 'Join the Discord',
@@ -181,9 +182,7 @@ export default function Join({}: JoinProps) {
   )
 }
 
-interface JoinProps {}
-
-interface More {
+type More = {
   color: string
   title: string
   description: string

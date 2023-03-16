@@ -13,7 +13,7 @@ import tiktok from './images/tiktok.png'
 import twitter from './images/twitter.png'
 import youtube from './images/youtube.png'
 
-export default function Community({}: CommunityProps) {
+export default function Community() {
   const sections: Section[] = [
     {
       title: 'Our Social Media',
@@ -156,14 +156,12 @@ export default function Community({}: CommunityProps) {
   )
 }
 
-interface CommunityProps {}
-
-interface Section {
+type Section = {
   title: string
   links: Link[]
 }
 
-interface Link {
+type Link = {
   href: string
   src?: StaticImageData
   alt: string

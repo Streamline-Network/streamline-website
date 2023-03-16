@@ -1,3 +1,4 @@
+import { Block } from './block-types'
 import blocks from './blocks.module.scss'
 
 export default function Blocks({ blockArr }: BlockProps) {
@@ -18,9 +19,4 @@ export default function Blocks({ blockArr }: BlockProps) {
 
 interface BlockProps {
   blockArr: Block[]
-}
-
-export interface Block {
-  title: string
-  paragraphs: React.ReactNode[]
 }

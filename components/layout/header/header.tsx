@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import header from './header.module.scss'
 import { useRouter } from 'next/router'
 
-export default function Header({}: HeaderProps) {
+export default function Header() {
   const pages = [
     ['Home', '/'],
     ['Community', '/community'],
@@ -93,5 +93,3 @@ export default function Header({}: HeaderProps) {
     </header>
   )
 }
-
-interface HeaderProps {}

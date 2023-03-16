@@ -6,6 +6,7 @@ import {
   UseFormRegister,
   useForm,
 } from 'react-hook-form'
+import { FormError, FormInfo, Question } from './block-types'
 import { KeyboardEvent, useRef, useState } from 'react'
 
 import Checkboxes from '../checkboxes/checkboxes'
@@ -217,28 +218,4 @@ interface BlockFormProps {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
     submitCallback: (formInfo: FormInfo) => void | FormError
   }
-}
-
-export type Question = {
-  question: string
-  description?: string
-  required: boolean
-} & (
-  | { type: 'checkboxes' | 'multiple-choice'; options: string[] }
-  | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
-  | { type: 'button'; buttonText: string; buttonCallback: () => void | FormError }
-)
-
-export type FormInfo = {
-  submissionTime: number
-  lastUpdate: number
-  answers: {
-    question: Question
-    answer?: string | string[]
-  }[]
-}
-
-export type FormError = {
-  message: string
-  question?: Question
 }

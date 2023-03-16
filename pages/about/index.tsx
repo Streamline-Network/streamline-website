@@ -5,7 +5,7 @@ import Link from 'next/link'
 import about from './about.module.scss'
 import classnames from 'classnames'
 
-export default function About({}: AboutProps) {
+export default function About() {
   const questions: QuestionProps[] = [
     {
       question: "What's the IP?",
@@ -233,5 +233,3 @@ export default function About({}: AboutProps) {
     </>
   )
 }
-
-interface AboutProps {}

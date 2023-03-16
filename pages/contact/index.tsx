@@ -77,9 +77,7 @@ export default function Contact() {
   )
 }
 
-interface ContactProps {}
-
-interface Block {
+type Block = {
   color: string
   top: string
   img: {

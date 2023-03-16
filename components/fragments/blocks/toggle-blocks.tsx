@@ -1,3 +1,4 @@
+import { BlockToggle } from './block-types'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
 
@@ -33,12 +34,3 @@ export default function ToggleBlocks({ blockArr }: BlockToggleProps) {
 interface BlockToggleProps {
   blockArr: BlockToggle[]
 }
-
-export type BlockToggle = {
-  title: string
-  description?: string
-} & (
-  | { controlType: 'button'; buttonText: string; click: () => void }
-  | { controlType: 'switch'; toggleOn: () => void; toggleOff: () => void }
-  | { controlType: 'message'; message: string }
-)

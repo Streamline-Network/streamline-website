@@ -1,12 +1,12 @@
-import ToggleBlocks, { BlockToggle } from 'components/fragments/blocks/toggle-blocks'
-
+import { BlockToggle } from 'components/fragments/blocks/block-types'
 import Head from 'next/head'
 import { LS_KEY } from 'components/layout/banners/banners'
 import Link from 'next/link'
+import ToggleBlocks from 'components/fragments/blocks/toggle-blocks'
 import classnames from 'classnames'
 import settings from './settings.module.scss'
 
-export default function Stats({}: StatsProps) {
+export default function Stats() {
   const controls: BlockToggle[] = [
     {
       title: 'Light mode',
@@ -66,5 +66,3 @@ export default function Stats({}: StatsProps) {
     </>
   )
 }
-
-interface StatsProps {}

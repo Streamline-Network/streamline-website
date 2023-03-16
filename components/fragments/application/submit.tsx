@@ -1,5 +1,5 @@
-import FormBlocks, { Question } from '../blocks/form-blocks'
-
+import FormBlocks from '../blocks/form-blocks'
+import { Question } from '../blocks/block-types'
 import application from './application.module.scss'
 
 export default function Submit() {

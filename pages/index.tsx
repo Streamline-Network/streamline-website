@@ -4,7 +4,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import index from './index.module.scss'
 
-export default function Index({}: IndexProps) {
+export default function Index() {
   const blocks: BlockProps[] = [
     {
       title: 'Economy',
@@ -89,5 +89,3 @@ export default function Index({}: IndexProps) {
     </>
   )
 }
-
-interface IndexProps {}

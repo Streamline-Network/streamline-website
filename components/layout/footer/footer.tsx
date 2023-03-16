@@ -2,7 +2,7 @@ import Link from 'next/link'
 import classnames from 'classnames'
 import footer from './footer.module.scss'
 
-export default function Footer({}: FooterProps) {
+export default function Footer() {
   const links: [text: string, href: string, button: boolean][] = [
     ['Map', '/map', true], // ["Map", "http://map.streamlinesmp.com", true],
     ['Stats', '/stats', true], // ["Stats", "http://stats.streamlinesmp.com", true],
@@ -31,5 +31,3 @@ export default function Footer({}: FooterProps) {
     </footer>
   )
 }
-
-interface FooterProps {}
