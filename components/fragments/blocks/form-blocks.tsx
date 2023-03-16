@@ -1,6 +1,4 @@
-import Checkboxes, { Checkbox } from '../checkboxes/checkboxes'
 import {
-  Controller,
   FieldErrors,
   FieldValues,
   Resolver,
@@ -8,8 +6,9 @@ import {
   UseFormRegister,
   useForm,
 } from 'react-hook-form'
-import { KeyboardEvent, useCallback, useRef, useState } from 'react'
+import { KeyboardEvent, useRef, useState } from 'react'
 
+import Checkboxes from '../checkboxes/checkboxes'
 import Image from 'next/image'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
@@ -76,7 +75,9 @@ function MinecraftSkin({
 function generateError(errors: FieldErrors<FieldValues>, question: Question) {
   //! console.log(errors[question.question]?.type)
 
-  return errors[question.question] && <span>This question is required!</span>
+  return (
+    errors[question.question] && <span className={blocks.error}>This question is required!</span>
+  )
 }
 
 type FormValues = {
@@ -99,7 +100,6 @@ const resolver: Resolver<FormValues> = async values => {
 }
 
 export default function FormBlocks({ numbered, questions, submit }: BlockFormProps) {
-  const [checkboxes, setCheckboxes] = useState<Checkbox[][]>(getCheckboxes())
   const {
     register,
     handleSubmit,
@@ -108,24 +108,6 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
   } = useForm()
 
   watch(values => console.log(values))
-
-  function getCheckboxes() {
-    const allCheckboxes: Checkbox[][] = []
-
-    for (const question of questions) {
-      if (question.type === 'checkboxes') {
-        const checkboxes: Checkbox[] = []
-
-        for (const option of question.options) {
-          checkboxes.push({ content: option, isChecked: false })
-        }
-
-        allCheckboxes.push(checkboxes)
-      }
-    }
-
-    return allCheckboxes
-  }
 
   function input(question: Question) {
     switch (question.type) {
@@ -155,16 +137,19 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
       }
       case 'checkboxes': {
         return (
-          <div>
+          <>
             <Checkboxes
+              groupName={question.question}
               register={register}
               direction={'auto'}
               checkboxArray={question.options.map(option => ({
                 content: option,
                 isChecked: false,
+                required: false,
               }))}
             />
-          </div>
+            {generateError(errors, question)}
+          </>
         )
       }
       case 'minecraft-skin': {
@@ -175,9 +160,10 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
           </>
         )
       }
+      default: {
+        throw new Error('Unexpected question type!')
+      }
     }
-
-    return <p>{question.type}</p>
   }
 
   const onSubmit: SubmitHandler<FieldValues> = data => {
@@ -197,16 +183,26 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
           {input(question)}
         </div>
       ))}
-      <div className={classNames(blocks.block, blocks.submitWrapper)}>
-        {submit.agreements && (
-          <Checkboxes
-            register={register}
-            checkboxArray={submit.agreements.map(a => ({ content: a.agreement, isChecked: false }))}
-            direction={'auto'}
-            onChangeCallback={() => {}}
-          />
+      <div className={classNames(blocks.block)}>
+        <div className={blocks.submitWrapper}>
+          {submit.agreements && (
+            <Checkboxes
+              groupName={'agreements'}
+              register={register}
+              checkboxArray={submit.agreements.map(a => ({
+                content: a.agreement,
+                isChecked: false,
+                required: true,
+              }))}
+              direction={'auto'}
+              onChangeCallback={() => {}}
+            />
+          )}
+          <button type="submit">Submit</button>
+        </div>
+        {errors['agreements'] && (
+          <span className={blocks.error}>You must accept the agreements.</span>
         )}
-        <button type="submit">Submit</button>
       </div>
     </form>
   )

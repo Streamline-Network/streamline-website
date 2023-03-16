@@ -25,6 +25,23 @@
       width: 100%;
     }
   }
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .error {
+    background-color: var(--danger);
+    width: fit-content;
+
+    margin-inline: auto;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+
+    font-weight: 600;
+    text-align: center;
+  }
 }
 
 .title {
@@ -68,11 +85,6 @@
 .textarea {
   resize: vertical;
   height: 6.5rem;
-}
-
-.block p {
-  padding: 0;
-  margin: 0;
 }
 
 .blockToggle {
@@ -126,10 +138,12 @@
 }
 
 .submitWrapper {
-  flex-direction: row;
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 
-  & > *:last-child {
-    margin-left: auto;
+  @include mixins.mobile {
+    flex-direction: column;
   }
 }

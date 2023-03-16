@@ -6,6 +6,7 @@ import Link from 'next/link'
 import checkboxes from './checkboxes.module.scss'
 
 export default function Checkboxes({
+  groupName,
   direction,
   checkboxArray,
   onChangeCallback,
@@ -30,12 +31,12 @@ export default function Checkboxes({
 
   return (
     <div className={getDirection()}>
-      {currentCheckboxes.map(({ content, isChecked, link }, i) => (
+      {currentCheckboxes.map(({ content, isChecked, link, required }, i) => (
         <div className={checkboxes.checkboxesWrapper} key={i}>
           <div className={checkboxes.checkboxWrapper}>
             <input
+              {...register(`${groupName}.${content}`, { required })}
               type="checkbox"
-              name={content}
               id={content}
               onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -74,6 +75,7 @@ export default function Checkboxes({
 }
 
 interface CheckboxesProps {
+  groupName: string
   direction: 'vertical' | 'horizontal' | 'auto'
   checkboxArray: Checkbox[]
   register: UseFormRegister<FieldValues>
@@ -83,6 +85,7 @@ interface CheckboxesProps {
 export type Checkbox = {
   content: string
   isChecked: boolean
+  required: boolean
 
   link?: string
 }

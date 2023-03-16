@@ -49,6 +49,7 @@
   @include mixins.prefers-reduced-motion {
     scroll-behavior: unset;
   }
+
   @include mixins.dark-theme {
     --bg-color: #202020;
     --text-color: #fff;
@@ -56,9 +57,11 @@
     --btn-2-color: #eee;
     --nav-safe: #9adcff;
     --nav-danger: #ff8aae;
+    --danger: #ff5555;
     --light-gray: #c0bfbf;
     --shadow: #0000005c;
   }
+
   @include mixins.light-theme {
     // --bg-color: #ffffff;
     // --text-color: #000;
@@ -78,6 +81,7 @@
     --btn-2-color: #eee;
     --nav-safe: #9adcff;
     --nav-danger: #ff8aae;
+    --danger: #ff5555;
     --light-gray: #c0bfbf;
     --shadow: #0000005c;
   }

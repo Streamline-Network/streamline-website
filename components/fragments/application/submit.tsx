@@ -33,7 +33,7 @@ export default function Submit() {
       question: 'What version of Minecraft do you play?',
       type: 'checkboxes',
       required: true,
-      options: ['Java Edition (PC, Mac)', 'Bedrock (Mobile, Console, Switch, Etc.)'],
+      options: ['Java Edition (PC or Mac)', 'Bedrock (Other)'],
     },
     {
       question: 'How old are you?',
