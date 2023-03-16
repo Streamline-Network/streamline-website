@@ -38,19 +38,12 @@ export default function Checkboxes({
               {...register(`${groupName}.${content}`, { required })}
               type="checkbox"
               id={content}
-              onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  setCurrentCheckboxes(() => {
-                    const newArr = [...currentCheckboxes]
-                    newArr[i].isChecked = !isChecked
-                    return newArr
-                  })
-                }
-              }}
-              onClick={() => {
+              onChangeCapture={e => {
+                const currentStatus = e.currentTarget.checked
+
                 setCurrentCheckboxes(() => {
                   const newArr = [...currentCheckboxes]
-                  newArr[i].isChecked = !isChecked
+                  newArr[i].isChecked = currentStatus
                   return newArr
                 })
               }}

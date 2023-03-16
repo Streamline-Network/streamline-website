@@ -72,7 +72,12 @@ function MinecraftSkin({
       )}
       <>
         <input
-          {...register(question.question, { required: question.required })}
+          {...register(question.question, {
+            required: question.required,
+            validate: value => {
+              return !!value.trim()
+            },
+          })}
           onKeyUp={handleInput}
           className={blocks.input}
           placeholder={question.placeholderText}
@@ -106,13 +111,20 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
     formState: { errors, isSubmitting },
   } = useForm()
 
+  const validate = (value: string) => {
+    return !!value.trim()
+  }
+
   function input(question: Question) {
     switch (question.type) {
       case 'short-answer': {
         return (
           <>
             <input
-              {...register(question.question, { required: question.required })}
+              {...register(question.question, {
+                required: question.required,
+                validate,
+              })}
               className={blocks.input}
               placeholder={question.placeholderText || 'Answer here...'}
             />
@@ -124,7 +136,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
         return (
           <>
             <textarea
-              {...register(question.question, { required: question.required })}
+              {...register(question.question, { required: question.required, validate })}
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
             />
