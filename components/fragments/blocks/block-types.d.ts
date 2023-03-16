@@ -17,11 +17,6 @@ export type FormInfo = {
   }[]
 }
 
-export type FormError = {
-  message: string
-  question?: Question
-}
-
 export type Block = {
   title: string
   paragraphs: React.ReactNode[]

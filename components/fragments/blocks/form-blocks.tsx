@@ -7,13 +7,14 @@ import {
   UseFormSetError,
   useForm,
 } from 'react-hook-form'
-import { FormError, FormInfo, Question } from './block-types'
+import { FormInfo, Question } from './block-types'
 import { KeyboardEvent, useRef, useState } from 'react'
 
 import Checkboxes from '../checkboxes/checkboxes'
 import Image from 'next/image'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
+import { validate } from 'utils/misc'
 
 function MinecraftSkin({
   state: register,
@@ -37,6 +38,7 @@ function MinecraftSkin({
       clearTimeout(timeoutRef.current)
       return setCurrentImage(false)
     }
+
     if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 
     timeoutRef.current = setTimeout(async () => {
@@ -74,9 +76,7 @@ function MinecraftSkin({
         <input
           {...register(question.question, {
             required: question.required,
-            validate: value => {
-              return !!value.trim()
-            },
+            validate,
           })}
           onKeyUp={handleInput}
           className={blocks.input}
@@ -85,21 +85,6 @@ function MinecraftSkin({
       </>
     </div>
   )
-}
-
-function generateError(errors: FieldErrors<FieldValues>, question: Question) {
-  if (errors[question.question] === undefined) return
-
-  switch (errors[question.question]!.type) {
-    case 'required': {
-      return <span className={blocks.error}>This question is required!</span>
-    }
-    case 'invalid-mc-username': {
-      return <span className={blocks.error}>Minecraft account not found.</span>
-    }
-    default:
-      return <span className={blocks.error}>Invalid input.</span>
-  }
 }
 
 export default function FormBlocks({ numbered, questions, submit }: BlockFormProps) {
@@ -111,8 +96,19 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
     formState: { errors, isSubmitting },
   } = useForm()
 
-  const validate = (value: string) => {
-    return !!value.trim()
+  function renderError(errors: FieldErrors<FieldValues>, question: Question) {
+    if (errors[question.question] === undefined) return
+
+    switch (errors[question.question]!.type) {
+      case 'required': {
+        return <span className={blocks.error}>This question is required!</span>
+      }
+      case 'invalid-mc-username': {
+        return <span className={blocks.error}>Minecraft account not found.</span>
+      }
+      default:
+        return <span className={blocks.error}>Invalid input.</span>
+    }
   }
 
   function input(question: Question) {
@@ -128,7 +124,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
               className={blocks.input}
               placeholder={question.placeholderText || 'Answer here...'}
             />
-            {generateError(errors, question)}
+            {renderError(errors, question)}
           </>
         )
       }
@@ -140,7 +136,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
             />
-            {generateError(errors, question)}
+            {renderError(errors, question)}
           </>
         )
       }
@@ -157,7 +153,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
                 required: false,
               }))}
             />
-            {generateError(errors, question)}
+            {renderError(errors, question)}
           </>
         )
       }
@@ -170,12 +166,12 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
               setError={setError}
               clearErrors={clearErrors}
             />
-            {generateError(errors, question)}
+            {renderError(errors, question)}
           </>
         )
       }
       default: {
-        throw new Error('Unexpected question type!')
+        console.error('Input type not recognized!')
       }
     }
   }
@@ -251,6 +247,6 @@ interface BlockFormProps {
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
-    submitCallback: (formInfo: FormInfo) => void | FormError
+    submitCallback: (formInfo: FormInfo) => void
   }
 }
