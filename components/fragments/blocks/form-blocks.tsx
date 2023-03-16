@@ -1,9 +1,10 @@
 import {
   FieldErrors,
   FieldValues,
-  Resolver,
   SubmitHandler,
+  UseFormClearErrors,
   UseFormRegister,
+  UseFormSetError,
   useForm,
 } from 'react-hook-form'
 import { FormError, FormInfo, Question } from './block-types'
@@ -17,9 +18,13 @@ import classNames from 'classnames'
 function MinecraftSkin({
   state: register,
   question,
+  setError,
+  clearErrors,
 }: {
   state: UseFormRegister<FieldValues>
   question: Question
+  setError: UseFormSetError<FieldValues>
+  clearErrors: UseFormClearErrors<FieldValues>
 }) {
   const timeoutRef = useRef<NodeJS.Timeout>()
   const [currentImage, setCurrentImage] = useState<string | false>(false)
@@ -35,15 +40,19 @@ function MinecraftSkin({
     if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 
     timeoutRef.current = setTimeout(async () => {
-      const uuid = await (
+      const uuid = (await (
         await fetch('/api/minecraft/profiles', {
           method: 'POST',
           body: JSON.stringify({ name: name }),
         })
-      ).json()
+      ).json()) as { uuid?: string }
 
-      if (uuid.error) return setCurrentImage(false)
+      if (!uuid.uuid) {
+        setError(question.question, { type: 'invalid-mc-username' })
+        return setCurrentImage(false)
+      }
 
+      clearErrors(question.question)
       setCurrentImage(uuid.uuid)
     }, 500)
   }
@@ -74,29 +83,17 @@ function MinecraftSkin({
 }
 
 function generateError(errors: FieldErrors<FieldValues>, question: Question) {
-  //! console.log(errors[question.question]?.type)
+  if (errors[question.question] === undefined) return
 
-  return (
-    errors[question.question] && <span className={blocks.error}>This question is required!</span>
-  )
-}
-
-type FormValues = {
-  [key: string]: string
-}
-
-const resolver: Resolver<FormValues> = async values => {
-  console.log(values)
-  return {
-    values: values.firstName ? values : {},
-    errors: !values.firstName
-      ? {
-          firstName: {
-            type: 'required',
-            message: 'This is required.',
-          },
-        }
-      : {},
+  switch (errors[question.question]!.type) {
+    case 'required': {
+      return <span className={blocks.error}>This question is required!</span>
+    }
+    case 'invalid-mc-username': {
+      return <span className={blocks.error}>Minecraft account not found.</span>
+    }
+    default:
+      return <span className={blocks.error}>Invalid input.</span>
   }
 }
 
@@ -104,11 +101,10 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    setError,
+    clearErrors,
+    formState: { errors, isSubmitting },
   } = useForm()
-
-  watch(values => console.log(values))
 
   function input(question: Question) {
     switch (question.type) {
@@ -156,7 +152,12 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
       case 'minecraft-skin': {
         return (
           <>
-            <MinecraftSkin state={register} question={question} />
+            <MinecraftSkin
+              state={register}
+              question={question}
+              setError={setError}
+              clearErrors={clearErrors}
+            />
             {generateError(errors, question)}
           </>
         )
@@ -169,6 +170,20 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
 
   const onSubmit: SubmitHandler<FieldValues> = data => {
     console.log(data)
+  }
+
+  const isErrors = () => Object.keys(errors).length !== 0
+
+  const goToFirstError = () => {
+    let firstError: any = errors[Object.keys(errors)[0]]
+    if (firstError) {
+      while (firstError && !firstError.ref) {
+        firstError = firstError[Object.keys(firstError)[0]]
+        console.log(firstError)
+      }
+      const elem = firstError.ref as HTMLElement
+      elem.focus()
+    }
   }
 
   return (
@@ -199,7 +214,15 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
               onChangeCallback={() => {}}
             />
           )}
-          <button type="submit">Submit</button>
+          {isErrors() ? (
+            <button onClick={goToFirstError} type="button">
+              Submit
+            </button>
+          ) : (
+            <button disabled={isSubmitting} type="submit">
+              Submit
+            </button>
+          )}
         </div>
         {errors['agreements'] && (
           <span className={blocks.error}>You must accept the agreements.</span>
