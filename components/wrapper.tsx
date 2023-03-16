@@ -13,7 +13,9 @@ const rubik = Rubik({
 export default function Wrapper({ children, session }: WrapperProps) {
   return (
     <div className={classNames('wrapper', rubik.className)}>
-      <SessionProvider session={session}>{children}</SessionProvider>
+      <SessionProvider refetchOnWindowFocus={false} session={session}>
+        {children}
+      </SessionProvider>
     </div>
   )
 }

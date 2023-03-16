@@ -52,13 +52,14 @@ export default function Stats() {
   const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(undefined)
 
   useEffect(() => {
+    // Checks for changes every minute.
     const intervalId = setInterval(() => {
       fetch('/api/db/docs?path=userState/{id}')
         .then(r => r.json())
         .then(r => {
           setCurrentStepIndex(r.data.applicationStage)
         })
-    }, 5000)
+    }, 60000)
 
     return () => clearInterval(intervalId)
   }, [])
