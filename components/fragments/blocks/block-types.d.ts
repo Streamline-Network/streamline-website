@@ -8,6 +8,13 @@ export type Question = {
   | { type: 'button'; buttonText: string; buttonCallback: () => void | FormError }
 )
 
+export type Section = {
+  sectionTitle: string
+  description?: string
+
+  questions: Question[]
+}
+
 export type FormInfo = {
   submissionTime: number
   lastUpdate: number

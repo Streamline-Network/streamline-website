@@ -7,8 +7,8 @@ import {
   UseFormSetError,
   useForm,
 } from 'react-hook-form'
-import { FormInfo, Question } from './block-types'
-import { KeyboardEvent, useRef, useState } from 'react'
+import { FormInfo, Question, Section } from './block-types'
+import { Fragment, KeyboardEvent, useRef, useState } from 'react'
 
 import Checkboxes from '../checkboxes/checkboxes'
 import Image from 'next/image'
@@ -87,7 +87,7 @@ function MinecraftSkin({
   )
 }
 
-export default function FormBlocks({ numbered, questions, submit }: BlockFormProps) {
+export default function FormBlocks({ numbered, sections, submit }: BlockFormProps) {
   const {
     register,
     handleSubmit,
@@ -196,16 +196,28 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={blocks.wrapper}>
-      {questions.map((question, i) => (
-        <div className={blocks.block} key={i}>
-          <div className={blocks.questionWrapper}>
-            <h3 className={blocks.title}>{(numbered ? `${i + 1}. ` : '') + question.question}</h3>
-            {!question.required && <span>optional</span>}
+      {sections.map(({ sectionTitle, description, questions }, i) => (
+        <Fragment key={i}>
+          <div className={blocks.block}>
+            <div className={blocks.questionWrapper}>
+              <h3 className={blocks.title}>{sectionTitle}</h3>
+            </div>
+            {description && <p>{description}</p>}
           </div>
+          {questions.map((question, i) => (
+            <div className={blocks.block} key={i}>
+              <div className={blocks.questionWrapper}>
+                <h3 className={blocks.title}>
+                  {(numbered ? `${i + 1}. ` : '') + question.question}
+                </h3>
+                {!question.required && <span>optional</span>}
+              </div>
 
-          {question.description && <p>{question.description}</p>}
-          {input(question)}
-        </div>
+              {question.description && <p>{question.description}</p>}
+              {input(question)}
+            </div>
+          ))}
+        </Fragment>
       ))}
       <div className={classNames(blocks.block)}>
         <div className={blocks.submitWrapper}>
@@ -242,8 +254,7 @@ export default function FormBlocks({ numbered, questions, submit }: BlockFormPro
 
 interface BlockFormProps {
   numbered: boolean
-  questions: Question[]
-  autosaveCallback?: (formInfo: FormInfo) => void
+  sections: Section[]
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]

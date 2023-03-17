@@ -125,6 +125,27 @@ a {
   color: var(--text-color);
 }
 
+.cookie-wrapper {
+  padding-block: 1rem;
+  gap: 1rem;
+
+  background-color: var(--btn-2-color) !important;
+  color: var(--bg-color) !important;
+
+  // border-radius: 10px 10px 0 0 !important;
+
+  button {
+    background-color: var(--bg-color) !important;
+    color: var(--btn-2-color) !important;
+
+    border-radius: 5px !important;
+  }
+
+  * {
+    margin: 0 !important;
+  }
+}
+
 .purple {
   /* background-color: #b983ff; */
   background: #7d48fe;
