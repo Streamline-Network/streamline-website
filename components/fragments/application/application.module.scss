@@ -16,6 +16,7 @@
   padding: 30px;
 
   gap: 1rem;
+
   > * {
     margin: 0;
   }
@@ -124,4 +125,38 @@
 
 .serverIp:hover::after {
   opacity: 1;
+}
+
+.skeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  > .subTitle {
+    margin-block: 30px;
+    height: 3rem;
+    width: 50rem;
+  }
+
+  > .block {
+    width: 100%;
+    height: 30rem;
+  }
+
+  > * {
+    border-radius: 10px;
+
+    background: linear-gradient(90deg, #ffffff10, #ffffff10, #ffffff15, #ffffff10, #ffffff10);
+    background-size: 200% 100%;
+    animation: skeleton 1s linear infinite;
+  }
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
 }

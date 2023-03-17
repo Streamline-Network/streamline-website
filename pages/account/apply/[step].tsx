@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import Head from 'next/head'
+import Loading from 'components/fragments/application/loading'
 import ProgressTracker from 'components/fragments/progress-tracker/progress-tracker'
 import Reviewed from 'components/fragments/application/reviewed'
 import Status from 'components/fragments/application/status'
@@ -18,7 +19,7 @@ export const STEPS: Steps = {
 }
 
 function StepSwitcher({ stage }: { stage?: number }) {
-  if (stage === undefined) return <p>Loading...</p>
+  if (stage === undefined) return <Loading />
   switch (stage) {
     case 0:
       return (

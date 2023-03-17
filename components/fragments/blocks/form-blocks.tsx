@@ -8,7 +8,7 @@ import {
   useForm,
 } from 'react-hook-form'
 import { FormInfo, Question, Section } from './block-types'
-import { Fragment, KeyboardEvent, useRef, useState } from 'react'
+import { Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react'
 
 import Checkboxes from '../checkboxes/checkboxes'
 import Image from 'next/image'
