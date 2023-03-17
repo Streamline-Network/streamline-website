@@ -161,6 +161,7 @@ export default function Submit() {
 
       <FormBlocks
         sections={sections}
+        numbered
         submit={{
           agreements: [
             {
