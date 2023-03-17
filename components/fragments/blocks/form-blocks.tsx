@@ -87,7 +87,7 @@ function MinecraftSkin({
   )
 }
 
-export default function FormBlocks({ numbered, sections, submit }: BlockFormProps) {
+export default function FormBlocks({ numbered = false, sections, submit }: BlockFormProps) {
   const {
     register,
     handleSubmit,
@@ -171,7 +171,7 @@ export default function FormBlocks({ numbered, sections, submit }: BlockFormProp
         )
       }
       default: {
-        console.error('Input type not recognized!')
+        console.warn('Input type not recognized!')
       }
     }
   }
@@ -196,27 +196,32 @@ export default function FormBlocks({ numbered, sections, submit }: BlockFormProp
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={blocks.wrapper}>
-      {sections.map(({ sectionTitle, description, questions }, i) => (
-        <Fragment key={i}>
-          <div className={blocks.block}>
-            <div className={blocks.questionWrapper}>
-              <h3 className={blocks.title}>{sectionTitle}</h3>
-            </div>
+      {sections.map(({ sectionTitle, description, questions }, sectionIndex) => (
+        <Fragment key={sectionIndex}>
+          <div className={classNames(blocks.block, blocks.sectionWrapper)}>
+            <h3 className={blocks.title}>
+              {numbered ? `${String.fromCharCode(sectionIndex + 65)}: ` : ''}
+              {sectionTitle}
+            </h3>
             {description && <p>{description}</p>}
           </div>
-          {questions.map((question, i) => (
-            <div className={blocks.block} key={i}>
-              <div className={blocks.questionWrapper}>
-                <h3 className={blocks.title}>
-                  {(numbered ? `${i + 1}. ` : '') + question.question}
-                </h3>
-                {!question.required && <span>optional</span>}
-              </div>
+          {questions.map((question, i) => {
+            const encodedQuestion = Buffer.from(question.question).toString('base64')
+            return (
+              <div className={blocks.block} key={i}>
+                <div className={blocks.questionWrapper}>
+                  <h3 className={blocks.title}>
+                    {(numbered ? `${String.fromCharCode(sectionIndex + 65)}${i + 1}. ` : '') +
+                      question.question}
+                  </h3>
+                  {!question.required && <span>optional</span>}
+                </div>
 
-              {question.description && <p>{question.description}</p>}
-              {input(question)}
-            </div>
-          ))}
+                {question.description && <p>{question.description}</p>}
+                {input({ ...question, question: encodedQuestion })}
+              </div>
+            )
+          })}
         </Fragment>
       ))}
       <div className={classNames(blocks.block)}>
@@ -253,7 +258,7 @@ export default function FormBlocks({ numbered, sections, submit }: BlockFormProp
 }
 
 interface BlockFormProps {
-  numbered: boolean
+  numbered?: boolean
   sections: Section[]
 
   submit: {
