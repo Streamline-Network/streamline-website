@@ -1,6 +1,6 @@
 import { Head, Html, Main, NextScript } from 'next/document'
 
-export default function Layout({}: LayoutProps) {
+export default function Layout() {
   return (
     <Html lang="en">
       <Head />
@@ -10,8 +10,4 @@ export default function Layout({}: LayoutProps) {
       </body>
     </Html>
   )
-}
-
-interface LayoutProps {
-  children: React.ReactNode
 }
