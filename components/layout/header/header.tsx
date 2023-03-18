@@ -87,7 +87,7 @@ export default function Header() {
               </Link>
             </li>
           ))}
-          <ProfileButton toggle={toggle} />
+          {/* <ProfileButton toggle={toggle} /> */}
         </ul>
       </nav>
     </header>
