@@ -5,7 +5,11 @@ export type Question = {
 } & (
   | { type: 'checkboxes' | 'multiple-choice'; options: string[] }
   | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
-  | { type: 'button'; buttonText: string; buttonCallback: () => void | FormError }
+  | {
+      type: 'button'
+      buttonText: string
+      link: string
+    }
 )
 
 export type Section = {

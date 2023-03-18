@@ -17,6 +17,13 @@ export default function Submit() {
           required: true,
         },
         {
+          question: 'What version of Minecraft do you play?',
+          type: 'checkboxes',
+
+          options: ['Java Edition', 'Bedrock Edition'],
+          required: true,
+        },
+        {
           question: 'How old are you?',
           type: 'short-answer',
           required: true,
@@ -108,9 +115,7 @@ export default function Submit() {
           type: 'button',
           buttonText: 'Join',
           required: true,
-          buttonCallback() {
-            console.log('OwO')
-          },
+          link: '#',
         },
       ],
     },

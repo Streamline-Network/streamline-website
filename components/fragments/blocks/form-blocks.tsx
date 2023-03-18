@@ -12,6 +12,7 @@ import { Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react'
 
 import Checkboxes from '../checkboxes/checkboxes'
 import Image from 'next/image'
+import Link from 'next/link'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
 import { validate } from 'utils/misc'
@@ -170,14 +171,39 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
           </>
         )
       }
+      case 'button': {
+        return (
+          <>
+            <button type="button">
+              <Link
+                style={{ display: 'block', width: '100%' }}
+                {...register(question.question)}
+                href={question.link}
+                type="button">
+                {question.buttonText}
+              </Link>
+            </button>
+
+            {renderError(errors, question)}
+          </>
+        )
+      }
       default: {
         console.warn('Input type not recognized!')
       }
     }
   }
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log(data)
+  const onSubmit: SubmitHandler<FieldValues> = (data: { [key: string]: string }) => {
+    let parsedData = {}
+    for (const question of Object.keys(data)) {
+      parsedData = {
+        ...parsedData,
+        [Buffer.from(question, 'base64').toString('utf8')]: data[question],
+      }
+    }
+
+    console.table(parsedData)
   }
 
   const isErrors = () => Object.keys(errors).length !== 0
