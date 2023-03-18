@@ -1,5 +1,6 @@
 import { JWT } from 'next-auth/jwt'
 import { Session } from 'next-auth'
+import crypto from 'crypto'
 import { db } from 'config/firebase'
 
 export type DBDefaults = {
@@ -11,23 +12,32 @@ const DB_DEFAULTS: DBDefaults = {
   applicationStage: 0,
 }
 
-const STATE = ['applicationStage']
-
 export async function loadFromDB(token: JWT) {
-  let docRef = db.doc(`users/${token.sub!}`)
+  async function loadId() {
+    const docRef = db.doc(`userIds/${token.email}`)
+    const docSnap = await docRef.get()
+
+    const docData = docSnap.exists ? docSnap.data()!.id : undefined
+
+    if (docData === undefined) {
+      const newId = crypto.randomUUID()
+      await docRef.set({ id: newId }, { merge: true })
+      token.id = newId
+    } else {
+      token.id = docData
+    }
+  }
+
+  await loadId()
+
+  let docRef = db.doc(`userState/${token.id}`)
   let docSnap = await docRef.get()
 
   for (const key of Object.keys(DB_DEFAULTS)) {
-    if (STATE.includes(key)) {
-      docRef = db.doc(`userState/${token.sub!}`)
-      docSnap = await docRef.get()
-    }
-
     const docData = docSnap.exists ? docSnap.data()![key] : undefined
 
     if (docData === undefined) {
       await docRef.set({ [key]: DB_DEFAULTS[key] }, { merge: true })
-      // await setDoc(docRef, { [key]: DB_DEFAULTS[key] }, { merge: true })
       token[key] = DB_DEFAULTS[key]
     } else {
       token[key] = docData
@@ -36,7 +46,8 @@ export async function loadFromDB(token: JWT) {
 }
 
 export function copyToSession(session: Session, token: JWT) {
-  const OTHERS = ['sub']
+  // Any property that is natively on the `token`.
+  const OTHERS: string[] = ['email', 'id']
 
   for (const key of Object.keys(DB_DEFAULTS)) {
     session[key] = token[key]
