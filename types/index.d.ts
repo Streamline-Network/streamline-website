@@ -9,7 +9,8 @@ declare module 'next-auth' {
     [key: string]: void
     role: Roles
     applicationStage: ApplicationStage
-    sub: string
+    id: string
+    email: string
   }
 }
 
@@ -18,5 +19,6 @@ declare module 'next-auth/jwt' {
     [key: string]: void
     role: Roles
     applicationStage: ApplicationStage
+    id: string
   }
 }

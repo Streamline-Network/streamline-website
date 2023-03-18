@@ -19,13 +19,13 @@ export function hasPermission(parsedPath: string, session: Session, res: NextApi
   /*   if (writing) {
     switch (pathArr[0]) {
       case 'applications':
-        if (pathArr[1] === session.sub) return true
+        if (pathArr[1] === session.id) return true
 
       case 'applicationData':
         if (session.role === 'reviewer') return true
 
       case 'userState':
-        if (pathArr[1] === session.sub) return true
+        if (pathArr[1] === session.id) return true
 
       default:
         return false
@@ -37,21 +37,21 @@ export function hasPermission(parsedPath: string, session: Session, res: NextApi
       res.setHeader('Cache-Control', `max-age=${60 * 30} private`)
 
       if (session.role === 'reviewer') return true
-      if (pathArr[1] === session.sub) return true
+      if (pathArr[1] === session.id) return true
 
     case 'applications':
       res.setHeader('Cache-Control', `max-age=${60 * 5} private`)
       if (session.role === 'reviewer') return true
-      if (pathArr[1] === session.sub) return true
+      if (pathArr[1] === session.id) return true
 
     case 'applicationData':
       res.setHeader('Cache-Control', `max-age=${60 * 0.5} private`)
       if (session.role === 'reviewer') return true
-      if (pathArr[1] === session.sub) return true
+      if (pathArr[1] === session.id) return true
 
     case 'userState':
       res.setHeader('Cache-Control', `max-age=${60 * 0.1} private`)
-      if (pathArr[1] === session.sub) return true
+      if (pathArr[1] === session.id) return true
 
     default:
       return false
@@ -71,7 +71,7 @@ export function parsePath(path: string, session: Session) {
 
     switch (variable) {
       case '{id}':
-        return session.sub
+        return session.id
 
       case '{role}':
         return session.role
@@ -82,6 +82,8 @@ export function parsePath(path: string, session: Session) {
   })
 
   if (parsedPath.find(pathSegment => pathSegment === false)) return false
+
+  console.log(parsedPath)
 
   return parsedPath.reduce((previousValue, currentValue) => previousValue + '/' + currentValue)
 }
