@@ -171,17 +171,16 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
       case 'button': {
         return (
           <>
-            <button type="button">
-              <Link
-                style={{ display: 'block', width: '100%' }}
-                {...register(question.question)}
-                href={question.link}
-                target={'_blank'}
-                referrerPolicy={'no-referrer'}
-                type="button">
-                {question.buttonText}
-              </Link>
-            </button>
+            <Link
+              style={{ display: 'block', width: '100%' }}
+              {...register(question.question)}
+              href={question.link}
+              target={'_blank'}
+              referrerPolicy={'no-referrer'}
+              className={blocks.button}
+              type="button">
+              {question.buttonText}
+            </Link>
 
             {renderError(errors, question)}
           </>
