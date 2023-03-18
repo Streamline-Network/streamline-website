@@ -15,7 +15,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import blocks from './blocks.module.scss'
 import classNames from 'classnames'
-import { validate } from 'utils/misc'
 
 function MinecraftSkin({
   state: register,
@@ -77,7 +76,6 @@ function MinecraftSkin({
         <input
           {...register(question.question, {
             required: question.required,
-            validate,
           })}
           onKeyUp={handleInput}
           className={blocks.input}
@@ -120,7 +118,6 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
             <input
               {...register(question.question, {
                 required: question.required,
-                validate,
               })}
               className={blocks.input}
               placeholder={question.placeholderText || 'Answer here...'}
@@ -133,7 +130,7 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
         return (
           <>
             <textarea
-              {...register(question.question, { required: question.required, validate })}
+              {...register(question.question, { required: question.required })}
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
             />
