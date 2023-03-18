@@ -115,7 +115,7 @@ export default function Submit() {
           type: 'button',
           buttonText: 'Join',
           required: true,
-          link: '#',
+          link: 'https://discord.gg/EAe4S6HdVC',
         },
       ],
     },
