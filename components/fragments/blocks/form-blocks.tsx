@@ -211,7 +211,6 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
     if (firstError) {
       while (firstError && !firstError.ref) {
         firstError = firstError[Object.keys(firstError)[0]]
-        console.log(firstError)
       }
       const elem = firstError.ref as HTMLElement
       elem.focus()

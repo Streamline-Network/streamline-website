@@ -10,8 +10,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const doc = db.doc(`userState/${session?.sub}`)
   await doc.set({ applicationStage: 1 }, { merge: true })
 
-  //! console.log(req.body)
-
   if (req.url) return res.redirect(`${process.env.NEXTAUTH_URL!}/account/apply/`)
 
   return res.status(300).send({ error: 'Request invalid!' })

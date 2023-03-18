@@ -83,8 +83,6 @@ export function parsePath(path: string, session: Session) {
 
   if (parsedPath.find(pathSegment => pathSegment === false)) return false
 
-  console.log(parsedPath)
-
   return parsedPath.reduce((previousValue, currentValue) => previousValue + '/' + currentValue)
 }
 
