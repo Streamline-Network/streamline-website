@@ -1,4 +1,13 @@
 import {
+  Dispatch,
+  Fragment,
+  KeyboardEvent,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
+import {
   FieldErrors,
   FieldValues,
   SubmitHandler,
@@ -8,7 +17,6 @@ import {
   useForm,
 } from 'react-hook-form'
 import { FormInfo, Question, Section } from './block-types'
-import { Fragment, KeyboardEvent, useEffect, useRef, useState } from 'react'
 
 import Checkboxes from '../checkboxes/checkboxes'
 import Image from 'next/image'
@@ -86,9 +94,13 @@ function MinecraftSkin({
   )
 }
 
-export default function FormBlocks({ numbered = false, sections, submit, checks }: BlockFormProps) {
-  const [customError, setCustomError] = useState<string | undefined>()
-
+export default function FormBlocks({
+  numbered = false,
+  sections,
+  submit,
+  checks,
+  error: [customError, setCustomError],
+}: BlockFormProps) {
   const {
     register,
     handleSubmit,
@@ -316,6 +328,7 @@ interface BlockFormProps {
   numbered?: boolean
   sections: Section[]
   checks: ((answers: { [key: string]: string }) => string | undefined)[]
+  error: [string | undefined, Dispatch<SetStateAction<string | undefined>>]
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]

@@ -1,10 +1,12 @@
 import { Question, Section } from '../blocks/block-types'
+import { SetStateAction, useState } from 'react'
 
 import FormBlocks from '../blocks/form-blocks'
-import { SetStateAction } from 'react'
 import application from './application.module.scss'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
+  const [customError, setCustomError] = useState<string | undefined>()
+
   /* const sections: Section[] = [
     {
       sectionTitle: 'Intro',
@@ -155,6 +157,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
       <FormBlocks
         sections={sections}
         numbered
+        error={[customError, setCustomError]}
         checks={[
           () => {
             // Check with the Discord Bot to see if the person applying is in the Discord server.
@@ -174,15 +177,21 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
             { agreement: 'Agree to the privacy policy.' },
           ],
           submitCallback(formInfo) {
-            fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) }).then(
-              r => {
+            fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) })
+              .then(r => {
                 if (r.status === 200) {
                   setCurrentStepIndex(1)
                 }
 
-                // TODO: Error handling.
-              }
-            )
+                setCustomError(`An error occurred with the server! Please try again later.`)
+                console.warn(r)
+              })
+              .catch(e => {
+                setCustomError(
+                  `Oh no! A critical error has occurred. Check your network connection.`
+                )
+                console.warn(e)
+              })
 
             console.log('Form submitted!', formInfo)
           },
