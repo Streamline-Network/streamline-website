@@ -113,12 +113,14 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
   }
 
   function input(question: Question) {
+    const encodedQuestion = Buffer.from(question.question).toString('base64')
+
     switch (question.type) {
       case 'short-answer': {
         return (
           <>
             <input
-              {...register(question.question, {
+              {...register(encodedQuestion, {
                 required: question.required,
               })}
               className={blocks.input}
@@ -132,7 +134,7 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
         return (
           <>
             <textarea
-              {...register(question.question, { required: question.required })}
+              {...register(encodedQuestion, { required: question.required })}
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
             />
@@ -144,7 +146,7 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
         return (
           <>
             <Checkboxes
-              groupName={question.question}
+              groupName={encodedQuestion}
               register={register}
               direction={'auto'}
               checkboxArray={question.options.map(option => ({
@@ -175,7 +177,7 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
           <>
             <Link
               style={{ display: 'block', width: '100%' }}
-              {...register(question.question)}
+              {...register(encodedQuestion)}
               href={question.link}
               target={'_blank'}
               referrerPolicy={'no-referrer'}
@@ -195,20 +197,34 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
   }
 
   const onSubmit: SubmitHandler<FieldValues> = (data: { [key: string]: string }) => {
-    let parsedData = {}
-    for (const question of Object.keys(data)) {
-      if (question === 'agreements') {
-        parsedData = {
-          ...parsedData,
-          [question]: data[question],
-        }
+    function getData(data: string) {
+      if (typeof data === 'object') {
+        return parseData(data)
       } else {
-        parsedData = {
-          ...parsedData,
-          [Buffer.from(question, 'base64').toString('utf8')]: data[question],
-        }
+        return data
       }
     }
+
+    function parseData(data: { [key: string]: string }) {
+      let parsedData = {}
+      for (const question of Object.keys(data)) {
+        if (question === 'agreements') {
+          parsedData = {
+            ...parsedData,
+            [question]: getData(data[question]),
+          }
+        } else {
+          parsedData = {
+            ...parsedData,
+            [Buffer.from(question, 'base64').toString('utf8')]: getData(data[question]),
+          }
+        }
+      }
+
+      return parsedData
+    }
+
+    const parsedData = parseData(data)
 
     for (const check of checks) {
       const result = check(parsedData)
@@ -245,7 +261,6 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
             {description && <p>{description}</p>}
           </div>
           {questions.map((question, i) => {
-            const encodedQuestion = Buffer.from(question.question).toString('base64')
             return (
               <div className={blocks.block} key={i}>
                 <div className={blocks.questionWrapper}>
@@ -257,7 +272,7 @@ export default function FormBlocks({ numbered = false, sections, submit, checks 
                 </div>
 
                 {question.description && <p>{question.description}</p>}
-                {input({ ...question, question: encodedQuestion })}
+                {input(question)}
               </div>
             )
           })}

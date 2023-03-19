@@ -1,10 +1,11 @@
 import { Question, Section } from '../blocks/block-types'
 
 import FormBlocks from '../blocks/form-blocks'
+import { SetStateAction } from 'react'
 import application from './application.module.scss'
 
-export default function Submit() {
-  const sections: Section[] = [
+export default function Submit({ setCurrentStepIndex }: SubmitProps) {
+  /* const sections: Section[] = [
     {
       sectionTitle: 'Intro',
       description: 'Tell us about yourself.',
@@ -119,6 +120,26 @@ export default function Submit() {
         },
       ],
     },
+  ] */
+
+  const sections: Section[] = [
+    {
+      sectionTitle: 'Debug Form',
+
+      questions: [
+        {
+          question: 'Debug Question',
+          type: 'short-answer',
+          required: false,
+        },
+        {
+          question: 'Checkbox Test',
+          type: 'checkboxes',
+          required: false,
+          options: ['Test.d,..d,.,,', "['ldwp;l';'a;pwld'p", 'owo'],
+        },
+      ],
+    },
   ]
 
   return (
@@ -153,10 +174,24 @@ export default function Submit() {
             { agreement: 'Agree to the privacy policy.' },
           ],
           submitCallback(formInfo) {
+            fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) }).then(
+              r => {
+                if (r.status === 200) {
+                  setCurrentStepIndex(1)
+                }
+
+                // TODO: Error handling.
+              }
+            )
+
             console.log('Form submitted!', formInfo)
           },
         }}
       />
     </>
   )
+}
+
+interface SubmitProps {
+  setCurrentStepIndex: (value: SetStateAction<number | undefined>) => void
 }
