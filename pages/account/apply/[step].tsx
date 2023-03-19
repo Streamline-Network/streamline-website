@@ -58,8 +58,13 @@ export default function Steps() {
       fetch('/api/db/docs?path=userState/{id}')
         .then(r => r.json())
         .then(r => {
-          setCurrentStepIndex(r.data.applicationStage)
+          if (!r.data.applicationStage) {
+            console.warn('Failed to refresh application stage.')
+          } else {
+            setCurrentStepIndex(r.data.applicationStage)
+          }
         })
+        .catch(e => console.warn('Failed to refresh application stage.', e))
     }, 60000)
 
     return () => clearInterval(intervalId)
