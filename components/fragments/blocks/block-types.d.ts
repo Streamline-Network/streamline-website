@@ -3,7 +3,7 @@ export type Question = {
   description?: string
   required: boolean
 } & (
-  | { type: 'checkboxes' | 'multiple-choice'; options: string[] }
+  | { type: 'checkboxes'; options: string[] }
   | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
   | {
       type: 'button'
