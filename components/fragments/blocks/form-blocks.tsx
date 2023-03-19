@@ -86,7 +86,9 @@ function MinecraftSkin({
   )
 }
 
-export default function FormBlocks({ numbered = false, sections, submit }: BlockFormProps) {
+export default function FormBlocks({ numbered = false, sections, submit, checks }: BlockFormProps) {
+  const [customError, setCustomError] = useState<string | undefined>()
+
   const {
     register,
     handleSubmit,
@@ -195,13 +197,27 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
   const onSubmit: SubmitHandler<FieldValues> = (data: { [key: string]: string }) => {
     let parsedData = {}
     for (const question of Object.keys(data)) {
-      parsedData = {
-        ...parsedData,
-        [Buffer.from(question, 'base64').toString('utf8')]: data[question],
+      if (question === 'agreements') {
+        parsedData = {
+          ...parsedData,
+          [question]: data[question],
+        }
+      } else {
+        parsedData = {
+          ...parsedData,
+          [Buffer.from(question, 'base64').toString('utf8')]: data[question],
+        }
       }
     }
 
-    console.table(parsedData)
+    for (const check of checks) {
+      const result = check(parsedData)
+      if (result) return setCustomError(result)
+    }
+
+    setCustomError(undefined)
+
+    submit.submitCallback({ submissionTime: Date.now(), answers: parsedData })
   }
 
   const isErrors = () => Object.keys(errors).length !== 0
@@ -275,6 +291,7 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
         {errors['agreements'] && (
           <span className={blocks.error}>You must accept the agreements.</span>
         )}
+        {customError && <span className={blocks.error}>{customError}</span>}
       </div>
     </form>
   )
@@ -283,6 +300,7 @@ export default function FormBlocks({ numbered = false, sections, submit }: Block
 interface BlockFormProps {
   numbered?: boolean
   sections: Section[]
+  checks: ((answers: { [key: string]: string }) => string | undefined)[]
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]

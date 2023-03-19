@@ -121,39 +121,6 @@ export default function Submit() {
     },
   ]
 
-  /*
-
-  ? Means optional
-
-  * Intro
-
-  What is your Minecraft Java Edition username?
-  How old are you?
-  ? How did you find out about Streamline?
-  Why do you want to join Streamline?
-  ? Do you use any special client? If so, what? E.x. Badlion, Wurst, Meteor, Fabric, Forge, etc.
-
-  * Scenarios
-
-  You want to use a village, but there's signs of other players' activity in it. What do you do?
-  If you had a chest in your base that got all of its items stolen from it and you saw a player running from your chest, what would you do?
-  If someone approached you and started attacking you, what would you do?
-  You find what looks to be an old abandoned base with some starter items, what do you do?
-
-  In the shopping district a creeper blows up, what do you do?
-  Someone offers you a high amount of diamonds for an item that is sold for cheap at someone’s shop. What do you do?
-
-  Your close friend tells you that they are x-raying, what do you do?
-
-  * Final
-
-  You’re unsure about a rule, what do you do?
-  At how many retributions do you get your first ban and at how many do you get permanently banned?
-
-  ! Join the Discord part (enforced by Discord bot)
-
-  */
-
   return (
     <>
       <div className={application.informationBlock}>
@@ -167,6 +134,16 @@ export default function Submit() {
       <FormBlocks
         sections={sections}
         numbered
+        checks={[
+          () => {
+            // Check with the Discord Bot to see if the person applying is in the Discord server.
+
+            // TODO: Implement this check.
+            return undefined
+
+            // return 'You must join the Streamline SMP Discord to apply!'
+          },
+        ]}
         submit={{
           agreements: [
             {

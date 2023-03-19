@@ -21,11 +21,10 @@ export type Section = {
 
 export type FormInfo = {
   submissionTime: number
-  lastUpdate: number
+
   answers: {
-    question: Question
-    answer?: string | string[]
-  }[]
+    [key: string]: string
+  }
 }
 
 export type Block = {
