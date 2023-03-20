@@ -1,7 +1,7 @@
-import { Question, Section } from '../blocks/block-types'
 import { SetStateAction, useState } from 'react'
 
-import FormBlocks from '../blocks/form-blocks'
+import FormBlocks from '../blocks/form-blocks/form-blocks'
+import { Section } from '../blocks/block-types'
 import application from './application.module.scss'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
@@ -139,6 +139,11 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           type: 'checkboxes',
           required: false,
           options: ['Test.d,..d,.,,', "['ldwp;l';'a;pwld'p", 'owo'],
+        },
+        {
+          question: 'MC Username test',
+          type: 'minecraft-skin',
+          required: false,
         },
       ],
     },

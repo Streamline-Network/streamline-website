@@ -1,98 +1,12 @@
-import {
-  Dispatch,
-  Fragment,
-  KeyboardEvent,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import {
-  FieldErrors,
-  FieldValues,
-  SubmitHandler,
-  UseFormClearErrors,
-  UseFormRegister,
-  UseFormSetError,
-  useForm,
-} from 'react-hook-form'
-import { FormInfo, Question, Section } from './block-types'
+import { Dispatch, Fragment, SetStateAction } from 'react'
+import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { FormInfo, Question, Section } from '../block-types'
 
-import Checkboxes from '../checkboxes/checkboxes'
-import Image from 'next/image'
+import Checkboxes from '../../checkboxes/checkboxes'
 import Link from 'next/link'
-import blocks from './blocks.module.scss'
+import MinecraftInput from './minecraft-input'
+import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
-
-function MinecraftSkin({
-  state: register,
-  question,
-  setError,
-  clearErrors,
-}: {
-  state: UseFormRegister<FieldValues>
-  question: Question
-  setError: UseFormSetError<FieldValues>
-  clearErrors: UseFormClearErrors<FieldValues>
-}) {
-  const timeoutRef = useRef<NodeJS.Timeout>()
-  const [currentImage, setCurrentImage] = useState<string | false>(false)
-
-  if (question.type !== 'minecraft-skin') throw new Error()
-
-  async function handleInput(e: KeyboardEvent<HTMLInputElement>) {
-    const name = e.currentTarget.value
-    if (!name) {
-      clearTimeout(timeoutRef.current)
-      return setCurrentImage(false)
-    }
-
-    if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
-
-    timeoutRef.current = setTimeout(async () => {
-      const uuid = (await (
-        await fetch('/api/minecraft/profiles', {
-          method: 'POST',
-          body: JSON.stringify({ name: name }),
-        })
-      ).json()) as { uuid?: string }
-
-      if (!uuid.uuid) {
-        setError(question.question, { type: 'invalid-mc-username' })
-        return setCurrentImage(false)
-      }
-
-      clearErrors(question.question)
-      setCurrentImage(uuid.uuid)
-    }, 500)
-  }
-
-  return (
-    <div className={blocks.minecraftSkinWrapper}>
-      {currentImage ? (
-        <Image
-          className={blocks.minecraftSkin}
-          src={`https://crafatar.com/avatars/${currentImage}/?overlay`}
-          alt="A MC Skin"
-          width={50}
-          height={50}
-        />
-      ) : (
-        <div className={blocks.minecraftSkin} />
-      )}
-      <>
-        <input
-          {...register(question.question, {
-            required: question.required,
-          })}
-          onKeyUp={handleInput}
-          className={blocks.input}
-          placeholder={question.placeholderText}
-        />
-      </>
-    </div>
-  )
-}
 
 export default function FormBlocks({
   numbered = false,
@@ -125,20 +39,23 @@ export default function FormBlocks({
   }
 
   function input(question: Question) {
-    const encodedQuestion = Buffer.from(question.question).toString('base64')
+    const encodedQuestion = {
+      ...question,
+      question: Buffer.from(question.question).toString('base64'),
+    }
 
     switch (question.type) {
       case 'short-answer': {
         return (
           <>
             <input
-              {...register(encodedQuestion, {
+              {...register(encodedQuestion.question, {
                 required: question.required,
               })}
               className={blocks.input}
               placeholder={question.placeholderText || 'Answer here...'}
             />
-            {renderError(errors, question)}
+            {renderError(errors, encodedQuestion)}
           </>
         )
       }
@@ -146,11 +63,11 @@ export default function FormBlocks({
         return (
           <>
             <textarea
-              {...register(encodedQuestion, { required: question.required })}
+              {...register(encodedQuestion.question, { required: question.required })}
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
             />
-            {renderError(errors, question)}
+            {renderError(errors, encodedQuestion)}
           </>
         )
       }
@@ -158,7 +75,7 @@ export default function FormBlocks({
         return (
           <>
             <Checkboxes
-              groupName={encodedQuestion}
+              groupName={encodedQuestion.question}
               register={register}
               direction={'auto'}
               checkboxArray={question.options.map(option => ({
@@ -167,20 +84,20 @@ export default function FormBlocks({
                 required: false,
               }))}
             />
-            {renderError(errors, question)}
+            {renderError(errors, encodedQuestion)}
           </>
         )
       }
       case 'minecraft-skin': {
         return (
           <>
-            <MinecraftSkin
+            <MinecraftInput
               state={register}
-              question={question}
+              question={encodedQuestion}
               setError={setError}
               clearErrors={clearErrors}
             />
-            {renderError(errors, question)}
+            {renderError(errors, encodedQuestion)}
           </>
         )
       }
@@ -189,7 +106,7 @@ export default function FormBlocks({
           <>
             <Link
               style={{ display: 'block', width: '100%' }}
-              {...register(encodedQuestion)}
+              {...register(encodedQuestion.question)}
               href={question.link}
               target={'_blank'}
               referrerPolicy={'no-referrer'}
@@ -198,7 +115,7 @@ export default function FormBlocks({
               {question.buttonText}
             </Link>
 
-            {renderError(errors, question)}
+            {renderError(errors, encodedQuestion)}
           </>
         )
       }
