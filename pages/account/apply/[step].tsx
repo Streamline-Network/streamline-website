@@ -37,7 +37,7 @@ export default function Steps() {
         return (
           <>
             <h2 className={apply.subTitle}>Application Status</h2>
-            <Status />
+            <Status setCurrentStepIndex={setCurrentStepIndex} />
           </>
         )
       case 2:

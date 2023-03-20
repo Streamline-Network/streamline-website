@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { FormInfo } from './../../../../components/fragments/blocks/block-types.d'
-import { MISSING_INFORMATION } from './../../../../utils/constant-messages'
+import { FormInfo } from 'components/fragments/blocks/block-types.d'
+import { MISSING_INFORMATION } from 'utils/constant-messages'
 import { NOT_AUTHENTICATED } from 'utils/constant-messages'
 import { authOptions } from '../../auth/[...nextauth]'
 import { db } from 'config/firebase'

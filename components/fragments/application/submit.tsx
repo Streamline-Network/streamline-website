@@ -181,10 +181,10 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               .then(r => {
                 if (r.status === 200) {
                   setCurrentStepIndex(1)
+                } else {
+                  setCustomError(`An error occurred with the server! Please try again later.`)
+                  console.warn(r)
                 }
-
-                setCustomError(`An error occurred with the server! Please try again later.`)
-                console.warn(r)
               })
               .catch(e => {
                 setCustomError(

@@ -1,11 +1,12 @@
 import Image, { StaticImageData } from 'next/image'
 
+import { SetStateAction } from 'react'
 import application from './application.module.scss'
 import classnames from 'classnames'
 import discordImage from 'images/discord.png'
 import websiteImage from 'images/website.png'
 
-export default function Status() {
+export default function Status({ setCurrentStepIndex }: StatusProps) {
   const blocks: Block[] = [
     {
       title:
@@ -42,7 +43,13 @@ export default function Status() {
           </div>
         ))}
       </div>
-      <button className={application.button}>Modify Your Application</button>
+      <button
+        onClick={() => {
+          setCurrentStepIndex(0)
+        }}
+        className={application.button}>
+        Modify Your Application
+      </button>
     </>
   )
 }
@@ -54,4 +61,8 @@ type Block = {
     text: string
     color: string
   }
+}
+
+interface StatusProps {
+  setCurrentStepIndex: (value: SetStateAction<number | undefined>) => void
 }
