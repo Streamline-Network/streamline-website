@@ -45,7 +45,14 @@ export default function Status({ setCurrentStepIndex }: StatusProps) {
       </div>
       <button
         onClick={() => {
-          setCurrentStepIndex(0)
+          fetch('/api/db/sets/state', {
+            method: 'POST',
+            body: JSON.stringify({ entries: { applicationStage: 0 } }),
+          }).then(r => {
+            if (r.status === 200) {
+              setCurrentStepIndex(0)
+            }
+          })
         }}
         className={application.button}>
         Modify Your Application
