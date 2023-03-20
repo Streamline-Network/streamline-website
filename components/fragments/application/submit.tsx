@@ -1,11 +1,29 @@
-import { SetStateAction, useState } from 'react'
+import { FormInfo, Section } from '../blocks/block-types'
+import { SetStateAction, useEffect, useState } from 'react'
 
 import FormBlocks from '../blocks/form-blocks/form-blocks'
-import { Section } from '../blocks/block-types'
+import Loading from './loading'
 import application from './application.module.scss'
+import { useSession } from 'next-auth/react'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
   const [customError, setCustomError] = useState<string | undefined>()
+  const [answers, setAnswers] = useState<undefined | FormInfo>()
+  const { status, data } = useSession()
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      if (data.hasApplied) {
+        fetch('/api/db/docs?path=applications/{id}/types/debug')
+          .then(r => {
+            if (r.status === 200) {
+              r.json().then(r => setAnswers(r.data))
+            }
+          })
+          .catch(e => console.warn(e))
+      }
+    }
+  }, [data?.hasApplied, status])
 
   /* const sections: Section[] = [
     {
@@ -151,57 +169,65 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
   return (
     <>
-      <div className={application.informationBlock}>
-        <h2>Fill out the application</h2>
-        <p>
-          Make sure to read the rules before doing the application! We have an acceptance rate of
-          about 70% so good luck.
-        </p>
-      </div>
+      {status === 'loading' ||
+      (status === 'authenticated' && data.hasApplied && answers === undefined) ? (
+        <Loading hideTitle />
+      ) : (
+        <>
+          <div className={application.informationBlock}>
+            <h2>Fill out the application</h2>
+            <p>
+              Make sure to read the rules before doing the application! We have an acceptance rate
+              of about 70% so good luck.
+            </p>
+          </div>
 
-      <FormBlocks
-        sections={sections}
-        numbered
-        error={[customError, setCustomError]}
-        checks={[
-          () => {
-            // Check with the Discord Bot to see if the person applying is in the Discord server.
+          <FormBlocks
+            sections={sections}
+            numbered
+            formInfo={answers}
+            error={[customError, setCustomError]}
+            checks={[
+              () => {
+                // Check with the Discord Bot to see if the person applying is in the Discord server.
 
-            // TODO: Implement this check.
-            return undefined
+                // TODO: Implement this check.
+                return undefined
 
-            // return 'You must join the Streamline SMP Discord to apply!'
-          },
-        ]}
-        submit={{
-          agreements: [
-            {
-              agreement: 'Agree to the rules.',
-              link: 'https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing',
-            },
-            { agreement: 'Agree to the privacy policy.' },
-          ],
-          submitCallback(formInfo) {
-            fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) })
-              .then(r => {
-                if (r.status === 200) {
-                  setCurrentStepIndex(1)
-                } else {
-                  setCustomError(`An error occurred with the server! Please try again later.`)
-                  console.warn(r)
-                }
-              })
-              .catch(e => {
-                setCustomError(
-                  `Oh no! A critical error has occurred. Check your network connection.`
-                )
-                console.warn(e)
-              })
+                // return 'You must join the Streamline SMP Discord to apply!'
+              },
+            ]}
+            submit={{
+              agreements: [
+                {
+                  agreement: 'Agree to the rules.',
+                  link: 'https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing',
+                },
+                { agreement: 'Agree to the privacy policy.' },
+              ],
+              submitCallback(formInfo) {
+                fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) })
+                  .then(r => {
+                    if (r.status === 200) {
+                      setCurrentStepIndex(1)
+                    } else {
+                      setCustomError(`An error occurred with the server! Please try again later.`)
+                      console.warn(r)
+                    }
+                  })
+                  .catch(e => {
+                    setCustomError(
+                      `Oh no! A critical error has occurred. Check your network connection.`
+                    )
+                    console.warn(e)
+                  })
 
-            console.log('Form submitted!', formInfo)
-          },
-        }}
-      />
+                console.log('Form submitted!', formInfo)
+              },
+            }}
+          />
+        </>
+      )}
     </>
   )
 }

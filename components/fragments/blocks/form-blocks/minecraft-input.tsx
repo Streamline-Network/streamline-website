@@ -11,7 +11,7 @@ export default function MinecraftInput({
   editable = true,
   setError,
   clearErrors,
-  value,
+  defaultValue,
 }: MinecraftInputProps) {
   const timeoutRef = useRef<NodeJS.Timeout>()
   const [currentImage, setCurrentImage] = useState<string | false>(false)
@@ -54,8 +54,8 @@ export default function MinecraftInput({
   }
 
   useEffect(() => {
-    getSkin(value)
-  }, [value, getSkin])
+    getSkin(defaultValue)
+  }, [defaultValue, getSkin])
 
   return (
     <div className={blocks.minecraftSkinWrapper}>
@@ -79,7 +79,7 @@ export default function MinecraftInput({
           className={blocks.input}
           placeholder={question.placeholderText || 'Answer here...'}
           disabled={!editable}
-          value={value}
+          defaultValue={defaultValue}
         />
       </>
     </div>
@@ -92,5 +92,5 @@ interface MinecraftInputProps {
   editable: boolean
   setError: UseFormSetError<FieldValues>
   clearErrors: UseFormClearErrors<FieldValues>
-  value?: string
+  defaultValue?: string
 }

@@ -85,7 +85,7 @@ export default function FormBlocks({
               className={blocks.input}
               placeholder={question.placeholderText || 'Answer here...'}
               disabled={!editable}
-              value={getValue(question, formInfo)}
+              defaultValue={getValue(question, formInfo)}
             />
             {renderError(errors, encodedQuestion)}
           </>
@@ -99,7 +99,7 @@ export default function FormBlocks({
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
               disabled={!editable}
-              value={getValue(question, formInfo)}
+              defaultValue={getValue(question, formInfo)}
             />
             {renderError(errors, encodedQuestion)}
           </>
@@ -138,7 +138,7 @@ export default function FormBlocks({
               setError={setError}
               clearErrors={clearErrors}
               editable={editable}
-              value={getValue(question, formInfo)}
+              defaultValue={getValue(question, formInfo)}
             />
             {renderError(errors, encodedQuestion)}
           </>

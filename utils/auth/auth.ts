@@ -10,6 +10,7 @@ export type DBDefaults = {
 const DB_DEFAULTS: DBDefaults = {
   role: 'user',
   applicationStage: 0,
+  hasApplied: false,
 }
 
 export async function loadFromDB(token: JWT) {
