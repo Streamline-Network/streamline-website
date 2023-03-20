@@ -43,6 +43,7 @@ export default function Checkboxes({
                 type="checkbox"
                 id={content}
                 disabled={!editable}
+                defaultChecked={isChecked}
                 onChangeCapture={e => {
                   const currentStatus = e.currentTarget.checked
 
