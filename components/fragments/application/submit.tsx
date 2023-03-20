@@ -4,26 +4,26 @@ import { SetStateAction, useEffect, useState } from 'react'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
 import application from './application.module.scss'
-import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
+  const route = useRouter()
+  const hasApplied = route.query.hasApplied
+
   const [customError, setCustomError] = useState<string | undefined>()
   const [answers, setAnswers] = useState<undefined | FormInfo>()
-  const { status, data } = useSession()
 
   useEffect(() => {
-    if (status === 'authenticated') {
-      if (data.hasApplied) {
-        fetch('/api/db/docs?path=applications/{id}/types/debug')
-          .then(r => {
-            if (r.status === 200) {
-              r.json().then(r => setAnswers(r.data))
-            }
-          })
-          .catch(e => console.warn(e))
-      }
+    if (hasApplied === 'true') {
+      fetch('/api/db/docs?path=applications/{id}/types/debug')
+        .then(r => {
+          if (r.status === 200) {
+            r.json().then(r => setAnswers(r.data))
+          }
+        })
+        .catch(e => console.warn(e))
     }
-  }, [data?.hasApplied, status])
+  }, [hasApplied])
 
   /* const sections: Section[] = [
     {
@@ -169,8 +169,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
   return (
     <>
-      {status === 'loading' ||
-      (status === 'authenticated' && data.hasApplied && answers === undefined) ? (
+      {hasApplied === undefined || (hasApplied === 'true' && !answers) ? (
         <Loading hideTitle />
       ) : (
         <>
