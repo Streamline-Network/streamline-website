@@ -23,7 +23,7 @@ export type FormInfo = {
   submissionTime: number
 
   answers: {
-    [key: string]: string
+    [key: string]: string | { [key: string]: boolean }
   }
 }
 

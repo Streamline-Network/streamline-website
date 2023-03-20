@@ -58,7 +58,7 @@ export default function Steps() {
       fetch('/api/db/docs?path=userState/{id}')
         .then(r => r.json())
         .then(r => {
-          if (!r.data.applicationStage) {
+          if (r.data.applicationStage === null) {
             console.warn('Failed to refresh application stage.')
           } else {
             setCurrentStepIndex(r.data.applicationStage)

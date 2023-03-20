@@ -8,6 +8,7 @@ import checkboxes from './checkboxes.module.scss'
 export default function Checkboxes({
   groupName,
   direction,
+  editable = true,
   checkboxArray,
   onChangeCallback,
   register,
@@ -41,6 +42,7 @@ export default function Checkboxes({
                 {...register(`${groupName}.${encodedContent}`, { required })}
                 type="checkbox"
                 id={content}
+                disabled={!editable}
                 onChangeCapture={e => {
                   const currentStatus = e.currentTarget.checked
 
@@ -77,6 +79,7 @@ interface CheckboxesProps {
   checkboxArray: Checkbox[]
   register: UseFormRegister<FieldValues>
   onChangeCallback?: (updatedCheckboxes: Checkbox[]) => void
+  editable?: boolean
 }
 
 export type Checkbox = {

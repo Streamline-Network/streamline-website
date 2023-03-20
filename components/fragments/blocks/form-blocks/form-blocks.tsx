@@ -1,8 +1,8 @@
+import Checkboxes, { Checkbox } from '../../checkboxes/checkboxes'
 import { Dispatch, Fragment, SetStateAction } from 'react'
 import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FormInfo, Question, Section } from '../block-types'
 
-import Checkboxes from '../../checkboxes/checkboxes'
 import Link from 'next/link'
 import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
@@ -10,7 +10,9 @@ import classNames from 'classnames'
 
 export default function FormBlocks({
   numbered = false,
+  editable = true,
   sections,
+  formInfo,
   submit,
   checks,
   error: [customError, setCustomError],
@@ -38,6 +40,34 @@ export default function FormBlocks({
     }
   }
 
+  function getValue(question: Question, formInfo?: FormInfo) {
+    if (!formInfo) return
+
+    for (const answer of Object.keys(formInfo.answers)) {
+      if (answer === question.question) {
+        const value = formInfo.answers[answer]
+        if (typeof value === 'string') return value
+      }
+    }
+  }
+
+  function getCheckboxValue(question: Question, formInfo?: FormInfo) {
+    if (!formInfo) return
+
+    for (const answer of Object.keys(formInfo.answers)) {
+      if (answer === question.question) {
+        const value = formInfo.answers[answer]
+        if (typeof value === 'object') {
+          const checkboxArray: Checkbox[] = []
+          for (const option of Object.keys(value)) {
+            checkboxArray.push({ content: option, isChecked: value[option], required: false })
+          }
+          return checkboxArray
+        }
+      }
+    }
+  }
+
   function input(question: Question) {
     const encodedQuestion = {
       ...question,
@@ -54,6 +84,8 @@ export default function FormBlocks({
               })}
               className={blocks.input}
               placeholder={question.placeholderText || 'Answer here...'}
+              disabled={!editable}
+              value={getValue(question, formInfo)}
             />
             {renderError(errors, encodedQuestion)}
           </>
@@ -66,23 +98,32 @@ export default function FormBlocks({
               {...register(encodedQuestion.question, { required: question.required })}
               className={classNames(blocks.input, blocks.textarea)}
               placeholder={question.placeholderText || 'Answer here...'}
+              disabled={!editable}
+              value={getValue(question, formInfo)}
             />
             {renderError(errors, encodedQuestion)}
           </>
         )
       }
       case 'checkboxes': {
+        const value = getCheckboxValue(question, formInfo)
+
         return (
           <>
             <Checkboxes
               groupName={encodedQuestion.question}
               register={register}
               direction={'auto'}
-              checkboxArray={question.options.map(option => ({
-                content: option,
-                isChecked: false,
-                required: false,
-              }))}
+              editable={editable}
+              checkboxArray={
+                value
+                  ? value
+                  : question.options.map(option => ({
+                      content: option,
+                      isChecked: false,
+                      required: false,
+                    }))
+              }
             />
             {renderError(errors, encodedQuestion)}
           </>
@@ -96,6 +137,8 @@ export default function FormBlocks({
               question={encodedQuestion}
               setError={setError}
               clearErrors={clearErrors}
+              editable={editable}
+              value={getValue(question, formInfo)}
             />
             {renderError(errors, encodedQuestion)}
           </>
@@ -104,17 +147,18 @@ export default function FormBlocks({
       case 'button': {
         return (
           <>
-            <Link
-              style={{ display: 'block', width: '100%' }}
-              {...register(encodedQuestion.question)}
-              href={question.link}
-              target={'_blank'}
-              referrerPolicy={'no-referrer'}
-              className={blocks.button}
-              type="button">
-              {question.buttonText}
-            </Link>
-
+            {editable && (
+              <Link
+                style={{ display: 'block', width: '100%' }}
+                {...register(encodedQuestion.question)}
+                href={question.link}
+                target={'_blank'}
+                referrerPolicy={'no-referrer'}
+                className={blocks.button}
+                type="button">
+                {question.buttonText}
+              </Link>
+            )}
             {renderError(errors, encodedQuestion)}
           </>
         )
@@ -207,45 +251,50 @@ export default function FormBlocks({
           })}
         </Fragment>
       ))}
-      <div className={classNames(blocks.block)}>
-        <div className={blocks.submitWrapper}>
-          {submit.agreements && (
-            <Checkboxes
-              groupName={'agreements'}
-              register={register}
-              checkboxArray={submit.agreements.map(a => ({
-                content: a.agreement,
-                isChecked: false,
-                required: true,
-              }))}
-              direction={'auto'}
-              onChangeCallback={() => {}}
-            />
+      {editable && (
+        <div className={classNames(blocks.block)}>
+          <div className={blocks.submitWrapper}>
+            {submit.agreements && (
+              <Checkboxes
+                groupName={'agreements'}
+                register={register}
+                checkboxArray={submit.agreements.map(a => ({
+                  content: a.agreement,
+                  isChecked: false,
+                  required: true,
+                }))}
+                direction={'auto'}
+                onChangeCallback={() => {}}
+              />
+            )}
+            {isErrors() ? (
+              <button onClick={goToFirstError} type="button">
+                Submit
+              </button>
+            ) : (
+              <button disabled={isSubmitting} type="submit">
+                Submit
+              </button>
+            )}
+          </div>
+          {errors['agreements'] && (
+            <span className={blocks.error}>You must accept the agreements.</span>
           )}
-          {isErrors() ? (
-            <button onClick={goToFirstError} type="button">
-              Submit
-            </button>
-          ) : (
-            <button disabled={isSubmitting} type="submit">
-              Submit
-            </button>
-          )}
+          {customError && <span className={blocks.error}>{customError}</span>}
         </div>
-        {errors['agreements'] && (
-          <span className={blocks.error}>You must accept the agreements.</span>
-        )}
-        {customError && <span className={blocks.error}>{customError}</span>}
-      </div>
+      )}
     </form>
   )
 }
 
 interface BlockFormProps {
   numbered?: boolean
+  editable?: boolean
   sections: Section[]
   checks: ((answers: { [key: string]: string }) => string | undefined)[]
   error: [string | undefined, Dispatch<SetStateAction<string | undefined>>]
+
+  formInfo?: FormInfo
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
