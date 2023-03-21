@@ -52,20 +52,30 @@ export default function FormBlocks({
   }
 
   function getCheckboxValue(question: Question, formInfo?: FormInfo) {
-    if (!formInfo) return
+    if (question.type === 'checkboxes') {
+      if (!formInfo) {
+        return question.options.map(option => ({
+          content: option,
+          isChecked: false,
+          required: false,
+        }))
+      }
 
-    for (const answer of Object.keys(formInfo.answers)) {
-      if (answer === question.question) {
-        const value = formInfo.answers[answer]
-        if (typeof value === 'object') {
-          const checkboxArray: Checkbox[] = []
-          for (const option of Object.keys(value)) {
-            checkboxArray.push({ content: option, isChecked: value[option], required: false })
+      for (const answer of Object.keys(formInfo.answers)) {
+        if (answer === question.question) {
+          const value = formInfo.answers[answer]
+          if (typeof value === 'object') {
+            const checkboxArray: Checkbox[] = []
+            for (const option of Object.keys(value)) {
+              checkboxArray.push({ content: option, isChecked: value[option], required: false })
+            }
+            return checkboxArray
           }
-          return checkboxArray
         }
       }
     }
+
+    throw new Error('Unexpected inputs.')
   }
 
   function input(question: Question) {
@@ -107,6 +117,7 @@ export default function FormBlocks({
       }
       case 'checkboxes': {
         const value = getCheckboxValue(question, formInfo)
+        console.log(value)
 
         return (
           <>
@@ -115,15 +126,7 @@ export default function FormBlocks({
               register={register}
               direction={'auto'}
               editable={editable}
-              checkboxArray={
-                value
-                  ? value
-                  : question.options.map(option => ({
-                      content: option,
-                      isChecked: false,
-                      required: false,
-                    }))
-              }
+              checkboxArray={value}
             />
             {renderError(errors, encodedQuestion)}
           </>

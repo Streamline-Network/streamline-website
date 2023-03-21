@@ -1,5 +1,5 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form'
-import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
+import { MdBrandingWatermark, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -13,7 +13,9 @@ export default function Checkboxes({
   onChangeCallback,
   register,
 }: CheckboxesProps) {
-  const [currentCheckboxes, setCurrentCheckboxes] = useState(checkboxArray)
+  const [currentCheckboxes, setCurrentCheckboxes] = useState([...checkboxArray])
+
+  if (currentCheckboxes.find(checkbox => checkbox.isChecked === true)) console.log('What')
 
   useEffect(() => {
     if (onChangeCallback) onChangeCallback(currentCheckboxes)
@@ -50,6 +52,7 @@ export default function Checkboxes({
                   setCurrentCheckboxes(() => {
                     const newArr = [...currentCheckboxes]
                     newArr[i].isChecked = currentStatus
+                    console.log(currentStatus, newArr[i].isChecked)
                     return newArr
                   })
                 }}

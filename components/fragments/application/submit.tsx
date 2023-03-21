@@ -4,26 +4,27 @@ import { SetStateAction, useEffect, useState } from 'react'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
 import application from './application.module.scss'
-import { useRouter } from 'next/router'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
-  const route = useRouter()
-  const hasApplied = route.query.hasApplied
-
   const [customError, setCustomError] = useState<string | undefined>()
   const [answers, setAnswers] = useState<undefined | FormInfo>()
+  const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
-    if (hasApplied === 'true') {
-      fetch('/api/db/docs?path=applications/{id}/types/debug')
-        .then(r => {
-          if (r.status === 200) {
-            r.json().then(r => setAnswers(r.data))
-          }
-        })
-        .catch(e => console.warn(e))
-    }
-  }, [hasApplied])
+    fetch('/api/db/docs?path=applications/{id}/types/debug')
+      .then(r => {
+        if (r.status === 200) {
+          r.json().then(r => {
+            console.log(r)
+            setAnswers(r.data)
+          })
+        }
+
+        console.log(r)
+        setHasFetched(true)
+      })
+      .catch(e => console.warn(e))
+  }, [])
 
   /* const sections: Section[] = [
     {
@@ -169,7 +170,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
   return (
     <>
-      {hasApplied === undefined || (hasApplied === 'true' && !answers) ? (
+      {!hasFetched ? (
         <Loading hideTitle />
       ) : (
         <>

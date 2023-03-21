@@ -9,14 +9,7 @@ const redirectToStep = async (applicationStage: number, req: NextRequest, token:
     if (STEPS[step] === applicationStage) {
       const newPathname = `/account/apply/${step}`
 
-      if (req.nextUrl.pathname === newPathname) {
-        if (req.nextUrl.searchParams.get('hasApplied') !== JSON.stringify(token.hasApplied)) {
-          const baseUrl = new URL(newPathname, req.nextUrl.origin)
-          baseUrl.searchParams.append('hasApplied', JSON.stringify(token.hasApplied))
-          return NextResponse.redirect(baseUrl)
-        }
-        return
-      }
+      if (req.nextUrl.pathname === newPathname) return
 
       const url = new URL(newPathname, req.nextUrl.origin)
       return NextResponse.redirect(url)
