@@ -13,9 +13,7 @@ export default function Checkboxes({
   onChangeCallback,
   register,
 }: CheckboxesProps) {
-  const [currentCheckboxes, setCurrentCheckboxes] = useState([...checkboxArray])
-
-  if (currentCheckboxes.find(checkbox => checkbox.isChecked === true)) console.log('What')
+  const [currentCheckboxes, setCurrentCheckboxes] = useState(checkboxArray)
 
   useEffect(() => {
     if (onChangeCallback) onChangeCallback(currentCheckboxes)
@@ -52,7 +50,6 @@ export default function Checkboxes({
                   setCurrentCheckboxes(() => {
                     const newArr = [...currentCheckboxes]
                     newArr[i].isChecked = currentStatus
-                    console.log(currentStatus, newArr[i].isChecked)
                     return newArr
                   })
                 }}

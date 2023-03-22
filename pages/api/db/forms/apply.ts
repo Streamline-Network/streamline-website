@@ -16,11 +16,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
-  const state = db.doc(`userState/${session.id}`)
-  await state.set({ applicationStage: 1, hasApplied: true }, { merge: true })
-
   const applications = db.doc(`applications/${session.id}/types/debug`)
   await applications.set(applicationData)
+
+  const state = db.doc(`userState/${session.id}`)
+  await state.set({ applicationStage: 1 }, { merge: true })
 
   return res.status(200).send({})
 }

@@ -15,13 +15,12 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
       .then(r => {
         if (r.status === 200) {
           r.json().then(r => {
-            console.log(r)
             setAnswers(r.data)
+            setHasFetched(true)
           })
+        } else {
+          setHasFetched(true)
         }
-
-        console.log(r)
-        setHasFetched(true)
       })
       .catch(e => console.warn(e))
   }, [])
@@ -170,63 +169,61 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
   return (
     <>
+      <div className={application.informationBlock}>
+        <h2>Fill out the application</h2>
+        <p>
+          Make sure to read the rules before doing the application! We have an acceptance rate of
+          about 70% so good luck.
+        </p>
+      </div>
+
       {!hasFetched ? (
         <Loading hideTitle />
       ) : (
-        <>
-          <div className={application.informationBlock}>
-            <h2>Fill out the application</h2>
-            <p>
-              Make sure to read the rules before doing the application! We have an acceptance rate
-              of about 70% so good luck.
-            </p>
-          </div>
+        <FormBlocks
+          sections={sections}
+          numbered
+          formInfo={answers}
+          error={[customError, setCustomError]}
+          checks={[
+            () => {
+              // Check with the Discord Bot to see if the person applying is in the Discord server.
 
-          <FormBlocks
-            sections={sections}
-            numbered
-            formInfo={answers}
-            error={[customError, setCustomError]}
-            checks={[
-              () => {
-                // Check with the Discord Bot to see if the person applying is in the Discord server.
+              // TODO: Implement this check.
+              return undefined
 
-                // TODO: Implement this check.
-                return undefined
-
-                // return 'You must join the Streamline SMP Discord to apply!'
+              // return 'You must join the Streamline SMP Discord to apply!'
+            },
+          ]}
+          submit={{
+            agreements: [
+              {
+                agreement: 'Agree to the rules.',
+                link: 'https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing',
               },
-            ]}
-            submit={{
-              agreements: [
-                {
-                  agreement: 'Agree to the rules.',
-                  link: 'https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing',
-                },
-                { agreement: 'Agree to the privacy policy.' },
-              ],
-              submitCallback(formInfo) {
-                fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) })
-                  .then(r => {
-                    if (r.status === 200) {
-                      setCurrentStepIndex(1)
-                    } else {
-                      setCustomError(`An error occurred with the server! Please try again later.`)
-                      console.warn(r)
-                    }
-                  })
-                  .catch(e => {
-                    setCustomError(
-                      `Oh no! A critical error has occurred. Check your network connection.`
-                    )
-                    console.warn(e)
-                  })
+              { agreement: 'Agree to the privacy policy.' },
+            ],
+            submitCallback(formInfo) {
+              fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) })
+                .then(r => {
+                  if (r.status === 200) {
+                    setCurrentStepIndex(1)
+                  } else {
+                    setCustomError(`An error occurred with the server! Please try again later.`)
+                    console.warn(r)
+                  }
+                })
+                .catch(e => {
+                  setCustomError(
+                    `Oh no! A critical error has occurred. Check your network connection.`
+                  )
+                  console.warn(e)
+                })
 
-                console.log('Form submitted!', formInfo)
-              },
-            }}
-          />
-        </>
+              console.log('Form submitted!', formInfo)
+            },
+          }}
+        />
       )}
     </>
   )

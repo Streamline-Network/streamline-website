@@ -11,7 +11,6 @@ declare module 'next-auth' {
     applicationStage: ApplicationStage
     id: string
     email: string
-    hasApplied: boolean
   }
 }
 
@@ -21,6 +20,5 @@ declare module 'next-auth/jwt' {
     role: Roles
     applicationStage: ApplicationStage
     id: string
-    hasApplied: boolean
   }
 }

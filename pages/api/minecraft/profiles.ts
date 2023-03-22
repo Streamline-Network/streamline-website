@@ -1,3 +1,5 @@
+import * as message from 'utils/constant-messages'
+
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -14,6 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).send({ uuid: obj.id })
   } catch (error) {
-    return res.status(400).send({ error })
+    return res.status(400).send({ error: message.SERVER_ERROR })
   }
 }
