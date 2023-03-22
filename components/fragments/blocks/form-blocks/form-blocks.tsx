@@ -73,6 +73,12 @@ export default function FormBlocks({
           }
         }
       }
+
+      return question.options.map(option => ({
+        content: option,
+        isChecked: false,
+        required: false,
+      }))
     }
 
     throw new Error('Unexpected inputs.')

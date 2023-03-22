@@ -165,6 +165,25 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
         },
       ],
     },
+    {
+      sectionTitle: 'Another test',
+      description: 'OwO',
+
+      questions: [
+        {
+          question: 'Long answer',
+          type: 'paragraph',
+          required: false,
+          description: 'A paragraph type of question',
+        },
+        {
+          question: 'Another checkbox question',
+          type: 'checkboxes',
+          options: ['This is a questo', 'this is anotehr', 'OwO', 'Dp', 'wd', 'wdaw', 'd'],
+          required: false,
+        },
+      ],
+    },
   ]
 
   return (
