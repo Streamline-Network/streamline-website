@@ -18,39 +18,39 @@ export const STEPS: Steps = {
   reviewed: 2,
 }
 
-function StepSwitcher({ stage }: { stage?: number }) {
-  if (stage === undefined) return <Loading />
-  switch (stage) {
-    case 0:
-      return (
-        <>
-          <h2 className={apply.subTitle}>Apply to join</h2>
-          <Submit />
-        </>
-      )
-    case 1:
-      return (
-        <>
-          <h2 className={apply.subTitle}>Application Status</h2>
-          <Status />
-        </>
-      )
-    case 2:
-      return (
-        <>
-          <h2 className={apply.subTitle}>What&apos;s Next?</h2>
-          <Reviewed />
-        </>
-      )
-    default:
-      return <h2>Oh no, something went wrong!</h2>
-  }
-}
-
-export default function Stats() {
+export default function Steps() {
   const router = useRouter()
   const step = router.query.step as string
   const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(undefined)
+
+  function StepSwitcher({ stage }: { stage?: number }) {
+    if (stage === undefined) return <Loading />
+    switch (stage) {
+      case 0:
+        return (
+          <>
+            <h2 className={apply.subTitle}>Apply to join</h2>
+            <Submit setCurrentStepIndex={setCurrentStepIndex} />
+          </>
+        )
+      case 1:
+        return (
+          <>
+            <h2 className={apply.subTitle}>Application Status</h2>
+            <Status setCurrentStepIndex={setCurrentStepIndex} />
+          </>
+        )
+      case 2:
+        return (
+          <>
+            <h2 className={apply.subTitle}>What&apos;s Next?</h2>
+            <Reviewed />
+          </>
+        )
+      default:
+        return <h2>Oh no, something went wrong!</h2>
+    }
+  }
 
   useEffect(() => {
     // Checks for changes every minute.
@@ -58,12 +58,17 @@ export default function Stats() {
       fetch('/api/db/docs?path=userState/{id}')
         .then(r => r.json())
         .then(r => {
-          setCurrentStepIndex(r.data.applicationStage)
+          if (r.data.applicationStage === null) {
+            console.warn('Failed to refresh application stage.')
+          } else {
+            setCurrentStepIndex(r.data.applicationStage)
+          }
         })
+        .catch(e => console.warn('Failed to refresh application stage.', e))
     }, 60000)
 
     return () => clearInterval(intervalId)
-  }, [])
+  }, [currentStepIndex])
 
   useEffect(() => {
     if (step === undefined) return

@@ -1,4 +1,4 @@
-import { EmojiData } from './../components/page-effects/celebration'
+import { EmojiData } from 'components/page-effects/celebration'
 
 export default class Emoji {
   cords: { x: number; y: number }
@@ -25,10 +25,7 @@ export default class Emoji {
     this.id = id
   }
 
-  create(
-    createEmoji: ({}: EmojiData) => void,
-    updateEmoji: ({}: EmojiData) => void
-  ) {
+  create(createEmoji: ({}: EmojiData) => void, updateEmoji: ({}: EmojiData) => void) {
     createEmoji({
       cords: this.cords,
       rotation: this.rotation,

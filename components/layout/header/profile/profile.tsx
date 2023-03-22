@@ -111,7 +111,13 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
 
       case 'unauthenticated':
         return (
-          <a onClick={handleSignIn} className={profileButton.loginButton}>
+          <a
+            href="#"
+            onClick={handleSignIn}
+            onKeyDown={e => {
+              if (e.key === 'Enter') handleSignIn()
+            }}
+            className={profileButton.loginButton}>
             Sign in
           </a>
         )

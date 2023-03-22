@@ -1,4 +1,4 @@
-import Question, { QuestionProps } from '../../components/fragments/question/question'
+import Question, { QuestionProps } from 'components/fragments/question/question'
 
 import Head from 'next/head'
 import Link from 'next/link'

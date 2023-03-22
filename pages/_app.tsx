@@ -1,12 +1,12 @@
-import '../styles/style.scss'
+import 'styles/style.scss'
 
-import AnalyticsWrapper from '../components/layout/analytics/analytics'
+import AnalyticsWrapper from 'components/layout/analytics/analytics'
 import type { AppProps } from 'next/app'
-import Banners from '../components/layout/banners/banners'
+import Banners from 'components/layout/banners/banners'
 import CookieConsent from 'react-cookie-consent'
-import Footer from '../components/layout/footer/footer'
-import Header from '../components/layout/header/header'
-import Wrapper from '../components/wrapper'
+import Footer from 'components/layout/footer/footer'
+import Header from 'components/layout/header/header'
+import Wrapper from 'components/wrapper'
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (

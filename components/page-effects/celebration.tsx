@@ -43,7 +43,6 @@ export default function Celebration() {
     }
 
     mainIntervalRef.current = setInterval(() => {
-      console.log('update')
       const testEmoji = new Emoji(
         { x: random(0, window.innerWidth), y: 20 },
         5,
