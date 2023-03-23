@@ -1,5 +1,5 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form'
-import { MdBrandingWatermark, MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md'
 import { useEffect, useState } from 'react'
 
 import Link from 'next/link'
@@ -60,7 +60,7 @@ export default function Checkboxes({
 
             <label htmlFor={content}>
               {link ? (
-                <Link target={'_blank'} href={link}>
+                <Link className={checkboxes.link} target={'_blank'} href={link}>
                   {content}
                 </Link>
               ) : (

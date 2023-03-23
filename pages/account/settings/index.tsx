@@ -5,8 +5,9 @@ import Link from 'next/link'
 import ToggleBlocks from 'components/fragments/blocks/toggle-blocks'
 import classnames from 'classnames'
 import settings from './settings.module.scss'
+import { signOut } from 'next-auth/react'
 
-export default function Stats() {
+export default function Settings() {
   const controls: BlockToggle[] = [
     {
       title: 'Light mode',
@@ -29,13 +30,16 @@ export default function Stats() {
       description: 'Unlink and delete all data related to your Discord account.',
       controlType: 'button',
       buttonText: 'Erase',
-      click() {
+      async click() {
         const confirmation = confirm(
           'Are you sure? This action will delete all of your user data, including your application.'
         )
+        console.log(confirmation)
+
         if (!confirmation) return
 
-        // Write delete code here
+        signOut()
+        await fetch('/api/db/settings/erase')
       },
     },
   ]

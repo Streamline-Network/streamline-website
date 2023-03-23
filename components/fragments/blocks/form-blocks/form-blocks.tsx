@@ -1,5 +1,5 @@
 import Checkboxes, { Checkbox } from '../../checkboxes/checkboxes'
-import { Dispatch, Fragment, SetStateAction, useEffect } from 'react'
+import { Dispatch, Fragment, SetStateAction } from 'react'
 import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FormInfo, Question, Section } from '../block-types'
 
@@ -270,6 +270,7 @@ export default function FormBlocks({
                   content: a.agreement,
                   isChecked: false,
                   required: true,
+                  link: a.link,
                 }))}
                 direction={'auto'}
                 onChangeCallback={() => {}}
