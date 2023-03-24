@@ -17,7 +17,7 @@ export default async function setState(req: NextApiRequest, res: NextApiResponse
 
   const data = JSON.parse(req.body) as StateData
 
-  if (!data.entries) return res.status(204).send({ error: message.MISSING_INFORMATION })
+  if (!data.entries) return res.status(422).send({ error: message.MISSING_INFORMATION })
 
   for (const entry of Object.keys(data.entries)) {
     if (!ALLOWED_CHANGES.find(change => change === entry)) {

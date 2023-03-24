@@ -177,7 +177,7 @@ export default function FormBlocks({
     }
   }
 
-  const onSubmit: SubmitHandler<FieldValues> = (data: { [key: string]: string }) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: { [key: string]: string }) => {
     function getData(data: string) {
       if (typeof data === 'object') {
         return parseData(data)
@@ -208,7 +208,7 @@ export default function FormBlocks({
     const parsedData = parseData(data)
 
     for (const check of checks) {
-      const result = check(parsedData)
+      const result = await check(parsedData)
       if (result) return setCustomError(result)
     }
 
@@ -300,7 +300,9 @@ interface BlockFormProps {
   numbered?: boolean
   editable?: boolean
   sections: Section[]
-  checks: ((answers: { [key: string]: string }) => string | undefined)[]
+  checks: ((answers: {
+    [key: string]: string
+  }) => string | undefined | Promise<string | undefined>)[]
   error: [string | undefined, Dispatch<SetStateAction<string | undefined>>]
 
   formInfo?: FormInfo

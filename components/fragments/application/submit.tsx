@@ -2,8 +2,10 @@ import { FormInfo, Section } from '../blocks/block-types'
 import { SetStateAction, useEffect, useState } from 'react'
 
 import FormBlocks from '../blocks/form-blocks/form-blocks'
+import Jwt from 'jsonwebtoken'
 import Loading from './loading'
 import application from './application.module.scss'
+import { useSession } from 'next-auth/react'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
   const [customError, setCustomError] = useState<string | undefined>()
@@ -11,7 +13,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
   const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
-    fetch('/api/db/docs?path=applications/{id}/types/debug')
+    fetch('/api/db/docs?path=applications/{id}/types/apply')
       .then(r => {
         if (r.status === 200) {
           r.json().then(r => {
@@ -25,7 +27,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
       .catch(e => console.warn(e))
   }, [])
 
-  /* const sections: Section[] = [
+  const sections: Section[] = [
     {
       sectionTitle: 'Intro',
       description: 'Tell us about yourself.',
@@ -36,6 +38,12 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           type: 'minecraft-skin',
           placeholderText: 'Put your exact Java Edition username here...',
           required: true,
+        },
+        {
+          question: 'Do you have a nickname you want to be called?',
+          description: 'This will show in discord next to your Minecraft name.',
+          type: 'short-answer',
+          required: false,
         },
         {
           question: 'What version of Minecraft do you play?',
@@ -140,50 +148,6 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
         },
       ],
     },
-  ] */
-
-  const sections: Section[] = [
-    {
-      sectionTitle: 'Debug Form',
-
-      questions: [
-        {
-          question: 'Debug Question',
-          type: 'short-answer',
-          required: false,
-        },
-        {
-          question: 'Checkbox Test',
-          type: 'checkboxes',
-          required: false,
-          options: ['Test.d,..d,.,,', "['ldwp;l';'a;pwld'p", 'owo'],
-        },
-        {
-          question: 'MC Username test',
-          type: 'minecraft-skin',
-          required: false,
-        },
-      ],
-    },
-    {
-      sectionTitle: 'Another test',
-      description: 'OwO',
-
-      questions: [
-        {
-          question: 'Long answer',
-          type: 'paragraph',
-          required: false,
-          description: 'A paragraph type of question',
-        },
-        {
-          question: 'Another checkbox question',
-          type: 'checkboxes',
-          options: ['This is a questo', 'this is anotehr', 'OwO', 'Dp', 'wd', 'wdaw', 'd'],
-          required: false,
-        },
-      ],
-    },
   ]
 
   return (
@@ -205,13 +169,31 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           formInfo={answers}
           error={[customError, setCustomError]}
           checks={[
-            () => {
+            formInfo => {
+              const MAX_DISCORD_NICKNAME_LENGTH = 32
+
+              const nickname = formInfo['Do you have a nickname you want to be called?']
+
+              if (!nickname) return undefined
+
+              const username = formInfo['What is your Minecraft Java Edition username?']
+
+              if (nickname.length + username.length + 3 > MAX_DISCORD_NICKNAME_LENGTH)
+                return 'Nickname is too long!'
+              else return undefined
+            },
+            async () => {
               // Check with the Discord Bot to see if the person applying is in the Discord server.
+              const data = await (await fetch('/api/discord/members')).json()
+              const idData = await (await fetch('/api/db/docs?path=userIds/{email}')).json()
 
-              // TODO: Implement this check.
-              return undefined
+              if (data.error) return 'A critical error occurred.'
 
-              // return 'You must join the Streamline SMP Discord to apply!'
+              if ((data.members as string[]).includes(idData.data.providerAccountId)) {
+                return undefined
+              }
+
+              return 'You must join the Streamline SMP Discord to apply!'
             },
           ]}
           submit={{

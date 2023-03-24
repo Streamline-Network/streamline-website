@@ -10,13 +10,13 @@ import { getServerSession } from 'next-auth'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
-  if (!req.body) return res.status(204).send({ error: message.MISSING_INFORMATION })
+  if (!req.body) return res.status(422).send({ error: message.MISSING_INFORMATION })
 
   const applicationData = JSON.parse(req.body) as FormInfo
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
-  const applications = db.doc(`applications/${session.id}/types/debug`)
+  const applications = db.doc(`applications/${session.id}/types/apply`)
   await applications.set(applicationData)
 
   const state = db.doc(`userState/${session.id}`)
