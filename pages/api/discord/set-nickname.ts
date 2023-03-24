@@ -17,6 +17,11 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
   const data = JSON.parse(req.body) as SetNicknameData
 
+  // Bypassing the owner because bot permissions wouldn't allow otherwise.
+  if (data.discordId === '290323648357859329') {
+    return res.status(200).send({})
+  }
+
   const signedJwt = jwt.sign(data, process.env.BOT_API_SECRET!, {
     expiresIn: DEFAULT_EXPIRATION_TIME,
   })
@@ -28,7 +33,7 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
       body: JSON.stringify({ token: signedJwt }),
     })
 
-    return res.status(data.status).send(await data.json())
+    return res.status(data.status).send({})
   } catch {
     return res.status(500).send({ error: 'Unexpected error.' })
   }
