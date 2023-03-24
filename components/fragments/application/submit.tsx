@@ -2,10 +2,11 @@ import { FormInfo, Section } from '../blocks/block-types'
 import { SetStateAction, useEffect, useState } from 'react'
 
 import FormBlocks from '../blocks/form-blocks/form-blocks'
-import Jwt from 'jsonwebtoken'
 import Loading from './loading'
 import application from './application.module.scss'
-import { useSession } from 'next-auth/react'
+
+const CRITICAL_ERROR_MESSAGE =
+  'Oh no! A critical error has occurred. Check your network connection.'
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
   const [customError, setCustomError] = useState<string | undefined>()
@@ -169,31 +170,65 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           formInfo={answers}
           error={[customError, setCustomError]}
           checks={[
-            formInfo => {
-              const MAX_DISCORD_NICKNAME_LENGTH = 32
-
-              const nickname = formInfo['Do you have a nickname you want to be called?']
-
-              if (!nickname) return undefined
-
-              const username = formInfo['What is your Minecraft Java Edition username?']
-
-              if (nickname.length + username.length + 3 > MAX_DISCORD_NICKNAME_LENGTH)
-                return 'Nickname is too long!'
-              else return undefined
-            },
             async () => {
               // Check with the Discord Bot to see if the person applying is in the Discord server.
-              const data = await (await fetch('/api/discord/members')).json()
-              const idData = await (await fetch('/api/db/docs?path=userIds/{email}')).json()
+              try {
+                const data = await (await fetch('/api/discord/members')).json()
+                const idData = await (await fetch('/api/db/docs?path=userIds/{email}')).json()
 
-              if (data.error) return 'A critical error occurred.'
+                if (data.error) return 'A critical error occurred.'
 
-              if ((data.members as string[]).includes(idData.data.providerAccountId)) {
-                return undefined
+                if ((data.members as string[]).includes(idData.data.providerAccountId)) {
+                  return undefined
+                }
+
+                return 'You must join the Streamline SMP Discord to apply!'
+              } catch (error) {
+                return CRITICAL_ERROR_MESSAGE + ' JOINED_CHECK'
+              }
+            },
+            async formInfo => {
+              const regex = /\((.*?)\)/
+
+              async function setNickname(username: string, nickname?: string) {
+                const idData = await (await fetch('/api/db/docs?path=userIds/{email}')).json()
+
+                const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
+
+                const data = await fetch('/api/discord/set-nickname', {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    discordId: idData.data.providerAccountId,
+                    nickname: finalNickname,
+                  }),
+                })
+
+                if (data.status !== 200) {
+                  return 'Unexpected error occurred.'
+                } else return undefined
               }
 
-              return 'You must join the Streamline SMP Discord to apply!'
+              try {
+                // Check if nickname with Minecraft name is too long.
+                const MAX_DISCORD_NICKNAME_LENGTH = 32
+
+                const nickname = formInfo['Do you have a nickname you want to be called?']
+
+                if (!nickname) return undefined
+
+                if (regex.test(nickname)) return 'Nickname cannot have parentheses.'
+
+                const username = formInfo['What is your Minecraft Java Edition username?']
+
+                if (nickname.length + username.length + 3 > MAX_DISCORD_NICKNAME_LENGTH) {
+                  return 'Nickname is too long!'
+                } else {
+                  // Set the nickname on Discord.
+                  return setNickname(username, nickname)
+                }
+              } catch (error) {
+                return CRITICAL_ERROR_MESSAGE + ' NICKNAME_CHECK'
+              }
             },
           ]}
           submit={{
@@ -215,9 +250,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                   }
                 })
                 .catch(e => {
-                  setCustomError(
-                    `Oh no! A critical error has occurred. Check your network connection.`
-                  )
+                  setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
                   console.warn(e)
                 })
 
