@@ -1,9 +1,10 @@
 import Checkboxes, { Checkbox } from '../../checkboxes/checkboxes'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FormInfo, Question, Section } from '../block-types'
 
 import Link from 'next/link'
+import LoadingBar from './loading-bar'
 import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
@@ -207,9 +208,13 @@ export default function FormBlocks({
 
     const parsedData = parseData(data)
 
-    for (const check of checks) {
+    for (let i = 0; i < checks.length; i++) {
+      const check = checks[i]
       const result = await check(parsedData)
-      if (result) return setCustomError(result)
+
+      if (result) {
+        return setCustomError(result)
+      }
     }
 
     setCustomError(undefined)
@@ -281,9 +286,16 @@ export default function FormBlocks({
                 Submit
               </button>
             ) : (
-              <button disabled={isSubmitting} type="submit">
-                Submit
-              </button>
+              <>
+                <button disabled={isSubmitting} type="submit">
+                  Submit
+                </button>
+                {isSubmitting && (
+                  <div className={blocks.loadingBarWrapper}>
+                    <LoadingBar />
+                  </div>
+                )}
+              </>
             )}
           </div>
           {errors['agreements'] && (

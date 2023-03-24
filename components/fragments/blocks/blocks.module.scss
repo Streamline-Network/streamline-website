@@ -13,6 +13,7 @@
   background-color: var(--btn-color);
   padding: 2rem;
   border-radius: 0px;
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -41,6 +42,13 @@
 
     font-weight: 600;
     text-align: center;
+  }
+
+  .loadingBarWrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
   }
 }
 
