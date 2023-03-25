@@ -3,6 +3,7 @@ import { SetStateAction, useEffect, useState } from 'react'
 
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
+import { SetNicknameData } from 'pages/api/discord/set-nickname'
 import application from './application.module.scss'
 
 const CRITICAL_ERROR_MESSAGE =
@@ -191,16 +192,15 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               const regex = /\((.*?)\)/
 
               async function setNickname(username: string, nickname?: string) {
-                const idData = await (await fetch('/api/db/docs?path=userIds/{email}')).json()
-
                 const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
+
+                const fetchData: SetNicknameData = {
+                  nickname: finalNickname,
+                }
 
                 const data = await fetch('/api/discord/set-nickname', {
                   method: 'POST',
-                  body: JSON.stringify({
-                    discordId: idData.data.providerAccountId,
-                    nickname: finalNickname,
-                  }),
+                  body: JSON.stringify(fetchData),
                 })
 
                 if (data.status !== 200) {

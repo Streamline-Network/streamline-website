@@ -3,6 +3,7 @@ import * as message from 'utils/constant-messages'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { authOptions } from '../auth/[...nextauth]'
+import { db } from './../../../config/firebase'
 import { getServerSession } from 'next-auth'
 import jwt from 'jsonwebtoken'
 
@@ -15,19 +16,25 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
   if (!req.body) return res.status(404).send({ error: message.MISSING_INFORMATION })
 
-  const data = JSON.parse(req.body) as SetNicknameData
+  const { nickname } = JSON.parse(req.body) as SetNicknameData
+
+  const ids = (await db.doc(`userIds/${session.email}`).get()).data()!
 
   // Bypassing the owner because bot permissions wouldn't allow otherwise.
-  if (data.discordId === '290323648357859329') {
+  if (ids.discordId === '290323648357859329') {
     return res.status(200).send({})
   }
 
-  const signedJwt = jwt.sign(data, process.env.BOT_API_SECRET!, {
-    expiresIn: DEFAULT_EXPIRATION_TIME,
-  })
+  const signedJwt = jwt.sign(
+    { nickname, discordId: ids.providerAccountId },
+    process.env.BOT_API_SECRET!,
+    {
+      expiresIn: DEFAULT_EXPIRATION_TIME,
+    }
+  )
 
   try {
-    const data = await fetch('http://localhost:3500/set-nickname', {
+    const data = await fetch(process.env.BOT_API_URL + '/set-nickname', {
       method: 'POST',
       headers: new Headers([['Content-Type', 'application/json']]),
       body: JSON.stringify({ token: signedJwt }),
@@ -39,7 +46,6 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
   }
 }
 
-type SetNicknameData = {
-  discordId: string
+export type SetNicknameData = {
   nickname?: string
 }

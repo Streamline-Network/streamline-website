@@ -31,7 +31,7 @@ export default async function setState(req: NextApiRequest, res: NextApiResponse
   return res.status(200).send({})
 }
 
-type StateData = {
+export type StateData = {
   entries?: {
     [key: string]: any
   }

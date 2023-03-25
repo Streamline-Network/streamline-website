@@ -19,7 +19,7 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
   try {
     const members = await (
-      await fetch('http://localhost:3500/members', {
+      await fetch(process.env.BOT_API_URL + '/members', {
         method: 'POST',
         headers: new Headers([['Content-Type', 'application/json']]),
         body: JSON.stringify({ token: signedJwt }),
