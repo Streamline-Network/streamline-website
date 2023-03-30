@@ -3,6 +3,7 @@ import { JWT, getToken } from 'next-auth/jwt'
 import { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { STEPS } from './pages/account/apply/[step]'
+import { verifyKey } from 'discord-interactions'
 
 const redirectToStep = async (applicationStage: number, req: NextRequest, token: JWT) => {
   for (const step of Object.keys(STEPS)) {
