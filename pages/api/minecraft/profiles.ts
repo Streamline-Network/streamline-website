@@ -5,14 +5,14 @@ import { NextApiRequest, NextApiResponse } from 'next'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (!req.body) return res.status(422).send({ error: message.MISSING_INFORMATION })
 
-  const parsedBody = JSON.parse(req.body) as ProfileData
+  const parsedBody = JSON.parse(req.body) as ProfileBody
 
   if (!parsedBody.name) return res.status(422).send({ error: 'Name missing!' })
 
   try {
-    const obj = await (
+    const obj = (await (
       await fetch('https://api.mojang.com/users/profiles/minecraft/' + parsedBody.name)
-    ).json()
+    ).json()) as { id: string }
 
     return res.status(200).send({ uuid: obj.id })
   } catch (error) {
@@ -20,6 +20,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 }
 
-export type ProfileData = {
+export type ProfileBody = {
   name: string
 }
+
+export type ProfileData =
+  | {
+      uuid: string
+    }
+  | { error: string }

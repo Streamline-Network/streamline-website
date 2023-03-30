@@ -1,4 +1,5 @@
 import * as NextAuth from 'next-auth'
+import '@total-typescript/ts-reset/'
 
 export type Roles = 'user' | 'reviewer' | 'admin'
 export type ApplicationStatus = 'denied' | 'accepted' | 'pending' | 'flagged'

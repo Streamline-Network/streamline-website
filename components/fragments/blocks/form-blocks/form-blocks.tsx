@@ -9,6 +9,8 @@ import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
 
+//TODO: Make an array of function, like checks that goes through and does submit stuff.
+
 export default function FormBlocks({
   numbered = false,
   editable = true,

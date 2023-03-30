@@ -1,10 +1,13 @@
 import { FormInfo, Section } from '../blocks/block-types'
 import { SetStateAction, useEffect, useState } from 'react'
 
+import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
+import { MembersData } from 'pages/api/discord/members'
 import { SetNicknameData } from 'pages/api/discord/set-nickname'
 import application from './application.module.scss'
+import customFetch from 'utils/fetch'
 
 const CRITICAL_ERROR_MESSAGE =
   'Oh no! A critical error has occurred. Check your network connection.'
@@ -15,13 +18,11 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
   const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
-    fetch('/api/db/docs?path=applications/{id}/types/apply')
-      .then(r => {
-        if (r.status === 200) {
-          r.json().then(r => {
-            setAnswers(r.data)
-            setHasFetched(true)
-          })
+    customFetch<Database.Applications.Apply>('/api/db/docs?path=applications/{id}/types/apply')
+      .then(({ status, data }) => {
+        if (status === 200) {
+          setAnswers(data as Database.Applications.Apply)
+          setHasFetched(true)
         } else {
           setHasFetched(true)
         }
@@ -174,12 +175,14 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
             async () => {
               // Check with the Discord Bot to see if the person applying is in the Discord server.
               try {
-                const data = await (await fetch('/api/discord/members')).json()
-                const idData = await (await fetch('/api/db/docs?path=userIds/{email}')).json()
+                const { data } = await customFetch<MembersData>('/api/discord/members')
+                const { data: idData } = await customFetch<Database.UserIds>(
+                  '/api/db/docs?path=userIds/{email}'
+                )
 
-                if (data.error) return 'A critical error occurred.'
+                if ('error' in data) return 'A critical error occurred.'
 
-                if ((data.members as string[]).includes(idData.data.providerAccountId)) {
+                if ((data.members as string[]).includes(idData.providerAccountId)) {
                   return undefined
                 }
 
@@ -194,16 +197,13 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               async function setNickname(username: string, nickname?: string) {
                 const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
 
-                const fetchData: SetNicknameData = {
-                  nickname: finalNickname,
-                }
+                const { status } = await customFetch<undefined, SetNicknameData>(
+                  '/api/discord/set-nickname',
+                  'POST',
+                  { nickname: finalNickname }
+                )
 
-                const data = await fetch('/api/discord/set-nickname', {
-                  method: 'POST',
-                  body: JSON.stringify(fetchData),
-                })
-
-                if (data.status !== 200) {
+                if (status !== 200) {
                   return 'Unexpected error occurred.'
                 } else return undefined
               }
@@ -240,13 +240,13 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               { agreement: 'Agree to the privacy policy.' },
             ],
             submitCallback(formInfo) {
-              fetch('/api/db/forms/apply', { method: 'POST', body: JSON.stringify(formInfo) })
-                .then(r => {
-                  if (r.status === 200) {
+              customFetch('/api/db/forms/apply', 'POST', formInfo)
+                .then(({ status, data }) => {
+                  if (status === 200) {
                     setCurrentStepIndex(1)
                   } else {
                     setCustomError(`An error occurred with the server! Please try again later.`)
-                    console.warn(r)
+                    console.warn(data)
                   }
                 })
                 .catch(e => {

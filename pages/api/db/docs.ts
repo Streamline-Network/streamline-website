@@ -35,7 +35,7 @@ export default async function docs(req: CustomRequest, res: NextApiResponse) {
   const data = await getDoc(parsedPath)
 
   return data
-    ? res.status(200).send({ data })
+    ? res.status(200).send(data)
     : res.status(404).send({ error: message.COULD_NOT_FIND_DOCUMENT })
 }
 

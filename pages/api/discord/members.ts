@@ -30,3 +30,9 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
     return res.status(500).send({ error: 'Cannot get members.' })
   }
 }
+
+export type MembersData =
+  | {
+      members: string[]
+    }
+  | { error: string }

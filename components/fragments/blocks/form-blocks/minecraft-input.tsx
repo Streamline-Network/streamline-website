@@ -2,9 +2,10 @@ import { FieldValues, UseFormClearErrors, UseFormRegister, UseFormSetError } fro
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 import Image from 'next/image'
-import { ProfileData } from 'pages/api/minecraft/profiles'
+import { ProfileBody } from 'pages/api/minecraft/profiles'
 import { Question } from '../block-types'
 import blocks from '../blocks.module.scss'
+import customFetch from 'utils/fetch'
 
 export default function MinecraftInput({
   state: register,
@@ -29,15 +30,12 @@ export default function MinecraftInput({
 
       if (timeoutRef.current !== null) clearTimeout(timeoutRef.current)
 
-      const fetchData: ProfileData = { name: name }
-
       timeoutRef.current = setTimeout(async () => {
-        const uuid = (await (
-          await fetch('/api/minecraft/profiles', {
-            method: 'POST',
-            body: JSON.stringify(fetchData),
-          })
-        ).json()) as { uuid?: string }
+        const { data: uuid } = await customFetch<{ uuid: string }, ProfileBody>(
+          '/api/minecraft/profiles',
+          'POST',
+          { name }
+        )
 
         if (!uuid.uuid) {
           setError(question.question, { type: 'invalid-mc-username' })

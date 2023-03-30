@@ -4,6 +4,7 @@ import { SetStateAction } from 'react'
 import { StateData } from 'pages/api/db/sets/state'
 import application from './application.module.scss'
 import classnames from 'classnames'
+import customFetch from 'utils/fetch'
 import discordImage from 'images/discord.png'
 import websiteImage from 'images/website.png'
 
@@ -48,13 +49,8 @@ export default function Status({ setCurrentStepIndex }: StatusProps) {
         onClick={() => {
           const data: StateData = { entries: { applicationStage: 0 } }
 
-          fetch('/api/db/sets/state', {
-            method: 'POST',
-            body: JSON.stringify(data),
-          }).then(r => {
-            if (r.status === 200) {
-              setCurrentStepIndex(0)
-            }
+          customFetch('/api/db/sets/state', 'POST', data).then(({ status }) => {
+            if (status === 200) setCurrentStepIndex(0)
           })
         }}
         className={application.button}>
