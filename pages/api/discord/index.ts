@@ -13,4 +13,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       type: InteractionResponseType.PONG,
     })
   }
+
+  return res.status(200).end()
 }
