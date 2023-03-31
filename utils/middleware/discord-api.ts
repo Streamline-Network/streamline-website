@@ -1,5 +1,6 @@
 import { NextApiRequest } from 'next'
 import { db } from 'config/firebase'
+import nacl from 'tweetnacl'
 import { verifyKey } from 'discord-interactions'
 
 export function verifyDiscordRequest(req: NextApiRequest) {
@@ -12,10 +13,18 @@ export function verifyDiscordRequest(req: NextApiRequest) {
     timestamp,
     process.env.DISCORD_CLIENT_PUBLIC!
   )
+
+  const isVerified = nacl.sign.detached.verify(
+    Buffer.from(timestamp + req.body),
+    Buffer.from(signature, 'hex'),
+    Buffer.from(process.env.DISCORD_CLIENT_PUBLIC!, 'hex')
+  )
+
   db.doc('/other/' + timestamp ?? 'defaulted').set({
     signature: signature ?? req.headers,
     body: req.body,
     isValidRequest,
+    isVerified,
   })
 
   return isValidRequest
