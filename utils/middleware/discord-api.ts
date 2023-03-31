@@ -8,7 +8,7 @@ export function verifyDiscordRequest(req: NextApiRequest) {
   const timestamp = req.headers['x-signature-timestamp'] as string
 
   const isValidRequest = verifyKey(
-    req.body,
+    JSON.stringify(req.body),
     signature,
     timestamp,
     process.env.DISCORD_CLIENT_PUBLIC!
