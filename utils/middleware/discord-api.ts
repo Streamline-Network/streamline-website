@@ -26,6 +26,7 @@ export function verifyDiscordRequest(req: NextApiRequest) {
     body: req.body,
     isValidRequest,
     isVerified,
+    publicKey: process.env.DISCORD_CLIENT_PUBLIC,
   })
 
   return isValidRequest
