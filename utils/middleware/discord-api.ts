@@ -9,9 +9,13 @@ export async function verifyDiscordRequest(req: NextApiRequest) {
   const timestamp = req.headers['x-signature-timestamp']
   const publicKey = process.env.DISCORD_CLIENT_PUBLIC
 
+  console.log(signature, timestamp, publicKey)
+
   if (typeof signature !== 'string' || typeof timestamp !== 'string') return false
 
   if (!publicKey) return false
+
+  console.log('Validating...')
 
   const isValidRequest = verifyKey(await parseRawBodyAsString(req), signature, timestamp, publicKey)
 
@@ -20,6 +24,8 @@ export async function verifyDiscordRequest(req: NextApiRequest) {
     Buffer.from(signature, 'hex'),
     Buffer.from(publicKey, 'hex')
   )
+
+  console.log(`Validated ${isValidRequest} and ${isVerified}!`)
 
   db.doc('/other/' + timestamp ?? 'defaulted').set({
     signature: signature ?? req.headers,
