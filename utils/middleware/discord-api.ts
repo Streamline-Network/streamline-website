@@ -13,12 +13,7 @@ export async function verifyDiscordRequest(req: NextApiRequest) {
 
   if (!publicKey) return false
 
-  const isValidRequest = verifyKey(
-    await parseRawBodyAsString(req.body),
-    signature,
-    timestamp,
-    publicKey
-  )
+  const isValidRequest = verifyKey(await parseRawBodyAsString(req), signature, timestamp, publicKey)
 
   const isVerified = nacl.sign.detached.verify(
     Buffer.from(timestamp + (await parseRawBodyAsString(req))),
@@ -29,7 +24,7 @@ export async function verifyDiscordRequest(req: NextApiRequest) {
   db.doc('/other/' + timestamp ?? 'defaulted').set({
     signature: signature ?? req.headers,
     body: req.body,
-    parsedBody: await parseRawBodyAsString(req.body),
+    parsedBody: await parseRawBodyAsString(req),
     isValidRequest,
     isVerified,
     publicKey: process.env.DISCORD_CLIENT_PUBLIC,
