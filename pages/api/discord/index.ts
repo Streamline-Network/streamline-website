@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!body) return res.status(400).end('Expected body.')
 
-  const interaction = JSON.parse(req.body) as any
+  const interaction = JSON.parse(body) as any
 
   if (interaction.type === InteractionType.PING) {
     return res.status(200).send({

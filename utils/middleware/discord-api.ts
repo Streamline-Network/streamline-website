@@ -1,5 +1,4 @@
 import { NextApiRequest } from 'next'
-import nacl from 'tweetnacl'
 import { parseRawBodyAsString } from 'utils/body-parser'
 import { verifyKey } from 'discord-interactions'
 
@@ -25,13 +24,7 @@ export async function verifyDiscordRequest(req: NextApiRequest): Promise<Process
 
     const isValidRequest = verifyKey(parsedBody, signature, timestamp, publicKey)
 
-    const isVerified = nacl.sign.detached.verify(
-      Buffer.from(timestamp + parsedBody),
-      Buffer.from(signature, 'hex'),
-      Buffer.from(publicKey, 'hex')
-    )
-
-    console.log(`Validated ${isValidRequest} and ${isVerified}!`)
+    console.log(`Validated ${isValidRequest}!`)
 
     if (isValidRequest) {
       return { isVerified: true, body: parsedBody }
