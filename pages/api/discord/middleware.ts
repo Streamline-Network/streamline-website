@@ -1,20 +1,23 @@
-import { NextApiRequest } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
+
 import nacl from 'tweetnacl'
 import { parseRawBodyAsString } from 'utils/body-parser'
 import { verifyKey } from 'discord-interactions'
 
-export async function verifyDiscordRequest(req: NextApiRequest): Promise<ProcessedRequest> {
+export default async function discordMiddleware(req: NextApiRequest, res: NextApiResponse) {
+  const callbackUrl = req.query.callbackUrl as string
+
   const signature = req.headers['x-signature-ed25519']
   const timestamp = req.headers['x-signature-timestamp']
   const publicKey = process.env.DISCORD_CLIENT_PUBLIC
 
   console.log(signature, timestamp, publicKey)
 
-  if (typeof signature !== 'string' || typeof timestamp !== 'string') return { isVerified: false }
+  if (typeof signature !== 'string' || typeof timestamp !== 'string') return false
 
-  if (!publicKey) return { isVerified: false }
+  if (!publicKey) return false
 
-  if (req.body === null) return { isVerified: false }
+  if (req.body === null) return false
 
   console.log('Validating...')
 
@@ -34,18 +37,18 @@ export async function verifyDiscordRequest(req: NextApiRequest): Promise<Process
     console.log(`Validated ${isValidRequest} and ${isVerified}!`)
 
     if (isValidRequest) {
-      return { isVerified: true, body: parsedBody }
+      return res.redirect(callbackUrl)
     } else {
-      return { isVerified: false }
+      return res.status(401).send('invalid request signature')
     }
   } catch (error) {
     console.error(error)
-    return { isVerified: false }
+    res.status(400).send('Something unexpected happened!')
   }
 }
 
-type ProcessedRequest =
-  | {
-      isVerified: false
-    }
-  | { isVerified: true; body: string }
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
