@@ -5,7 +5,9 @@ import { APIApplicationCommandInteraction } from 'discord-api-types/v10'
 import { verifyDiscordRequest } from 'utils/middleware/discord-api'
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (!verifyDiscordRequest(req)) return res.status(401).end('Bad request signature')
+  const isValid = !verifyDiscordRequest(req)
+
+  if (isValid) return res.status(401).end('Bad request signature')
 
   const interaction = JSON.parse(req.body) as any
 

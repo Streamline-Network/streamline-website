@@ -5,20 +5,25 @@ import { parseRawBodyAsString } from 'utils/body-parser'
 import { verifyKey } from 'discord-interactions'
 
 export async function verifyDiscordRequest(req: NextApiRequest) {
-  const signature = req.headers['x-signature-ed25519'] as string
-  const timestamp = req.headers['x-signature-timestamp'] as string
+  const signature = req.headers['x-signature-ed25519']
+  const timestamp = req.headers['x-signature-timestamp']
+  const publicKey = process.env.DISCORD_CLIENT_PUBLIC
+
+  if (typeof signature !== 'string' || typeof timestamp !== 'string') return false
+
+  if (!publicKey) return false
 
   const isValidRequest = verifyKey(
     await parseRawBodyAsString(req.body),
     signature,
     timestamp,
-    process.env.DISCORD_CLIENT_PUBLIC!
+    publicKey
   )
 
   const isVerified = nacl.sign.detached.verify(
     Buffer.from(timestamp + (await parseRawBodyAsString(req))),
     Buffer.from(signature, 'hex'),
-    Buffer.from(process.env.DISCORD_CLIENT_PUBLIC!, 'hex')
+    Buffer.from(publicKey, 'hex')
   )
 
   db.doc('/other/' + timestamp ?? 'defaulted').set({
