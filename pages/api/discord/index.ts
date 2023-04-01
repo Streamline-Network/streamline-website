@@ -9,6 +9,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
   if (isValid) return res.status(401).end('Bad request signature')
 
+  if (!req.body) return res.status(400).end('Expected body.')
+
   const interaction = JSON.parse(req.body) as any
 
   if (interaction.type === InteractionType.PING) {
