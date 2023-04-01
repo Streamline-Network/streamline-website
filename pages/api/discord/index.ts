@@ -1,9 +1,7 @@
-import { InteractionResponseType, InteractionType, verifyKey } from 'discord-interactions'
+import { APIInteraction, InteractionType } from 'discord-api-types/v10'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { verifyDiscordRequest } from 'utils/middleware/discord-api'
-
-// import { type APIApplicationCommandInteraction } from 'discord-api-types/v10'
 
 export const config = {
   api: {
@@ -20,11 +18,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!body) return res.status(400).end('Expected body.')
 
-  const interaction = JSON.parse(body) as any
+  const interaction = JSON.parse(body) as APIInteraction
 
-  if (interaction.type === InteractionType.PING) {
+  if (interaction.type === InteractionType.Ping) {
     return res.status(200).send({
-      type: InteractionResponseType.PONG,
+      type: InteractionType.Ping,
     })
   }
 
