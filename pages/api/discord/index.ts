@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { verifyDiscordRequest } from 'utils/middleware/discord-api'
 
-// import { APIApplicationCommandInteraction } from 'discord-api-types/v10'
+// import { type APIApplicationCommandInteraction } from 'discord-api-types/v10'
 
 export const config = {
   api: {

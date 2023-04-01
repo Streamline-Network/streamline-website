@@ -32,37 +32,8 @@ export async function middleware(req: NextRequest) {
       return redirectToStep(token.applicationStage, req)
     }
   }
-
-  /*   if (req.nextUrl.pathname.startsWith('/api/discord')) {
-    const key = process.env.MIDDLEWARE_SECRET
-
-    if (!key) {
-      throw new Error('Key expected!')
-    }
-
-    const url = new URL(req.nextUrl.pathname, req.nextUrl.origin)
-
-    const verificationKey = req.nextUrl.searchParams.get('verificationKey')
-
-    if (verificationKey) {
-      const isVerified = Jwt.verify(verificationKey, key)
-      console.log(isVerified)
-      NextResponse.redirect(url)
-    }
-
-    const redirectUrl = new URL('/api/discord/middleware', req.nextUrl.origin)
-
-    redirectUrl.searchParams.set('callbackUrl', url.href)
-
-    const newVerificationKey = Jwt.sign({ originalUrl: url }, key, { expiresIn: '1s' })
-
-    redirectUrl.searchParams.set('verificationKey', newVerificationKey)
-
-    return NextResponse.redirect(redirectUrl)
-  } */
 }
 
 export const config = {
-  // matcher: ['/account/:path*', '/api/discord'],
   matcher: ['/account/:path*'],
 }
