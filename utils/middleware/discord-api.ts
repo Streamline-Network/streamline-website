@@ -16,7 +16,7 @@ export async function verifyDiscordRequest(req: NextApiRequest) {
   )
 
   const isVerified = nacl.sign.detached.verify(
-    Buffer.from(timestamp + parseRawBodyAsString(req)),
+    Buffer.from(timestamp + (await parseRawBodyAsString(req))),
     Buffer.from(signature, 'hex'),
     Buffer.from(process.env.DISCORD_CLIENT_PUBLIC!, 'hex')
   )
