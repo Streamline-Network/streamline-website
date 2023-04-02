@@ -46,20 +46,16 @@ const command: CommandObject = {
           }
         }
 
-        const oldName = member.user.username
+        const oldName = member.nick
 
-        let minecraftName = undefined
+        let minecraftName = oldName
 
-        if (REGEX.test(oldName)) {
+        if (oldName && REGEX.test(oldName)) {
+          console.log(oldName)
           minecraftName = oldName.replace(REGEX, '')
         }
 
-        if (
-          !(await setNickname(
-            member.user.id,
-            minecraftName ? minecraftName + ` (${option.value})` : option.value
-          ))
-        )
+        if (!(await setNickname(member.user.id, minecraftName + ` (${option.value})`)))
           return D_RESPONSE_WENT_WRONG
 
         return {
