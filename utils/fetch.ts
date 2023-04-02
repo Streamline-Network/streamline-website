@@ -12,7 +12,13 @@ export default async function customFetch<T, BodyType = Record<string, JSONAccep
         headers,
       })
 
-      const json = (await result.json()) as T
+      let json
+
+      try {
+        json = (await result.json()) as T
+      } catch (error) {
+        json = result as T
+      }
 
       resolve({ status: result.status, data: json })
     } catch (error) {

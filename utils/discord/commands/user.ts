@@ -5,16 +5,16 @@ import path from 'node:path'
 
 const command: CommandObject = {
   commandInformation: {
-    name: path.basename(__filename),
+    name: 'user',
     description: 'Provides information about the user.',
     type: 1,
   },
-  response(commandInteraction) {
+  async response(commandInteraction) {
     const { member } = commandInteraction
 
     return {
       type: InteractionResponseType.ChannelMessageWithSource,
-      data: { content: `**Hello** ${member?.user.username}`, flags: MessageFlags.Ephemeral },
+      data: { content: `**Hello** ${member?.user.username}!`, flags: MessageFlags.Ephemeral },
     }
   },
 }

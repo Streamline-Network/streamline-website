@@ -45,6 +45,8 @@ discordAuthHeaders.set('Authorization', `Bot ${process.env.DISCORD_BOT_TOKEN}`)
 
 discordAuthHeaders.set('User-Agent', 'DiscordBot (https://streamlinesmp.com/, 1.0.0)')
 
+discordAuthHeaders.set('Content-Type', 'application/json')
+
 type ProcessedRequest =
   | {
       isVerified: false

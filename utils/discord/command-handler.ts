@@ -12,7 +12,7 @@ export default async function commandHandler(
 
   return {
     code: 200,
-    payload: command.response(commandInteraction),
+    payload: await command.response(commandInteraction),
   }
 }
 
@@ -23,5 +23,7 @@ type CommandHandlerResult = {
 
 export type CommandObject = {
   commandInformation: RESTPostAPIChatInputApplicationCommandsJSONBody
-  response: (commandInteraction: APIApplicationCommandInteraction) => APIInteractionResponse
+  response: (
+    commandInteraction: APIApplicationCommandInteraction
+  ) => Promise<APIInteractionResponse>
 }

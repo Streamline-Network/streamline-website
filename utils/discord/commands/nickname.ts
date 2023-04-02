@@ -1,21 +1,22 @@
 import {
-  APIApplicationCommandInteractionDataBasicOption,
+  APIChatInputApplicationCommandGuildInteraction,
   ApplicationCommandOptionType,
   InteractionResponseType,
+  MessageFlags,
   RESTPatchAPIGuildMemberJSONBody,
 } from 'discord-api-types/v10'
 
 import { CommandObject } from '../command-handler'
+import { D_RESPONSE_WENT_WRONG } from 'utils/constant-messages'
 import customFetch from 'utils/fetch'
 import { discordAuthHeaders } from '../verify-discord-request'
-import path from 'node:path'
 
 const MAX_DISCORD_NICKNAME_LENGTH = 32
 
 const command: CommandObject = {
   commandInformation: {
-    name: path.basename(__filename),
-    description: 'Change your nickname!',
+    name: 'nickname',
+    description: 'Change your nickname.',
     type: 1,
     options: [
       {
@@ -23,31 +24,44 @@ const command: CommandObject = {
         description: 'The new nickname you want.',
         required: true,
         type: ApplicationCommandOptionType.String,
+        max_length: 32,
+        min_length: 2,
       },
     ],
   },
-  response(commandInteraction) {
-    const { member, data } = commandInteraction
+  async response(commandInteraction) {
+    const { member, data } = commandInteraction as APIChatInputApplicationCommandGuildInteraction
 
-    return {
-      type: InteractionResponseType.ChannelMessageWithSource,
-      data: { content: `**Hello** <@${member?.user.id}>` },
+    if (!data.options) throw new Error()
+
+    for (const option of data.options) {
+      if (option.name === 'nickname') {
+        if (option.type !== ApplicationCommandOptionType.String) return D_RESPONSE_WENT_WRONG
+
+        if (!(await setNickname(member.user.id, option.value))) return D_RESPONSE_WENT_WRONG
+
+        return {
+          type: InteractionResponseType.ChannelMessageWithSource,
+          data: { content: 'Your nickname has been set!', flags: MessageFlags.Ephemeral },
+        }
+      }
     }
+
+    return D_RESPONSE_WENT_WRONG
   },
 }
-// setNicknameWithMinecraftName(member?.user.id)
 
-function setNickname(id: number, nickname: string): boolean {
+async function setNickname(id: string, nickname: string): Promise<boolean> {
   if (nickname.length > MAX_DISCORD_NICKNAME_LENGTH) return false
 
-  customFetch<undefined, RESTPatchAPIGuildMemberJSONBody>(
+  const result = await customFetch<undefined, RESTPatchAPIGuildMemberJSONBody>(
     `${process.env.DISCORD_API_URL}/guilds/${process.env.DISCORD_SERVER_ID}/members/${id}`,
     'PATCH',
     { nick: nickname },
     discordAuthHeaders
   )
 
-  return true
+  return result.status === 200
 }
 
 module.exports = command
