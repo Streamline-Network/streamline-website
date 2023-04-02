@@ -51,7 +51,6 @@ const command: CommandObject = {
         let minecraftName = oldName
 
         if (oldName && REGEX.test(oldName)) {
-          console.log(oldName)
           minecraftName = oldName.replace(REGEX, '')
         }
 

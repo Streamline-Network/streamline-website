@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 
 import { authOptions } from '../../auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
-import registerCommands from 'services/register-commands'
+import registerCommands from 'utils/discord/register-commands'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
