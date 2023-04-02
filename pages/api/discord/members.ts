@@ -15,13 +15,15 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
   try {
     const { data } = await customFetch<RESTGetAPIGuildMembersResult>(
-      `${process.env.DISCORD_API_URL}/guilds/${process.env.DISCORD_SERVER_ID}/members`,
+      `${process.env.DISCORD_API_URL}/guilds/${process.env.DISCORD_SERVER_ID}/members?limit=1000`,
       'GET',
       undefined,
       discordAuthHeaders
     )
 
     const members = data.map(member => member.user?.id)
+
+    console.log(members)
 
     return res.status(200).send({ members })
   } catch (err) {

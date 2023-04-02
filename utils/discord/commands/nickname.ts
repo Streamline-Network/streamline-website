@@ -3,15 +3,11 @@ import {
   ApplicationCommandOptionType,
   InteractionResponseType,
   MessageFlags,
-  RESTPatchAPIGuildMemberJSONBody,
 } from 'discord-api-types/v10'
 
 import { CommandObject } from '../command-handler'
 import { D_RESPONSE_WENT_WRONG } from 'utils/constant-messages'
-import customFetch from 'utils/fetch'
-import { discordAuthHeaders } from '../verify-discord-request'
-
-const MAX_DISCORD_NICKNAME_LENGTH = 32
+import { setNickname } from '../set-nickname'
 
 const command: CommandObject = {
   commandInformation: {
@@ -49,19 +45,6 @@ const command: CommandObject = {
 
     return D_RESPONSE_WENT_WRONG
   },
-}
-
-export async function setNickname(id: string, nickname: string): Promise<boolean> {
-  if (nickname.length > MAX_DISCORD_NICKNAME_LENGTH) return false
-
-  const result = await customFetch<undefined, RESTPatchAPIGuildMemberJSONBody>(
-    `${process.env.DISCORD_API_URL}/guilds/${process.env.DISCORD_SERVER_ID}/members/${id}`,
-    'PATCH',
-    { nick: nickname },
-    discordAuthHeaders
-  )
-
-  return result.status === 200
 }
 
 module.exports = command

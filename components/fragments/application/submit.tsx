@@ -182,6 +182,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
                 if ('error' in data) return 'A critical error occurred.'
 
+                console.log(idData.providerAccountId, data.members)
+
                 if ((data.members as string[]).includes(idData.providerAccountId)) {
                   return undefined
                 }
@@ -204,7 +206,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                 )
 
                 if (status !== 201) {
-                  return 'Unexpected error occurred.'
+                  return 'Unexpected error occurred. SET_NICK'
                 } else return undefined
               }
 
