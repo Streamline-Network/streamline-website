@@ -3,9 +3,11 @@ import * as message from 'utils/constant-messages'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { authOptions } from '../auth/[...nextauth]'
+import customFetch from 'utils/fetch'
 import { db } from './../../../config/firebase'
 import { getServerSession } from 'next-auth'
 import jwt from 'jsonwebtoken'
+import { setNickname } from 'utils/discord/commands/nickname'
 
 const DEFAULT_EXPIRATION_TIME = '1m'
 
@@ -22,30 +24,18 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
   // Bypassing the owner because bot permissions wouldn't allow otherwise.
   if (ids.discordId === '290323648357859329') {
-    return res.status(200).send({})
+    return res.status(200).end()
   }
 
-  const signedJwt = jwt.sign(
-    { nickname, discordId: ids.providerAccountId },
-    process.env.BOT_API_SECRET!,
-    {
-      expiresIn: DEFAULT_EXPIRATION_TIME,
-    }
-  )
-
   try {
-    const data = await fetch(process.env.BOT_API_URL + '/set-nickname', {
-      method: 'POST',
-      headers: new Headers([['Content-Type', 'application/json']]),
-      body: JSON.stringify({ token: signedJwt }),
-    })
+    const didSucceed = await setNickname(ids.discordId, nickname)
 
-    return res.status(data.status).send({})
+    return res.status(didSucceed ? 201 : 500).end()
   } catch {
     return res.status(500).send({ error: 'Unexpected error.' })
   }
 }
 
 export type SetNicknameData = {
-  nickname?: string
+  nickname: string
 }

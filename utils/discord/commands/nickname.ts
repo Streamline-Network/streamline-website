@@ -51,7 +51,7 @@ const command: CommandObject = {
   },
 }
 
-async function setNickname(id: string, nickname: string): Promise<boolean> {
+export async function setNickname(id: string, nickname: string): Promise<boolean> {
   if (nickname.length > MAX_DISCORD_NICKNAME_LENGTH) return false
 
   const result = await customFetch<undefined, RESTPatchAPIGuildMemberJSONBody>(
