@@ -1,13 +1,11 @@
 import { NextApiRequest } from 'next'
+import nacl from 'tweetnacl'
 import { parseRawBodyAsString } from 'utils/body-parser'
-import { verifyKey } from 'discord-interactions'
 
-export async function verifyDiscordRequest(req: NextApiRequest): Promise<ProcessedRequest> {
+export default async function verifyDiscordRequest(req: NextApiRequest): Promise<ProcessedRequest> {
   const signature = req.headers['x-signature-ed25519']
   const timestamp = req.headers['x-signature-timestamp']
   const publicKey = process.env.DISCORD_CLIENT_PUBLIC
-
-  console.log(signature, timestamp, publicKey)
 
   if (typeof signature !== 'string' || typeof timestamp !== 'string') return { isVerified: false }
 
@@ -20,9 +18,13 @@ export async function verifyDiscordRequest(req: NextApiRequest): Promise<Process
   try {
     const parsedBody = await parseRawBodyAsString(req)
 
-    console.log(`Parsed body as ${parsedBody}`)
+    console.log('Body parsed!')
 
-    const isValidRequest = verifyKey(parsedBody, signature, timestamp, publicKey)
+    const isValidRequest = nacl.sign.detached.verify(
+      Buffer.from(timestamp + parsedBody),
+      Buffer.from(signature, 'hex'),
+      Buffer.from(publicKey, 'hex')
+    )
 
     console.log(`Validated ${isValidRequest}!`)
 
@@ -36,6 +38,12 @@ export async function verifyDiscordRequest(req: NextApiRequest): Promise<Process
     return { isVerified: false }
   }
 }
+
+export const discordAuthHeaders = new Headers()
+
+discordAuthHeaders.set('Authorization', `Bot ${process.env.DISCORD_BOT_TOKEN}`)
+
+discordAuthHeaders.set('User-Agent', 'DiscordBot (https://streamlinesmp.com/, 1.0.0)')
 
 type ProcessedRequest =
   | {

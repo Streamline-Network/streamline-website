@@ -1,7 +1,8 @@
 import { APIInteraction, InteractionType } from 'discord-api-types/v10'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { verifyDiscordRequest } from 'utils/middleware/discord-api'
+import commandHandler from 'utils/discord/command-handler'
+import verifyDiscordRequest from 'utils/discord/verify-discord-request'
 
 export const config = {
   api: {
@@ -20,11 +21,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const interaction = JSON.parse(body) as APIInteraction
 
-  if (interaction.type === InteractionType.Ping) {
-    return res.status(200).send({
-      type: InteractionType.Ping,
-    })
+  switch (interaction.type) {
+    case InteractionType.Ping: {
+      return res.status(200).send({
+        type: InteractionType.Ping,
+      })
+    }
+    case InteractionType.ApplicationCommand: {
+      const commandResult = await commandHandler(interaction)
+      return res.status(commandResult.code).send(commandResult.payload)
+    }
+    default: {
+      return res.status(500).end('Request could not be processed.')
+    }
   }
-
-  return res.status(200).end()
 }

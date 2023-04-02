@@ -7,7 +7,6 @@ export const parseRawBodyAsString = (req: NextApiRequest) =>
       data += chunk
     })
     req.on('end', () => {
-      console.log(data)
       resolve(Buffer.from(data).toString())
     })
     req.on('error', error => {
