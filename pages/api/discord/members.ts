@@ -2,29 +2,29 @@ import * as message from 'utils/constant-messages'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { RESTGetAPIGuildMembersResult } from 'discord-api-types/v10'
 import { authOptions } from '../auth/[...nextauth]'
+import customFetch from 'utils/fetch'
+import { discordAuthHeaders } from 'utils/discord/verify-discord-request'
 import { getServerSession } from 'next-auth'
-import jwt from 'jsonwebtoken'
-
-const DEFAULT_EXPIRATION_TIME = '1m'
 
 export default async function createJwt(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
-  const signedJwt = jwt.sign({}, process.env.BOT_API_SECRET!, {
-    expiresIn: DEFAULT_EXPIRATION_TIME,
-  })
-
   try {
-    const members = await (
-      await fetch(process.env.BOT_API_URL + '/members', {
-        method: 'POST',
-        headers: new Headers([['Content-Type', 'application/json']]),
-        body: JSON.stringify({ token: signedJwt }),
-      })
-    ).json()
+    const { data } = await customFetch<RESTGetAPIGuildMembersResult>(
+      `${process.env.DISCORD_API_URL}/guilds/${process.env.DISCORD_SERVER_ID}/members?limit=1000`,
+      'GET',
+      undefined,
+      discordAuthHeaders
+    )
+
+    const members = data.map(member => member.user?.id)
+
+    console.log(members)
+
     return res.status(200).send({ members })
   } catch (err) {
     return res.status(500).send({ error: 'Cannot get members.' })

@@ -1,10 +1,11 @@
 import { JWT, getToken } from 'next-auth/jwt'
 
+import Jwt from 'jsonwebtoken'
 import { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { STEPS } from './pages/account/apply/[step]'
 
-const redirectToStep = async (applicationStage: number, req: NextRequest, token: JWT) => {
+const redirectToStep = async (applicationStage: number, req: NextRequest) => {
   for (const step of Object.keys(STEPS)) {
     if (STEPS[step] === applicationStage) {
       const newPathname = `/account/apply/${step}`
@@ -28,11 +29,11 @@ export async function middleware(req: NextRequest) {
     }
 
     if (req.nextUrl.pathname.startsWith('/account/apply')) {
-      return redirectToStep(token.applicationStage, req, token)
+      return redirectToStep(token.applicationStage, req)
     }
   }
 }
 
 export const config = {
-  matcher: '/account/:path*',
+  matcher: ['/account/:path*'],
 }

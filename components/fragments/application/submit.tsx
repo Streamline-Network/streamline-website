@@ -182,6 +182,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
                 if ('error' in data) return 'A critical error occurred.'
 
+                console.log(idData.providerAccountId, data.members)
+
                 if ((data.members as string[]).includes(idData.providerAccountId)) {
                   return undefined
                 }
@@ -194,7 +196,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
             async formInfo => {
               const regex = /\((.*?)\)/
 
-              async function setNickname(username: string, nickname?: string) {
+              async function formatAndSetNickname(username: string, nickname: string) {
                 const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
 
                 const { status } = await customFetch<undefined, SetNicknameData>(
@@ -203,8 +205,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                   { nickname: finalNickname }
                 )
 
-                if (status !== 200) {
-                  return 'Unexpected error occurred.'
+                if (status !== 201) {
+                  return 'Unexpected error occurred. SET_NICK'
                 } else return undefined
               }
 
@@ -224,7 +226,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                   return 'Nickname is too long!'
                 } else {
                   // Set the nickname on Discord.
-                  return setNickname(username, nickname)
+                  return formatAndSetNickname(username, nickname)
                 }
               } catch (error) {
                 return CRITICAL_ERROR_MESSAGE + ' NICKNAME_CHECK'
