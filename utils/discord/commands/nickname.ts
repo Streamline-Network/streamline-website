@@ -9,6 +9,8 @@ import { CommandObject } from '../command-handler'
 import { D_RESPONSE_WENT_WRONG } from 'utils/constant-messages'
 import { setNickname } from '../set-nickname'
 
+const REGEX = /\((.*?)\)/
+
 const command: CommandObject = {
   commandInformation: {
     name: 'nickname',
@@ -34,7 +36,31 @@ const command: CommandObject = {
       if (option.name === 'nickname') {
         if (option.type !== ApplicationCommandOptionType.String) return D_RESPONSE_WENT_WRONG
 
-        if (!(await setNickname(member.user.id, option.value))) return D_RESPONSE_WENT_WRONG
+        if (REGEX.test(option.value)) {
+          return {
+            type: InteractionResponseType.ChannelMessageWithSource,
+            data: {
+              content: 'Nickname cannot have parentheses.',
+              flags: MessageFlags.Ephemeral,
+            },
+          }
+        }
+
+        const oldName = member.user.username
+
+        let minecraftName = undefined
+
+        if (REGEX.test(oldName)) {
+          minecraftName = oldName.replace(REGEX, '')
+        }
+
+        if (
+          !(await setNickname(
+            member.user.id,
+            minecraftName ? minecraftName + ` (${option.value})` : option.value
+          ))
+        )
+          return D_RESPONSE_WENT_WRONG
 
         return {
           type: InteractionResponseType.ChannelMessageWithSource,
