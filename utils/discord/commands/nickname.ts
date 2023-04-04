@@ -46,7 +46,7 @@ const command: CommandObject = {
           }
         }
 
-        const oldName = member.nick
+        const oldName = member.nick ?? member.user.username
 
         let minecraftName = oldName
 

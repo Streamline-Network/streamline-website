@@ -23,8 +23,6 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
     const members = data.map(member => member.user?.id)
 
-    console.log(members)
-
     return res.status(200).send({ members })
   } catch (err) {
     return res.status(500).send({ error: 'Cannot get members.' })
