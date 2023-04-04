@@ -21,7 +21,7 @@ export default async function createJwt(req: NextApiRequest, res: NextApiRespons
 
   // Bypassing the owner because bot permissions wouldn't allow otherwise.
   if (ids.providerAccountId === '290323648357859329') {
-    return res.status(200).end()
+    return res.status(201).end()
   }
 
   const didSucceed = await setNickname(ids.providerAccountId, nickname)

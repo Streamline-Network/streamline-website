@@ -44,7 +44,7 @@ export default function FormBlocks({
   }
 
   function getValue(question: Question, formInfo?: FormInfo) {
-    if (!formInfo) return
+    if (!formInfo || !formInfo.answers) return
 
     for (const answer of Object.keys(formInfo.answers)) {
       if (answer === question.question) {
@@ -56,7 +56,7 @@ export default function FormBlocks({
 
   function getCheckboxValue(question: Question, formInfo?: FormInfo) {
     if (question.type === 'checkboxes') {
-      if (!formInfo) {
+      if (!formInfo || !formInfo.answers) {
         return question.options.map(option => ({
           content: option,
           isChecked: false,

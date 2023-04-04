@@ -2,7 +2,7 @@ import * as message from 'utils/constant-messages'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { FormInfo } from 'components/fragments/blocks/block-types.d'
+import { Database } from '../database'
 import { authOptions } from '../../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!req.body) return res.status(422).send({ error: message.MISSING_INFORMATION })
 
-  const applicationData = JSON.parse(req.body) as FormInfo
+  const applicationData = JSON.parse(req.body) as Database.Applications.Apply
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 

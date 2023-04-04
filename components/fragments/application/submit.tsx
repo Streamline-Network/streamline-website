@@ -1,10 +1,11 @@
-import { FormInfo, Section } from '../blocks/block-types'
+import { ProfileBody, ProfileData } from 'pages/api/minecraft/profiles'
 import { SetStateAction, useEffect, useState } from 'react'
 
 import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
 import { MembersData } from 'pages/api/discord/members'
+import { Section } from '../blocks/block-types'
 import { SetNicknameData } from 'pages/api/discord/set-nickname'
 import application from './application.module.scss'
 import customFetch from 'utils/fetch'
@@ -14,14 +15,14 @@ const CRITICAL_ERROR_MESSAGE =
 
 export default function Submit({ setCurrentStepIndex }: SubmitProps) {
   const [customError, setCustomError] = useState<string | undefined>()
-  const [answers, setAnswers] = useState<undefined | FormInfo>()
+  const [answers, setAnswers] = useState<undefined | Database.Applications.Apply>()
   const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
     customFetch<Database.Applications.Apply>('/api/db/docs?path=applications/{id}/types/apply')
       .then(({ status, data }) => {
         if (status === 200) {
-          setAnswers(data as Database.Applications.Apply)
+          setAnswers(data)
           setHasFetched(true)
         } else {
           setHasFetched(true)
@@ -169,7 +170,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
         <FormBlocks
           sections={sections}
           numbered
-          formInfo={answers}
+          formInfo={answers?.submissionDetails}
           error={[customError, setCustomError]}
           checks={[
             async () => {
@@ -182,8 +183,6 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
                 if ('error' in data) return 'A critical error occurred.'
 
-                console.log(idData.providerAccountId, data.members)
-
                 if ((data.members as string[]).includes(idData.providerAccountId)) {
                   return undefined
                 }
@@ -194,6 +193,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               }
             },
             async formInfo => {
+              // Set nickname on Discord to Minecraft name.
               const regex = /\((.*?)\)/
 
               async function formatAndSetNickname(username: string, nickname: string) {
@@ -242,21 +242,42 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               { agreement: 'Agree to the privacy policy.' },
             ],
             submitCallback(formInfo) {
-              customFetch('/api/db/forms/apply', 'POST', formInfo)
-                .then(({ status, data }) => {
-                  if (status === 200) {
-                    setCurrentStepIndex(1)
-                  } else {
-                    setCustomError(`An error occurred with the server! Please try again later.`)
-                    console.warn(data)
+              // Get users Minecraft uuid to save in the database.
+              customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
+                name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
+              })
+                .then(uuidData => {
+                  if (uuidData.status !== 200 || 'error' in uuidData.data || !uuidData.data.uuid) {
+                    return setCustomError('Could not get UUID! Try again later.')
                   }
+
+                  // Push to database.
+                  customFetch<undefined, Database.Applications.Apply>(
+                    '/api/db/forms/apply',
+                    'POST',
+                    {
+                      submissionDetails: formInfo,
+                      minecraftUuid: uuidData.data.uuid,
+                    }
+                  )
+                    .then(({ status, data }) => {
+                      if (status === 200) {
+                        setCurrentStepIndex(1)
+                        console.log('Form submitted!', formInfo)
+                      } else {
+                        setCustomError(`An error occurred with the server! Please try again later.`)
+                        console.warn(data)
+                      }
+                    })
+                    .catch(e => {
+                      setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
+                      console.warn(e)
+                    })
                 })
                 .catch(e => {
-                  setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
+                  setCustomError(CRITICAL_ERROR_MESSAGE + ' UUID')
                   console.warn(e)
                 })
-
-              console.log('Form submitted!', formInfo)
             },
           }}
         />
