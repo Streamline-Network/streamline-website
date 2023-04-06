@@ -14,5 +14,5 @@ export async function setNickname(id: string, nickname: string): Promise<boolean
     discordAuthHeaders
   )
 
-  return result.status === 200
+  return result.response.ok
 }

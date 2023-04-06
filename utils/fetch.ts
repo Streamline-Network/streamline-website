@@ -3,7 +3,7 @@ export default async function customFetch<T, BodyType = Record<string, JSONAccep
   method: Methods = 'GET',
   body?: BodyType,
   headers?: HeadersInit
-): Promise<{ status: number; data: T }> {
+): Promise<{ status: number; response: Response; data: T }> {
   return new Promise(async (resolve, reject) => {
     try {
       const result = await fetch(url, {
@@ -20,7 +20,7 @@ export default async function customFetch<T, BodyType = Record<string, JSONAccep
         json = result as T
       }
 
-      resolve({ status: result.status, data: json })
+      resolve({ status: result.status, response: result, data: json })
     } catch (error) {
       reject(error)
     }

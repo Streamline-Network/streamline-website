@@ -54,8 +54,19 @@ const command: CommandObject = {
           minecraftName = oldName.replace(REGEX, '')
         }
 
-        if (!(await setNickname(member.user.id, minecraftName + ` (${option.value})`)))
-          return D_RESPONSE_WENT_WRONG
+        if (
+          !(await setNickname(member.user.id, minecraftName.trim() + ` (${option.value.trim()})`))
+        ) {
+          return {
+            type: InteractionResponseType.ChannelMessageWithSource,
+            data: {
+              content: `Nickname too long! Total length must be less than 32, yours was ${
+                minecraftName.trim().length + option.value.trim().length + 3
+              }`,
+              flags: MessageFlags.Ephemeral,
+            },
+          }
+        }
 
         return {
           type: InteractionResponseType.ChannelMessageWithSource,

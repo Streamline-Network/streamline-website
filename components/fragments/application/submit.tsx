@@ -215,13 +215,13 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                 // Check if nickname with Minecraft name is too long.
                 const MAX_DISCORD_NICKNAME_LENGTH = 32
 
-                const nickname = formInfo['Do you have a nickname you want to be called?']
+                const nickname = formInfo['Do you have a nickname you want to be called?'].trim()
 
                 if (!nickname) return undefined
 
                 if (regex.test(nickname)) return 'Nickname cannot have parentheses.'
 
-                const username = formInfo['What is your Minecraft Java Edition username?']
+                const username = formInfo['What is your Minecraft Java Edition username?'].trim()
 
                 if (nickname.length + username.length + 3 > MAX_DISCORD_NICKNAME_LENGTH) {
                   return 'Nickname is too long!'
