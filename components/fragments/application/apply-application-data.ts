@@ -27,7 +27,7 @@ const sections: Section[] = [
       },
       {
         question: 'How old are you?',
-        type: 'short-answer',
+        type: 'number',
         required: true,
       },
       {

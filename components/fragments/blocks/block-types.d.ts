@@ -4,7 +4,7 @@ export type Question = {
   required: boolean
 } & (
   | { type: 'checkboxes'; options: string[] }
-  | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
+  | { type: 'short-answer' | 'paragraph' | 'minecraft-skin' | 'number'; placeholderText?: string }
   | {
       type: 'button'
       buttonText: string

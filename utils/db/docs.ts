@@ -24,12 +24,10 @@ export function hasPermission(parsedPath: string, session: Session, res: NextApi
       if (pathArr[1] === session.id) return true
 
     case 'applications':
-      res.setHeader('Cache-Control', `max-age=${60 * 5} private`)
       if (session.role === 'reviewer') return true
       if (pathArr[1] === session.id) return true
 
     case 'userState':
-      // res.setHeader('Cache-Control', `max-age=${60 * 0.1} private`)
       if (pathArr[1] === session.id) return true
 
     case 'userIds':

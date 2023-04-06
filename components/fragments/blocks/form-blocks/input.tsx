@@ -40,6 +40,7 @@ export default function Input({
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
             defaultValue={getValue(question, formInfo)}
+            type="text"
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -105,6 +106,23 @@ export default function Input({
               {question.buttonText}
             </Link>
           )}
+          {renderError(errors, encodedQuestion)}
+        </>
+      )
+    }
+    case 'number': {
+      return (
+        <>
+          <input
+            {...register(encodedQuestion.question, {
+              required: question.required,
+            })}
+            className={blocks.input}
+            type="number"
+            placeholder={question.placeholderText || 'Answer here...'}
+            disabled={!editable}
+            defaultValue={getValue(question, formInfo)}
+          />
           {renderError(errors, encodedQuestion)}
         </>
       )
