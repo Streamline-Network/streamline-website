@@ -13,6 +13,7 @@ import Link from 'next/link'
 import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
+import { useEffect } from 'react'
 
 export default function Input({
   question,
@@ -27,6 +28,23 @@ export default function Input({
     ...question,
     question: Buffer.from(question.question).toString('base64'),
   }
+
+  useEffect(() => {
+    function removeScroll() {
+      if (!document.activeElement) return
+      const activeElement = document.activeElement as HTMLInputElement
+
+      if ('type' in activeElement) {
+        if (activeElement.type === 'number') {
+          activeElement.blur()
+        }
+      }
+    }
+
+    document.addEventListener('wheel', removeScroll)
+
+    return () => document.removeEventListener('wheel', removeScroll)
+  })
 
   switch (question.type) {
     case 'short-answer': {

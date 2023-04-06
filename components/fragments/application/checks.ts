@@ -8,6 +8,13 @@ export const CRITICAL_ERROR_MESSAGE =
   'Oh no! A critical error has occurred. Check your network connection.'
 
 const checks: Checks = [
+  async formInfo => {
+    const age = parseInt(formInfo['How old are you?'])
+
+    if (isNaN(age) || age < 13) return 'Invalid age or age in under our minimum age (13)!'
+
+    return undefined
+  },
   async () => {
     // Check with the Discord Bot to see if the person applying is in the Discord server.
     try {
