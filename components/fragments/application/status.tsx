@@ -49,8 +49,8 @@ export default function Status({ setCurrentStepIndex }: StatusProps) {
         onClick={() => {
           const data: StateData = { entries: { applicationStage: 0 } }
 
-          customFetch('/api/db/sets/state', 'POST', data).then(({ status }) => {
-            if (status === 200) setCurrentStepIndex(0)
+          customFetch('/api/db/sets/state', 'POST', data).then(({ response }) => {
+            if (response.ok) setCurrentStepIndex(0)
           })
         }}
         className={application.button}>

@@ -21,8 +21,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 
   useEffect(() => {
     customFetch<Database.Applications.Apply>('/api/db/docs?path=applications/{id}/types/apply')
-      .then(({ status, data }) => {
-        if (status === 200) {
+      .then(({ response, data }) => {
+        if (response.ok) {
           setAnswers(data)
           setHasFetched(true)
         } else {
@@ -200,13 +200,13 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               async function formatAndSetNickname(username: string, nickname: string) {
                 const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
 
-                const { status } = await customFetch<undefined, SetNicknameData>(
+                const { response } = await customFetch<undefined, SetNicknameData>(
                   '/api/discord/set-nickname',
                   'POST',
                   { nickname: finalNickname }
                 )
 
-                if (status !== 201) {
+                if (!response.ok) {
                   return 'Unexpected error occurred. SET_NICK'
                 } else return undefined
               }
@@ -246,8 +246,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
                 entries: { applicationStage: 1 },
               })
-                .then(({ status }) => {
-                  if (status === 200) {
+                .then(({ response }) => {
+                  if (response.ok) {
                     console.log('All checks passed!')
                     setCurrentStepIndex(1)
                   } else {
@@ -263,7 +263,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
             })
               .then(uuidData => {
-                if (uuidData.status !== 200 || 'error' in uuidData.data || !uuidData.data.uuid) {
+                if (!uuidData.response.ok || 'error' in uuidData.data || !uuidData.data.uuid) {
                   return setCustomError('Could not get UUID! Try again later.')
                 }
 
@@ -272,8 +272,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                   submissionDetails: formInfo,
                   minecraftUuid: uuidData.data.uuid,
                 })
-                  .then(({ status, data }) => {
-                    if (status === 200) {
+                  .then(({ response, data }) => {
+                    if (response.ok) {
                       console.log('Form saved!', formInfo)
                     } else {
                       setCustomError(`An error occurred with the server! Please try again later.`)
