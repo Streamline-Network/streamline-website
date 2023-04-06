@@ -46,7 +46,7 @@ export default function Steps() {
         return (
           <>
             <h2 className={apply.subTitle}>What&apos;s Next?</h2>
-            <Reviewed />
+            <Reviewed setCurrentStepIndex={setCurrentStepIndex} />
           </>
         )
       default:

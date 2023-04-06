@@ -1,5 +1,5 @@
 import { ProfileBody, ProfileData } from 'pages/api/minecraft/profiles'
-import { SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
@@ -297,5 +297,5 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
 }
 
 interface SubmitProps {
-  setCurrentStepIndex: (value: SetStateAction<number | undefined>) => void
+  setCurrentStepIndex: (value: React.SetStateAction<number | undefined>) => void
 }

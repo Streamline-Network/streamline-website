@@ -2,7 +2,7 @@ import * as message from 'utils/constant-messages'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { Database } from '../database'
+import { Database } from 'pages/api/db/database'
 import { authOptions } from '../../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
@@ -17,7 +17,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
   const applications = db.doc(`applications/${session.id}/types/apply`)
-  await applications.set(applicationData)
+
+  const previousApplication = (await applications.get()).data() as Database.Applications.Apply
+
+  if (previousApplication.submissionDetails) {
+    applicationData.previousSubmissions = previousApplication.previousSubmissions
+      ? [...previousApplication.previousSubmissions, previousApplication.submissionDetails]
+      : [previousApplication.submissionDetails]
+  }
+
+  await applications.set(applicationData, { merge: true })
 
   return res.status(200).send({})
 }

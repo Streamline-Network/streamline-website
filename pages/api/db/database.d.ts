@@ -34,18 +34,13 @@ export declare module Database {
 
   module Applications {
     type Apply = {
-      submissionDetails: {
-        submissionTime: number
-        answers: {
-          [key: string]:
-            | string
-            | {
-                [key: string]: boolean
-              }
-        }
-      }
+      submissionDetails: FormInfo
+      previousSubmissions?: FormInfo[]
+
       minecraftUuid: string
+
       state?: 'accepted' | 'denied' | 'pending'
+      deniedReason?: string
     }
   }
 }
