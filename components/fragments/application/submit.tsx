@@ -7,6 +7,7 @@ import Loading from './loading'
 import { MembersData } from 'pages/api/discord/members'
 import { Section } from '../blocks/block-types'
 import { SetNicknameData } from 'pages/api/discord/set-nickname'
+import { StateData } from 'pages/api/db/sets/state'
 import application from './application.module.scss'
 import customFetch from 'utils/fetch'
 
@@ -241,44 +242,53 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               },
               { agreement: 'Agree to the privacy policy.' },
             ],
-            submitCallback(formInfo) {
-              // Get users Minecraft uuid to save in the database.
-              customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
-                name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
+            final() {
+              customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
+                entries: { applicationStage: 1 },
               })
-                .then(uuidData => {
-                  if (uuidData.status !== 200 || 'error' in uuidData.data || !uuidData.data.uuid) {
-                    return setCustomError('Could not get UUID! Try again later.')
+                .then(({ status }) => {
+                  if (status === 200) {
+                    console.log('All checks passed!')
+                    setCurrentStepIndex(1)
+                  } else {
+                    setCustomError('There was an issue saving!')
                   }
-
-                  // Push to database.
-                  customFetch<undefined, Database.Applications.Apply>(
-                    '/api/db/forms/apply',
-                    'POST',
-                    {
-                      submissionDetails: formInfo,
-                      minecraftUuid: uuidData.data.uuid,
-                    }
-                  )
-                    .then(({ status, data }) => {
-                      if (status === 200) {
-                        setCurrentStepIndex(1)
-                        console.log('Form submitted!', formInfo)
-                      } else {
-                        setCustomError(`An error occurred with the server! Please try again later.`)
-                        console.warn(data)
-                      }
-                    })
-                    .catch(e => {
-                      setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
-                      console.warn(e)
-                    })
                 })
-                .catch(e => {
-                  setCustomError(CRITICAL_ERROR_MESSAGE + ' UUID')
-                  console.warn(e)
-                })
+                .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE'))
             },
+          }}
+          save={formInfo => {
+            // Get users Minecraft uuid to save in the database.
+            customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
+              name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
+            })
+              .then(uuidData => {
+                if (uuidData.status !== 200 || 'error' in uuidData.data || !uuidData.data.uuid) {
+                  return setCustomError('Could not get UUID! Try again later.')
+                }
+
+                // Push to database.
+                customFetch<undefined, Database.Applications.Apply>('/api/db/forms/apply', 'POST', {
+                  submissionDetails: formInfo,
+                  minecraftUuid: uuidData.data.uuid,
+                })
+                  .then(({ status, data }) => {
+                    if (status === 200) {
+                      console.log('Form saved!', formInfo)
+                    } else {
+                      setCustomError(`An error occurred with the server! Please try again later.`)
+                      console.warn(data)
+                    }
+                  })
+                  .catch(e => {
+                    setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
+                    console.warn(e)
+                  })
+              })
+              .catch(e => {
+                setCustomError(CRITICAL_ERROR_MESSAGE + ' UUID')
+                console.warn(e)
+              })
           }}
         />
       )}

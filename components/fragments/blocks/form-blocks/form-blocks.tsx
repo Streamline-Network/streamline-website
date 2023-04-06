@@ -1,5 +1,5 @@
 import Checkboxes, { Checkbox } from '../../checkboxes/checkboxes'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
+import { Dispatch, Fragment, SetStateAction } from 'react'
 import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { FormInfo, Question, Section } from '../block-types'
 
@@ -9,8 +9,6 @@ import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
 
-//TODO: Make an array of function, like checks that goes through and does submit stuff.
-
 export default function FormBlocks({
   numbered = false,
   editable = true,
@@ -18,6 +16,7 @@ export default function FormBlocks({
   formInfo,
   submit,
   checks,
+  save,
   error: [customError, setCustomError],
 }: BlockFormProps) {
   const {
@@ -190,6 +189,8 @@ export default function FormBlocks({
     }
 
     function parseData(data: { [key: string]: string }) {
+      setCustomError(undefined)
+
       let parsedData = {}
       for (const question of Object.keys(data)) {
         if (question === 'agreements') {
@@ -210,6 +211,8 @@ export default function FormBlocks({
 
     const parsedData = parseData(data)
 
+    save({ submissionTime: Date.now(), answers: parsedData })
+
     for (let i = 0; i < checks.length; i++) {
       const check = checks[i]
       const result = await check(parsedData)
@@ -219,9 +222,7 @@ export default function FormBlocks({
       }
     }
 
-    setCustomError(undefined)
-
-    submit.submitCallback({ submissionTime: Date.now(), answers: parsedData })
+    submit.final({ submissionTime: Date.now(), answers: parsedData })
   }
 
   const isErrors = () => Object.keys(errors).length !== 0
@@ -280,7 +281,6 @@ export default function FormBlocks({
                   link: a.link,
                 }))}
                 direction={'auto'}
-                onChangeCallback={() => {}}
               />
             )}
             {isErrors() ? (
@@ -314,6 +314,7 @@ interface BlockFormProps {
   numbered?: boolean
   editable?: boolean
   sections: Section[]
+
   checks: ((answers: {
     [key: string]: string
   }) => string | undefined | Promise<string | undefined>)[]
@@ -323,6 +324,7 @@ interface BlockFormProps {
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
-    submitCallback: (formInfo: FormInfo) => void
+    final: (formInfo: FormInfo) => void
   }
+  save: (formInfo: FormInfo) => void
 }

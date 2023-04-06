@@ -19,8 +19,5 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const applications = db.doc(`applications/${session.id}/types/apply`)
   await applications.set(applicationData)
 
-  const state = db.doc(`userState/${session.id}`)
-  await state.set({ applicationStage: 1 }, { merge: true })
-
   return res.status(200).send({})
 }
