@@ -28,7 +28,7 @@ export default async function setState(req: NextApiRequest, res: NextApiResponse
   const doc = db.doc(`userState/${session.id}`)
   await doc.set(data.entries, { merge: true })
 
-  return res.status(200).send({})
+  return res.status(200).end()
 }
 
 export type StateData = {

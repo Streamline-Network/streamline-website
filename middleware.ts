@@ -1,9 +1,7 @@
-import { JWT, getToken } from 'next-auth/jwt'
-
-import Jwt from 'jsonwebtoken'
 import { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { STEPS } from './pages/account/apply/[step]'
+import { getToken } from 'next-auth/jwt'
 
 const redirectToStep = async (applicationStage: number, req: NextRequest) => {
   for (const step of Object.keys(STEPS)) {

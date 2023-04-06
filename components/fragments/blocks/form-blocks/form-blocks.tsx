@@ -1,11 +1,11 @@
-import Checkboxes, { Checkbox } from '../../checkboxes/checkboxes'
+import { Checks, FormInfo, Section } from '../block-types'
 import { Dispatch, Fragment, SetStateAction } from 'react'
-import { FieldErrors, FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { FormInfo, Question, Section } from '../block-types'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { goToFirstError, isErrors } from './helpers'
 
-import Link from 'next/link'
+import Checkboxes from '../../checkboxes/checkboxes'
+import Input from './input'
 import LoadingBar from './loading-bar'
-import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
 
@@ -26,158 +26,6 @@ export default function FormBlocks({
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm()
-
-  function renderError(errors: FieldErrors<FieldValues>, question: Question) {
-    if (errors[question.question] === undefined) return
-
-    switch (errors[question.question]!.type) {
-      case 'required': {
-        return <span className={blocks.error}>This question is required!</span>
-      }
-      case 'invalid-mc-username': {
-        return <span className={blocks.error}>Minecraft account not found.</span>
-      }
-      default:
-        return <span className={blocks.error}>Invalid input.</span>
-    }
-  }
-
-  function getValue(question: Question, formInfo?: FormInfo) {
-    if (!formInfo || !formInfo.answers) return
-
-    for (const answer of Object.keys(formInfo.answers)) {
-      if (answer === question.question) {
-        const value = formInfo.answers[answer]
-        if (typeof value === 'string') return value
-      }
-    }
-  }
-
-  function getCheckboxValue(question: Question, formInfo?: FormInfo) {
-    if (question.type === 'checkboxes') {
-      if (!formInfo || !formInfo.answers) {
-        return question.options.map(option => ({
-          content: option,
-          isChecked: false,
-          required: false,
-        }))
-      }
-
-      for (const answer of Object.keys(formInfo.answers)) {
-        if (answer === question.question) {
-          const value = formInfo.answers[answer]
-          if (typeof value === 'object') {
-            const checkboxArray: Checkbox[] = []
-            for (const option of Object.keys(value)) {
-              checkboxArray.push({ content: option, isChecked: value[option], required: false })
-            }
-            return checkboxArray
-          }
-        }
-      }
-
-      return question.options.map(option => ({
-        content: option,
-        isChecked: false,
-        required: false,
-      }))
-    }
-
-    throw new Error('Unexpected inputs.')
-  }
-
-  function input(question: Question) {
-    const encodedQuestion = {
-      ...question,
-      question: Buffer.from(question.question).toString('base64'),
-    }
-
-    switch (question.type) {
-      case 'short-answer': {
-        return (
-          <>
-            <input
-              {...register(encodedQuestion.question, {
-                required: question.required,
-              })}
-              className={blocks.input}
-              placeholder={question.placeholderText || 'Answer here...'}
-              disabled={!editable}
-              defaultValue={getValue(question, formInfo)}
-            />
-            {renderError(errors, encodedQuestion)}
-          </>
-        )
-      }
-      case 'paragraph': {
-        return (
-          <>
-            <textarea
-              {...register(encodedQuestion.question, { required: question.required })}
-              className={classNames(blocks.input, blocks.textarea)}
-              placeholder={question.placeholderText || 'Answer here...'}
-              disabled={!editable}
-              defaultValue={getValue(question, formInfo)}
-            />
-            {renderError(errors, encodedQuestion)}
-          </>
-        )
-      }
-      case 'checkboxes': {
-        const value = getCheckboxValue(question, formInfo)
-
-        return (
-          <>
-            <Checkboxes
-              groupName={encodedQuestion.question}
-              register={register}
-              direction={'auto'}
-              editable={editable}
-              checkboxArray={value}
-            />
-            {renderError(errors, encodedQuestion)}
-          </>
-        )
-      }
-      case 'minecraft-skin': {
-        return (
-          <>
-            <MinecraftInput
-              state={register}
-              question={encodedQuestion}
-              setError={setError}
-              clearErrors={clearErrors}
-              editable={editable}
-              defaultValue={getValue(question, formInfo)}
-            />
-            {renderError(errors, encodedQuestion)}
-          </>
-        )
-      }
-      case 'button': {
-        return (
-          <>
-            {editable && (
-              <Link
-                style={{ display: 'block', width: '100%' }}
-                {...register(encodedQuestion.question)}
-                href={question.link}
-                target={'_blank'}
-                referrerPolicy={'no-referrer'}
-                className={blocks.button}
-                type="button">
-                {question.buttonText}
-              </Link>
-            )}
-            {renderError(errors, encodedQuestion)}
-          </>
-        )
-      }
-      default: {
-        console.warn('Input type not recognized!')
-      }
-    }
-  }
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: { [key: string]: string }) => {
     function getData(data: string) {
@@ -225,19 +73,6 @@ export default function FormBlocks({
     submit.final({ submissionTime: Date.now(), answers: parsedData })
   }
 
-  const isErrors = () => Object.keys(errors).length !== 0
-
-  const goToFirstError = () => {
-    let firstError: any = errors[Object.keys(errors)[0]]
-    if (firstError) {
-      while (firstError && !firstError.ref) {
-        firstError = firstError[Object.keys(firstError)[0]]
-      }
-      const elem = firstError.ref as HTMLElement
-      elem.focus()
-    }
-  }
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={blocks.wrapper}>
       {sections.map(({ sectionTitle, description, questions }, sectionIndex) => (
@@ -261,7 +96,17 @@ export default function FormBlocks({
                 </div>
 
                 {question.description && <p>{question.description}</p>}
-                {input(question)}
+                {
+                  <Input
+                    formInfo={formInfo}
+                    clearErrors={clearErrors}
+                    editable={editable}
+                    errors={errors}
+                    question={question}
+                    register={register}
+                    setError={setError}
+                  />
+                }
               </div>
             )
           })}
@@ -283,8 +128,8 @@ export default function FormBlocks({
                 direction={'auto'}
               />
             )}
-            {isErrors() ? (
-              <button onClick={goToFirstError} type="button">
+            {isErrors(errors) ? (
+              <button onClick={() => goToFirstError(errors)} type="button">
                 Submit
               </button>
             ) : (
@@ -310,14 +155,12 @@ export default function FormBlocks({
   )
 }
 
-interface BlockFormProps {
+export interface BlockFormProps {
   numbered?: boolean
   editable?: boolean
   sections: Section[]
 
-  checks: ((answers: {
-    [key: string]: string
-  }) => string | undefined | Promise<string | undefined>)[]
+  checks: Checks
   error: [string | undefined, Dispatch<SetStateAction<string | undefined>>]
 
   formInfo?: FormInfo

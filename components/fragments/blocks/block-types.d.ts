@@ -40,3 +40,7 @@ export type BlockToggle = {
   | { controlType: 'switch'; toggleOn: () => void; toggleOff: () => void }
   | { controlType: 'message'; message: string }
 )
+
+export type Checks = ((answers: {
+  [key: string]: string
+}) => string | undefined | Promise<string | undefined>)[]

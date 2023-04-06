@@ -18,15 +18,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const applications = db.doc(`applications/${session.id}/types/apply`)
 
-  const previousApplication = (await applications.get()).data() as Database.Applications.Apply
+  const docSnap = await applications.get()
 
-  if (previousApplication.submissionDetails) {
-    applicationData.previousSubmissions = previousApplication.previousSubmissions
-      ? [...previousApplication.previousSubmissions, previousApplication.submissionDetails]
-      : [previousApplication.submissionDetails]
+  if (docSnap.exists) {
+    const previousApplication = docSnap.data() as Database.Applications.Apply
+
+    if (previousApplication.submissionDetails) {
+      applicationData.previousSubmissions = previousApplication.previousSubmissions
+        ? [...previousApplication.previousSubmissions, previousApplication.submissionDetails]
+        : [previousApplication.submissionDetails]
+    }
   }
 
   await applications.set(applicationData, { merge: true })
 
-  return res.status(200).send({})
+  return res.status(200).end()
 }
