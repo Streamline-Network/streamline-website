@@ -1,0 +1,12 @@
+@use 'styles/mixins.scss' as mixins;
+
+.title {
+  @include mixins.title;
+  margin-bottom: 1rem;
+}
+
+.block {
+  background-color: var(--btn-color);
+  padding: 1rem;
+  border-radius: 10px;
+}

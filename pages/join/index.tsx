@@ -62,28 +62,6 @@ export default function Join() {
           usually no more than 24 hours. If you have any questions please ask our staff or you can
           DM me directly.
         </>,
-        /*
-				<>Here&apos;s a video explanation in case you get lost:</>,
-				<>
-					<Link
-						className={classnames(join.largeButton, join.hideDesktop)}
-						target="_blank"
-						href="https://www.youtube.com/watch?v=3"
-					>
-						Tutorial Video
-					</Link>
-				</>,
-				<>
-					<iframe
-						className={classnames(join.video, join.showDesktop)}
-						src="https://www.youtube.com/embed/dQw4w9WgXdcQ"
-						title="YouTube video player"
-						frameBorder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowFullScreen
-					></iframe>
-				</>,
-				 */
       ],
     },
   ]
