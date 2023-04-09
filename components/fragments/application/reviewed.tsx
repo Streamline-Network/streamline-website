@@ -69,7 +69,9 @@ function Accepted() {
       <div className={application.block}>
         <h3>Apply to join staff.</h3>
         <p>You must have been a Streamliner for at least 1 month to join staff.</p>
-        <button className={application.blockButton}>Apply for staff</button>
+        <button disabled className={application.blockButton}>
+          Currently unavailable
+        </button>
       </div>
     </>
   )

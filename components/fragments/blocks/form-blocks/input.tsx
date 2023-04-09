@@ -119,7 +119,7 @@ export default function Input({
               href={question.link}
               target={'_blank'}
               referrerPolicy={'no-referrer'}
-              className={blocks.button}
+              className={blocks.diffButton}
               type="button">
               {question.buttonText}
             </Link>

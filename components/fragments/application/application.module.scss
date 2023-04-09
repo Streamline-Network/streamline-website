@@ -60,6 +60,11 @@
   @include mixins.block-button;
 }
 
+.blockButton:disabled {
+  color: var(--light-gray) !important;
+  cursor: not-allowed;
+}
+
 .subTitle {
   @include mixins.subheader;
 }

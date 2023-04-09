@@ -155,3 +155,7 @@
 .button {
   @include mixins.block-button;
 }
+
+.diffButton {
+  @include mixins.button;
+}
