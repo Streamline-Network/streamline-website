@@ -32,6 +32,7 @@
 .button {
   @include largeButton;
   border-radius: var(--border-radius-2);
+  padding: 0;
   h3 {
     display: inline-block;
     font-size: 1.5rem;
