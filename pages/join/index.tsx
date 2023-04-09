@@ -135,27 +135,29 @@ export default function Join() {
         <meta name="keywords" content="Joining the Minecraft server" />
       </Head>
       <h1 className={classnames('green', join.title)}>How To Join</h1>
-      <article className={join.grid}>
-        <Blocks blockArr={blocks} />
-        <iframe
-          className={classnames(join.showDesktop, join.discordEmbed)}
-          src="https://discord.com/widget?id=775831180086870096&theme=dark"
-          width="350"
-          height="600"
-          frameBorder="0"
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-      </article>
-      <h2 className={join.subheader}>More</h2>
-      <article className={classnames(join.grid, join.lowerGrid)}>
-        {mores.map(({ color, title, description, caption, discord }, index) => (
-          <div className={classnames(join.block)} key={index}>
-            <h2 className={color}>{title}</h2>
-            <p>{description}</p>
-            <span>{caption}</span>
-            <Discord {...discord} />
-          </div>
-        ))}
-      </article>
+      <div>
+        <article className={join.grid}>
+          <Blocks blockArr={blocks} />
+          <iframe
+            className={classnames(join.showDesktop, join.discordEmbed)}
+            src="https://discord.com/widget?id=775831180086870096&theme=dark"
+            width="350"
+            height="600"
+            frameBorder="0"
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </article>
+        <h2 className={join.subheader}>More</h2>
+        <article className={classnames(join.grid, join.lowerGrid)}>
+          {mores.map(({ color, title, description, caption, discord }, index) => (
+            <div className={classnames(join.block)} key={index}>
+              <h2 className={color}>{title}</h2>
+              <p>{description}</p>
+              <span>{caption}</span>
+              <Discord {...discord} />
+            </div>
+          ))}
+        </article>
+      </div>
     </>
   )
 }

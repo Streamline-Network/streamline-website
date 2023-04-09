@@ -212,7 +212,7 @@ export default function About() {
         />
       </Head>
       <h1 className={classnames('yellow', about.title)}>About</h1>
-      <article>
+      <div>
         <div className={about.subHeader}>
           <h2>Frequently Asked Questions</h2>
           <p>
@@ -229,7 +229,7 @@ export default function About() {
             <Question {...question} key={index} />
           ))}
         </div>
-      </article>
+      </div>
     </>
   )
 }

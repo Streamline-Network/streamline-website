@@ -5,19 +5,19 @@
   flex-direction: column;
   gap: 0.5rem;
 
-  border-radius: 10px;
+  border-radius: var(--border-radius-1);
   overflow: hidden;
 }
 
 .block {
   background-color: var(--btn-color);
-  padding: 2rem;
-  border-radius: 0px;
+  padding: var(--block-padding);
+  border-radius: 0;
   position: relative;
 
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: var(--margin-1);
 
   & button {
     @include mixins.block-button;
@@ -25,11 +25,6 @@
     @include mixins.mobile {
       width: 100%;
     }
-  }
-
-  p {
-    padding: 0;
-    margin: 0;
   }
 
   .error {
@@ -53,9 +48,6 @@
 }
 
 .title {
-  padding: 0;
-  margin: 0;
-
   font-weight: 800;
   font-size: 1.6rem;
 
@@ -72,7 +64,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--margin-1);
 
   > span {
     color: var(--light-gray);
@@ -153,7 +145,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: var(--margin-1);
 
   @include mixins.mobile {
     flex-direction: column;

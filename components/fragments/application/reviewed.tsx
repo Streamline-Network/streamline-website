@@ -30,7 +30,7 @@ export default function Reviewed({ setCurrentStepIndex }: ReviewedProps) {
   }, [])
 
   return (
-    <div>
+    <>
       {hasFetched ? (
         accepted === undefined ? (
           <Error setCurrentStepIndex={setCurrentStepIndex} />
@@ -42,7 +42,7 @@ export default function Reviewed({ setCurrentStepIndex }: ReviewedProps) {
       ) : (
         <Loading hideTitle />
       )}
-    </div>
+    </>
   )
 }
 

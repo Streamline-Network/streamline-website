@@ -1,32 +1,32 @@
 .disc {
-	background-color: #36393f;
-	border-radius: 0 0 10px 10px;
-	box-shadow: 0 0 4px 1px var(--shadow);
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
+  background-color: #36393f;
+  border-radius: 0 0 var(--border-radius-2) var(--border-radius-2);
+  box-shadow: 0 0 4px 1px var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .discMessageContainer {
-	margin: 7px;
-	align-items: center;
-	background-color: #40444b;
-	border-radius: 7px;
-	cursor: not-allowed;
-	display: flex;
-	height: 50px;
-	user-select: none;
-	> div {
-		&:first-of-type {
-			width: 50px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		&:last-of-type {
-			flex-grow: 1;
-			font-weight: 400;
-			color: #72767d;
-		}
-	}
+  margin: 7px;
+  align-items: center;
+  background-color: #40444b;
+  border-radius: 7px;
+  cursor: not-allowed;
+  display: flex;
+  height: 50px;
+  user-select: none;
+  > div {
+    &:first-of-type {
+      width: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &:last-of-type {
+      flex-grow: 1;
+      font-weight: 400;
+      color: #72767d;
+    }
+  }
 }

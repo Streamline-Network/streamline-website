@@ -4,6 +4,8 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 :root {
@@ -50,6 +52,18 @@
     scroll-behavior: unset;
   }
 
+  --margin-0: 1.5rem;
+  --margin-1: 1rem;
+
+  --border-radius-1: calc(var(--border-radius-2) + var(--block-padding) - 5px);
+  --border-radius-2: 5px;
+
+  --padding-1: calc(var(--block-padding) * 2);
+  --padding-2: calc(var(--block-padding) * 1.5);
+  --padding-3: var(--block-padding);
+
+  --block-padding: 20px;
+
   @include mixins.dark-theme {
     --bg-color: #202020;
     --text-color: #fff;
@@ -94,7 +108,6 @@ a {
 }
 
 .wrapper {
-  margin: 0;
   background: var(--bg-color);
   color: var(--text-color);
   display: flex;
@@ -109,12 +122,14 @@ a {
 
   .main {
     flex-grow: 1;
-    margin-bottom: 50px;
-  }
-}
 
-body {
-  margin: 0;
+    > div {
+      margin-block: var(--margin-1);
+      display: flex;
+      flex-direction: column;
+      gap: var(--margin-1);
+    }
+  }
 }
 
 button {
@@ -127,12 +142,10 @@ a {
 
 .cookie-wrapper {
   padding-block: 1rem;
-  gap: 1rem;
+  gap: var(--margin-1);
 
   background-color: var(--btn-2-color) !important;
   color: var(--bg-color) !important;
-
-  // border-radius: 10px 10px 0 0 !important;
 
   button {
     background-color: var(--bg-color) !important;
@@ -150,7 +163,6 @@ a {
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
 }
 
 /* Firefox */

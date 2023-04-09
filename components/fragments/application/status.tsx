@@ -45,17 +45,19 @@ export default function Status({ setCurrentStepIndex }: StatusProps) {
           </div>
         ))}
       </div>
-      <button
-        onClick={() => {
-          const data: StateData = { entries: { applicationStage: 0 } }
+      <div className={application.block}>
+        <button
+          onClick={() => {
+            const data: StateData = { entries: { applicationStage: 0 } }
 
-          customFetch('/api/db/sets/state', 'POST', data).then(({ response }) => {
-            if (response.ok) setCurrentStepIndex(0)
-          })
-        }}
-        className={application.button}>
-        Unsubmit & Modify Your Application
-      </button>
+            customFetch('/api/db/sets/state', 'POST', data).then(({ response }) => {
+              if (response.ok) setCurrentStepIndex(0)
+            })
+          }}
+          className={application.button}>
+          Unsubmit & Modify Your Application
+        </button>
+      </div>
     </>
   )
 }

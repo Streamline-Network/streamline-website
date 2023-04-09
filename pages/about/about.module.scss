@@ -11,9 +11,9 @@
 .faq {
   display: grid;
   padding: 20px;
-  gap: 1.5rem;
+  gap: var(--margin-1);
   background-color: var(--btn-color);
-  border-radius: 10px;
+  border-radius: var(--border-radius-1);
   color: black;
   @include mixins.desktop {
     grid-template-columns: 1fr 1fr;

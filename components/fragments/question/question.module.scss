@@ -1,13 +1,13 @@
 .block {
-	padding: 20px 20px;
-	border-radius: 10px;
-	height: min-content;
-	> summary {
-		font-size: 1.2rem;
-		font-weight: 600;
-		cursor: pointer;
-		> details[open] {
-			height: auto;
-		}
-	}
+  padding: var(--padding-2);
+  border-radius: var(--border-radius-2);
+  height: min-content;
+  > summary {
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    > details[open] {
+      height: auto;
+    }
+  }
 }

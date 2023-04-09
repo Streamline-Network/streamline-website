@@ -125,9 +125,9 @@ const sections: Section[] = [
 export const agreements = [
   {
     agreement: 'Agree to the rules.',
-    link: 'https://docs.google.com/document/d/15fSrpzbVmg0gipyZF9MBiK5JPCymrWZOAImNA3a-_9Q/edit?usp=sharing',
+    link: '/rules',
   },
-  { agreement: 'Agree to the privacy policy.' },
+  { agreement: 'Agree to the privacy policy.', link: '/privacy' },
 ]
 
 export default sections

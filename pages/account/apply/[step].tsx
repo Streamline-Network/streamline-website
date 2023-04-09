@@ -84,7 +84,7 @@ export default function Steps() {
 
       <h1 className={classNames('blue', apply.header)}>Application</h1>
 
-      <div className={apply.wrapper}>
+      <div>
         <ProgressTracker
           steps={['Apply', 'Applied', 'Application Reviewed', "What's next?"]}
           currentStepIndex={currentStepIndex === 2 ? 3 : currentStepIndex}

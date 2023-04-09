@@ -50,7 +50,7 @@ export default function Contact() {
         <meta name="keywords" content="Contact the Minecraft server" />
       </Head>
       <h1 className={classnames('orange', contact.title)}>Contact</h1>
-      <article className={contact.grid}>
+      <div className={contact.grid}>
         <div className={contact.subHeader}>
           <h2>Have A Question?</h2>
           <p>Check out our Q&A! Still lost? Contact us anytime.</p>
@@ -72,7 +72,7 @@ export default function Contact() {
             )
           )}
         </div>
-      </article>
+      </div>
     </>
   )
 }

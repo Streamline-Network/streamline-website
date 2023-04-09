@@ -17,7 +17,7 @@ export default function Privacy() {
               title: 'Information we collect',
               paragraphs: [
                 <>
-                  <ol>
+                  <ol className={privacy.ol}>
                     <li>
                       In-game activity: We track every move a user makes while in our Minecraft
                       server to ensure compliance with our rules. This includes the use of in-game

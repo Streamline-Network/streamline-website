@@ -8,9 +8,9 @@ export default function Blocks({ blockArr }: BlockProps) {
         <div className={blocks.block} key={i}>
           <h3 className={blocks.title}>{item.title}</h3>
 
-          {item.paragraphs.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
+          {item.paragraphs.map((paragraph, i) => {
+            return <div key={i}>{paragraph}</div>
+          })}
         </div>
       ))}
     </div>

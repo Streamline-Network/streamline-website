@@ -9,18 +9,18 @@
 
 .subtitle {
   text-align: center;
-  padding: 20px;
+  padding: var(--block-padding);
   background-color: var(--btn-color);
-  border-radius: 20px;
+  border-radius: var(--border-radius-1);
   font-size: 1.4rem;
 }
 
 .grid {
   background-color: var(--btn-color);
-  border-radius: 20px;
+  border-radius: var(--border-radius-1);
   display: grid;
-  gap: 1.5rem;
-  padding: 20px;
+  gap: var(--block-padding);
+  padding: var(--block-padding);
 
   @include mixins.desktop {
     grid-template-columns: repeat(4, 1fr);

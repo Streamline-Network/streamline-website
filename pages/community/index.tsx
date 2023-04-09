@@ -120,38 +120,40 @@ export default function Community() {
         <meta name="keywords" content="Minecraft community" />
       </Head>
       <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
-      {sections.map(({ title, links }, i) => (
-        <Fragment key={i}>
-          <h2 className={community.subheader}>{title}</h2>
-          <div>
-            <div className={community.grid}>
-              {links.map(({ href, src, alt, classes }, j) => (
-                <NextLink
-                  target="_blank"
-                  rel="noreferrer"
-                  href={href}
-                  className={classnames(classes, { [community.stats]: !src })}
-                  key={j}>
-                  {src && (
-                    <>
-                      <div className={community.icon}>
-                        <Image
-                          className={alt.toLowerCase()}
-                          src={src}
-                          alt={alt + ' Icon'}
-                          height={50}
-                        />
-                      </div>
-                      <h3>{alt}</h3>
-                    </>
-                  )}
-                  {!src && alt}
-                </NextLink>
-              ))}
+      <div>
+        {sections.map(({ title, links }, i) => (
+          <Fragment key={i}>
+            <h2 className={community.subheader}>{title}</h2>
+            <div>
+              <div className={community.grid}>
+                {links.map(({ href, src, alt, classes }, j) => (
+                  <NextLink
+                    target="_blank"
+                    rel="noreferrer"
+                    href={href}
+                    className={classnames(classes, { [community.stats]: !src })}
+                    key={j}>
+                    {src && (
+                      <>
+                        <div className={community.icon}>
+                          <Image
+                            className={alt.toLowerCase()}
+                            src={src}
+                            alt={alt + ' Icon'}
+                            height={50}
+                          />
+                        </div>
+                        <h3>{alt}</h3>
+                      </>
+                    )}
+                    {!src && alt}
+                  </NextLink>
+                ))}
+              </div>
             </div>
-          </div>
-        </Fragment>
-      ))}
+          </Fragment>
+        ))}
+      </div>
     </>
   )
 }
