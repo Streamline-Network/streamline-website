@@ -3,6 +3,7 @@ import { useRef, useState } from 'react'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { STAFF_ROLES } from 'middleware'
 import colorImage from './images/colors.png'
 import profileButton from './profile.module.scss'
 import profilePlaceholder from './images/profile-placeholder.webp'
@@ -21,6 +22,13 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
     { name: 'Application', link: '/account/apply' },
     { name: 'Settings', link: '/account/settings' },
   ]
+
+  if (data.data && STAFF_ROLES.includes(data.data.role)) {
+    items.unshift({
+      name: 'Staff Panel',
+      link: '/account/admin/panel',
+    })
+  }
 
   const handleOutsideClick = (e: Event) => {
     if (

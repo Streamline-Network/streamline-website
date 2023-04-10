@@ -1,0 +1,82 @@
+@use 'styles/mixins.scss' as mixins;
+
+.title {
+  @include mixins.title;
+}
+
+.subheader {
+  @include mixins.subheader;
+}
+
+.block {
+  background-color: var(--btn-color);
+  padding: var(--block-padding);
+  border-radius: var(--border-radius-1);
+}
+
+.intro {
+  text-align: center;
+
+  span {
+    color: cornflowerblue;
+  }
+}
+
+.pageButtonWrapper {
+  display: grid;
+  gap: var(--margin-1);
+}
+
+.pageButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: capitalize;
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2.5rem;
+  }
+
+  a {
+    @include mixins.block-button;
+  }
+}
+
+.button {
+  @include mixins.button;
+}
+
+.feed {
+  display: grid;
+  gap: var(--margin-1);
+
+  .feedItem {
+    padding: var(--padding-3);
+    border-radius: var(--border-radius-2);
+    background-color: var(--bg-color);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .showMore {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  time {
+    color: var(--light-gray);
+  }
+
+  span {
+    color: cornflowerblue;
+  }
+}
