@@ -8,7 +8,6 @@ export default function Footer() {
     ['Stats', '/stats', true],
     ['Donate', '/donate', false],
     ['Contact Us', '/contact', false],
-    ['Rules', '/rules', false],
     ['Privacy Policy', '/privacy', false],
   ]
 
