@@ -3,6 +3,7 @@ import { copyToSession, loadFromDB } from 'utils/auth/auth'
 
 import DiscordProvider from 'next-auth/providers/discord'
 import { FirestoreAdapter } from '@next-auth/firebase-adapter'
+import { db } from 'config/firebase'
 
 const discordProvider = DiscordProvider({
   clientId: process.env.DISCORD_CLIENT_ID || '',
@@ -13,6 +14,13 @@ export const authOptions: AuthOptions = {
   providers: [discordProvider],
   adapter: FirestoreAdapter(),
   callbacks: {
+    async signIn({ account, user }) {
+      await db
+        .doc('userIds/' + user.email)
+        .set({ providerAccountId: account?.providerAccountId }, { merge: true })
+
+      return true
+    },
     async jwt({ token }) {
       await loadFromDB(token)
       return token

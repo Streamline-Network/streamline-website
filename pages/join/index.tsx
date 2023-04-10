@@ -62,28 +62,6 @@ export default function Join() {
           usually no more than 24 hours. If you have any questions please ask our staff or you can
           DM me directly.
         </>,
-        /*
-				<>Here&apos;s a video explanation in case you get lost:</>,
-				<>
-					<Link
-						className={classnames(join.largeButton, join.hideDesktop)}
-						target="_blank"
-						href="https://www.youtube.com/watch?v=3"
-					>
-						Tutorial Video
-					</Link>
-				</>,
-				<>
-					<iframe
-						className={classnames(join.video, join.showDesktop)}
-						src="https://www.youtube.com/embed/dQw4w9WgXdcQ"
-						title="YouTube video player"
-						frameBorder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						allowFullScreen
-					></iframe>
-				</>,
-				 */
       ],
     },
   ]
@@ -157,27 +135,29 @@ export default function Join() {
         <meta name="keywords" content="Joining the Minecraft server" />
       </Head>
       <h1 className={classnames('green', join.title)}>How To Join</h1>
-      <article className={join.grid}>
-        <Blocks blockArr={blocks} />
-        <iframe
-          className={classnames(join.showDesktop, join.discordEmbed)}
-          src="https://discord.com/widget?id=775831180086870096&theme=dark"
-          width="350"
-          height="600"
-          frameBorder="0"
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-      </article>
-      <h2 className={join.subheader}>More</h2>
-      <article className={classnames(join.grid, join.lowerGrid)}>
-        {mores.map(({ color, title, description, caption, discord }, index) => (
-          <div className={classnames(join.block)} key={index}>
-            <h2 className={color}>{title}</h2>
-            <p>{description}</p>
-            <span>{caption}</span>
-            <Discord {...discord} />
-          </div>
-        ))}
-      </article>
+      <div>
+        <article className={join.grid}>
+          <Blocks blockArr={blocks} />
+          <iframe
+            className={classnames(join.showDesktop, join.discordEmbed)}
+            src="https://discord.com/widget?id=775831180086870096&theme=dark"
+            width="350"
+            height="600"
+            frameBorder="0"
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </article>
+        <h2 className={join.subheader}>More</h2>
+        <article className={classnames(join.grid, join.lowerGrid)}>
+          {mores.map(({ color, title, description, caption, discord }, index) => (
+            <div className={classnames(join.block)} key={index}>
+              <h2 className={color}>{title}</h2>
+              <p>{description}</p>
+              <span>{caption}</span>
+              <Discord {...discord} />
+            </div>
+          ))}
+        </article>
+      </div>
     </>
   )
 }

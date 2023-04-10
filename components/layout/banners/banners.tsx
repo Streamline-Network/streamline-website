@@ -9,10 +9,12 @@ export default function Banners() {
 
   type Messages = Omit<BannerProps, 'close' | 'index'>[]
 
-  const getOrSetLS = (item?: string[]): string[] => {
-    return item
-      ? localStorage.setItem(LS_KEY, JSON.stringify(item))
-      : JSON.parse(localStorage.getItem(LS_KEY) || '[]')
+  const getOrSetLS = (item?: string[]) => {
+    return (
+      item
+        ? localStorage.setItem(LS_KEY, JSON.stringify(item))
+        : JSON.parse(localStorage.getItem(LS_KEY) || '[]')
+    ) as string[]
   }
 
   useEffect(() => {

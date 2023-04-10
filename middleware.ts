@@ -1,10 +1,12 @@
-import { JWT, getToken } from 'next-auth/jwt'
-
 import { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
+import { Roles } from 'types'
 import { STEPS } from './pages/account/apply/[step]'
+import { getToken } from 'next-auth/jwt'
 
-const redirectToStep = async (applicationStage: number, req: NextRequest, token: JWT) => {
+export const STAFF_ROLES: Roles[] = ['reviewer', 'admin']
+
+const redirectToStep = async (applicationStage: number, req: NextRequest) => {
   for (const step of Object.keys(STEPS)) {
     if (STEPS[step] === applicationStage) {
       const newPathname = `/account/apply/${step}`
@@ -27,12 +29,18 @@ export async function middleware(req: NextRequest) {
       )
     }
 
+    if (req.nextUrl.pathname.startsWith('/account/admin')) {
+      if (!STAFF_ROLES.includes(token.role)) {
+        return NextResponse.redirect(req.nextUrl.origin)
+      }
+    }
+
     if (req.nextUrl.pathname.startsWith('/account/apply')) {
-      return redirectToStep(token.applicationStage, req, token)
+      return redirectToStep(token.applicationStage, req)
     }
   }
 }
 
 export const config = {
-  matcher: '/account/:path*',
+  matcher: ['/account/:path*'],
 }

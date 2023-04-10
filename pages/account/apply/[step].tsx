@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { Database } from 'pages/api/db/database'
 import Head from 'next/head'
 import Loading from 'components/fragments/application/loading'
 import ProgressTracker from 'components/fragments/progress-tracker/progress-tracker'
@@ -8,6 +9,7 @@ import Status from 'components/fragments/application/status'
 import Submit from 'components/fragments/application/submit'
 import apply from './apply.module.scss'
 import classNames from 'classnames'
+import customFetch from 'utils/fetch'
 import { useRouter } from 'next/router'
 
 type Steps = { [key: string]: number }
@@ -44,7 +46,7 @@ export default function Steps() {
         return (
           <>
             <h2 className={apply.subTitle}>What&apos;s Next?</h2>
-            <Reviewed />
+            <Reviewed setCurrentStepIndex={setCurrentStepIndex} />
           </>
         )
       default:
@@ -55,13 +57,12 @@ export default function Steps() {
   useEffect(() => {
     // Checks for changes every minute.
     const intervalId = setInterval(() => {
-      fetch('/api/db/docs?path=userState/{id}')
-        .then(r => r.json())
-        .then(r => {
-          if (r.data.applicationStage === null) {
+      customFetch<Database.UserState>('/api/db/docs?path=userState/{id}')
+        .then(({ data }) => {
+          if (data.applicationStage === null) {
             console.warn('Failed to refresh application stage.')
           } else {
-            setCurrentStepIndex(r.data.applicationStage)
+            setCurrentStepIndex(data.applicationStage)
           }
         })
         .catch(e => console.warn('Failed to refresh application stage.', e))
@@ -83,7 +84,7 @@ export default function Steps() {
 
       <h1 className={classNames('blue', apply.header)}>Application</h1>
 
-      <div className={apply.wrapper}>
+      <div>
         <ProgressTracker
           steps={['Apply', 'Applied', 'Application Reviewed', "What's next?"]}
           currentStepIndex={currentStepIndex === 2 ? 3 : currentStepIndex}

@@ -2,7 +2,7 @@
 
 .wrapper {
   display: grid;
-  gap: 20px;
+  gap: var(--margin-1);
 
   @include mixins.desktop {
     grid-auto-flow: column;
@@ -12,21 +12,18 @@
 .block {
   display: grid;
   background-color: var(--btn-color);
-  border-radius: 10px;
-  padding: 30px;
+  border-radius: var(--border-radius-1);
+  padding: var(--block-padding);
 
-  gap: 1rem;
-
-  > * {
-    margin: 0;
-  }
+  gap: var(--margin-1);
 }
 
 .colorBlock {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: 1rem;
+  gap: var(--margin-1);
+  border-radius: var(--border-radius-2);
 
   color: var(--btn-color);
   font-size: min(1.5rem, 1vw);
@@ -56,12 +53,16 @@
   outline: none;
   border: none;
   width: 100%;
-  margin-top: 20px;
   cursor: pointer;
 }
 
 .blockButton {
   @include mixins.block-button;
+}
+
+.blockButton:disabled {
+  color: var(--light-gray) !important;
+  cursor: not-allowed;
 }
 
 .subTitle {
@@ -70,7 +71,7 @@
 
 .serverIp {
   background-color: var(--bg-color);
-  border-radius: 10px;
+  border-radius: var(--border-radius-2);
   display: block;
   width: 100%;
   padding: 1rem;
@@ -97,7 +98,7 @@
   background-color: var(--text-color);
   color: var(--btn-color);
 
-  border-radius: 10px 0px 0px 10px;
+  border-radius: var(--border-radius-2) 0px 0px var(--border-radius-2);
 }
 
 .serverIp::after {
@@ -120,11 +121,22 @@
   font-weight: 500;
 
   padding: 0.5rem 1rem;
-  border-radius: 10px;
+  border-radius: var(--border-radius-2);
 }
 
 .serverIp:hover::after {
   opacity: 1;
+}
+
+.deniedReason {
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius-2);
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.2rem;
+
+  text-align: center;
 }
 
 .skeletonWrapper {
@@ -144,7 +156,7 @@
   }
 
   > * {
-    border-radius: 10px;
+    border-radius: var(--border-radius-1);
 
     background: linear-gradient(90deg, #ffffff10, #ffffff10, #ffffff15, #ffffff10, #ffffff10);
     background-size: 200% 100%;

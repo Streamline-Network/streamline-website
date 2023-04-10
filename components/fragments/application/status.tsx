@@ -1,8 +1,10 @@
 import Image, { StaticImageData } from 'next/image'
 
 import { SetStateAction } from 'react'
+import { StateData } from 'pages/api/db/sets/state'
 import application from './application.module.scss'
 import classnames from 'classnames'
+import customFetch from 'utils/fetch'
 import discordImage from 'images/discord.png'
 import websiteImage from 'images/website.png'
 
@@ -43,20 +45,19 @@ export default function Status({ setCurrentStepIndex }: StatusProps) {
           </div>
         ))}
       </div>
-      <button
-        onClick={() => {
-          fetch('/api/db/sets/state', {
-            method: 'POST',
-            body: JSON.stringify({ entries: { applicationStage: 0 } }),
-          }).then(r => {
-            if (r.status === 200) {
-              setCurrentStepIndex(0)
-            }
-          })
-        }}
-        className={application.button}>
-        Unsubmit & Modify Your Application
-      </button>
+      <div className={application.block}>
+        <button
+          onClick={() => {
+            const data: StateData = { entries: { applicationStage: 0 } }
+
+            customFetch('/api/db/sets/state', 'POST', data).then(({ response }) => {
+              if (response.ok) setCurrentStepIndex(0)
+            })
+          }}
+          className={application.button}>
+          Unsubmit & Modify Your Application
+        </button>
+      </div>
     </>
   )
 }

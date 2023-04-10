@@ -2,7 +2,7 @@ import * as message from 'utils/constant-messages'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { FormInfo } from 'components/fragments/blocks/block-types.d'
+import { Database } from 'pages/api/db/database'
 import { authOptions } from '../../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
@@ -10,17 +10,27 @@ import { getServerSession } from 'next-auth'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
-  if (!req.body) return res.status(204).send({ error: message.MISSING_INFORMATION })
+  if (!req.body) return res.status(422).send({ error: message.MISSING_INFORMATION })
 
-  const applicationData = JSON.parse(req.body) as FormInfo
+  const applicationData = JSON.parse(req.body) as Database.Applications.Apply
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
-  const applications = db.doc(`applications/${session.id}/types/debug`)
-  await applications.set(applicationData)
+  const applications = db.doc(`applications/${session.id}/types/apply`)
 
-  const state = db.doc(`userState/${session.id}`)
-  await state.set({ applicationStage: 1 }, { merge: true })
+  const docSnap = await applications.get()
 
-  return res.status(200).send({})
+  if (docSnap.exists) {
+    const previousApplication = docSnap.data() as Database.Applications.Apply
+
+    if (previousApplication.submissionDetails) {
+      applicationData.previousSubmissions = previousApplication.previousSubmissions
+        ? [...previousApplication.previousSubmissions, previousApplication.submissionDetails]
+        : [previousApplication.submissionDetails]
+    }
+  }
+
+  await applications.set(applicationData, { merge: true })
+
+  return res.status(200).end()
 }

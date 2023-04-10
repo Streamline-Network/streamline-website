@@ -9,7 +9,6 @@ const nextConfig = {
       permanent: true,
     },
   ],
-  env: {},
   images: {
     remotePatterns: [
       {

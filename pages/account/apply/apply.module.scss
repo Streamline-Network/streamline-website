@@ -1,20 +1,9 @@
 @use '/styles/mixins.scss' as mixins;
 
-.wrapper {
-  margin-top: 2rem;
-}
-
 .subTitle {
   @include mixins.subheader;
 }
 
 .header {
   @include mixins.title;
-}
-
-.button {
-  cursor: pointer;
-  border: none;
-  @include mixins.button;
-  width: 100%;
 }

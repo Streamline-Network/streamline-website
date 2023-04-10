@@ -15,9 +15,8 @@ footer.footer {
       justify-content: center;
       display: flex;
       flex-direction: row;
-      gap: 1.3rem;
+      gap: var(--margin-1);
       list-style-type: none;
-      margin: 0;
       padding-inline-start: 0;
       > li {
         display: inline;
@@ -25,7 +24,6 @@ footer.footer {
           color: var(--text-color);
           text-align: center;
           text-decoration: underline;
-          text-transform: uppercase;
           width: 100%;
         }
       }
@@ -49,7 +47,7 @@ footer.footer {
     align-items: center;
     padding-block: 50px !important;
 
-    gap: 10px;
+    gap: var(--margin-1);
 
     nav {
       width: 80%;
@@ -63,8 +61,7 @@ footer.footer {
         justify-content: center;
         align-items: center;
         width: 80%;
-        font-size: 2vw;
-        margin: 0;
+        font-size: 3vw;
 
         height: max-content;
 

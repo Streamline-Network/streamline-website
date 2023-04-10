@@ -4,10 +4,12 @@ import footer from './footer.module.scss'
 
 export default function Footer() {
   const links: [text: string, href: string, button: boolean][] = [
-    ['Map', '/map', true], // ["Map", "http://map.streamlinesmp.com", true],
-    ['Stats', '/stats', true], // ["Stats", "http://stats.streamlinesmp.com", true],
+    ['Map', '/map', true],
+    ['Stats', '/stats', true],
     ['Donate', '/donate', false],
     ['Contact Us', '/contact', false],
+    ['Rules', '/rules', false],
+    ['Privacy Policy', '/privacy', false],
   ]
 
   return (

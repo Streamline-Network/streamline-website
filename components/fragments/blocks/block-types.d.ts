@@ -4,7 +4,7 @@ export type Question = {
   required: boolean
 } & (
   | { type: 'checkboxes'; options: string[] }
-  | { type: 'short-answer' | 'paragraph' | 'minecraft-skin'; placeholderText?: string }
+  | { type: 'short-answer' | 'paragraph' | 'minecraft-skin' | 'number'; placeholderText?: string }
   | {
       type: 'button'
       buttonText: string
@@ -40,3 +40,7 @@ export type BlockToggle = {
   | { controlType: 'switch'; toggleOn: () => void; toggleOff: () => void }
   | { controlType: 'message'; message: string }
 )
+
+export type Checks = ((answers: {
+  [key: string]: string
+}) => string | undefined | Promise<string | undefined>)[]
