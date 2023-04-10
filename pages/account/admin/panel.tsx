@@ -16,7 +16,7 @@ export default function Panel() {
     <>
       <h1 className={classNames('green', panel.title)}>Staff Panel</h1>
       {status !== 'authenticated' ? (
-        <Loading /> // Temp loading skeleton until I make one that looks like this page.
+        <Loading />
       ) : (
         <div>
           <div className={classNames(panel.block, panel.intro)}>

@@ -78,6 +78,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                 customFetch<undefined, Database.Applications.Apply>('/api/db/forms/apply', 'POST', {
                   submissionDetails: formInfo,
                   minecraftUuid: uuidData.data.uuid,
+                  type: 'apply',
                 })
                   .then(({ response, data }) => {
                     if (response.ok) {

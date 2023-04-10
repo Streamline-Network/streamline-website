@@ -39,8 +39,12 @@ export declare module Database {
 
       minecraftUuid: string
 
-      state?: 'accepted' | 'denied' | 'pending'
+      state?: ApplyApplicationState
       deniedReason?: string
+
+      type: 'apply'
     }
   }
 }
+
+export type ApplyApplicationState = 'accepted' | 'denied' | 'pending'

@@ -1,0 +1,65 @@
+.wrapper {
+  background-color: var(--btn-color);
+  padding: var(--padding-3);
+  border-radius: var(--border-radius-1);
+  min-width: fit-content;
+
+  display: flex;
+  align-items: center;
+  gap: var(--margin-1);
+}
+
+.minecraftSkin {
+  border-radius: var(--border-radius-2);
+}
+
+.details {
+  display: grid;
+}
+
+.name {
+  font-size: 2rem;
+}
+
+.accepted,
+.denied,
+.pending,
+.notReviewed {
+  border-left: solid var(--border-radius-2) transparent;
+}
+
+.accepted {
+  border-color: #6de36b;
+}
+
+.pending {
+  border-color: #eae453;
+}
+
+.notReviewed {
+  border-color: #3789e9;
+}
+
+.denied {
+  border-color: #e36b6b;
+}
+
+.selector {
+  display: flex;
+  gap: var(--margin-1);
+
+  overflow-x: auto;
+
+  width: calc((100% + (var(--left-right-padding) * 2)) + (0.5% * 2));
+  margin-left: calc((var(--left-right-padding) * -1) - 0.5%);
+
+  padding: var(--padding-3);
+  padding-right: calc(50% - 70px);
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
