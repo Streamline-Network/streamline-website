@@ -8,7 +8,7 @@ import {
 import { FormInfo, Question } from '../block-types'
 import { getCheckboxValue, getValue, renderError } from './helpers'
 
-import Checkboxes from 'components/fragments/checkboxes/checkboxes'
+import Checkboxes from 'components/fragments/blocks/form-blocks/checkboxes/checkboxes'
 import Link from 'next/link'
 import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
@@ -57,8 +57,9 @@ export default function Input({
             className={blocks.input}
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
-            defaultValue={getValue(question, formInfo)}
+            defaultValue={editable ? getValue(question, formInfo) : undefined}
             type="text"
+            value={!editable ? getValue(question, formInfo) : undefined}
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -72,7 +73,8 @@ export default function Input({
             className={classNames(blocks.input, blocks.textarea)}
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
-            defaultValue={getValue(question, formInfo)}
+            defaultValue={editable ? getValue(question, formInfo) : undefined}
+            value={!editable ? getValue(question, formInfo) : undefined}
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -139,7 +141,8 @@ export default function Input({
             type="number"
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
-            defaultValue={getValue(question, formInfo)}
+            defaultValue={editable ? getValue(question, formInfo) : undefined}
+            value={!editable ? getValue(question, formInfo) : undefined}
           />
           {renderError(errors, encodedQuestion)}
         </>

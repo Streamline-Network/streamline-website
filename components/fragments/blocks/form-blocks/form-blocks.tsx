@@ -3,7 +3,7 @@ import { Dispatch, Fragment, SetStateAction } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { goToFirstError, isErrors } from './helpers'
 
-import Checkboxes from '../../checkboxes/checkboxes'
+import Checkboxes from './checkboxes/checkboxes'
 import Input from './input'
 import LoadingBar from './loading-bar'
 import blocks from '../blocks.module.scss'

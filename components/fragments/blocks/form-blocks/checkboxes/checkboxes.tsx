@@ -16,8 +16,9 @@ export default function Checkboxes({
   const [currentCheckboxes, setCurrentCheckboxes] = useState(checkboxArray)
 
   useEffect(() => {
+    setCurrentCheckboxes(checkboxArray)
     if (onChangeCallback) onChangeCallback(currentCheckboxes)
-  }, [currentCheckboxes, onChangeCallback])
+  }, [checkboxArray, currentCheckboxes, onChangeCallback])
 
   function getDirection() {
     switch (direction) {
@@ -43,7 +44,8 @@ export default function Checkboxes({
                 type="checkbox"
                 id={content}
                 disabled={!editable}
-                defaultChecked={isChecked}
+                defaultChecked={editable ? isChecked : undefined}
+                checked={!editable ? isChecked : undefined}
                 onChangeCapture={e => {
                   const currentStatus = e.currentTarget.checked
 
