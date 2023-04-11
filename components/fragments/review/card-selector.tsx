@@ -80,6 +80,7 @@ export default function CardSelector({
   useEffect(() => {
     const wrapper: HTMLDivElement = wrapperRef.current!
     if (currentApplicationUuid === -1) {
+      if (!applications[0]) return
       const latestUuid = applications[0].minecraftUuid
       setCurrentApplicationUuid(latestUuid)
       const latestElem = wrapper.querySelector('#uuid' + latestUuid)!

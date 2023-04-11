@@ -44,6 +44,7 @@ export default function Review() {
       return
     }
     if (!isSearching) {
+      setApplicationData(undefined)
       customFetch<Database.Applications.Apply[]>(
         `/api/db/forms/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
       ).then(({ data }) => {
