@@ -2,13 +2,16 @@ import React, { useEffect, useRef } from 'react'
 
 import ApplicationCard from './card'
 import { Database } from 'pages/api/db/database'
+import { PER_SECTION_LIMIT } from 'pages/account/admin/review'
 import card from './card-styles.module.scss'
+import classNames from 'classnames'
 
 export default function CardSelector({
   applications,
   currentApplicationUuid,
   setCurrentApplicationUuid,
   loadMore,
+  allLoaded,
 }: CardSelectorProps) {
   const wrapperRef = useRef(null)
   const detectorRef = useRef(null)
@@ -20,7 +23,6 @@ export default function CardSelector({
       ([entry]) => {
         if (entry.isIntersecting) {
           loadMore()
-          console.log('Load more')
         }
       },
       { threshold: 0.5 }
@@ -84,6 +86,17 @@ export default function CardSelector({
     }
   }, [applications, currentApplicationUuid, setCurrentApplicationUuid])
 
+  function generateSkeletons() {
+    if (allLoaded) return
+
+    let skeletons: React.ReactNode[] = []
+
+    for (let i = 0; i < PER_SECTION_LIMIT; i++) {
+      skeletons.push(<div key={i} className={classNames(card.wrapper, card.skeleton)} />)
+    }
+    return skeletons
+  }
+
   return (
     <div className={card.selector} ref={wrapperRef} onMouseDown={handleClickAndDrag}>
       {applications.map((application, i) => {
@@ -110,11 +123,11 @@ export default function CardSelector({
             versions={mcVersions}
             state={application.state}
             currentApplicationUuid={currentApplicationUuid}
-            setCurrentApplicationUuid={setCurrentApplicationUuid}
           />
         )
       })}
       <div ref={detectorRef} className={card.loadDetector} />
+      {generateSkeletons()}
     </div>
   )
 }
@@ -125,4 +138,5 @@ interface CardSelectorProps {
   setCurrentApplicationUuid: React.Dispatch<React.SetStateAction<string | -1>>
 
   loadMore: () => void
+  allLoaded: boolean
 }

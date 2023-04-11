@@ -111,3 +111,18 @@ $rounded-radius: 10px;
     text-decoration: underline;
   }
 }
+
+@mixin skeleton-animation {
+  background: linear-gradient(90deg, #ffffff10, #ffffff10, #ffffff15, #ffffff10, #ffffff10);
+  background-size: 200% 100%;
+  animation: skeleton 1s linear infinite reverse;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}

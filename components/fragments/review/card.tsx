@@ -12,7 +12,6 @@ export default function ApplicationCard({
   appliedTime,
   state,
   currentApplicationUuid,
-  setCurrentApplicationUuid,
 }: ApplicationCardProps) {
   const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto', style: 'long' })
 
@@ -58,5 +57,4 @@ export interface ApplicationCardProps {
   state?: ApplyApplicationState
 
   currentApplicationUuid: string | -1
-  setCurrentApplicationUuid: React.Dispatch<React.SetStateAction<string | -1>>
 }

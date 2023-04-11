@@ -2,13 +2,16 @@ import { useEffect, useState } from 'react'
 
 import Blocks from 'components/fragments/blocks/blocks'
 import CardSelector from 'components/fragments/review/card-selector'
+import CardSkeleton from 'components/fragments/review/card-skeletons'
 import { Database } from 'pages/api/db/database'
+import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import Loading from 'components/fragments/application/loading'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import review from './review.module.scss'
+import sections from 'components/fragments/application/apply-application-data'
 
-const PER_SECTION_LIMIT = 5
+export const PER_SECTION_LIMIT = 5
 
 export default function Review() {
   const [query, setQuery] = useState('')
@@ -17,6 +20,7 @@ export default function Review() {
   )
   const [currentApplicationUuid, setCurrentApplicationUuid] = useState<string | -1>(-1)
   const [allLoaded, setAllLoaded] = useState(false)
+  const [error, setError] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     customFetch<Database.Applications.Apply[]>(
@@ -37,6 +41,16 @@ export default function Review() {
       if (data[0] === undefined) return setAllLoaded(true)
       setApplicationData([...applicationData, ...data])
     })
+  }
+
+  function getSelectedFormData() {
+    console.log(
+      applicationData!.find(application => application.minecraftUuid === currentApplicationUuid)
+        ?.submissionDetails
+    )
+    return applicationData!.find(
+      application => application.minecraftUuid === currentApplicationUuid
+    )?.submissionDetails
   }
 
   return (
@@ -71,11 +85,25 @@ export default function Review() {
             currentApplicationUuid={currentApplicationUuid}
             setCurrentApplicationUuid={setCurrentApplicationUuid}
             loadMore={loadMore}
+            allLoaded={allLoaded}
           />
         ) : (
-          <Loading hideTitle />
+          <CardSkeleton count={10} />
         )}
-        <Loading />
+        {currentApplicationUuid === -1 ? (
+          <Loading hideTitle />
+        ) : (
+          <FormBlocks
+            editable={false}
+            numbered
+            formInfo={getSelectedFormData()}
+            sections={sections}
+            save={() => {}}
+            submit={{ final: () => {} }}
+            checks={[]}
+            error={[error, setError]}
+          />
+        )}
       </div>
     </>
   )
