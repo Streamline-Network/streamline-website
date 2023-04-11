@@ -55,7 +55,9 @@ export default function CardSelector({
       const card = e.target as HTMLElement
       if (card.id && hasDrug === false) {
         card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
-        setCurrentApplicationUuid(card.id)
+        const parsed = card.id.slice(4)
+        console.log(parsed)
+        setCurrentApplicationUuid(parsed)
       }
 
       wrapper.removeEventListener('mousemove', move)
@@ -81,7 +83,8 @@ export default function CardSelector({
     if (currentApplicationUuid === -1) {
       const latestUuid = applications[0].minecraftUuid
       setCurrentApplicationUuid(latestUuid)
-      const latestElem = wrapper.querySelector('#' + latestUuid)!
+      const latestElem = wrapper.querySelector('#uuid' + latestUuid)!
+
       latestElem.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'auto' })
     }
   }, [applications, currentApplicationUuid, setCurrentApplicationUuid])

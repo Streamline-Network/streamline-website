@@ -24,7 +24,7 @@ export default function ApplicationCard({
 
   return (
     <div
-      id={minecraftUuid}
+      id={'uuid' + minecraftUuid}
       className={classNames(card.wrapper, card[getClassName(state)], {
         [card.selected]: currentApplicationUuid === minecraftUuid,
       })}>
