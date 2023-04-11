@@ -9,6 +9,9 @@
   align-items: center;
   gap: var(--margin-1);
 
+  border: none;
+  color: var(--text-color);
+
   user-select: none;
 
   transition: color 200ms, background 200ms;

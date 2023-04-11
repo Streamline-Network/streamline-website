@@ -44,10 +44,6 @@ export default function Review() {
   }
 
   function getSelectedFormData() {
-    console.log(
-      applicationData!.find(application => application.minecraftUuid === currentApplicationUuid)
-        ?.submissionDetails
-    )
     return applicationData!.find(
       application => application.minecraftUuid === currentApplicationUuid
     )?.submissionDetails

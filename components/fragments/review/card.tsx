@@ -12,6 +12,7 @@ export default function ApplicationCard({
   appliedTime,
   state,
   currentApplicationUuid,
+  setCurrentApplicationUuid,
 }: ApplicationCardProps) {
   const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto', style: 'long' })
 
@@ -23,7 +24,15 @@ export default function ApplicationCard({
   }
 
   return (
-    <div
+    <button
+      onKeyDown={e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          const elem = e.target as HTMLButtonElement
+          const parsed = elem.id.slice(4)
+          elem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
+          setCurrentApplicationUuid(parsed)
+        }
+      }}
       id={'uuid' + minecraftUuid}
       className={classNames(card.wrapper, card[getClassName(state)], {
         [card.selected]: currentApplicationUuid === minecraftUuid,
@@ -44,7 +53,7 @@ export default function ApplicationCard({
           <span>Age: {age}</span>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 
@@ -57,4 +66,5 @@ export interface ApplicationCardProps {
   state?: ApplyApplicationState
 
   currentApplicationUuid: string | -1
+  setCurrentApplicationUuid: React.Dispatch<React.SetStateAction<string | -1>>
 }

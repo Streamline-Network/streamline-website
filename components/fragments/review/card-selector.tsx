@@ -56,7 +56,6 @@ export default function CardSelector({
       if (card.id && hasDrug === false) {
         card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' })
         const parsed = card.id.slice(4)
-        console.log(parsed)
         setCurrentApplicationUuid(parsed)
       }
 
@@ -126,6 +125,7 @@ export default function CardSelector({
             versions={mcVersions}
             state={application.state}
             currentApplicationUuid={currentApplicationUuid}
+            setCurrentApplicationUuid={setCurrentApplicationUuid}
           />
         )
       })}
