@@ -5,19 +5,39 @@ import CardSelector from 'components/fragments/review/card-selector'
 import { Database } from 'pages/api/db/database'
 import Loading from 'components/fragments/application/loading'
 import classNames from 'classnames'
+import customFetch from 'utils/fetch'
 import review from './review.module.scss'
+
+const PER_SECTION_LIMIT = 5
 
 export default function Review() {
   const [query, setQuery] = useState('')
   const [applicationData, setApplicationData] = useState<Database.Applications.Apply[] | undefined>(
     undefined
   )
-  //? -1 means select the latest.
   const [currentApplicationUuid, setCurrentApplicationUuid] = useState<string | -1>(-1)
+  const [allLoaded, setAllLoaded] = useState(false)
 
-  // useEffect(() => {
+  useEffect(() => {
+    customFetch<Database.Applications.Apply[]>(
+      `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc`
+    ).then(({ data }) => {
+      setApplicationData(data)
+    })
+  }, [])
 
-  // }, [])
+  function loadMore() {
+    if (!applicationData || allLoaded) return
+
+    const oldest = applicationData[applicationData.length - 1].submissionDetails.submissionTime
+
+    customFetch<Database.Applications.Apply[]>(
+      `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc&startAfter=${oldest}`
+    ).then(({ data }) => {
+      if (data[0] === undefined) return setAllLoaded(true)
+      setApplicationData([...applicationData, ...data])
+    })
+  }
 
   return (
     <>
@@ -50,10 +70,12 @@ export default function Review() {
             applications={applicationData}
             currentApplicationUuid={currentApplicationUuid}
             setCurrentApplicationUuid={setCurrentApplicationUuid}
+            loadMore={loadMore}
           />
         ) : (
           <Loading hideTitle />
         )}
+        <Loading />
       </div>
     </>
   )

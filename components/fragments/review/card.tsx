@@ -11,6 +11,8 @@ export default function ApplicationCard({
   age,
   appliedTime,
   state,
+  currentApplicationUuid,
+  setCurrentApplicationUuid,
 }: ApplicationCardProps) {
   const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto', style: 'long' })
 
@@ -22,8 +24,13 @@ export default function ApplicationCard({
   }
 
   return (
-    <div className={classNames(card.wrapper, card[getClassName(state)])}>
+    <div
+      id={minecraftUuid}
+      className={classNames(card.wrapper, card[getClassName(state)], {
+        [card.selected]: currentApplicationUuid === minecraftUuid,
+      })}>
       <Image
+        draggable={false}
         className={card.minecraftSkin}
         src={`https://crafatar.com/avatars/${minecraftUuid}/?overlay`}
         alt="A MC Skin"
@@ -46,7 +53,10 @@ export interface ApplicationCardProps {
   minecraftName: string
   minecraftUuid: string
   versions: string[]
-  age: number
+  age: string
   appliedTime: number
   state?: ApplyApplicationState
+
+  currentApplicationUuid: string | -1
+  setCurrentApplicationUuid: React.Dispatch<React.SetStateAction<string | -1>>
 }

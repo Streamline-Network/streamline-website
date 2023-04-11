@@ -1,0 +1,59 @@
+import * as message from 'utils/constant-messages'
+
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+import { authOptions } from '../../auth/[...nextauth]'
+import { db } from 'config/firebase'
+import { getServerSession } from 'next-auth'
+import { hasPermission } from 'utils/db/docs'
+
+export default async function handler(req: CustomRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions)
+
+  // Check if the user is logged in.
+  if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
+
+  // Check the method.
+  if ('GET' !== req.method) return res.status(405).send({ error: message.WRONG_METHOD })
+
+  const params = req.query as Query
+
+  const collectionId = 'types' // The collection id that all forms are stored in.
+
+  // Check if a path is included.
+  if (!params.applicationType || !params.direction || !params.limit)
+    return res.status(422).send({ error: message.MISSING_INFORMATION })
+
+  // Check their permissions.
+  if (!hasPermission(collectionId, session, res, true))
+    return res.status(403).send({ error: message.NOT_AUTHORIZED })
+
+  let query = db
+    .collectionGroup(collectionId)
+    .where('type', '==', params.applicationType)
+    .orderBy('submissionDetails.submissionTime', params.direction)
+    .limit(parseInt(params.limit))
+
+  if (params.startAfter) {
+    query = query.startAfter(parseInt(params.startAfter))
+  }
+
+  const data = await query.get()
+  const safeData = data.docs.map(doc => doc.data())
+
+  return data
+    ? res.status(200).send(safeData)
+    : res.status(404).send({ error: message.COULD_NOT_FIND_DOCUMENT })
+}
+
+interface CustomRequest extends NextApiRequest {
+  method: string
+}
+
+// TODO: add filter controls for accepted, denied, etc.
+type Query = {
+  applicationType: string
+  limit: string
+  direction: 'asc' | 'desc'
+  startAfter?: string
+}

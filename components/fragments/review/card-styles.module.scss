@@ -2,11 +2,24 @@
   background-color: var(--btn-color);
   padding: var(--padding-3);
   border-radius: var(--border-radius-1);
-  min-width: fit-content;
+  min-width: max-content;
 
   display: flex;
   align-items: center;
   gap: var(--margin-1);
+
+  user-select: none;
+
+  transition: color 200ms, background 200ms;
+
+  > * {
+    pointer-events: none;
+  }
+}
+
+.selected {
+  background-color: var(--text-color);
+  color: var(--btn-color);
 }
 
 .minecraftSkin {
@@ -47,14 +60,16 @@
 .selector {
   display: flex;
   gap: var(--margin-1);
+  position: relative;
+
+  cursor: grab;
 
   overflow-x: auto;
 
   width: calc((100% + (var(--left-right-padding) * 2)) + (0.5% * 2));
   margin-left: calc((var(--left-right-padding) * -1) - 0.5%);
 
-  padding: var(--padding-3);
-  padding-right: calc(50% - 70px);
+  padding-inline: 50%;
 
   &::-webkit-scrollbar {
     display: none;
@@ -62,4 +77,8 @@
 
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+.loadDetector {
+  width: 0;
 }
