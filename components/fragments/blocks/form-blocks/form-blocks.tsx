@@ -1,9 +1,9 @@
+import Checkboxes, { Checkbox } from './checkboxes/checkboxes'
 import { Checks, FormInfo, Section } from '../block-types'
-import { Dispatch, Fragment, SetStateAction } from 'react'
+import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { goToFirstError, isErrors } from './helpers'
 
-import Checkboxes from './checkboxes/checkboxes'
 import Input from './input'
 import LoadingBar from './loading-bar'
 import blocks from '../blocks.module.scss'
@@ -26,6 +26,17 @@ export default function FormBlocks({
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm()
+
+  const [agreements, setAgreements] = useState<Checkbox[]>(
+    submit.agreements
+      ? submit.agreements.map(a => ({
+          content: a.agreement,
+          isChecked: false,
+          required: true,
+          link: a.link,
+        }))
+      : []
+  )
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: { [key: string]: string }) => {
     function getData(data: string) {
@@ -119,12 +130,8 @@ export default function FormBlocks({
               <Checkboxes
                 groupName={'agreements'}
                 register={register}
-                checkboxArray={submit.agreements.map(a => ({
-                  content: a.agreement,
-                  isChecked: false,
-                  required: true,
-                  link: a.link,
-                }))}
+                checkboxArray={agreements}
+                setCheckboxArray={setAgreements}
                 direction={'auto'}
               />
             )}

@@ -10,15 +10,13 @@ export default function Checkboxes({
   direction,
   editable = true,
   checkboxArray,
+  setCheckboxArray,
   onChangeCallback,
   register,
 }: CheckboxesProps) {
-  const [currentCheckboxes, setCurrentCheckboxes] = useState(checkboxArray)
-
   useEffect(() => {
-    setCurrentCheckboxes(checkboxArray)
-    if (onChangeCallback) onChangeCallback(currentCheckboxes)
-  }, [checkboxArray, currentCheckboxes, onChangeCallback])
+    if (onChangeCallback) onChangeCallback(checkboxArray)
+  }, [checkboxArray, onChangeCallback])
 
   function getDirection() {
     switch (direction) {
@@ -33,7 +31,7 @@ export default function Checkboxes({
 
   return (
     <div className={getDirection()}>
-      {currentCheckboxes.map(({ content, isChecked, link, required }, i) => {
+      {checkboxArray.map(({ content, isChecked, link, required }, i) => {
         const encodedContent = Buffer.from(content).toString('base64')
 
         return (
@@ -49,8 +47,8 @@ export default function Checkboxes({
                 onChangeCapture={e => {
                   const currentStatus = e.currentTarget.checked
 
-                  setCurrentCheckboxes(() => {
-                    const newArr = [...currentCheckboxes]
+                  setCheckboxArray(() => {
+                    const newArr = [...checkboxArray]
                     newArr[i].isChecked = currentStatus
                     return newArr
                   })
@@ -76,10 +74,11 @@ export default function Checkboxes({
   )
 }
 
-interface CheckboxesProps {
+export interface CheckboxesProps {
   groupName: string
   direction: 'vertical' | 'horizontal' | 'auto'
   checkboxArray: Checkbox[]
+  setCheckboxArray: React.Dispatch<React.SetStateAction<Checkbox[]>>
   register: UseFormRegister<FieldValues>
   onChangeCallback?: (updatedCheckboxes: Checkbox[]) => void
   editable?: boolean
