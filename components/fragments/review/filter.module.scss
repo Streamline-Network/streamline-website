@@ -1,0 +1,14 @@
+.filter {
+  display: flex;
+  gap: var(--margin-1);
+}
+
+.tag {
+  border-left-width: var(--border-radius-2) !important;
+  border-left-style: solid !important;
+}
+
+.selected {
+  background-color: var(--text-color) !important;
+  color: var(--bg-color) !important;
+}

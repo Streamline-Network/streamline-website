@@ -1,3 +1,4 @@
+import Filter, { FilterTag } from '../../../../components/fragments/review/filter'
 import { useEffect, useState } from 'react'
 
 import Blocks from 'components/fragments/blocks/blocks'
@@ -25,8 +26,17 @@ export default function Review() {
   const [queriedApplicationData, setQueriedApplicationData] = useState<
     Database.Applications.Apply[] | undefined
   >(undefined)
+  const [filteredApplicationData, setFilteredApplicationData] = useState<
+    Database.Applications.Apply[] | undefined
+  >(undefined)
   const [allLoaded, setAllLoaded] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
+  const [filters, setFilters] = useState<FilterTag[]>([
+    { name: 'Pending Review', selected: false },
+    { name: 'Denied', selected: false, state: 'denied' },
+    { name: 'Held For Review', selected: false, state: 'pending' },
+    { name: 'Accepted', selected: false, state: 'accepted' },
+  ])
 
   useEffect(() => {
     customFetch<Database.Applications.Apply[]>(
@@ -36,20 +46,37 @@ export default function Review() {
     })
   }, [])
 
+  function fetchSearchData() {
+    setApplicationData(undefined)
+
+    customFetch<Database.Applications.Apply[]>(
+      `/api/db/forms/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
+    ).then(({ data }) => {
+      setApplicationData(data)
+    })
+  }
+
+  // Reset if there are no filters to allow users to load past 50
+  useEffect(() => {
+    const isFiltering = filters.findIndex(filter => filter.selected) !== -1
+
+    if (!query && !isFiltering) {
+      setAllLoaded(false)
+    }
+  }, [filters, query])
+
+  // Generate and reset queriedApplicationData
   useEffect(() => {
     if (!query) {
-      setAllLoaded(false)
       setIsSearching(false)
       setQueriedApplicationData(undefined)
       return
     }
+
     if (!isSearching) {
-      setApplicationData(undefined)
-      customFetch<Database.Applications.Apply[]>(
-        `/api/db/forms/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
-      ).then(({ data }) => {
-        setApplicationData(data)
-      })
+      if (!applicationData || (applicationData.length < SEARCH_AMOUNT && !allLoaded)) {
+        fetchSearchData()
+      }
 
       setIsSearching(true)
       setAllLoaded(true)
@@ -68,11 +95,48 @@ export default function Review() {
       return final
     }
 
-    const searcher = new FuzzySearch(applicationData, ['minecraftUuid', ...getAllQuestions()])
+    const searcher = new FuzzySearch(applicationData, ['minecraftUuid', ...getAllQuestions()], {
+      sort: true,
+    })
     setCurrentApplicationUuid(-1)
 
     setQueriedApplicationData(searcher.search(query))
-  }, [applicationData, isSearching, query])
+  }, [applicationData, isSearching, query, filters, allLoaded])
+
+  // Generate and reset filteredApplicationData
+  useEffect(() => {
+    function filterData(data: Database.Applications.Apply) {
+      const allowedStates = filters.filter(state => state.selected)
+      const stateArray = allowedStates.map(filter => filter.state)
+
+      if (stateArray.includes(data.state)) return true
+
+      return false
+    }
+
+    const isFiltering = filters.findIndex(filter => filter.selected) !== -1
+
+    if (isFiltering) {
+      if ((!applicationData || applicationData.length < SEARCH_AMOUNT) && !allLoaded) {
+        fetchSearchData()
+      }
+      setAllLoaded(true)
+
+      if (!applicationData) return
+
+      const filteredData = queriedApplicationData
+        ? queriedApplicationData.filter(filterData)
+        : applicationData.filter(filterData)
+
+      setFilteredApplicationData(filteredData)
+
+      setCurrentApplicationUuid(-1)
+    }
+
+    if (!isFiltering) {
+      setFilteredApplicationData(undefined)
+    }
+  }, [filters, applicationData, allLoaded, queriedApplicationData])
 
   function loadMore() {
     if (!applicationData || allLoaded || isSearching) return
@@ -93,6 +157,12 @@ export default function Review() {
     )?.submissionDetails
   }
 
+  function getFilteredApplications() {
+    if (filteredApplicationData) return filteredApplicationData
+    if (queriedApplicationData) return queriedApplicationData
+    return applicationData!
+  }
+
   return (
     <>
       <h1 className={classNames(review.title, 'green')}>Applications</h1>
@@ -104,8 +174,8 @@ export default function Review() {
               title: 'Search applications',
               paragraphs: [
                 <>
-                  Preform a fuzzy search on the {50} newest applications, search by age, Minecraft
-                  name, Minecraft UUID, or any question response.
+                  Preform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by age,
+                  Minecraft name, Minecraft UUID, or any question response.
                 </>,
                 <>
                   <input
@@ -117,12 +187,24 @@ export default function Review() {
                 </>,
               ],
             },
+            {
+              title: 'Filter by status',
+              paragraphs: [
+                <>
+                  Select one or multiple statuses to filter the newest {SEARCH_AMOUNT} applications.
+                  This also filters the results from search.
+                </>,
+                <>
+                  <Filter filterTags={filters} setFilterTags={setFilters} />
+                </>,
+              ],
+            },
           ]}
         />
         <h2 className={review.subheader}>Select an application</h2>
         {applicationData ? (
           <CardSelector
-            applications={queriedApplicationData ? queriedApplicationData : applicationData}
+            applications={getFilteredApplications()}
             currentApplicationUuid={currentApplicationUuid}
             setCurrentApplicationUuid={setCurrentApplicationUuid}
             loadMore={loadMore}
@@ -131,7 +213,7 @@ export default function Review() {
         ) : (
           <CardSkeleton count={10} />
         )}
-        {currentApplicationUuid === -1 ? (
+        {currentApplicationUuid === -1 || !applicationData ? (
           <Loading hideTitle />
         ) : (
           <FormBlocks

@@ -10,6 +10,8 @@ import { hasPermission } from 'utils/db/docs'
 export default async function handler(req: CustomRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
+  console.log('Test')
+
   // Check if the user is logged in.
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
@@ -50,7 +52,6 @@ interface CustomRequest extends NextApiRequest {
   method: string
 }
 
-// TODO: add filter controls for accepted, denied, etc.
 type Query = {
   applicationType: string
   limit: string

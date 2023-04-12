@@ -1,7 +1,7 @@
 import Checkboxes, { Checkbox } from './checkboxes/checkboxes'
 import { Checks, FormInfo, Section } from '../block-types'
-import { Dispatch, Fragment, SetStateAction, useState } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { Fragment, useState } from 'react'
 import { goToFirstError, isErrors } from './helpers'
 
 import Input from './input'
@@ -168,7 +168,7 @@ export interface BlockFormProps {
   sections: Section[]
 
   checks: Checks
-  error: [string | undefined, Dispatch<SetStateAction<string | undefined>>]
+  error: [string | undefined, React.Dispatch<React.SetStateAction<string | undefined>>]
 
   formInfo?: FormInfo
 
