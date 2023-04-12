@@ -1,0 +1,44 @@
+.reason {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  font: inherit;
+
+  border: none;
+
+  width: 100%;
+  height: 100px;
+
+  padding: var(--padding-3);
+  border-radius: var(--border-radius-2);
+
+  resize: vertical;
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: var(--margin-1);
+}
+
+.deny {
+  text-transform: capitalize !important;
+  color: black !important;
+
+  background-color: var(--deny-color) !important;
+}
+
+.review {
+  text-transform: capitalize !important;
+  color: black !important;
+
+  background-color: var(--review-color) !important;
+}
+
+.accept {
+  margin-left: auto;
+
+  text-transform: capitalize !important;
+  color: black !important;
+
+  background-color: var(--accept-color) !important;
+}

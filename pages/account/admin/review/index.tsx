@@ -5,6 +5,7 @@ import Blocks from 'components/fragments/blocks/blocks'
 import CardSelector from 'components/fragments/review/card-selector'
 import CardSkeleton from 'components/fragments/review/card-skeletons'
 import { Database } from 'pages/api/db/database'
+import Decision from 'components/fragments/review/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
 import Loading from 'components/fragments/application/loading'
@@ -227,6 +228,7 @@ export default function Review() {
             error={[error, setError]}
           />
         )}
+        <Decision />
       </div>
     </>
   )

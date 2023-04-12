@@ -46,19 +46,19 @@
 }
 
 .accepted {
-  border-color: #6de36b !important;
+  border-color: var(--accept-color) !important;
 }
 
 .pending {
-  border-color: #eae453 !important;
+  border-color: var(--review-color) !important;
 }
 
 .notReviewed {
-  border-color: #3789e9 !important;
+  border-color: var(--pending-color) !important;
 }
 
 .denied {
-  border-color: #e36b6b !important;
+  border-color: var(--deny-color) !important;
 }
 
 .selector {
