@@ -2,6 +2,7 @@ import * as message from 'utils/constant-messages'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+import { Database } from '../database'
 import { authOptions } from '../../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
@@ -39,7 +40,8 @@ export default async function handler(req: CustomRequest, res: NextApiResponse) 
   }
 
   const data = await query.get()
-  const safeData = data.docs.map(doc => doc.data())
+
+  const safeData = data.docs.map(doc => ({ application: doc.data(), path: doc.ref.path }))
 
   return data
     ? res.status(200).send(safeData)
@@ -48,6 +50,11 @@ export default async function handler(req: CustomRequest, res: NextApiResponse) 
 
 interface CustomRequest extends NextApiRequest {
   method: string
+}
+
+export type QueryResponse = {
+  path: string
+  application: Database.Applications.Apply
 }
 
 type Query = {

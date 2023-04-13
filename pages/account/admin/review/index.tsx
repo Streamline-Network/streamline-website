@@ -9,6 +9,7 @@ import Decision from 'components/fragments/review/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
 import Loading from 'components/fragments/application/loading'
+import { QueryResponse } from 'pages/api/db/forms/collection-group'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import review from './review.module.scss'
@@ -20,15 +21,13 @@ const SEARCH_AMOUNT = 50
 export default function Review() {
   const [query, setQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [applicationData, setApplicationData] = useState<Database.Applications.Apply[] | undefined>(
+  const [applicationData, setApplicationData] = useState<QueryResponse[] | undefined>(undefined)
+  const [currentApplicationUuid, setCurrentApplicationUuid] = useState<string | -1>(-1)
+  const [queriedApplicationData, setQueriedApplicationData] = useState<QueryResponse[] | undefined>(
     undefined
   )
-  const [currentApplicationUuid, setCurrentApplicationUuid] = useState<string | -1>(-1)
-  const [queriedApplicationData, setQueriedApplicationData] = useState<
-    Database.Applications.Apply[] | undefined
-  >(undefined)
   const [filteredApplicationData, setFilteredApplicationData] = useState<
-    Database.Applications.Apply[] | undefined
+    QueryResponse[] | undefined
   >(undefined)
   const [allLoaded, setAllLoaded] = useState(false)
   const [error, setError] = useState<string | undefined>(undefined)
@@ -40,7 +39,7 @@ export default function Review() {
   ])
 
   useEffect(() => {
-    customFetch<Database.Applications.Apply[]>(
+    customFetch<QueryResponse[]>(
       `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc`
     ).then(({ data }) => {
       setApplicationData(data)
@@ -50,7 +49,7 @@ export default function Review() {
   function fetchSearchData() {
     setApplicationData(undefined)
 
-    customFetch<Database.Applications.Apply[]>(
+    customFetch<QueryResponse[]>(
       `/api/db/forms/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
     ).then(({ data }) => {
       setApplicationData(data)
@@ -86,19 +85,23 @@ export default function Review() {
     if (!applicationData) return
 
     function getAllQuestions() {
-      const questions = applicationData![0].submissionDetails.answers
+      const questions = applicationData![0].application.submissionDetails.answers
 
       let final: string[] = []
       for (const question of Object.keys(questions)) {
-        final.push(`submissionDetails.answers.${question}`)
+        final.push(`application.submissionDetails.answers.${question}`)
       }
 
       return final
     }
 
-    const searcher = new FuzzySearch(applicationData, ['minecraftUuid', ...getAllQuestions()], {
-      sort: true,
-    })
+    const searcher = new FuzzySearch(
+      applicationData,
+      ['application.minecraftUuid', ...getAllQuestions()],
+      {
+        sort: true,
+      }
+    )
     setCurrentApplicationUuid(-1)
 
     setQueriedApplicationData(searcher.search(query))
@@ -126,8 +129,8 @@ export default function Review() {
       if (!applicationData) return
 
       const filteredData = queriedApplicationData
-        ? queriedApplicationData.filter(filterData)
-        : applicationData.filter(filterData)
+        ? queriedApplicationData.filter(data => filterData(data.application))
+        : applicationData.filter(data => filterData(data.application))
 
       setFilteredApplicationData(filteredData)
 
@@ -142,9 +145,10 @@ export default function Review() {
   function loadMore() {
     if (!applicationData || allLoaded || isSearching) return
 
-    const oldest = applicationData[applicationData.length - 1].submissionDetails.submissionTime
+    const oldest =
+      applicationData[applicationData.length - 1].application.submissionDetails.submissionTime
 
-    customFetch<Database.Applications.Apply[]>(
+    customFetch<QueryResponse[]>(
       `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc&startAfter=${oldest}`
     ).then(({ data }) => {
       setApplicationData([...applicationData, ...data])
@@ -154,14 +158,15 @@ export default function Review() {
 
   function getSelectedFormData() {
     return applicationData!.find(
-      application => application.minecraftUuid === currentApplicationUuid
-    )?.submissionDetails
+      ({ application }) => application.minecraftUuid === currentApplicationUuid
+    )?.application.submissionDetails
   }
 
   function getFilteredApplications() {
-    if (filteredApplicationData) return filteredApplicationData
-    if (queriedApplicationData) return queriedApplicationData
-    return applicationData!
+    if (filteredApplicationData)
+      return filteredApplicationData.map(({ application }) => application)
+    if (queriedApplicationData) return queriedApplicationData.map(({ application }) => application)
+    return applicationData!.map(({ application }) => application)
   }
 
   return (
@@ -228,7 +233,15 @@ export default function Review() {
             error={[error, setError]}
           />
         )}
-        <Decision />
+        {currentApplicationUuid === -1 || !applicationData ? (
+          <Loading hideTitle />
+        ) : (
+          <Decision
+            applicationData={applicationData}
+            setApplicationData={setApplicationData}
+            currentApplicationUuid={currentApplicationUuid}
+          />
+        )}
       </div>
     </>
   )

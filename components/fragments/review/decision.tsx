@@ -1,23 +1,64 @@
-import Blocks from '../blocks/blocks'
-import decision from './decision.module.scss'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
-export default function Decision() {
+import Blocks from '../blocks/blocks'
+import { QueryResponse } from 'pages/api/db/forms/collection-group'
+import classNames from 'classnames'
+import decision from './decision.module.scss'
+
+export default function Decision({
+  applicationData,
+  setApplicationData,
+  currentApplicationUuid,
+}: DecisionProps) {
   const [reasoning, setReasoning] = useState('')
+  const currentApplicationIndex = useMemo(() => {
+    return applicationData.findIndex(
+      ({ application }) => application.minecraftUuid === currentApplicationUuid
+    )
+  }, [applicationData, currentApplicationUuid])
 
   const buttons: Button[] = [
     {
       name: 'Deny',
       class: 'deny',
-      function: () => {},
+      function: () => {
+        const appData = [...applicationData]
+        appData[currentApplicationIndex].application.state = 'denied'
+        setApplicationData(appData)
+      },
     },
     {
       name: 'Hold For Review',
       class: 'review',
-      function: () => {},
+      function: () => {
+        const appData = [...applicationData]
+        appData[currentApplicationIndex].application.state = 'pending'
+        setApplicationData(appData)
+      },
     },
-    { name: 'Accept', class: 'accept', function: () => {} },
+    {
+      name: 'Accept',
+      class: 'accept',
+      function: () => {
+        const appData = [...applicationData]
+        appData[currentApplicationIndex].application.state = 'accepted'
+        setApplicationData(appData)
+      },
+    },
   ]
+
+  function getClass() {
+    switch (applicationData[currentApplicationIndex].application.state) {
+      case 'accepted':
+        return 'accept'
+      case 'denied':
+        return 'deny'
+      case 'pending':
+        return 'review'
+      default:
+        return 'pending'
+    }
+  }
 
   return (
     <Blocks
@@ -49,12 +90,20 @@ export default function Decision() {
                   </button>
                 ))}
               </div>
+              <div className={classNames(decision.statusLine, decision[getClass()])} />
             </>,
           ],
         },
       ]}
     />
   )
+}
+
+interface DecisionProps {
+  currentApplicationUuid: string
+
+  applicationData: QueryResponse[]
+  setApplicationData: React.Dispatch<React.SetStateAction<QueryResponse[] | undefined>>
 }
 
 type Button = {

@@ -40,11 +40,18 @@ export declare module Database {
       minecraftUuid: string
 
       state?: ApplyApplicationState
+      comments: string[]
       deniedReason?: string
 
       type: 'apply'
     }
   }
+}
+
+export type Comment = {
+  sender: string
+  time: number
+  message: string
 }
 
 export type ApplyApplicationState = 'accepted' | 'denied' | 'pending'
