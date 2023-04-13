@@ -49,7 +49,10 @@ export default function ApplicationCard({
         <h3 className={card.name}>{minecraftName}</h3>
         <div className={card.details}>
           <span>Applied: {parsedTime}</span>
-          <span>Version: {versions.reduce((final, current) => `${final}, ${current}`)}</span>
+          <span>
+            Version:{' '}
+            {versions.length ? versions.reduce((final, current) => `${final}, ${current}`) : 'N/A'}
+          </span>
           <span>Age: {age}</span>
         </div>
       </div>

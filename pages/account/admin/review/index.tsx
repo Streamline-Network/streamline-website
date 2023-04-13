@@ -62,9 +62,9 @@ export default function Review() {
     const isFiltering = filters.findIndex(filter => filter.selected) !== -1
 
     if (!query && !isFiltering) {
-      setAllLoaded(false)
+      if (!applicationData || applicationData.length === SEARCH_AMOUNT) setAllLoaded(false)
     }
-  }, [filters, query])
+  }, [applicationData, filters, query])
 
   // Generate and reset queriedApplicationData
   useEffect(() => {
@@ -147,8 +147,8 @@ export default function Review() {
     customFetch<Database.Applications.Apply[]>(
       `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc&startAfter=${oldest}`
     ).then(({ data }) => {
-      if (data[0] === undefined) return setAllLoaded(true)
       setApplicationData([...applicationData, ...data])
+      if (data.length < PER_SECTION_LIMIT) return setAllLoaded(true)
     })
   }
 
