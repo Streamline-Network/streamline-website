@@ -40,7 +40,7 @@ export declare module Database {
       minecraftUuid: string
 
       state?: ApplyApplicationState
-      comments: string[]
+      comments?: Comment[]
       deniedReason?: string
 
       type: 'apply'
