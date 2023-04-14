@@ -3,7 +3,7 @@ import * as message from 'utils/constant-messages'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { Database } from 'pages/api/db/database'
-import { authOptions } from '../../auth/[...nextauth]'
+import { authOptions } from '../../../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
 

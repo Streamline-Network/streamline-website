@@ -1,8 +1,10 @@
 import { useMemo, useState } from 'react'
 
+import { ApplyApplicationState } from 'pages/api/db/database'
 import Blocks from '../blocks/blocks'
-import { QueryResponse } from 'pages/api/db/forms/collection-group'
+import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
+import customFetch from 'utils/fetch'
 import decision from './decision.module.scss'
 
 export default function Decision({
@@ -11,38 +13,54 @@ export default function Decision({
   currentApplicationUuid,
 }: DecisionProps) {
   const [reasoning, setReasoning] = useState('')
+  const [error, setError] = useState<undefined | string>()
   const currentApplicationIndex = useMemo(() => {
     return applicationData.findIndex(
       ({ application }) => application.minecraftUuid === currentApplicationUuid
     )
   }, [applicationData, currentApplicationUuid])
 
+  async function changeState(state: ApplyApplicationState) {
+    const appData = structuredClone(applicationData)
+    if (appData[currentApplicationIndex].application.state === state) return
+
+    setError(undefined)
+
+    appData[currentApplicationIndex].application.state = state
+
+    const res = await customFetch<undefined, QueryResponse>(
+      '/api/db/forms/apply/review',
+      'POST',
+      appData[currentApplicationIndex]
+    )
+
+    if (res.response.ok) {
+      setApplicationData(appData)
+    } else {
+      setError('Something went wrong!')
+    }
+  }
+
   const buttons: Button[] = [
     {
       name: 'Deny',
       class: 'deny',
-      function: () => {
-        const appData = [...applicationData]
-        appData[currentApplicationIndex].application.state = 'denied'
-        setApplicationData(appData)
+      function: async () => {
+        await changeState('denied')
       },
     },
     {
       name: 'Hold For Review',
       class: 'review',
-      function: () => {
-        const appData = [...applicationData]
-        appData[currentApplicationIndex].application.state = 'pending'
-        setApplicationData(appData)
+      function: async () => {
+        await changeState('pending')
       },
     },
     {
       name: 'Accept',
       class: 'accept',
-      function: () => {
-        const appData = [...applicationData]
-        appData[currentApplicationIndex].application.state = 'accepted'
-        setApplicationData(appData)
+      function: async () => {
+        await changeState('accepted')
       },
     },
   ]
@@ -90,6 +108,7 @@ export default function Decision({
                   </button>
                 ))}
               </div>
+              {error && <div className={decision.error}>{error}</div>}
               <div className={classNames(decision.statusLine, decision[getClass()])} />
             </>,
           ],
@@ -109,5 +128,5 @@ interface DecisionProps {
 type Button = {
   name: string
   class: string
-  function: () => void
+  function: (e: React.MouseEvent) => void | Promise<void>
 }

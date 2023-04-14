@@ -2,8 +2,9 @@ import * as message from 'utils/constant-messages'
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { Database } from '../database'
-import { authOptions } from '../../auth/[...nextauth]'
+import { Database } from '../../database'
+import { STAFF_ROLES } from 'middleware'
+import { authOptions } from '../../../auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
 import { hasPermission } from 'utils/db/docs'
@@ -13,6 +14,10 @@ export default async function handler(req: CustomRequest, res: NextApiResponse) 
 
   // Check if the user is logged in.
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
+
+  // Check if the user is staff.
+  if (!STAFF_ROLES.includes(session.role))
+    return res.status(401).send({ error: message.NOT_AUTHORIZED })
 
   // Check the method.
   if ('GET' !== req.method) return res.status(405).send({ error: message.WRONG_METHOD })

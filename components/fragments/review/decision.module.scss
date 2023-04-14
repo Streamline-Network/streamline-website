@@ -55,3 +55,14 @@
   bottom: 0;
   left: 0;
 }
+
+.error {
+  padding: 1rem;
+  color: black;
+  font-weight: 500;
+  margin-top: var(--margin-1);
+  background-color: var(--danger);
+  width: max-content;
+  border-radius: var(--border-radius-2);
+  margin-inline: auto;
+}

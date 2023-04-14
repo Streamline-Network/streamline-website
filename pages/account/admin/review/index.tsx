@@ -9,7 +9,7 @@ import Decision from 'components/fragments/review/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
 import Loading from 'components/fragments/application/loading'
-import { QueryResponse } from 'pages/api/db/forms/collection-group'
+import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import review from './review.module.scss'
@@ -40,7 +40,7 @@ export default function Review() {
 
   useEffect(() => {
     customFetch<QueryResponse[]>(
-      `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc`
+      `/api/db/forms/apply/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc`
     ).then(({ data }) => {
       setApplicationData(data)
     })
@@ -50,7 +50,7 @@ export default function Review() {
     setApplicationData(undefined)
 
     customFetch<QueryResponse[]>(
-      `/api/db/forms/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
+      `/api/db/forms/apply/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
     ).then(({ data }) => {
       setApplicationData(data)
     })
@@ -149,7 +149,7 @@ export default function Review() {
       applicationData[applicationData.length - 1].application.submissionDetails.submissionTime
 
     customFetch<QueryResponse[]>(
-      `/api/db/forms/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc&startAfter=${oldest}`
+      `/api/db/forms/apply/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc&startAfter=${oldest}`
     ).then(({ data }) => {
       setApplicationData([...applicationData, ...data])
       if (data.length < PER_SECTION_LIMIT) return setAllLoaded(true)
