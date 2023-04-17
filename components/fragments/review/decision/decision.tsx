@@ -1,7 +1,7 @@
 import { ApplyApplicationState, Comment } from 'pages/api/db/database'
 import { useMemo, useState } from 'react'
 
-import Blocks from '../blocks/blocks'
+import Blocks from '../../blocks/blocks'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'

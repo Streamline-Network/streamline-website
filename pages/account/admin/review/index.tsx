@@ -1,14 +1,15 @@
-import Filter, { FilterTag } from '../../../../components/fragments/review/filter'
+import Filter, { FilterTag } from '../../../../components/fragments/review/filter/filter'
 import { useEffect, useState } from 'react'
 
+import ApplicationNavigation from 'components/fragments/review/application-navigation/application-navigation'
 import Blocks from 'components/fragments/blocks/blocks'
-import CardSelector from 'components/fragments/review/card-selector'
-import CardSkeleton from 'components/fragments/review/card-skeletons'
+import CardSelector from 'components/fragments/review/cards/card-selector'
+import CardSkeleton from 'components/fragments/review/cards/card-skeletons'
 import { Database } from 'pages/api/db/database'
-import Decision from 'components/fragments/review/decision'
+import Decision from 'components/fragments/review/decision/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
-import HistoryDropdown from 'components/fragments/review/history-dropdown'
+import HistoryDropdown from 'components/fragments/review/history-dropdown/history-dropdown'
 import Loading from 'components/fragments/application/loading'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
@@ -277,11 +278,18 @@ export default function Review() {
         {currentApplicationUuid === -1 || !applicationData ? (
           <Loading hideTitle />
         ) : (
-          <Decision
-            applicationData={applicationData}
-            setApplicationData={setApplicationData}
-            currentApplicationUuid={currentApplicationUuid}
-          />
+          <>
+            <Decision
+              applicationData={applicationData}
+              setApplicationData={setApplicationData}
+              currentApplicationUuid={currentApplicationUuid}
+            />
+            <ApplicationNavigation
+              applicationData={applicationData}
+              currentApplicationUuid={currentApplicationUuid}
+              setCurrentApplicationUuid={setCurrentApplicationUuid}
+            />
+          </>
         )}
       </div>
     </>

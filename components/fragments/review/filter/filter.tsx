@@ -1,5 +1,5 @@
 import { ApplyApplicationState } from 'pages/api/db/database'
-import card from './card-styles.module.scss'
+import card from '../cards/card-styles.module.scss'
 import classNames from 'classnames'
 import filter from './filter.module.scss'
 

@@ -1,0 +1,14 @@
+@use 'styles/mixins.scss' as mixins;
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--btn-color);
+  padding: var(--block-padding);
+
+  border-radius: var(--border-radius-1);
+
+  > button {
+    @include mixins.block-button;
+  }
+}
