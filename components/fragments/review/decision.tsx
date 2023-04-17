@@ -1,17 +1,19 @@
+import { ApplyApplicationState, Comment } from 'pages/api/db/database'
 import { useMemo, useState } from 'react'
 
-import { ApplyApplicationState } from 'pages/api/db/database'
 import Blocks from '../blocks/blocks'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import decision from './decision.module.scss'
+import { useSession } from 'next-auth/react'
 
 export default function Decision({
   applicationData,
   setApplicationData,
   currentApplicationUuid,
 }: DecisionProps) {
+  const { data, status } = useSession()
   const [reasoning, setReasoning] = useState('')
   const [error, setError] = useState<undefined | string>()
   const currentApplicationIndex = useMemo(() => {
@@ -22,16 +24,27 @@ export default function Decision({
 
   async function changeState(state: ApplyApplicationState) {
     const appData = structuredClone(applicationData)
-    if (appData[currentApplicationIndex].application.state === state) return
+    const currentApplication = appData[currentApplicationIndex]
+
+    if (currentApplication.application.state === state) return
 
     setError(undefined)
 
-    appData[currentApplicationIndex].application.state = state
+    const comment: Comment = {
+      message: reasoning,
+      senderId: data!.id,
+      time: Date.now(),
+    }
+
+    currentApplication.application.state = state
+    currentApplication.application.comments
+      ? currentApplication.application.comments.push(comment)
+      : (currentApplication.application.comments = [comment])
 
     const res = await customFetch<undefined, QueryResponse>(
       '/api/db/forms/apply/review',
       'POST',
-      appData[currentApplicationIndex]
+      currentApplication
     )
 
     if (res.response.ok) {
@@ -102,11 +115,12 @@ export default function Decision({
             </>,
             <>
               <div className={decision.buttonWrapper}>
-                {buttons.map((button, i) => (
-                  <button key={i} className={decision[button.class]} onClick={button.function}>
-                    {button.name}
-                  </button>
-                ))}
+                {status === 'authenticated' &&
+                  buttons.map((button, i) => (
+                    <button key={i} className={decision[button.class]} onClick={button.function}>
+                      {button.name}
+                    </button>
+                  ))}
               </div>
               {error && <div className={decision.error}>{error}</div>}
               <div className={classNames(decision.statusLine, decision[getClass()])} />

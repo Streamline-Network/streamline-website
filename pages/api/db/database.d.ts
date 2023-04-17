@@ -49,7 +49,7 @@ export declare module Database {
 }
 
 export type Comment = {
-  sender: string
+  senderId: string
   time: number
   message: string
 }
