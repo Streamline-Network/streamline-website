@@ -8,6 +8,7 @@ import { Database } from 'pages/api/db/database'
 import Decision from 'components/fragments/review/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
+import HistoryDropdown from 'components/fragments/review/history-dropdown'
 import Loading from 'components/fragments/application/loading'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
@@ -21,22 +22,23 @@ const SEARCH_AMOUNT = 50
 export default function Review() {
   const [query, setQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [applicationData, setApplicationData] = useState<QueryResponse[] | undefined>(undefined)
+  const [applicationData, setApplicationData] = useState<QueryResponse[] | undefined>()
   const [currentApplicationUuid, setCurrentApplicationUuid] = useState<string | -1>(-1)
   const [queriedApplicationData, setQueriedApplicationData] = useState<QueryResponse[] | undefined>(
     undefined
   )
   const [filteredApplicationData, setFilteredApplicationData] = useState<
     QueryResponse[] | undefined
-  >(undefined)
+  >()
   const [allLoaded, setAllLoaded] = useState(false)
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [error, setError] = useState<string | undefined>()
   const [filters, setFilters] = useState<FilterTag[]>([
     { name: 'Pending Review', selected: false },
     { name: 'Denied', selected: false, state: 'denied' },
     { name: 'Held For Review', selected: false, state: 'pending' },
     { name: 'Accepted', selected: false, state: 'accepted' },
   ])
+  const [history, setHistory] = useState<undefined | number>()
 
   useEffect(() => {
     customFetch<QueryResponse[]>(
@@ -45,6 +47,11 @@ export default function Review() {
       setApplicationData(data)
     })
   }, [])
+
+  useEffect(() => {
+    // Set history to undefined on ever application change.
+    setHistory(undefined)
+  }, [currentApplicationUuid])
 
   function fetchSearchData() {
     setApplicationData(undefined)
@@ -157,9 +164,23 @@ export default function Review() {
   }
 
   function getSelectedFormData() {
+    const currentApplication = applicationData!.find(
+      ({ application }) => application.minecraftUuid === currentApplicationUuid
+    )!
+
+    if (history) {
+      return currentApplication.application.previousSubmissions!.find(
+        app => app.submissionTime === history
+      )
+    }
+
+    return currentApplication.application.submissionDetails
+  }
+
+  function getSelectedData() {
     return applicationData!.find(
       ({ application }) => application.minecraftUuid === currentApplicationUuid
-    )?.application.submissionDetails
+    )
   }
 
   function getFilteredApplications() {
@@ -222,16 +243,36 @@ export default function Review() {
         {currentApplicationUuid === -1 || !applicationData ? (
           <Loading hideTitle />
         ) : (
-          <FormBlocks
-            editable={false}
-            numbered
-            formInfo={getSelectedFormData()}
-            sections={sections}
-            save={() => {}}
-            submit={{ final: () => {} }}
-            checks={[]}
-            error={[error, setError]}
-          />
+          <>
+            <Blocks
+              blockArr={[
+                {
+                  title: `${
+                    getSelectedFormData()?.answers['What is your Minecraft Java Edition username?']
+                  }'s application history`,
+                  paragraphs: [
+                    <>
+                      <HistoryDropdown
+                        applicationData={getSelectedData()!}
+                        history={history}
+                        setHistory={setHistory}
+                      />
+                    </>,
+                  ],
+                },
+              ]}
+            />
+            <FormBlocks
+              editable={false}
+              numbered
+              formInfo={getSelectedFormData()}
+              sections={sections}
+              save={() => {}}
+              submit={{ final: () => {} }}
+              checks={[]}
+              error={[error, setError]}
+            />
+          </>
         )}
         {currentApplicationUuid === -1 || !applicationData ? (
           <Loading hideTitle />
