@@ -173,5 +173,11 @@ function CheckboxWrapper(
 ) {
   const [checkboxArray, setCheckboxArray] = useState(props.array)
 
+  useEffect(() => {
+    if (!props.editable) {
+      setCheckboxArray(props.array)
+    }
+  }, [props.array, props.editable])
+
   return <Checkboxes {...props} checkboxArray={checkboxArray} setCheckboxArray={setCheckboxArray} />
 }
