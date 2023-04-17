@@ -1,3 +1,5 @@
+import { useEffect, useMemo } from 'react'
+
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import applicationNavigation from './application-navigation.module.scss'
 
@@ -5,15 +7,23 @@ export default function ApplicationNavigation({
   applicationData,
   currentApplicationUuid,
   setCurrentApplicationUuid,
+  loadMore,
+  allLoaded,
 }: ApplicationNavigationProps) {
   const currentApplicationIndex = applicationData.findIndex(
     app => app.application.minecraftUuid === currentApplicationUuid
   )
 
-  const prevApplicationId: undefined | string =
-    applicationData[currentApplicationIndex - 1]?.application.minecraftUuid
-  const nextApplicationId: undefined | string =
-    applicationData[currentApplicationIndex + 1]?.application.minecraftUuid
+  const prevApplicationId: undefined | string = useMemo(
+    () => applicationData[currentApplicationIndex - 1]?.application.minecraftUuid,
+    [applicationData, currentApplicationIndex]
+  )
+  const nextApplicationId: undefined | string = useMemo(
+    () => applicationData[currentApplicationIndex + 1]?.application.minecraftUuid,
+    [applicationData, currentApplicationIndex]
+  )
+
+  if (!nextApplicationId) loadMore()
 
   return (
     <div className={applicationNavigation.wrapper}>
@@ -34,8 +44,10 @@ export default function ApplicationNavigation({
           }}>
           Next Application
         </button>
-      ) : (
+      ) : allLoaded ? (
         <div />
+      ) : (
+        <p className={applicationNavigation.loading}>Loading...</p>
       )}
     </div>
   )
@@ -45,4 +57,6 @@ interface ApplicationNavigationProps {
   applicationData: QueryResponse[]
   currentApplicationUuid: string
   setCurrentApplicationUuid: React.Dispatch<React.SetStateAction<string | -1>>
+  loadMore: () => void
+  allLoaded: boolean
 }

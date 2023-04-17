@@ -288,6 +288,8 @@ export default function Review() {
               applicationData={applicationData}
               currentApplicationUuid={currentApplicationUuid}
               setCurrentApplicationUuid={setCurrentApplicationUuid}
+              loadMore={loadMore}
+              allLoaded={allLoaded}
             />
           </>
         )}
