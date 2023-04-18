@@ -116,9 +116,15 @@ export default function Review() {
         sort: true,
       }
     )
-    setCurrentApplicationUuid(-1)
 
-    setQueriedApplicationData(searcher.search(query))
+    const newData = searcher.search(query)
+
+    if (!newData.find(d => d.application.minecraftUuid === currentApplicationUuid)) {
+      setCurrentApplicationUuid(-1)
+    }
+
+    setQueriedApplicationData(newData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationData, isSearching, query, filters, allLoaded])
 
   // Generate and reset filteredApplicationData
