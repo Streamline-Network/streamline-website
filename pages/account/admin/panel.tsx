@@ -23,8 +23,8 @@ export default function Panel() {
             Welcome <span>{data.user?.name}</span> to the <span>{data.role}</span> staff panel! Take
             a look around, something might be useful to you!
           </div>
-          <h2 className={panel.subheader}>Recent activity</h2>
-          <Feed />
+          {/* <h2 className={panel.subheader}>Recent activity</h2>
+          <Feed /> */}
           <h2 className={panel.subheader}>Staff pages</h2>
           <StaffPages />
         </div>
