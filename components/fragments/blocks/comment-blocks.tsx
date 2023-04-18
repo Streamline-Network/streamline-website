@@ -70,7 +70,7 @@ export default function CommentBlocks({
             <h2>Comments about this application</h2>
           </div>
           {status === 'authenticated'
-            ? comments.map(({ time, message, name, senderPicture, decision }, i) => {
+            ? comments.map(({ time, message, name, senderPicture, decision, userAction }, i) => {
                 return (
                   <div className={blocks.block} key={i}>
                     <div>
@@ -78,6 +78,7 @@ export default function CommentBlocks({
                         <Image width={30} height={30} src={senderPicture} alt={''} />
                         <h2>{name}</h2>
                         {decision && getAction(decision)}
+                        {userAction && <span className={blocks.userAction}>{userAction}</span>}
                         <span>{getRelativeTime(time, rtf)}</span>
                       </div>
                     </div>

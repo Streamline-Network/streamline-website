@@ -199,7 +199,8 @@
 
 .commentDenied,
 .commentAccepted,
-.commentPending {
+.commentPending,
+.userAction {
   color: var(--bg-color) !important;
   padding: 0.5rem;
   font-weight: 700;
@@ -216,4 +217,11 @@
 
 .commentPending {
   background-color: var(--review-color);
+}
+
+.userAction {
+  background-color: var(--bg-color);
+  color: var(--txt-color) !important;
+
+  font-weight: 400;
 }

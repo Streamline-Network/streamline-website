@@ -54,8 +54,9 @@ export type Comment = {
   name: string
   senderPicture: string
   time: number
-  message: string
+  message?: string
   decision?: ApplyApplicationState
+  userAction?: string
 }
 
 export type ApplyApplicationState = 'accepted' | 'denied' | 'pending'

@@ -40,7 +40,7 @@ export default function Decision({
     }
 
     currentApplication.application.state = state
-    if (state === 'denied') currentApplication.application.deniedReason = reasoning
+    if (state === 'denied' && reasoning) currentApplication.application.deniedReason = reasoning
     currentApplication.application.comments
       ? currentApplication.application.comments.push(comment)
       : (currentApplication.application.comments = [comment])
@@ -109,6 +109,10 @@ export default function Decision({
             <>
               Note: Users can see the reason they were denied, if there is no reason given, they see
               &quot;No reason given&quot;.
+            </>,
+            <>
+              Note: Users will get notified of their application getting accepted or denied, so
+              choose carefully!
             </>,
             <>
               <textarea

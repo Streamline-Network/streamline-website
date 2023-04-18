@@ -12,6 +12,11 @@ declare module 'next-auth' {
     applicationStage: ApplicationStage
     id: string
     email: string
+    user: {
+      email: string
+      image: string
+      name: string
+    }
   }
 }
 
