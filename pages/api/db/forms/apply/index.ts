@@ -24,7 +24,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const previousApplication = docSnap.data() as Database.Applications.Apply
 
     if (previousApplication.submissionDetails) {
-      console.log('OwO')
       previousApplication.comments!.push({
         name: session.user.name,
         senderId: session.id,
