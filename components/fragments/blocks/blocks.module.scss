@@ -159,3 +159,61 @@
 .diffButton {
   @include mixins.button;
 }
+
+.commentTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--margin-1);
+
+  > img {
+    border-radius: var(--border-radius-2);
+  }
+
+  > span {
+    margin-left: auto;
+    color: var(--light-gray);
+  }
+}
+
+.commentMessage {
+  background-color: var(--bg-color);
+  padding: var(--padding-3);
+  border-radius: var(--border-radius-2);
+}
+
+.blockLoading {
+  @include mixins.skeleton-animation;
+  border-radius: var(--border-radius-2);
+  height: 110px;
+  width: 100%;
+}
+
+.commentInput {
+  display: flex;
+  gap: var(--margin-1);
+
+  > input {
+    flex-grow: 1;
+  }
+}
+
+.commentDenied,
+.commentAccepted,
+.commentPending {
+  color: var(--bg-color) !important;
+  padding: 0.5rem;
+  font-weight: 700;
+  border-radius: var(--border-radius-2);
+}
+
+.commentDenied {
+  background-color: var(--deny-color);
+}
+
+.commentAccepted {
+  background-color: var(--accept-color);
+}
+
+.commentPending {
+  background-color: var(--review-color);
+}

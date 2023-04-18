@@ -5,6 +5,7 @@ import ApplicationNavigation from 'components/fragments/review/application-navig
 import Blocks from 'components/fragments/blocks/blocks'
 import CardSelector from 'components/fragments/review/cards/card-selector'
 import CardSkeleton from 'components/fragments/review/cards/card-skeletons'
+import CommentBlocks from 'components/fragments/blocks/comment-blocks'
 import { Database } from 'pages/api/db/database'
 import Decision from 'components/fragments/review/decision/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
@@ -263,6 +264,13 @@ export default function Review() {
                 },
               ]}
             />
+
+            <CommentBlocks
+              applicationData={getSelectedData()!}
+              setApplicationData={setApplicationData}
+              currentApplicationUuid={currentApplicationUuid}
+            />
+
             <FormBlocks
               editable={false}
               numbered

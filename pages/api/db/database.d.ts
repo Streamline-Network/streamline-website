@@ -13,6 +13,7 @@ export declare module Database {
     applicationStage: ApplicationStage
     name: string
     role: Roles
+    picture: string
   }
 
   interface UserIds {
@@ -50,8 +51,11 @@ export declare module Database {
 
 export type Comment = {
   senderId: string
+  name: string
+  senderPicture: string
   time: number
   message: string
+  decision?: ApplyApplicationState
 }
 
 export type ApplyApplicationState = 'accepted' | 'denied' | 'pending'

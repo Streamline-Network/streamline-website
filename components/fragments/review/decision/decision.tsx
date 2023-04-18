@@ -1,8 +1,9 @@
 import { ApplyApplicationState, Comment } from 'pages/api/db/database'
-import { useMemo, useState } from 'react'
+import { SetStateAction, useMemo, useState } from 'react'
 
 import Blocks from '../../blocks/blocks'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
+import { StateData } from 'pages/api/db/sets/state'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import decision from './decision.module.scss'
@@ -29,14 +30,19 @@ export default function Decision({
     if (currentApplication.application.state === state) return
 
     setError(undefined)
+    setReasoning('')
 
     const comment: Comment = {
       message: reasoning,
       senderId: data!.id,
       time: Date.now(),
+      name: data!.user!.name!,
+      senderPicture: data!.user!.image!,
+      decision: state,
     }
 
     currentApplication.application.state = state
+    if (state === 'denied') currentApplication.application.deniedReason = reasoning
     currentApplication.application.comments
       ? currentApplication.application.comments.push(comment)
       : (currentApplication.application.comments = [comment])

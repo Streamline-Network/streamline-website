@@ -27,7 +27,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const applicationData = JSON.parse(req.body) as QueryResponse
 
-  await db.doc(applicationData.path).update(applicationData.application)
+  function getIdFromPath(path: string) {
+    const arr = path.split('/')
+    return arr[1]
+  }
+
+  const final = await Promise.all([
+    db.doc(applicationData.path).update(applicationData.application),
+    applicationData.application.state !== 'pending'
+      ? db.doc('userState/' + getIdFromPath(applicationData.path)).update({ applicationStage: 2 })
+      : db.doc('userState/' + getIdFromPath(applicationData.path)).update({ applicationStage: 1 }),
+  ])
+
+  console.log(final)
 
   return res.status(201).end()
 }

@@ -40,7 +40,13 @@ export function hasPermission(
       if (pathArr[1] === session.id) return true
 
     case 'userState':
-      if (pathArr[1] === session.id) return true
+      if (session.role === 'reviewer' || pathArr[1] === session.id) {
+        if (session.role === 'reviewer') {
+          console.log('t')
+          res.setHeader('Cache-Control', `max-age=${60 * 10} private`)
+        }
+        return true
+      }
 
     case 'userIds':
       res.setHeader('Cache-Control', `max-age=${60 * 30} private`)
