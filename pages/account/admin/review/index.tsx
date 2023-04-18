@@ -41,11 +41,14 @@ export default function Review() {
     { name: 'Accepted', selected: false, state: 'accepted' },
   ])
   const [history, setHistory] = useState<undefined | number>()
+  const [hasFetched, setHasFetched] = useState(false)
 
   useEffect(() => {
+    setHasFetched(false)
     customFetch<QueryResponse[]>(
       `/api/db/forms/apply/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc`
     ).then(({ data }) => {
+      setHasFetched(true)
       setApplicationData(data)
     })
   }, [])
@@ -57,10 +60,12 @@ export default function Review() {
 
   function fetchSearchData() {
     setApplicationData(undefined)
+    setHasFetched(false)
 
     customFetch<QueryResponse[]>(
       `/api/db/forms/apply/collection-group?applicationType=apply&limit=${SEARCH_AMOUNT}&direction=desc`
     ).then(({ data }) => {
+      setHasFetched(true)
       setApplicationData(data)
     })
   }
@@ -157,10 +162,12 @@ export default function Review() {
     const oldest =
       applicationData[applicationData.length - 1].application.submissionDetails.submissionTime
 
+    setHasFetched(false)
     customFetch<QueryResponse[]>(
       `/api/db/forms/apply/collection-group?applicationType=apply&limit=${PER_SECTION_LIMIT}&direction=desc&startAfter=${oldest}`
     ).then(({ data }) => {
       setApplicationData([...applicationData, ...data])
+      setHasFetched(true)
       if (data.length < PER_SECTION_LIMIT) return setAllLoaded(true)
     })
   }
@@ -243,7 +250,13 @@ export default function Review() {
           <CardSkeleton count={10} />
         )}
         {currentApplicationUuid === -1 || !applicationData ? (
-          <Loading hideTitle />
+          hasFetched ? (
+            <div className={review.block}>
+              <p>No results found!</p>
+            </div>
+          ) : (
+            <Loading hideTitle />
+          )
         ) : (
           <>
             <Blocks
@@ -284,7 +297,11 @@ export default function Review() {
           </>
         )}
         {currentApplicationUuid === -1 || !applicationData ? (
-          <Loading hideTitle />
+          hasFetched ? (
+            <></>
+          ) : (
+            <Loading hideTitle />
+          )
         ) : (
           <>
             <Decision
@@ -293,7 +310,7 @@ export default function Review() {
               currentApplicationUuid={currentApplicationUuid}
             />
             <ApplicationNavigation
-              applicationData={applicationData}
+              applicationData={filteredApplicationData ?? applicationData}
               currentApplicationUuid={currentApplicationUuid}
               setCurrentApplicationUuid={setCurrentApplicationUuid}
               loadMore={loadMore}

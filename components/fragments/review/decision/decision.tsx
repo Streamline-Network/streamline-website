@@ -1,9 +1,8 @@
 import { ApplyApplicationState, Comment } from 'pages/api/db/database'
-import { SetStateAction, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import Blocks from '../../blocks/blocks'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
-import { StateData } from 'pages/api/db/sets/state'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import decision from './decision.module.scss'
@@ -30,7 +29,6 @@ export default function Decision({
     if (currentApplication.application.state === state) return
 
     setError(undefined)
-    setReasoning('')
 
     const comment: Comment = {
       message: reasoning,
@@ -55,6 +53,7 @@ export default function Decision({
 
     if (res.response.ok) {
       setApplicationData(appData)
+      setReasoning('')
     } else {
       setError('Something went wrong!')
     }

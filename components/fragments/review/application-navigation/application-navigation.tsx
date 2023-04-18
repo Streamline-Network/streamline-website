@@ -1,7 +1,6 @@
-import { useEffect, useMemo } from 'react'
-
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import applicationNavigation from './application-navigation.module.scss'
+import { useMemo } from 'react'
 
 export default function ApplicationNavigation({
   applicationData,
