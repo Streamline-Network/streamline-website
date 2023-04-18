@@ -26,8 +26,6 @@ export default function Decision({
     const appData = structuredClone(applicationData)
     const currentApplication = appData[currentApplicationIndex]
 
-    if (currentApplication.application.state === state) return
-
     setError(undefined)
 
     const comment: Comment = {
