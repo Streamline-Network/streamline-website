@@ -1,5 +1,4 @@
 import { ApplyApplicationState, Comment } from 'pages/api/db/database'
-import { useEffect, useState } from 'react'
 
 import Image from 'next/image'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
@@ -7,6 +6,7 @@ import blocks from './blocks.module.scss'
 import customFetch from 'utils/fetch'
 import { getRelativeTime } from 'utils/misc'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 
 export default function CommentBlocks({
   applicationData,
