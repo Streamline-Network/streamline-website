@@ -81,7 +81,7 @@ export default function CommentBlocks({
                         <span>{getRelativeTime(time, rtf)}</span>
                       </div>
                     </div>
-                    <p className={blocks.commentMessage}>{message}</p>
+                    {message && <p className={blocks.commentMessage}>{message}</p>}
                   </div>
                 )
               })
