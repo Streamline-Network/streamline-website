@@ -46,7 +46,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         ]
       }'s application! -- The application is ${
         applicationData.application.state ?? 'pending'
-      }.\` View it here: https://streamlinesmp.com/account/admin/review`
+      }.\` View it here: ${process.env.NEXTAUTH_URL}/account/admin/review?q=${
+        applicationData.application.minecraftUuid
+      }`
     ),
   ])
 

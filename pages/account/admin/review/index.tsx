@@ -1,5 +1,5 @@
 import Filter, { FilterTag } from '../../../../components/fragments/review/filter/filter'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import ApplicationNavigation from 'components/fragments/review/application-navigation/application-navigation'
 import Blocks from 'components/fragments/blocks/blocks'
@@ -17,6 +17,7 @@ import classNames from 'classnames'
 import customFetch from 'utils/fetch'
 import review from './review.module.scss'
 import sections from 'components/fragments/application/apply-application-data'
+import { useRouter } from 'next/router'
 
 export const PER_SECTION_LIMIT = 5
 const SEARCH_AMOUNT = 50
@@ -42,6 +43,7 @@ export default function Review() {
   ])
   const [history, setHistory] = useState<undefined | number>()
   const [hasFetched, setHasFetched] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     setHasFetched(false)
@@ -52,6 +54,15 @@ export default function Review() {
       setApplicationData(data)
     })
   }, [])
+
+  // Apply url query once the page and application content has loaded
+  useEffect(() => {
+    if (hasFetched) {
+      if ('q' in router.query && typeof router.query.q === 'string') {
+        setQuery(router.query.q)
+      }
+    }
+  }, [hasFetched, router.query])
 
   useEffect(() => {
     // Set history to undefined on ever application change.
@@ -188,7 +199,7 @@ export default function Review() {
         app => app.submissionTime === history
       )
     }
-
+    console.log(currentApplication)
     return currentApplication.application.submissionDetails
   }
 
@@ -222,7 +233,12 @@ export default function Review() {
                 <>
                   <input
                     value={query}
-                    onChange={e => setQuery(e.target.value)}
+                    onChange={e => {
+                      router.push({
+                        query: { q: e.target.value },
+                      })
+                      setQuery(e.target.value)
+                    }}
                     placeholder="Began typing to search..."
                     className={review.search}
                   />

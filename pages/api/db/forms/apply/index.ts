@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await Promise.all([
     sendMessageToChannel(
       staffChannelId,
-      `\`${session.user.name} has applied!\` View it here: https://streamlinesmp.com/account/admin/review`
+      `\`${session.user.name} has applied!\` View it here: ${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.minecraftUuid}`
     ),
     applications.set(applicationData, { merge: true }),
   ])
