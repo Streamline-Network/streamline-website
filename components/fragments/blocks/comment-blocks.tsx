@@ -40,6 +40,7 @@ export default function CommentBlocks({
       comments ? comments.push(comment) : (comments = [comment])
 
       newArr[index].application.comments = comments
+      newArr[index].action = 'commented'
 
       return newArr
     })

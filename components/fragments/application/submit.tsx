@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
+import { Notify } from 'pages/api/discord/notify-staff'
 import { StateData } from 'pages/api/db/sets/state'
 import application from './application.module.scss'
 import customFetch from 'utils/fetch'
@@ -49,19 +50,30 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           checks={checks}
           submit={{
             agreements: agreements,
-            final() {
-              customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
-                entries: { applicationStage: 1 },
-              })
-                .then(({ response }) => {
-                  if (response.ok) {
-                    console.log('All checks passed!')
-                    setCurrentStepIndex(1)
-                  } else {
-                    setCustomError('There was an issue saving!')
-                  }
+            final(formInfo) {
+              customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
+                name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
+              }).then(({ data, response }) => {
+                if (!response.ok || 'error' in data)
+                  return setCustomError(CRITICAL_ERROR_MESSAGE + ' ID')
+
+                customFetch<undefined, Notify>('/api/discord/notify-staff', 'POST', {
+                  minecraftUuid: data.uuid,
                 })
-                .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE'))
+
+                customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
+                  entries: { applicationStage: 1 },
+                })
+                  .then(({ response }) => {
+                    if (response.ok) {
+                      console.log('All checks passed!')
+                      setCurrentStepIndex(1)
+                    } else {
+                      setCustomError('There was an issue saving!')
+                    }
+                  })
+                  .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE'))
+              })
             },
           }}
           save={formInfo => {

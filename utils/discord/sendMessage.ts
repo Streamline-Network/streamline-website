@@ -1,14 +1,34 @@
-import { RESTPatchAPIChannelMessageJSONBody } from 'discord-api-types/v10'
+import {
+  ButtonStyle,
+  ComponentType,
+  RESTPostAPIChannelMessageJSONBody,
+} from 'discord-api-types/v10'
+
 import customFetch from 'utils/fetch'
 import { discordAuthHeaders } from 'utils/discord/verify-discord-request'
 
-export async function sendMessageToChannel(channelId: string, message: string) {
-  const result = await customFetch<undefined, RESTPatchAPIChannelMessageJSONBody>(
+export async function sendMessageToChannel(
+  channelId: string,
+  message: string,
+  buttons: { content: string; link: string }[]
+) {
+  await customFetch<undefined, RESTPostAPIChannelMessageJSONBody>(
     `${process.env.DISCORD_API_URL}/channels/${channelId}/messages`,
     'POST',
-    { content: message },
+    {
+      content: message,
+      components: buttons.map(({ content, link }) => ({
+        type: ComponentType.ActionRow,
+        components: [
+          {
+            type: ComponentType.Button,
+            url: link,
+            style: ButtonStyle.Link,
+            label: content,
+          },
+        ],
+      })),
+    },
     discordAuthHeaders
   )
-
-  console.log(result)
 }

@@ -39,6 +39,7 @@ export default function Decision({
 
     currentApplication.application.state = state
     if (state === 'denied' && reasoning) currentApplication.application.deniedReason = reasoning
+    currentApplication.action = reasoning ? 'decidedWithReason' : 'decided'
     currentApplication.application.comments
       ? currentApplication.application.comments.push(comment)
       : (currentApplication.application.comments = [comment])

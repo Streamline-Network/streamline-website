@@ -60,6 +60,7 @@ interface CustomRequest extends NextApiRequest {
 export type QueryResponse = {
   path: string
   application: Database.Applications.Apply
+  action: 'decided' | 'decidedWithReason' | 'commented'
 }
 
 type Query = {
