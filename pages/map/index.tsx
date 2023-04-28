@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 export default function Map() {
   const [hasTried, setHasTried] = useState(false)
-  const mapDomain = 'http://104.243.40.122:7778/'
+  const mapDomain = process.env.NEXT_PUBLIC_MAP_URL
 
   function handleCLick() {
     try {
