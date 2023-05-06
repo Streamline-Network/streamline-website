@@ -12,7 +12,7 @@ export async function sendMessageToChannel(
   message: string,
   buttons: { content: string; link: string }[]
 ) {
-  await customFetch<undefined, RESTPostAPIChannelMessageJSONBody>(
+  const res = await customFetch<undefined, RESTPostAPIChannelMessageJSONBody>(
     `${process.env.DISCORD_API_URL}/channels/${channelId}/messages`,
     'POST',
     {
@@ -31,4 +31,6 @@ export async function sendMessageToChannel(
     },
     discordAuthHeaders
   )
+
+  console.log(res)
 }
