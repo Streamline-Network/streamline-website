@@ -150,5 +150,5 @@ export function getRandomMessage() {
     'Feast your eyes',
   ]
 
-  return messages[random(0, messages.length)]
+  return messages[random(0, messages.length - 1)]
 }

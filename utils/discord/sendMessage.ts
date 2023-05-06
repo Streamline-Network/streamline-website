@@ -32,5 +32,5 @@ export async function sendMessageToChannel(
     discordAuthHeaders
   )
 
-  console.log(res)
+  console.log(ComponentType, res.data)
 }
