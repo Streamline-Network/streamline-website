@@ -3,7 +3,7 @@ import * as message from 'utils/constant-messages'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { authOptions } from '../auth/[...nextauth]'
-import { getRandomMessage } from '../db/forms/apply/review'
+import { getRandomMessage } from 'utils/discord/action-messages/staff-change'
 import { getServerSession } from 'next-auth'
 import { sendMessageToChannel } from 'utils/discord/send-message'
 

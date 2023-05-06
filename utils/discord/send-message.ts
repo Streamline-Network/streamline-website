@@ -12,7 +12,7 @@ export async function sendMessageToChannel(
   message: string,
   buttons: { content: string; link: string }[]
 ) {
-  const res = await customFetch<undefined, RESTPostAPIChannelMessageJSONBody>(
+  await customFetch<undefined, RESTPostAPIChannelMessageJSONBody>(
     `${process.env.DISCORD_API_URL}/channels/${channelId}/messages`,
     'POST',
     {

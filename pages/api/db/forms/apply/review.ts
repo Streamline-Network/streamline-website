@@ -6,8 +6,9 @@ import { QueryResponse } from './collection-group'
 import { STAFF_ROLES } from 'middleware'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { db } from 'config/firebase'
+import { getMessageToSend } from 'utils/discord/action-messages/staff-change'
 import { getServerSession } from 'next-auth'
-import { random } from 'utils/misc'
+import { notifyUser } from 'utils/discord/action-messages/notify-user'
 import { sendMessageToChannel } from 'utils/discord/send-message'
 
 // TODO: Give role on Discord, send welcome message
@@ -31,92 +32,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return arr[1]
   }
 
-  async function getMessageToSend() {
-    const staffChannelId = process.env.DISCORD_STAFF_CHANNEL
-    if (!staffChannelId) throw new Error('Missing staff channel id env!')
-
-    const comments = applicationData.application.comments ?? [
-      { message: ' {{ An error occurred! }} ' },
-    ]
-
-    switch (applicationData.action) {
-      case 'decided': {
-        return await sendMessageToChannel(
-          staffChannelId,
-          `**${session!.user.name} has ${
-            applicationData.application.state === 'pending'
-              ? 'held'
-              : applicationData.application.state
-          } ${
-            applicationData.application.submissionDetails.answers[
-              'What is your Minecraft Java Edition username?'
-            ]
-          }'s application!**`,
-          [
-            {
-              content: getRandomMessage(),
-              link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
-            },
-          ]
-        )
-      }
-      case 'decidedWithReason': {
-        return await sendMessageToChannel(
-          staffChannelId,
-          `**${session!.user.name} has ${
-            applicationData.application.state === 'pending'
-              ? 'held'
-              : applicationData.application.state
-          } ${
-            applicationData.application.submissionDetails.answers[
-              'What is your Minecraft Java Edition username?'
-            ]
-          }'s application!**\nTheir reason: \`\`\`${comments[comments.length - 1].message}\`\`\``,
-          [
-            {
-              content: getRandomMessage(),
-              link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
-            },
-          ]
-        )
-      }
-      case 'commented': {
-        return await sendMessageToChannel(
-          staffChannelId,
-          `**${session!.user.name} has commented on ${
-            applicationData.application.submissionDetails.answers[
-              'What is your Minecraft Java Edition username?'
-            ]
-          }'s application!**\nTheir comment: \`\`\`${comments[comments.length - 1].message}\`\`\``,
-          [
-            {
-              content: getRandomMessage(),
-              link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
-            },
-          ]
-        )
-      }
-      default: {
-        return await sendMessageToChannel(
-          staffChannelId,
-          `**${session!.user.name} has updated ${
-            applicationData.application.submissionDetails.answers[
-              'What is your Minecraft Java Edition username?'
-            ]
-          }'s application! -- The application is ${
-            applicationData.application.state ?? 'pending'
-          }.**`,
-          [
-            {
-              content: getRandomMessage(),
-              link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
-            },
-          ]
-        )
-      }
-    }
-  }
-
   try {
     await Promise.all([
       db.doc(applicationData.path).update(applicationData.application),
@@ -125,30 +40,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         : db
             .doc('userState/' + getIdFromPath(applicationData.path))
             .update({ applicationStage: 1 }),
-      getMessageToSend(),
+      getMessageToSend(session, applicationData),
+      notifyUser(applicationData),
     ])
   } catch {
     return res.status(500).end()
   }
 
   return res.status(201).end()
-}
-
-export function getRandomMessage() {
-  const messages = [
-    'View it here',
-    'Take a looksie',
-    'Grab a peek',
-    'See it',
-    'Take a gander',
-    'Take a glimpse',
-    'Take a look',
-    'Behold',
-    'Witness the glory',
-    'Check it out',
-    'Inspect this',
-    'Feast your eyes',
-  ]
-
-  return messages[random(0, messages.length - 1)]
 }
