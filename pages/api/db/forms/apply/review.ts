@@ -9,11 +9,8 @@ import { db } from 'config/firebase'
 import { getMessageToSend } from 'utils/discord/action-messages/staff-change'
 import { getServerSession } from 'next-auth'
 import { notifyUser } from 'utils/discord/action-messages/notify-user'
-import { sendMessageToChannel } from 'utils/discord/send-message'
 
-// TODO: Give role on Discord, send welcome message
 // TODO: Whitelist them on MC server
-// TODO: Denied DM
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
