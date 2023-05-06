@@ -17,17 +17,17 @@ export async function sendMessageToChannel(
     'POST',
     {
       content: message,
-      components: buttons.map(({ content, link }) => ({
-        type: ComponentType.ActionRow,
-        components: [
-          {
+      components: [
+        {
+          type: ComponentType.ActionRow,
+          components: buttons.map(({ content, link }) => ({
             type: ComponentType.Button,
             url: link,
             style: ButtonStyle.Link,
             label: content,
-          },
-        ],
-      })),
+          })),
+        },
+      ],
     },
     discordAuthHeaders
   )
