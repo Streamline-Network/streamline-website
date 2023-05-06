@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { authOptions } from '../auth/[...nextauth]'
 import { getRandomMessage } from '../db/forms/apply/review'
 import { getServerSession } from 'next-auth'
-import { sendMessageToChannel } from 'utils/discord/sendMessage'
+import { sendMessageToChannel } from 'utils/discord/send-message'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)

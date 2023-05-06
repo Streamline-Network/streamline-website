@@ -8,7 +8,7 @@ import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { db } from 'config/firebase'
 import { getServerSession } from 'next-auth'
 import { random } from 'utils/misc'
-import { sendMessageToChannel } from 'utils/discord/sendMessage'
+import { sendMessageToChannel } from 'utils/discord/send-message'
 
 // TODO: Give role on Discord, send welcome message
 // TODO: Whitelist them on MC server
