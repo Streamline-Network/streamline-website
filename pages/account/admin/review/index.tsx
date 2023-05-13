@@ -1,5 +1,5 @@
 import Filter, { FilterTag } from '../../../../components/fragments/review/filter/filter'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import ApplicationNavigation from 'components/fragments/review/application-navigation/application-navigation'
 import Blocks from 'components/fragments/blocks/blocks'
@@ -21,6 +21,7 @@ import { useRouter } from 'next/router'
 
 export const PER_SECTION_LIMIT = 5
 const SEARCH_AMOUNT = 50
+const REFRESH_INTERVAL = 30000 // Get updated applications every 30 seconds
 
 export default function Review() {
   const [query, setQuery] = useState('')
@@ -43,7 +44,9 @@ export default function Review() {
   ])
   const [history, setHistory] = useState<undefined | number>()
   const [hasFetched, setHasFetched] = useState(false)
+  const [refreshes, setRefreshes] = useState(0)
   const router = useRouter()
+  const refresherRef = useRef<NodeJS.Timer>()
 
   useEffect(() => {
     setHasFetched(false)
@@ -54,6 +57,23 @@ export default function Review() {
       setApplicationData(data)
     })
   }, [])
+
+  useEffect(() => {
+    refresherRef.current = setInterval(() => {
+      setRefreshes(refreshes + 1)
+
+      if (hasFetched) {
+        customFetch<QueryResponse[]>(
+          `/api/db/forms/apply/collection-group?applicationType=apply&limit=${applicationData?.length}&direction=desc`
+        ).then(({ data }) => {
+          console.log(data)
+          setApplicationData(data)
+        })
+      }
+    }, REFRESH_INTERVAL)
+
+    return () => clearInterval(refresherRef.current)
+  }, [applicationData?.length, hasFetched, refreshes])
 
   // Apply url query once the page and application content has loaded
   useEffect(() => {
