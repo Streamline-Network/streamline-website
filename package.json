@@ -24,7 +24,7 @@
     "react-hook-form": "^7.43.5",
     "react-icons": "^4.8.0",
     "sass": "^1.58.3",
-    "sharp": "^0.32.0",
+    "sharp": "^0.32.1",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
