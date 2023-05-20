@@ -4,6 +4,10 @@
   @include mixins.title;
 }
 
+.subheader {
+  @include mixins.subheader;
+}
+
 .block {
   background-color: var(--btn-color);
   padding: 1rem;
