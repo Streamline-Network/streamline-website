@@ -1,5 +1,6 @@
 import LimitedTable, { TableRow } from 'components/fragments/blocks/limited-table'
 
+import Head from 'next/head'
 import classNames from 'classnames'
 import rules from './rules.module.scss'
 
@@ -100,6 +101,9 @@ export default function Rules() {
 
   return (
     <>
+      <Head>
+        <title>Streamline SMP Rules</title>
+      </Head>
       <h1 className={classNames('orange', rules.title)}>Rules</h1>
       <div>
         <h2 className={rules.subheader}>Discord Rules</h2>

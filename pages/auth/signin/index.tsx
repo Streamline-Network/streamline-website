@@ -18,7 +18,7 @@ export default function SignIn({
   return (
     <>
       <Head>
-        <title>Sign in to Streamline SMP</title>
+        <title>Streamline SMP Sign In</title>
       </Head>
       <h1 className={classnames('orange', signin.title)}>Sign In</h1>
       <div>

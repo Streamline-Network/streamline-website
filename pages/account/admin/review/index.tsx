@@ -10,6 +10,7 @@ import { Database } from 'pages/api/db/database'
 import Decision from 'components/fragments/review/decision/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
+import Head from 'next/head'
 import HistoryDropdown from 'components/fragments/review/history-dropdown/history-dropdown'
 import Loading from 'components/fragments/application/loading'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
@@ -238,6 +239,9 @@ export default function Review() {
 
   return (
     <>
+      <Head>
+        <title>Streamline SMP Review Applications</title>
+      </Head>
       <h1 className={classNames(review.title, 'green')}>Applications</h1>
       <div>
         <h2 className={review.subheader}>Filter applications</h2>

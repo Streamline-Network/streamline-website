@@ -47,7 +47,7 @@ export default function Settings() {
   return (
     <>
       <Head>
-        <title>Account Settings</title>
+        <title>Streamline SMP Settings</title>
       </Head>
 
       <h1 className={classnames('purple', settings.title)}>Settings</h1>
