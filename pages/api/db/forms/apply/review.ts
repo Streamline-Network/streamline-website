@@ -30,43 +30,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return arr[1]
   }
 
-  async function updateDB(applicationData: QueryResponse) {
-    const docRef = db.doc(applicationData.path)
-
-    switch (applicationData.action) {
-      case 'commented': {
-        const newComments = applicationData.application.comments!
-
-        return db.runTransaction(async transaction => {
-          const snapshot = await transaction.get(docRef)
-          const comments: Comment[] = snapshot.get('comments')
-          comments.push(newComments[newComments.length - 1])
-          transaction.update(docRef, 'comments', comments)
-        })
-      }
-      // case 'decided': {
-      //   return 'promise'
-      // }
-      // case 'decidedWithReason': {
-      //   return 'promise'
-      // }
-      default: {
-        return db.doc(applicationData.path).update(applicationData.application)
-      }
-    }
-  }
-
-  console.log(applicationData.action)
+  const newComments = applicationData.application.comments!
+  const docRef = db.doc(applicationData.path)
 
   try {
     await Promise.all([
-      updateDB(applicationData),
+      applicationData.action !== 'commented' ??
+        db.doc(applicationData.path).update({ state: applicationData.application.state }),
+
+      db.runTransaction(async transaction => {
+        const snapshot = await transaction.get(docRef)
+        const comments: Comment[] = snapshot.get('comments') ?? []
+        comments.push(newComments[newComments.length - 1])
+        transaction.update(docRef, 'comments', comments)
+      }),
+
       applicationData.application.state !== 'pending'
         ? db.doc('userState/' + getIdFromPath(applicationData.path)).update({ applicationStage: 2 })
         : db
             .doc('userState/' + getIdFromPath(applicationData.path))
             .update({ applicationStage: 1 }),
+
       getMessageToSend(session, applicationData),
+
       notifyUser(applicationData),
     ])
   } catch {
