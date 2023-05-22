@@ -76,39 +76,42 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               })
             },
           }}
-          save={formInfo => {
-            // Get users Minecraft uuid to save in the database.
-            customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
-              name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
-            })
-              .then(uuidData => {
-                if (!uuidData.response.ok || 'error' in uuidData.data || !uuidData.data.uuid) {
-                  return setCustomError('Could not get UUID! Try again later.')
+          save={async formInfo => {
+            try {
+              // Get users Minecraft uuid to save in the database.
+              const uuidData = await customFetch<ProfileData, ProfileBody>(
+                '/api/minecraft/profiles',
+                'POST',
+                {
+                  name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
                 }
+              )
 
-                // Push to database.
-                customFetch<undefined, Database.Applications.Apply>('/api/db/forms/apply', 'POST', {
+              if (!uuidData.response.ok || 'error' in uuidData.data || !uuidData.data.uuid) {
+                return 'Could not get UUID! Try again later.'
+              }
+
+              // Push to database.
+              const { response, data } = await customFetch<undefined, Database.Applications.Apply>(
+                '/api/db/forms/apply',
+                'POST',
+                {
                   submissionDetails: formInfo,
                   minecraftUuid: uuidData.data.uuid,
                   type: 'apply',
-                })
-                  .then(({ response, data }) => {
-                    if (response.ok) {
-                      console.log('Form saved!', formInfo)
-                    } else {
-                      setCustomError(`An error occurred with the server! Please try again later.`)
-                      console.warn(data)
-                    }
-                  })
-                  .catch(e => {
-                    setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
-                    console.warn(e)
-                  })
-              })
-              .catch(e => {
-                setCustomError(CRITICAL_ERROR_MESSAGE + ' UUID')
-                console.warn(e)
-              })
+                }
+              )
+
+              if (response.ok) {
+                console.log('Form saved!', formInfo)
+              } else {
+                console.warn(data)
+                return `An error occurred with the server! Please try again later.`
+              }
+            } catch (error) {
+              console.warn(error)
+              return CRITICAL_ERROR_MESSAGE + ' UUID'
+            }
           }}
         />
       )}

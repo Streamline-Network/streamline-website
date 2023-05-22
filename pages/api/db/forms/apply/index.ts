@@ -16,30 +16,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
-  const applications = db.doc(`applications/${session.id}/types/apply`)
+  const applicationsRef = db.doc(`applications/${session.id}/types/apply`)
 
-  const docSnap = await applications.get()
+  await db.runTransaction(async transaction => {
+    const docSnap = await transaction.get(applicationsRef)
 
-  if (docSnap.exists) {
-    const previousApplication = docSnap.data() as Database.Applications.Apply
+    if (docSnap.exists) {
+      const previousApplication = docSnap.data() as Database.Applications.Apply
 
-    if (previousApplication.submissionDetails) {
-      previousApplication.comments!.push({
-        name: session.user.name,
-        senderId: session.id,
-        time: Date.now(),
-        senderPicture: session.user.image,
-        userAction: 'Updated application',
-      })
-      applicationData.comments = previousApplication.comments
+      if (previousApplication.submissionDetails) {
+        previousApplication.comments!.push({
+          name: session.user.name,
+          senderId: session.id,
+          time: Date.now(),
+          senderPicture: session.user.image,
+          userAction: 'Updated application',
+        })
+        applicationData.comments = previousApplication.comments
 
-      applicationData.previousSubmissions = previousApplication.previousSubmissions
-        ? [...previousApplication.previousSubmissions, previousApplication.submissionDetails]
-        : [previousApplication.submissionDetails]
+        applicationData.previousSubmissions = previousApplication.previousSubmissions
+          ? [...previousApplication.previousSubmissions, previousApplication.submissionDetails]
+          : [previousApplication.submissionDetails]
+      }
     }
-  }
 
-  await Promise.all([applications.set(applicationData, { merge: true })])
+    // Make sure data is safe by only including any expected values.
+    const safeData: Database.Applications.Apply = {
+      minecraftUuid: applicationData.minecraftUuid,
+      submissionDetails: applicationData.submissionDetails,
+      type: 'apply',
+    }
+
+    if (docSnap.exists) {
+      safeData.comments = applicationData.comments
+      safeData.previousSubmissions = applicationData.previousSubmissions
+    }
+
+    transaction.set(applicationsRef, safeData, { merge: true })
+  })
 
   return res.status(200).end()
 }

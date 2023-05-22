@@ -335,7 +335,9 @@ export default function Review() {
               numbered
               formInfo={getSelectedFormData()}
               sections={sections}
-              save={() => {}}
+              save={() => {
+                return undefined
+              }}
               submit={{ final: () => {} }}
               checks={[]}
               error={[error, setError]}

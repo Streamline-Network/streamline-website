@@ -70,7 +70,11 @@ export default function FormBlocks({
 
     const parsedData = parseData(data)
 
-    save({ submissionTime: Date.now(), answers: parsedData })
+    const error = await save({ submissionTime: Date.now(), answers: parsedData })
+
+    if (error) {
+      return setCustomError(error)
+    }
 
     for (let i = 0; i < checks.length; i++) {
       const check = checks[i]
@@ -176,5 +180,5 @@ export interface BlockFormProps {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
     final: (formInfo: FormInfo) => void
   }
-  save: (formInfo: FormInfo) => void
+  save: (formInfo: FormInfo) => string | undefined | Promise<string | undefined>
 }

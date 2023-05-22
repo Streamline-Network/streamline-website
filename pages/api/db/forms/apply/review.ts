@@ -1,8 +1,8 @@
 import * as message from 'utils/constant-messages'
 
-import { Comment, Database } from '../../database'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+import { Comment } from '../../database'
 import { QueryResponse } from './collection-group'
 import { STAFF_ROLES } from 'middleware'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
