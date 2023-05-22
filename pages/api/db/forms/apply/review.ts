@@ -1,5 +1,6 @@
 import * as message from 'utils/constant-messages'
 
+import { Comment, Database } from '../../database'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 import { QueryResponse } from './collection-group'
@@ -29,9 +30,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return arr[1]
   }
 
+  async function updateDB(applicationData: QueryResponse) {
+    const docRef = db.doc(applicationData.path)
+
+    switch (applicationData.action) {
+      case 'commented': {
+        const newComments = applicationData.application.comments!
+
+        return db.runTransaction(async transaction => {
+          const snapshot = await transaction.get(docRef)
+          const comments: Comment[] = snapshot.get('comments')
+          comments.push(newComments[newComments.length - 1])
+          transaction.update(docRef, 'comments', comments)
+        })
+      }
+      // case 'decided': {
+      //   return 'promise'
+      // }
+      // case 'decidedWithReason': {
+      //   return 'promise'
+      // }
+      default: {
+        return db.doc(applicationData.path).update(applicationData.application)
+      }
+    }
+  }
+
+  console.log(applicationData.action)
+
   try {
     await Promise.all([
-      db.doc(applicationData.path).update(applicationData.application),
+      updateDB(applicationData),
       applicationData.application.state !== 'pending'
         ? db.doc('userState/' + getIdFromPath(applicationData.path)).update({ applicationStage: 2 })
         : db
