@@ -40,6 +40,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       db.runTransaction(async transaction => {
         const snapshot = await transaction.get(docRef)
+
+        if (applicationData.application.state)
+          transaction.update(docRef, 'state', applicationData.application.state)
+
         const comments: Comment[] = snapshot.get('comments') ?? []
         comments.push(newComments[newComments.length - 1])
         transaction.update(docRef, 'comments', comments)

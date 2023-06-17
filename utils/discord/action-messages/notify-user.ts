@@ -5,7 +5,8 @@ import { sendDmMessage } from '../send-dm-message'
 import { sendMessageToChannel } from '../send-message'
 
 export async function notifyUser(applicationData: QueryResponse) {
-  if (applicationData.action !== 'decided') return
+  if (!(applicationData.action === 'decided' || applicationData.action === 'decidedWithReason'))
+    return
 
   const mainUserId = applicationData.path.split('/')[1]
 
