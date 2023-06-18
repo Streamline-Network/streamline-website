@@ -27,7 +27,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const previousApplication = docSnap.data() as Database.Applications.Apply
 
         if (previousApplication.submissionDetails) {
-          previousApplication.comments!.push({
+          if (!previousApplication.comments) previousApplication.comments = []
+
+          previousApplication.comments.push({
             name: session.user.name,
             senderId: session.id,
             time: Date.now(),
@@ -51,7 +53,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       if (docSnap.exists) {
-        safeData.comments = applicationData.comments
+        safeData.comments = applicationData.comments ? applicationData.comments : []
         safeData.previousSubmissions = applicationData.previousSubmissions
       }
 
