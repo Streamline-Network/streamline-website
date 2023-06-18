@@ -103,8 +103,9 @@ $rounded-radius: 10px;
   flex-direction: column;
   padding: 20px;
   text-align: center;
-  > h2 {
-    text-transform: uppercase;
+  > h3 {
+    font-size: 1.5rem;
+    text-transform: capitalize;
   }
 
   & a {
