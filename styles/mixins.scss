@@ -69,9 +69,9 @@ $rounded-radius: 10px;
 }
 
 @mixin block-button {
-  background: var(--bg-color) !important;
+  background: var(--bg-color);
   border-radius: var(--border-radius-2);
-  color: var(--text-color) !important;
+  color: var(--text-color);
   display: block;
   font-size: 1.3rem;
   font-weight: 600;
@@ -103,11 +103,27 @@ $rounded-radius: 10px;
   flex-direction: column;
   padding: 20px;
   text-align: center;
-  > h2 {
-    text-transform: uppercase;
+  > h3 {
+    font-size: 1.5rem;
+    text-transform: capitalize;
   }
 
   & a {
     text-decoration: underline;
+  }
+}
+
+@mixin skeleton-animation {
+  background: linear-gradient(90deg, #ffffff10, #ffffff10, #ffffff15, #ffffff10, #ffffff10);
+  background-size: 200% 100%;
+  animation: skeleton 1s linear infinite reverse;
+}
+
+@keyframes skeleton {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
   }
 }

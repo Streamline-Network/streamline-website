@@ -13,6 +13,7 @@ export declare module Database {
     applicationStage: ApplicationStage
     name: string
     role: Roles
+    picture: string
   }
 
   interface UserIds {
@@ -39,8 +40,23 @@ export declare module Database {
 
       minecraftUuid: string
 
-      state?: 'accepted' | 'denied' | 'pending'
+      state?: ApplyApplicationState
+      comments?: Comment[]
       deniedReason?: string
+
+      type: 'apply'
     }
   }
 }
+
+export type Comment = {
+  senderId: string
+  name: string
+  senderPicture: string
+  time: number
+  message?: string
+  decision?: ApplyApplicationState
+  userAction?: string
+}
+
+export type ApplyApplicationState = 'accepted' | 'denied' | 'pending'

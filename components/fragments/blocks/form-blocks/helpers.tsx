@@ -1,7 +1,7 @@
 import { FieldErrors, FieldValues } from 'react-hook-form'
 import { FormInfo, Question } from '../block-types'
 
-import { Checkbox } from 'components/fragments/checkboxes/checkboxes'
+import { Checkbox } from 'components/fragments/blocks/form-blocks/checkboxes/checkboxes'
 import blocks from '../blocks.module.scss'
 
 export function getValue(question: Question, formInfo?: FormInfo) {

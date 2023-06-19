@@ -12,11 +12,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
   return (
     <Wrapper session={session}>
       <div>
-        <CookieConsent
-          acceptOnScroll
-          acceptOnScrollPercentage={25}
-          containerClasses="cookie-wrapper"
-          buttonText={'Accept Essential Cookies'}>
+        <CookieConsent containerClasses="cookie-wrapper" buttonText={'Accept Essential Cookies'}>
           This website uses cookies to enhance the user experience.
         </CookieConsent>
       </div>

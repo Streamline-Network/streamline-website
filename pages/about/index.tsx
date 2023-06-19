@@ -214,7 +214,7 @@ export default function About() {
       <h1 className={classnames('yellow', about.title)}>About</h1>
       <div>
         <div className={about.subHeader}>
-          <h2>Frequently Asked Questions</h2>
+          <h3>Frequently Asked Questions</h3>
           <p>
             Have a question? We have the answer! If you don&lsquo;t see your question here you can
             always hit us up at our{' '}
