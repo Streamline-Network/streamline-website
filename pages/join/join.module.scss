@@ -4,81 +4,18 @@
   @include mixins.title;
 }
 
-.block {
-  background-color: var(--btn-color);
-  border-radius: var(--border-radius-1);
-  display: flex;
-  flex-direction: column;
-  font-size: 1rem;
-  gap: var(--margin-1);
-  padding: var(--block-padding);
-
-  > h2 {
-    color: black;
-    font-size: 1.4rem;
-
-    padding: var(--padding-3) !important;
-    text-align: center;
-    width: 100%;
-    border-radius: var(--border-radius-2);
-  }
-
-  > p {
-    flex-grow: 1;
-    line-height: 1.25rem;
-    text-align: justify;
-  }
+.infoBlock {
+  @include mixins.information-block;
 }
 
-.showDesktop {
-  display: none;
-  @include mixins.desktop {
-    display: block;
-  }
+.importantButton {
+  @include mixins.button;
 }
 
 .largeButton {
   @include mixins.block-button;
 }
 
-.grid {
-  color: white;
-  display: grid;
-  gap: var(--margin-1);
-
-  @include mixins.desktop {
-    grid-template-columns: 2fr 1fr;
-  }
-}
-
-.discordEmbed {
-  height: 100%;
-  width: 100%;
-  border-radius: var(--border-radius-1);
-}
-
 .subheader {
   @include mixins.subheader;
-}
-
-.subBlockTxt {
-  margin-top: auto;
-}
-
-.lowerGrid {
-  @include mixins.desktop {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-.hideDesktop {
-  @include mixins.desktop {
-    display: none;
-  }
-}
-
-.discExample {
-  @include mixins.desktop {
-    margin-top: auto;
-  }
 }

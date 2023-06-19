@@ -18,6 +18,8 @@
 .box {
   background-color: var(--btn-color);
   border-radius: var(--border-radius-1);
+  color: var(--bg-color);
+  font-weight: 700;
   padding: 1rem;
 
   display: flex;

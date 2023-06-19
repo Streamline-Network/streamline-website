@@ -1,0 +1,49 @@
+.dropdown {
+  width: 100%;
+  padding: var(--padding-3);
+  border-radius: var(--border-radius-2);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: none;
+  outline: transparent;
+  font: inherit;
+
+  text-transform: capitalize !important;
+  text-align: left !important;
+
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 4rem;
+
+  transition: transform 200ms ease;
+
+  &.closed {
+    transform: translateY(-50%) rotateZ(90deg);
+  }
+}
+
+.itemsWrapper {
+  margin-top: var(--margin-1);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--margin-1);
+
+  > * {
+    width: fit-content;
+    text-transform: capitalize !important;
+  }
+}
+
+.selected {
+  background-color: var(--text-color) !important;
+  color: var(--bg-color) !important;
+}

@@ -1,0 +1,95 @@
+@use 'styles/mixins.scss' as mixins;
+.wrapper {
+  background-color: var(--btn-color);
+  padding: var(--padding-3);
+  border-radius: var(--border-radius-1);
+  min-width: max-content;
+
+  display: flex;
+  align-items: center;
+  gap: var(--margin-1);
+
+  border: none;
+  color: var(--text-color);
+
+  user-select: none;
+
+  transition: color 200ms, background 200ms;
+
+  > * {
+    pointer-events: none;
+  }
+}
+
+.selected {
+  background-color: var(--text-color);
+  color: var(--btn-color);
+}
+
+.minecraftSkin {
+  border-radius: var(--border-radius-2);
+}
+
+.details {
+  display: grid;
+}
+
+.name {
+  font-size: 2rem;
+}
+
+.accepted,
+.denied,
+.pending,
+.notReviewed {
+  border-left: solid var(--border-radius-2) transparent;
+}
+
+.accepted {
+  border-color: var(--accept-color) !important;
+}
+
+.pending {
+  border-color: var(--review-color) !important;
+}
+
+.notReviewed {
+  border-color: var(--pending-color) !important;
+}
+
+.denied {
+  border-color: var(--deny-color) !important;
+}
+
+.selector {
+  display: flex;
+  gap: var(--margin-1);
+  position: relative;
+
+  cursor: grab;
+
+  overflow-x: auto;
+
+  width: calc((100% + (var(--left-right-padding) * 2)) + (0.5% * 2));
+  margin-left: calc((var(--left-right-padding) * -1) - 0.5%);
+
+  padding-inline: 50%;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.loadDetector {
+  width: 0;
+  margin-left: calc(var(--margin-1) * -1);
+}
+
+.skeleton {
+  min-width: 300px;
+
+  @include mixins.skeleton-animation;
+}

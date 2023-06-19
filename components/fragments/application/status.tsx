@@ -55,7 +55,7 @@ export default function Status({ setCurrentStepIndex }: StatusProps) {
             })
           }}
           className={application.button}>
-          Unsubmit & Modify Your Application
+          Modify Your Application
         </button>
       </div>
     </>

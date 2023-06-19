@@ -1,9 +1,9 @@
+import Checkboxes, { Checkbox } from './checkboxes/checkboxes'
 import { Checks, FormInfo, Section } from '../block-types'
-import { Dispatch, Fragment, SetStateAction } from 'react'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { Fragment, useState } from 'react'
 import { goToFirstError, isErrors } from './helpers'
 
-import Checkboxes from '../../checkboxes/checkboxes'
 import Input from './input'
 import LoadingBar from './loading-bar'
 import blocks from '../blocks.module.scss'
@@ -26,6 +26,17 @@ export default function FormBlocks({
     clearErrors,
     formState: { errors, isSubmitting },
   } = useForm()
+
+  const [agreements, setAgreements] = useState<Checkbox[]>(
+    submit.agreements
+      ? submit.agreements.map(a => ({
+          content: a.agreement,
+          isChecked: false,
+          required: true,
+          link: a.link,
+        }))
+      : []
+  )
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: { [key: string]: string }) => {
     function getData(data: string) {
@@ -59,7 +70,11 @@ export default function FormBlocks({
 
     const parsedData = parseData(data)
 
-    save({ submissionTime: Date.now(), answers: parsedData })
+    const error = await save({ submissionTime: Date.now(), answers: parsedData })
+
+    if (error) {
+      return setCustomError(error)
+    }
 
     for (let i = 0; i < checks.length; i++) {
       const check = checks[i]
@@ -119,12 +134,8 @@ export default function FormBlocks({
               <Checkboxes
                 groupName={'agreements'}
                 register={register}
-                checkboxArray={submit.agreements.map(a => ({
-                  content: a.agreement,
-                  isChecked: false,
-                  required: true,
-                  link: a.link,
-                }))}
+                checkboxArray={agreements}
+                setCheckboxArray={setAgreements}
                 direction={'auto'}
               />
             )}
@@ -161,7 +172,7 @@ export interface BlockFormProps {
   sections: Section[]
 
   checks: Checks
-  error: [string | undefined, Dispatch<SetStateAction<string | undefined>>]
+  error: [string | undefined, React.Dispatch<React.SetStateAction<string | undefined>>]
 
   formInfo?: FormInfo
 
@@ -169,5 +180,5 @@ export interface BlockFormProps {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
     final: (formInfo: FormInfo) => void
   }
-  save: (formInfo: FormInfo) => void
+  save: (formInfo: FormInfo) => string | undefined | Promise<string | undefined>
 }

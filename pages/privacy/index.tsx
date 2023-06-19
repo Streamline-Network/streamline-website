@@ -1,10 +1,14 @@
 import Blocks from 'components/fragments/blocks/blocks'
+import Head from 'next/head'
 import classnames from 'classnames'
 import privacy from './privacy.module.scss'
 
 export default function Privacy() {
   return (
     <>
+      <Head>
+        <title>Streamline SMP Privacy Policy</title>
+      </Head>
       <h1 className={classnames('purple', privacy.title)}>Privacy Policy</h1>
       <div>
         <p className={privacy.block}>
