@@ -12,6 +12,11 @@ declare module 'next-auth' {
     applicationStage: ApplicationStage
     id: string
     email: string
+    user: {
+      email: string
+      image: string
+      name: string
+    }
   }
 }
 
@@ -23,3 +28,10 @@ declare module 'next-auth/jwt' {
     id: string
   }
 }
+
+export type StreamlinePluginJSON =
+  | { action: 'command'; payload: string } // Payload should be valid MC command
+  | {
+      action: 'whitelist'
+      payload: { operation: 'add' | 'remove'; uuid: string } | { operation: 'list' } // List return type
+    }

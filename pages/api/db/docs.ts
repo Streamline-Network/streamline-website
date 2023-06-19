@@ -6,7 +6,7 @@ import { getDoc, getPathArray, hasPermission, parsePath } from 'utils/db/docs'
 import { authOptions } from '../auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 
-export default async function docs(req: CustomRequest, res: NextApiResponse) {
+export default async function handler(req: CustomRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
   // Check if the user is logged in.

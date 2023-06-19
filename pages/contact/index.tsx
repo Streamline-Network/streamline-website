@@ -52,7 +52,7 @@ export default function Contact() {
       <h1 className={classnames('orange', contact.title)}>Contact</h1>
       <div className={contact.grid}>
         <div className={contact.subHeader}>
-          <h2>Have A Question?</h2>
+          <h3>Have A Question?</h3>
           <p>Check out our Q&A! Still lost? Contact us anytime.</p>
         </div>
         <div className={contact.contentGrid}>

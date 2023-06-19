@@ -1,3 +1,7 @@
+import Checkboxes, {
+  Checkbox,
+  CheckboxesProps,
+} from 'components/fragments/blocks/form-blocks/checkboxes/checkboxes'
 import {
   FieldErrors,
   FieldValues,
@@ -7,13 +11,12 @@ import {
 } from 'react-hook-form'
 import { FormInfo, Question } from '../block-types'
 import { getCheckboxValue, getValue, renderError } from './helpers'
+import { useEffect, useState } from 'react'
 
-import Checkboxes from 'components/fragments/checkboxes/checkboxes'
 import Link from 'next/link'
 import MinecraftInput from './minecraft-input'
 import blocks from '../blocks.module.scss'
 import classNames from 'classnames'
-import { useEffect } from 'react'
 
 export default function Input({
   question,
@@ -57,8 +60,9 @@ export default function Input({
             className={blocks.input}
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
-            defaultValue={getValue(question, formInfo)}
+            defaultValue={editable ? getValue(question, formInfo) : undefined}
             type="text"
+            value={!editable ? getValue(question, formInfo) : undefined}
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -72,7 +76,8 @@ export default function Input({
             className={classNames(blocks.input, blocks.textarea)}
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
-            defaultValue={getValue(question, formInfo)}
+            defaultValue={editable ? getValue(question, formInfo) : undefined}
+            value={!editable ? getValue(question, formInfo) : undefined}
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -83,12 +88,12 @@ export default function Input({
 
       return (
         <>
-          <Checkboxes
+          <CheckboxWrapper
             groupName={encodedQuestion.question}
             register={register}
             direction={'auto'}
             editable={editable}
-            checkboxArray={value}
+            array={value}
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -139,7 +144,8 @@ export default function Input({
             type="number"
             placeholder={question.placeholderText || 'Answer here...'}
             disabled={!editable}
-            defaultValue={getValue(question, formInfo)}
+            defaultValue={editable ? getValue(question, formInfo) : undefined}
+            value={!editable ? getValue(question, formInfo) : undefined}
           />
           {renderError(errors, encodedQuestion)}
         </>
@@ -160,4 +166,18 @@ interface InputProps {
   errors: FieldErrors<FieldValues>
   setError: UseFormSetError<FieldValues>
   clearErrors: UseFormClearErrors<FieldValues>
+}
+
+function CheckboxWrapper(
+  props: Omit<CheckboxesProps, 'setCheckboxArray' | 'checkboxArray'> & { array: Checkbox[] }
+) {
+  const [checkboxArray, setCheckboxArray] = useState(props.array)
+
+  useEffect(() => {
+    if (!props.editable) {
+      setCheckboxArray(props.array)
+    }
+  }, [props.array, props.editable])
+
+  return <Checkboxes {...props} checkboxArray={checkboxArray} setCheckboxArray={setCheckboxArray} />
 }

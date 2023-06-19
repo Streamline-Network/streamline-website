@@ -80,7 +80,9 @@ export default function MinecraftInput({
           className={blocks.input}
           placeholder={question.placeholderText || 'Answer here...'}
           disabled={!editable}
-          defaultValue={defaultValue}
+          type="text"
+          defaultValue={editable ? defaultValue : undefined}
+          value={!editable ? defaultValue : undefined}
         />
       </>
     </div>

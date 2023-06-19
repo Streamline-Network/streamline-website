@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 import classNames from 'classnames'
 import progressTracker from './progress-tracker.module.scss'
