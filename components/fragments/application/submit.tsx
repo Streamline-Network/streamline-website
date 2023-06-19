@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
 import Loading from './loading'
+import { Notify } from 'pages/api/discord/notify-staff'
 import { StateData } from 'pages/api/db/sets/state'
 import application from './application.module.scss'
 import customFetch from 'utils/fetch'
@@ -49,53 +50,68 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           checks={checks}
           submit={{
             agreements: agreements,
-            final() {
-              customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
-                entries: { applicationStage: 1 },
-              })
-                .then(({ response }) => {
-                  if (response.ok) {
-                    console.log('All checks passed!')
-                    setCurrentStepIndex(1)
-                  } else {
-                    setCustomError('There was an issue saving!')
-                  }
-                })
-                .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE'))
-            },
-          }}
-          save={formInfo => {
-            // Get users Minecraft uuid to save in the database.
-            customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
-              name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
-            })
-              .then(uuidData => {
-                if (!uuidData.response.ok || 'error' in uuidData.data || !uuidData.data.uuid) {
-                  return setCustomError('Could not get UUID! Try again later.')
-                }
+            final(formInfo) {
+              customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
+                name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
+              }).then(({ data, response }) => {
+                if (!response.ok || 'error' in data)
+                  return setCustomError(CRITICAL_ERROR_MESSAGE + ' ID')
 
-                // Push to database.
-                customFetch<undefined, Database.Applications.Apply>('/api/db/forms/apply', 'POST', {
-                  submissionDetails: formInfo,
-                  minecraftUuid: uuidData.data.uuid,
+                customFetch<undefined, Notify>('/api/discord/notify-staff', 'POST', {
+                  minecraftUuid: data.uuid,
                 })
-                  .then(({ response, data }) => {
+
+                customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
+                  entries: { applicationStage: 1 },
+                })
+                  .then(({ response }) => {
                     if (response.ok) {
-                      console.log('Form saved!', formInfo)
+                      console.log('All checks passed!')
+                      setCurrentStepIndex(1)
                     } else {
-                      setCustomError(`An error occurred with the server! Please try again later.`)
-                      console.warn(data)
+                      setCustomError('There was an issue saving!')
                     }
                   })
-                  .catch(e => {
-                    setCustomError(CRITICAL_ERROR_MESSAGE + ' SUBMIT')
-                    console.warn(e)
-                  })
+                  .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE'))
               })
-              .catch(e => {
-                setCustomError(CRITICAL_ERROR_MESSAGE + ' UUID')
-                console.warn(e)
-              })
+            },
+          }}
+          save={async formInfo => {
+            try {
+              // Get users Minecraft uuid to save in the database.
+              const uuidData = await customFetch<ProfileData, ProfileBody>(
+                '/api/minecraft/profiles',
+                'POST',
+                {
+                  name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
+                }
+              )
+
+              if (!uuidData.response.ok || 'error' in uuidData.data || !uuidData.data.uuid) {
+                return 'Could not get UUID! Try again later.'
+              }
+
+              // Push to database.
+              const { response, data } = await customFetch<undefined, Database.Applications.Apply>(
+                '/api/db/forms/apply',
+                'POST',
+                {
+                  submissionDetails: formInfo,
+                  minecraftUuid: uuidData.data.uuid,
+                  type: 'apply',
+                }
+              )
+
+              if (response.ok) {
+                console.log('Form saved!', formInfo)
+              } else {
+                console.warn(data)
+                return `An error occurred with the server! Please try again later.`
+              }
+            } catch (error) {
+              console.warn(error)
+              return CRITICAL_ERROR_MESSAGE + ' UUID'
+            }
           }}
         />
       )}

@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Link from 'next/link'
 import Loading from 'components/fragments/application/loading'
 import { MdRateReview } from 'react-icons/md'
@@ -14,17 +15,20 @@ export default function Panel() {
 
   return (
     <>
+      <Head>
+        <title>Streamline SMP Staff Panel</title>
+      </Head>
       <h1 className={classNames('green', panel.title)}>Staff Panel</h1>
       {status !== 'authenticated' ? (
-        <Loading /> // Temp loading skeleton until I make one that looks like this page.
+        <Loading />
       ) : (
         <div>
           <div className={classNames(panel.block, panel.intro)}>
             Welcome <span>{data.user?.name}</span> to the <span>{data.role}</span> staff panel! Take
             a look around, something might be useful to you!
           </div>
-          <h2 className={panel.subheader}>Recent activity</h2>
-          <Feed />
+          {/* <h2 className={panel.subheader}>Recent activity</h2>
+          <Feed /> */}
           <h2 className={panel.subheader}>Staff pages</h2>
           <StaffPages />
         </div>

@@ -29,8 +29,7 @@ export async function loadFromDB(token: JWT) {
   }
 
   await loadId()
-
-  const OTHER_STATES: { [key: string]: string } = { name: token.name! }
+  const OTHER_STATES: { [key: string]: string } = { name: token.name!, picture: token.picture! }
 
   let docRef = db.doc(`userState/${token.id}`)
   let docSnap = await docRef.get()
@@ -47,8 +46,8 @@ export async function loadFromDB(token: JWT) {
   }
 
   for (const otherState of Object.keys(OTHER_STATES)) {
-    if (docSnap.exists && docSnap.data()![otherState]) return
-    await docRef.set({ [otherState]: OTHER_STATES[otherState] })
+    if (docSnap.exists && docSnap.data()![otherState]) continue
+    await docRef.set({ [otherState]: OTHER_STATES[otherState] }, { merge: true })
   }
 }
 
