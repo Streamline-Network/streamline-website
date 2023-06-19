@@ -25,7 +25,7 @@ const checks: Checks = [
 
       if ('error' in data) return 'A critical error occurred.'
 
-      if ((data.members as string[]).includes(idData.providerAccountId)) {
+      if (data.members.includes(idData.providerAccountId)) {
         return undefined
       }
 
