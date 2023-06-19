@@ -1,5 +1,6 @@
 import { Block } from 'components/fragments/blocks/block-types'
 import Blocks from 'components/fragments/blocks/blocks'
+import Head from 'next/head'
 import Link from 'next/link'
 import classNames from 'classnames'
 import join from './join.module.scss'
@@ -63,6 +64,14 @@ export default function Join() {
 
   return (
     <>
+      <Head>
+        <title>Join the Best Vanilla SMP Whitelist-Only Minecraft Server Today</title>
+        <meta
+          name="description"
+          content="Take the first step towards an amazing Minecraft experience. Join the best Vanilla SMP Whitelist-Only Minecraft Server now. Apply today!"
+        />
+        <meta name="keywords" content="Joining the Minecraft server" />
+      </Head>
       <h1 className={classNames(join.title, 'green')}>JOIN THE SERVER</h1>
       <div>
         <div className={join.infoBlock}>
