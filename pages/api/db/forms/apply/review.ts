@@ -32,6 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const newComments = applicationData.application.comments!
+
+  if (!verifyPath(applicationData.path)) return res.status(422).send({ error: 'Invalid path.' })
+
   const docRef = db.doc(applicationData.path)
 
   const mainUserId = applicationData.path.split('/')[1]
@@ -76,4 +79,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   return res.status(201).end()
+}
+
+function verifyPath(path: string) {
+  const pathArr = path.split('/')
+
+  if ('applications' !== pathArr[0]) return false
+  if ('types' !== pathArr[2]) return false
+  if ('apply' !== pathArr[3]) return false
+
+  return true
 }
