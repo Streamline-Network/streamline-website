@@ -1,18 +1,11 @@
 import { Database } from 'pages/api/db/database'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
-import { db } from 'config/firebase'
 import { sendDmMessage } from '../send-dm-message'
 import { sendMessageToChannel } from '../send-message'
 
-export async function notifyUser(applicationData: QueryResponse) {
+export async function notifyUser(applicationData: QueryResponse, userIds: Database.UserIds) {
   if (!(applicationData.action === 'decided' || applicationData.action === 'decidedWithReason'))
     return
-
-  const mainUserId = applicationData.path.split('/')[1]
-
-  const userIds = (
-    await db.collection('userIds').where('id', '==', mainUserId).get()
-  ).docs[0].data() as Database.UserIds
 
   if (applicationData.application.state === 'denied') {
     return await sendDmMessage(

@@ -1,8 +1,8 @@
 import * as message from 'utils/constant-messages'
 
+import { Comment, Database } from '../../database'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { Comment } from '../../database'
 import { QueryResponse } from './collection-group'
 import { STAFF_ROLES } from 'middleware'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
@@ -10,6 +10,7 @@ import { db } from 'config/firebase'
 import { getMessageToSend } from 'utils/discord/action-messages/staff-change'
 import { getServerSession } from 'next-auth'
 import { notifyUser } from 'utils/discord/action-messages/notify-user'
+import { setRoles } from 'utils/discord/add-role'
 
 // TODO: Whitelist them on MC server
 
@@ -33,6 +34,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const newComments = applicationData.application.comments!
   const docRef = db.doc(applicationData.path)
 
+  const mainUserId = applicationData.path.split('/')[1]
+
+  const userIds = (
+    await db.collection('userIds').where('id', '==', mainUserId).get()
+  ).docs[0].data() as Database.UserIds
+
+  const roleId = process.env.DISCORD_STREAMLINER_ROLE
+  if (!roleId) throw new Error('No Role ID ENV set!')
+
   try {
     await Promise.all([
       applicationData.action !== 'commented' ??
@@ -55,9 +65,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             .doc('userState/' + getIdFromPath(applicationData.path))
             .update({ applicationStage: 1 }),
 
+      applicationData.application.state === 'accepted' && setRoles(userIds, roleId),
+
       getMessageToSend(session, applicationData),
 
-      notifyUser(applicationData),
+      notifyUser(applicationData, userIds),
     ])
   } catch {
     return res.status(500).end()
