@@ -11,25 +11,23 @@ export default async function setState(req: NextApiRequest, res: NextApiResponse
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })
 
-  let doc = db.doc(`applications/${session.id}`)
-  await db.recursiveDelete(doc)
+  const results = await Promise.all([
+    db.recursiveDelete(db.doc(`applications/${session.id}`)),
+    db.recursiveDelete(db.doc(`userState/${session.id}`)),
+    db.recursiveDelete(db.doc(`userIds/${session.email}`)),
+    db.collection('users').where('email', '==', session.email).get(),
+  ])
 
-  doc = db.doc(`userState/${session.id}`)
-  await db.recursiveDelete(doc)
+  let querySnapshot = results[3]
 
-  doc = db.doc(`userIds/${session.email}`)
-  await db.recursiveDelete(doc)
-
-  let query = db.collection('users').where('email', '==', session.email)
-  let querySnapshot = await query.get()
-
-  // Get the provider userId for deleting the "account".
   const userId = querySnapshot.docs[0].id
 
-  await querySnapshot.docs[0].ref.delete()
+  const results2 = await Promise.all([
+    querySnapshot.docs[0].ref.delete(),
+    db.collection('accounts').where('userId', '==', userId).get(),
+  ])
 
-  query = db.collection('accounts').where('userId', '==', userId)
-  querySnapshot = await query.get()
+  querySnapshot = results2[1]
 
   await querySnapshot.docs[0].ref.delete()
 

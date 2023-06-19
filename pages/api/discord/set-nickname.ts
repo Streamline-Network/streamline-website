@@ -8,7 +8,7 @@ import { db } from './../../../config/firebase'
 import { getServerSession } from 'next-auth'
 import { setNickname } from 'utils/discord/set-nickname'
 
-export default async function createJwt(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
 
   if (!session) return res.status(401).send({ error: message.NOT_AUTHENTICATED })

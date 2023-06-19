@@ -1,0 +1,22 @@
+@use '/styles/mixins.scss' as mixins;
+
+.filter {
+  display: flex;
+  gap: var(--margin-1);
+
+  @include mixins.mobile {
+    flex-direction: column;
+  }
+}
+
+.tag {
+  border-left-width: var(--border-radius-2) !important;
+  border-left-style: solid !important;
+
+  flex-grow: 1;
+}
+
+.selected {
+  background-color: var(--text-color) !important;
+  color: var(--bg-color) !important;
+}

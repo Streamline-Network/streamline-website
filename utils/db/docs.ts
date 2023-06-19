@@ -13,7 +13,19 @@ export function getPathArray(path: string) {
   return trimmedPathArr
 }
 
-export function hasPermission(parsedPath: string, session: Session, res: NextApiResponse): boolean {
+export function hasPermission(
+  parsedPath: string,
+  session: Session,
+  res: NextApiResponse,
+  isCollectionGroupRequest = false
+): boolean {
+  if (isCollectionGroupRequest) {
+    switch (parsedPath) {
+      case 'types':
+        if (session.role === 'reviewer') return true
+    }
+  }
+
   const pathArr = getPathArray(parsedPath)
 
   switch (pathArr[0]) {
@@ -28,7 +40,9 @@ export function hasPermission(parsedPath: string, session: Session, res: NextApi
       if (pathArr[1] === session.id) return true
 
     case 'userState':
-      if (pathArr[1] === session.id) return true
+      if (session.role === 'reviewer' || pathArr[1] === session.id) {
+        return true
+      }
 
     case 'userIds':
       res.setHeader('Cache-Control', `max-age=${60 * 30} private`)

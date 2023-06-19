@@ -3,6 +3,7 @@ import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
+import classNames from 'classnames'
 import classnames from 'classnames'
 import discord from '/images/discord.png'
 import { getServerSession } from 'next-auth'
@@ -18,7 +19,7 @@ export default function SignIn({
   return (
     <>
       <Head>
-        <title>Sign in to Streamline SMP</title>
+        <title>Streamline SMP Sign In</title>
       </Head>
       <h1 className={classnames('orange', signin.title)}>Sign In</h1>
       <div>
@@ -26,7 +27,9 @@ export default function SignIn({
           <h2>You must sign in to continue</h2>
           <p>Signing in is required to visit the page you are trying to visit.</p>
         </div>
-        {error}
+        {error ? (
+          <div className={classNames(signin.box, 'red')}>An error has occurred: {error}</div>
+        ) : undefined}
         <div className={signin.box}>
           <div className={classnames('blue', signin.coloredBox)}>
             <Image width="300" src={discord} alt="The Discord logo" />
