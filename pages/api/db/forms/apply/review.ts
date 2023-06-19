@@ -45,14 +45,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     await Promise.all([
-      applicationData.action !== 'commented' ??
-        db.doc(applicationData.path).update({ state: applicationData.application.state }),
-
       db.runTransaction(async transaction => {
         const snapshot = await transaction.get(docRef)
 
         if (applicationData.application.state)
           transaction.update(docRef, 'state', applicationData.application.state)
+
+        if (applicationData.application.deniedReason)
+          transaction.update(docRef, 'deniedReason', applicationData.application.deniedReason)
 
         const comments: Comment[] = snapshot.get('comments') ?? []
         comments.push(newComments[newComments.length - 1])
