@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
+import Link from 'next/link'
 import Loading from './loading'
 import { Notify } from 'pages/api/discord/notify-staff'
 import { StateData } from 'pages/api/db/sets/state'
@@ -34,8 +35,11 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
       <div className={application.informationBlock}>
         <h2>Fill out the application</h2>
         <p>
-          Make sure to read the rules before doing the application! We have an acceptance rate of
-          about 70% so good luck.
+          Make sure to read the{' '}
+          <Link href="/rules" target={'_blank'}>
+            rules
+          </Link>{' '}
+          before doing the application! We have an acceptance rate of about 70% so good luck.
         </p>
       </div>
 
