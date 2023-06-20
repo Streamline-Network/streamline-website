@@ -38,7 +38,7 @@ const checks: Checks = [
     // Set nickname on Discord to Minecraft name.
     const regex = /\((.*?)\)/
 
-    async function formatAndSetNickname(username: string, nickname: string) {
+    async function formatAndSetNickname(username: string, nickname?: string) {
       const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
 
       const { response } = await customFetch<undefined, SetNicknameData>(
@@ -57,12 +57,13 @@ const checks: Checks = [
       const MAX_DISCORD_NICKNAME_LENGTH = 32
 
       const nickname = formInfo['Do you have a nickname you want to be called?'].trim()
+      const username = formInfo['What is your Minecraft Java Edition username?'].trim()
 
-      if (!nickname) return undefined
+      if (!nickname) {
+        return formatAndSetNickname(username, undefined)
+      }
 
       if (regex.test(nickname)) return 'Nickname cannot have parentheses.'
-
-      const username = formInfo['What is your Minecraft Java Edition username?'].trim()
 
       if (nickname.length + username.length + 3 > MAX_DISCORD_NICKNAME_LENGTH) {
         return 'Nickname is too long!'
