@@ -58,7 +58,7 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
               customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
                 name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
               }).then(({ data, response }) => {
-                if (!response.ok || 'error' in data)
+                if (!response.ok || 'error' in data || !data.uuid)
                   return setCustomError(CRITICAL_ERROR_MESSAGE + ' ID')
 
                 customFetch<undefined, Notify>('/api/discord/notify-staff', 'POST', {
