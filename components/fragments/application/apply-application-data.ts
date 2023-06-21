@@ -14,7 +14,7 @@ const sections: Section[] = [
       },
       {
         question: 'If you have a nickname you want to show on Discord, put it here!',
-        description: 'This will show in discord next to your Minecraft name.',
+        description: 'This will show in Discord next to your Minecraft name.',
         type: 'short-answer',
         required: false,
       },
