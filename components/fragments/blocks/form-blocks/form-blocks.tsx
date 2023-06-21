@@ -103,10 +103,11 @@ export default function FormBlocks({
             return (
               <div className={blocks.block} key={i}>
                 <div className={blocks.questionWrapper}>
-                  <h3 className={blocks.title}>
-                    {(numbered ? `${String.fromCharCode(sectionIndex + 65)}${i + 1}. ` : '') +
-                      question.question}
-                  </h3>
+                  <span className={blocks.questionNumber}>
+                    {String.fromCharCode(sectionIndex + 65)}
+                    {i + 1}.
+                  </span>
+                  <h3 className={blocks.title}>{question.question}</h3>
                   {!question.required && <span>optional</span>}
                 </div>
 

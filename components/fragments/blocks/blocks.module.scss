@@ -63,8 +63,13 @@
 .questionWrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--margin-1);
+
+  .questionNumber {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-right: -10px;
+  }
 
   > span {
     color: var(--light-gray);
