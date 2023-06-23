@@ -9,39 +9,47 @@
 
 <url>
   <loc>https://streamlinesmp.com/</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://streamlinesmp.com/community</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://streamlinesmp.com/about</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://streamlinesmp.com/join</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
-  <priority>0.80</priority>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
+  <priority>0.90</priority>
 </url>
 <url>
   <loc>https://streamlinesmp.com/map</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://streamlinesmp.com/stats</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://streamlinesmp.com/contact</loc>
-  <lastmod>2023-01-31T19:30:50+00:00</lastmod>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
   <priority>0.80</priority>
 </url>
-
-
+<url>
+  <loc>https://streamlinesmp.com/rules</loc>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
+  <priority>0.85</priority>
+</url>
+<url>
+  <loc>https://streamlinesmp.com/privacy</loc>
+  <lastmod>2023-06-22T19:30:50+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
 </urlset>
