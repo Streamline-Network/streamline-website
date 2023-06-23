@@ -1,4 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /account/*
 Crawl-delay: 10
 Sitemap: https://streamlinesmp.com/sitemap.xml
