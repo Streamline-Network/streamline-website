@@ -1,5 +1,5 @@
-import Head from 'next/head'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import map from './map.module.scss'
 import { useState } from 'react'
 
@@ -17,13 +17,10 @@ export default function Map() {
 
   return (
     <>
-      <Head>
-        <title> Streamline SMP Map - Explore Our World</title>
-        <meta
-          name="description"
-          content="Explore the world of Streamline SMP, a vanilla whitelist-only Minecraft server. View our dynamic map and see what’s happening."
-        />
-      </Head>
+      <NextSeo
+        title="Map - Explore Our World"
+        description="Explore the world of Streamline SMP, a vanilla whitelist-only Minecraft server. View our dynamic map and see what’s happening."
+      />
 
       {!hasTried ? (
         <section className={map.container}>

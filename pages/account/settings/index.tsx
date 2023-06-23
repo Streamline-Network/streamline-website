@@ -1,7 +1,7 @@
 import { BlockToggle } from 'components/fragments/blocks/block-types'
-import Head from 'next/head'
 import { LS_KEY } from 'components/layout/banners/banners'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import ToggleBlocks from 'components/fragments/blocks/toggle-blocks'
 import classnames from 'classnames'
 import settings from './settings.module.scss'
@@ -46,9 +46,10 @@ export default function Settings() {
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Settings</title>
-      </Head>
+      <NextSeo
+        title="Settings"
+        description="Adjust the website settings and your account settings."
+      />
 
       <h1 className={classnames('purple', settings.title)}>Settings</h1>
 

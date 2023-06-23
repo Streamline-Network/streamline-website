@@ -1,7 +1,7 @@
 import LimitedTable, { TableRow } from 'components/fragments/blocks/limited-table'
 
 import Blocks from 'components/fragments/blocks/blocks'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 import classNames from 'classnames'
 import rules from './rules.module.scss'
 
@@ -243,13 +243,11 @@ export default function Rules() {
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Rules</title>
-        <meta
-          name="description"
-          content="Learn the rules of Streamline SMP, a vanilla whitelist-only Minecraft server. Respect other players, the environment and have fun."
-        />
-      </Head>
+      <NextSeo
+        title="Rules"
+        description="Learn the rules of Streamline SMP, a vanilla whitelist-only Minecraft server. Respect other players, the environment and have fun."
+      />
+
       <h1 className={classNames('orange', rules.title)}>Rules</h1>
       <div>
         <h2 className={rules.subheader}>Page Contents:</h2>

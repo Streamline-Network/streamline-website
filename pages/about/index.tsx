@@ -1,7 +1,7 @@
 import Question, { QuestionProps } from 'components/fragments/question/question'
 
-import Head from 'next/head'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import about from './about.module.scss'
 import classnames from 'classnames'
 
@@ -203,13 +203,11 @@ export default function About() {
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP About - Frequently Asked Questions</title>
-        <meta
-          name="description"
-          content="Find out more about Streamline SMP, a vanilla whitelist-only Minecraft server. Read our FAQ and learn about our history and vision."
-        />
-      </Head>
+      <NextSeo
+        title="About - Frequently Asked Questions"
+        description="Find out more about Streamline SMP, a vanilla whitelist-only Minecraft server. Read our FAQ and learn about our history and vision."
+      />
+
       <h1 className={classnames('yellow', about.title)}>About</h1>
       <div>
         <div className={about.subHeader}>

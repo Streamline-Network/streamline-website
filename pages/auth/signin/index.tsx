@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 
-import Head from 'next/head'
 import Image from 'next/image'
+import { NextSeo } from 'next-seo'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import classNames from 'classnames'
 import classnames from 'classnames'
@@ -18,9 +18,8 @@ export default function SignIn({
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Sign In</title>
-      </Head>
+      <NextSeo title="Login" description="Login to the Streamline SMP website with Discord." />
+
       <h1 className={classnames('orange', signin.title)}>Sign In</h1>
       <div>
         <div className={signin.informationBlock}>

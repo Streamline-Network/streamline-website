@@ -1,5 +1,5 @@
-import Head from 'next/head'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import stats from './stats.module.scss'
 import { useState } from 'react'
 
@@ -17,13 +17,10 @@ export default function Map() {
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Stats - Track Your Progress</title>
-        <meta
-          name="description"
-          content="Track your progress on Streamline SMP, a vanilla whitelist-only Minecraft server. See your playtime, deaths, kills and more."
-        />
-      </Head>
+      <NextSeo
+        title="Stats - Track Your Progress"
+        description="Track your progress on Streamline SMP, a vanilla whitelist-only Minecraft server. See your playtime, deaths, kills and more."
+      />
 
       {!hasTried ? (
         <section className={stats.container}>

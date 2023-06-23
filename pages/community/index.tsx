@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from 'next/image'
 
 import { Fragment } from 'react'
-import Head from 'next/head'
 import { default as NextLink } from 'next/link'
+import { NextSeo } from 'next-seo'
 import checkbox from './images/checkbox.png'
 import classnames from 'classnames'
 import community from './community.module.scss'
@@ -111,13 +111,11 @@ export default function Community() {
 
   return (
     <>
-      <Head>
-        <title> Streamline SMP Community - Connect with Us Online</title>
-        <meta
-          name="description"
-          content="Connect with the Streamline SMP community online. Follow us on social media, check out our wiki and chat with other players."
-        />
-      </Head>
+      <NextSeo
+        title="Community - Connect with Us Online"
+        description="Connect with the Streamline SMP community online. Follow us on social media, check out our wiki and chat with other players."
+      />
+
       <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
       <div>
         {sections.map(({ title, links }, i) => (
