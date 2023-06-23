@@ -42,12 +42,11 @@ export default function Contact() {
   return (
     <>
       <Head>
-        <title>Get in Touch with Streamline SMP</title>
+        <title>Streamline SMP Contact - Reach Out to Us</title>
         <meta
           name="description"
-          content="Become a part of a thriving Minecraft community on a Whitelist-Only Server. Meet new players, join crews and more. Apply today!"
+          content="Contact the admins of Streamline SMP, a vanilla whitelist-only Minecraft server. Send us an email or join our Discord server."
         />
-        <meta name="keywords" content="Contact the Minecraft server" />
       </Head>
       <h1 className={classnames('orange', contact.title)}>Contact</h1>
       <div className={contact.grid}>

@@ -18,14 +18,11 @@ export default function Map() {
   return (
     <>
       <Head>
-        <title>
-          Check out the Latest Stats for the Streamline SMP Whitelist-Only Minecraft Server
-        </title>
+        <title>Streamline SMP Stats - Track Your Progress</title>
         <meta
           name="description"
-          content="Stay up to date with the latest stats for the best Vanilla SMP Whitelist-Only Minecraft Server. Check out player counts, activity, and more."
+          content="Track your progress on Streamline SMP, a vanilla whitelist-only Minecraft server. See your playtime, deaths, kills and more."
         />
-        <meta name="keywords" content="Minecraft server stats" />
       </Head>
 
       {!hasTried ? (

@@ -112,12 +112,11 @@ export default function Community() {
   return (
     <>
       <Head>
-        <title>Join the Exciting Minecraft Community on a Whitelist-Only Server</title>
+        <title> Streamline SMP Community - Connect with Us Online</title>
         <meta
           name="description"
-          content="Become a part of a thriving Minecraft community on a Whitelist-Only Server. Meet new players, join crews and more. Apply today!"
+          content="Connect with the Streamline SMP community online. Follow us on social media, check out our wiki and chat with other players."
         />
-        <meta name="keywords" content="Minecraft community" />
       </Head>
       <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
       <div>

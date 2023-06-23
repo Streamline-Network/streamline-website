@@ -18,12 +18,11 @@ export default function Map() {
   return (
     <>
       <Head>
-        <title>Explore the World of Vanilla SMP Whitelist-Only Minecraft Server</title>
+        <title> Streamline SMP Map - Explore Our World</title>
         <meta
           name="description"
-          content="ake a journey through the world of Vanilla SMP Whitelist-Only Minecraft Server. Discover new lands and adventures. Join now!"
+          content="Explore the world of Streamline SMP, a vanilla whitelist-only Minecraft server. View our dynamic map and see what’s happening."
         />
-        <meta name="keywords" content="Minecraft server map" />
       </Head>
 
       {!hasTried ? (

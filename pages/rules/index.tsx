@@ -245,6 +245,10 @@ export default function Rules() {
     <>
       <Head>
         <title>Streamline SMP Rules</title>
+        <meta
+          name="description"
+          content="Learn the rules of Streamline SMP, a vanilla whitelist-only Minecraft server. Respect other players, the environment and have fun."
+        />
       </Head>
       <h1 className={classNames('orange', rules.title)}>Rules</h1>
       <div>

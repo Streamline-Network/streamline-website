@@ -65,12 +65,11 @@ export default function Join() {
   return (
     <>
       <Head>
-        <title>Join the Best Vanilla SMP Whitelist-Only Minecraft Server Today</title>
+        <title>Streamline SMP Join - Apply to Play on Our Server</title>
         <meta
           name="description"
-          content="Take the first step towards an amazing Minecraft experience. Join the best Vanilla SMP Whitelist-Only Minecraft Server now. Apply today!"
+          content="Apply to join Streamline SMP, a vanilla whitelist-only Minecraft server. Fill out a simple form and wait for approval."
         />
-        <meta name="keywords" content="Joining the Minecraft server" />
       </Head>
       <h1 className={classNames(join.title, 'green')}>JOIN THE SERVER</h1>
       <div>

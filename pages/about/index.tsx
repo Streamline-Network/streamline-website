@@ -204,11 +204,10 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>Get to Know the Best Vanilla SMP Whitelist-Only Minecraft Server</title>
-        <meta name="keywords" content="About the Minecraft server" />
+        <title>Streamline SMP About - Frequently Asked Questions</title>
         <meta
           name="description"
-          content="Discover what makes our Vanilla SMP Whitelist-Only Minecraft Server the best. Learn about our history, mission and values. Read now!"
+          content="Find out more about Streamline SMP, a vanilla whitelist-only Minecraft server. Read our FAQ and learn about our history and vision."
         />
       </Head>
       <h1 className={classnames('yellow', about.title)}>About</h1>

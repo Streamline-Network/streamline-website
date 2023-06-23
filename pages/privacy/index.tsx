@@ -7,7 +7,11 @@ export default function Privacy() {
   return (
     <>
       <Head>
-        <title>Streamline SMP Privacy Policy</title>
+        <title>Streamline SMP Privacy Policy - How We Protect Your Data</title>
+        <meta
+          name="description"
+          content="Read our privacy policy and learn how we protect your data on Streamline SMP, a vanilla whitelist-only Minecraft server."
+        />
       </Head>
       <h1 className={classnames('purple', privacy.title)}>Privacy Policy</h1>
       <div>

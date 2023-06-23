@@ -61,12 +61,11 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>Join the Best Vanilla SMP Whitelist-Only Minecraft Server 1.19.3</title>
+        <title>Streamline SMP - A Vanilla Whitelist Minecraft Server</title>
         <meta
           name="description"
-          content="Experience the ultimate Minecraft adventure with the best Vanilla SMP Whitelist-Only Server 1.19.3. Join now for a guaranteed great time. Apply today!"
+          content="Join Streamline SMP, a vanilla whitelist-only Minecraft server with a diamond-based economy and a friendly community."
         />
-        <meta name="keywords" content="minecraft-server vanilla smp whitelist-only 1.19.3" />
         <meta
           name="google-site-verification"
           content="xfNSYxrRZ6uD9-uX0zoGMzyj_90lDdaLDihkRCLDdA0"
