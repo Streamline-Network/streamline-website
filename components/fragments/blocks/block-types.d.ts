@@ -44,3 +44,8 @@ export type BlockToggle = {
 export type Checks = ((answers: {
   [key: string]: string
 }) => string | undefined | Promise<string | undefined>)[]
+
+export type SaveData = {
+  minecraftUuid: string
+  userUuid: string
+}

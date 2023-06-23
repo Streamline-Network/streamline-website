@@ -47,6 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Make sure data is safe by only including any expected values.
       const safeData: Database.Applications.Apply = {
         minecraftUuid: applicationData.minecraftUuid,
+        userUuid: applicationData.userUuid,
         submissionDetails: applicationData.submissionDetails,
         type: 'apply',
         state: firestore.FieldValue.delete() as any,

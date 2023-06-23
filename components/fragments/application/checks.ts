@@ -56,8 +56,10 @@ const checks: Checks = [
       // Check if nickname with Minecraft name is too long.
       const MAX_DISCORD_NICKNAME_LENGTH = 32
 
-      const nickname = formInfo['Do you have a nickname you want to be called?'].trim()
       const username = formInfo['What is your Minecraft Java Edition username?'].trim()
+      let nickname = formInfo['Do you have a nickname you want to be called?']
+
+      nickname && nickname.trim()
 
       if (!nickname) {
         return formatAndSetNickname(username, undefined)
@@ -72,6 +74,7 @@ const checks: Checks = [
         return formatAndSetNickname(username, nickname)
       }
     } catch (error) {
+      console.log(error)
       return CRITICAL_ERROR_MESSAGE + ' NICKNAME_CHECK'
     }
   },

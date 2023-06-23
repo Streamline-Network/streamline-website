@@ -39,6 +39,7 @@ export declare module Database {
       previousSubmissions?: FormInfo[]
 
       minecraftUuid: string
+      userUuid: string
 
       state?: ApplyApplicationState
       comments?: Comment[]
