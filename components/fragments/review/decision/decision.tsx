@@ -18,7 +18,7 @@ export default function Decision({
   const [error, setError] = useState<undefined | string>()
   const currentApplicationIndex = useMemo(() => {
     return applicationData.findIndex(
-      ({ application }) => application.minecraftUuid === currentApplicationUuid
+      ({ application }) => application.userUuid === currentApplicationUuid
     )
   }, [applicationData, currentApplicationUuid])
 

@@ -7,6 +7,7 @@ import { getRelativeTime } from 'utils/misc'
 export default function ApplicationCard({
   minecraftName,
   minecraftUuid,
+  userUuid,
   versions,
   age,
   appliedTime,
@@ -33,9 +34,9 @@ export default function ApplicationCard({
           setCurrentApplicationUuid(parsed)
         }
       }}
-      id={'uuid' + minecraftUuid}
+      id={'uuid' + userUuid}
       className={classNames(card.wrapper, card[getClassName(state)], {
-        [card.selected]: currentApplicationUuid === minecraftUuid,
+        [card.selected]: currentApplicationUuid === userUuid,
       })}>
       <Image
         draggable={false}
@@ -63,6 +64,7 @@ export default function ApplicationCard({
 export interface ApplicationCardProps {
   minecraftName: string
   minecraftUuid: string
+  userUuid: string
   versions: string[]
   age: string
   appliedTime: number

@@ -81,7 +81,7 @@ export default function CardSelector({
     const wrapper: HTMLDivElement = wrapperRef.current!
     if (currentApplicationUuid === -1) {
       if (!applications[0]) return
-      const latestUuid = applications[0].minecraftUuid
+      const latestUuid = applications[0].userUuid
       setCurrentApplicationUuid(latestUuid)
       const latestElem = wrapper.querySelector('#uuid' + latestUuid)!
 
@@ -123,6 +123,7 @@ export default function CardSelector({
             appliedTime={application.submissionDetails.submissionTime}
             minecraftName={answers['What is your Minecraft Java Edition username?'] as string}
             minecraftUuid={application.minecraftUuid}
+            userUuid={application.userUuid}
             versions={mcVersions}
             state={application.state}
             currentApplicationUuid={currentApplicationUuid}

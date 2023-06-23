@@ -31,9 +31,7 @@ export default function CommentBlocks({
       senderPicture: data!.user!.image!,
     }
     setApplicationData(appData => {
-      const index = appData!.findIndex(
-        app => app.application.minecraftUuid === currentApplicationUuid
-      )
+      const index = appData!.findIndex(app => app.application.userUuid === currentApplicationUuid)
       const newArr = [...appData!]
 
       let comments = newArr[index].application.comments

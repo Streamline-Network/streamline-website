@@ -151,7 +151,7 @@ export default function Review() {
 
     const newData = searcher.search(query)
 
-    if (!newData.find(d => d.application.minecraftUuid === currentApplicationUuid)) {
+    if (!newData.find(d => d.application.userUuid === currentApplicationUuid)) {
       setCurrentApplicationUuid(-1)
     }
 
@@ -212,7 +212,7 @@ export default function Review() {
 
   function getSelectedFormData() {
     const currentApplication = applicationData!.find(
-      ({ application }) => application.minecraftUuid === currentApplicationUuid
+      ({ application }) => application.userUuid === currentApplicationUuid
     )!
 
     if (history) {
@@ -226,7 +226,7 @@ export default function Review() {
 
   function getSelectedData() {
     return applicationData!.find(
-      ({ application }) => application.minecraftUuid === currentApplicationUuid
+      ({ application }) => application.userUuid === currentApplicationUuid
     )
   }
 
@@ -336,7 +336,7 @@ export default function Review() {
               formInfo={getSelectedFormData()}
               sections={sections}
               save={() => {
-                return { error }
+                return { error: '' }
               }}
               submit={{ final: () => {} }}
               checks={[]}
