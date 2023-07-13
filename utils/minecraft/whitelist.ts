@@ -18,12 +18,15 @@ export default async function whitelist(options: WhitelistParams) {
     case 'add':
     case 'remove':
       body.payload = { operation: options.type, uuid: options.minecraftUuid }
+      console.log(body)
 
       await customFetch(apiUrl, 'POST', jwt.sign(body, secret, config))
+      return
     case 'list':
       body.payload = { operation: options.type }
 
       await customFetch(apiUrl, 'POST', jwt.sign(body, secret, config))
+      return
   }
 }
 
