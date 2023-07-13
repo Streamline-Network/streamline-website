@@ -8,9 +8,9 @@ export default async function customFetch<T, BodyType = Record<string, JSONAccep
     try {
       const result = await fetch(url, {
         method,
-        body: JSON.stringify(body),
+        body: getFinalBody(body),
         headers,
-      })
+      } as RequestInit)
 
       let json
 
@@ -25,6 +25,14 @@ export default async function customFetch<T, BodyType = Record<string, JSONAccep
       reject(error)
     }
   })
+}
+
+function getFinalBody(body?: any) {
+  if (typeof body === 'number' || typeof body === 'string') {
+    return body
+  } else {
+    return JSON.stringify(body)
+  }
 }
 
 type Methods =

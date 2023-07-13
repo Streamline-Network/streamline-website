@@ -31,7 +31,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
         </CookieConsent>
       </div>
       <Header />
-      <Banners />
+      {/* <Banners /> */}
       <div className="main">
         <Component {...pageProps} />
       </div>

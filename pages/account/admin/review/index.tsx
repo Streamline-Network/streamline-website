@@ -67,7 +67,6 @@ export default function Review() {
         customFetch<QueryResponse[]>(
           `/api/db/forms/apply/collection-group?applicationType=apply&limit=${applicationData?.length}&direction=desc`
         ).then(({ data }) => {
-          console.log(data)
           setApplicationData(data)
         })
       }
@@ -220,7 +219,7 @@ export default function Review() {
         app => app.submissionTime === history
       )
     }
-    console.log(currentApplication)
+
     return currentApplication.application.submissionDetails
   }
 
@@ -234,6 +233,7 @@ export default function Review() {
     if (filteredApplicationData)
       return filteredApplicationData.map(({ application }) => application)
     if (queriedApplicationData) return queriedApplicationData.map(({ application }) => application)
+
     return applicationData!.map(({ application }) => application)
   }
 

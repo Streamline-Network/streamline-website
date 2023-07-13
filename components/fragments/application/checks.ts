@@ -74,7 +74,7 @@ const checks: Checks = [
         return formatAndSetNickname(username, nickname)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return CRITICAL_ERROR_MESSAGE + ' NICKNAME_CHECK'
     }
   },
