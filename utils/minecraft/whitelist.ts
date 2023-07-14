@@ -8,7 +8,7 @@ export default async function whitelist(options: WhitelistParams) {
   if (!apiUrl || !secret) throw new Error("Minecraft Server's API URL or Secret Not Found.")
 
   const body = {
-    action: 'whitelist',
+    action: 'command',
     payload: {},
   }
 
@@ -17,13 +17,13 @@ export default async function whitelist(options: WhitelistParams) {
   switch (options.type) {
     case 'add':
     case 'remove':
-      body.payload = { operation: options.type, uuid: options.minecraftUuid }
+      body.payload = `whitelist ${options.type} ${options.minecraftName}`
       console.log(body)
 
       await customFetch(apiUrl, 'POST', jwt.sign(body, secret, config))
       return
     case 'list':
-      body.payload = { operation: options.type }
+      body.payload = `whitelist ${options.type}`
 
       await customFetch(apiUrl, 'POST', jwt.sign(body, secret, config))
       return
@@ -33,7 +33,7 @@ export default async function whitelist(options: WhitelistParams) {
 type WhitelistParams =
   | {
       type: 'add' | 'remove'
-      minecraftUuid: string
+      minecraftName: string
     }
   | {
       type: 'list'

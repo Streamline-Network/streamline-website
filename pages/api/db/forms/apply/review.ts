@@ -69,7 +69,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       applicationData.application.state === 'accepted' && setRoles(userIds, roleId),
       applicationData.application.state === 'accepted' &&
-        whitelist({ type: 'add', minecraftUuid: applicationData.application.minecraftUuid }),
+        whitelist({
+          type: 'add',
+          minecraftName: applicationData.application.submissionDetails.answers[
+            'What is your Minecraft Java Edition username?'
+          ] as string,
+        }),
 
       getMessageToSend(session, applicationData),
 
