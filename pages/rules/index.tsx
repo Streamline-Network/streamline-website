@@ -188,6 +188,12 @@ export default function Rules() {
         'If you build something near one of the public North, South, East, or West Nether Paths, spawn proof it.',
       end: '0.5',
     },
+    {
+      start: '3.9',
+      content:
+        'Do not build in spawn without permission: spawn is reserved for community builds and shopping district plots.',
+      end: '0.5',
+    },
   ]
 
   const enderDragonRules: TableRow[] = [
