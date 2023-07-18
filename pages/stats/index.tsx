@@ -26,7 +26,11 @@ export default function Map() {
         title="Stats - Track Your Progress"
         description="Track your progress on Streamline SMP, a vanilla whitelist-only Minecraft server. See your playtime, deaths, kills and more."
       />
-      <iframe style={{ height }} className={stats.frame} src="https://s.streamlinesmp.com/" />
+      <iframe
+        style={{ height }}
+        className={stats.frame}
+        src="http://144.217.29.142:8037/server/Streamline%20SMP/overview"
+      />
     </>
   )
 }
