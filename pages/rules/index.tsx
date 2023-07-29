@@ -7,11 +7,11 @@ import rules from './rules.module.scss'
 
 export default function Rules() {
   const contentList: ContentItem[] = [
+    { scrollId: 'ret', name: 'What is a retribution?' },
     { scrollId: 'dc', name: 'Discord/Chat Rules' },
     { scrollId: 'm', name: 'Minecraft Rules' },
     { scrollId: 's', name: 'Spawn Rules' },
     { scrollId: 'ede', name: 'Ender Dragon Egg Rules' },
-    { scrollId: 'ret', name: 'What is a retribution?' },
   ]
 
   const discordRules: TableRow[] = [
@@ -267,38 +267,6 @@ export default function Rules() {
           </ul>
         </div>
 
-        <h2 id="dc" className={rules.subheader}>
-          Discord/Chat Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={discordRules}
-        />
-
-        <h2 id="m" className={rules.subheader}>
-          Minecraft Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={minecraftServerRules}
-        />
-
-        <h2 id="s" className={rules.subheader}>
-          Spawn Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={spawnRules}
-        />
-
-        <h2 id="ede" className={rules.subheader}>
-          Ender Dragon Egg Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={enderDragonRules}
-        />
-
         <h2 id="ret" className={rules.subheader}>
           Retributions and How They Work
         </h2>
@@ -313,8 +281,8 @@ export default function Rules() {
                       <>
                         Retributions are our way of keeping track of who breaks rules and who
                         doesn&apos;t. The more retributions you have, the worse. There is only one
-                        way to get a retribution, break a rule. See the #rules channel and click on
-                        the link to see the consequences for each rule broken.
+                        way to get a retribution, break a rule. You can see what consequences
+                        certain rules have below.
                       </>,
                     ],
                   },
@@ -350,6 +318,38 @@ export default function Rules() {
             </div>
           </div>
         </div>
+
+        <h2 id="dc" className={rules.subheader}>
+          Discord/Chat Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={discordRules}
+        />
+
+        <h2 id="m" className={rules.subheader}>
+          Minecraft Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={minecraftServerRules}
+        />
+
+        <h2 id="s" className={rules.subheader}>
+          Spawn Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={spawnRules}
+        />
+
+        <h2 id="ede" className={rules.subheader}>
+          Ender Dragon Egg Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={enderDragonRules}
+        />
       </div>
     </>
   )
