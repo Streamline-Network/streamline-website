@@ -130,11 +130,16 @@ export default function Review() {
     if (!applicationData) return
 
     function getAllQuestions() {
+      const questionsToInclude = ['What is your Minecraft Java Edition username?']
+
       const questions = applicationData![0].application.submissionDetails.answers
 
       let final: string[] = []
       for (const question of Object.keys(questions)) {
-        final.push(`application.submissionDetails.answers.${question}`)
+        console.log(question)
+        if (questionsToInclude.includes(question)) {
+          final.push(`application.submissionDetails.answers.${question}`)
+        }
       }
 
       return final
@@ -142,7 +147,7 @@ export default function Review() {
 
     const searcher = new FuzzySearch(
       applicationData,
-      ['application.minecraftUuid', ...getAllQuestions()],
+      ['application.minecraftUuid', 'application.userUuid', ...getAllQuestions()],
       {
         sort: true,
       }
@@ -253,8 +258,8 @@ export default function Review() {
               title: 'Search applications',
               paragraphs: [
                 <>
-                  Preform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by age,
-                  Minecraft name, Minecraft UUID, or any question response.
+                  Preform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by
+                  Minecraft name or Minecraft UUID.
                 </>,
                 <>
                   <input
