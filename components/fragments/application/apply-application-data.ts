@@ -106,7 +106,7 @@ const sections: Section[] = [
       },
       {
         question:
-          'At how many retributions do you get your first ban and at how many do you get permanently banned?',
+          'At how many retributions do you get your first ban and at how many do you get a season-long ban?',
         type: 'short-answer',
         required: true,
       },

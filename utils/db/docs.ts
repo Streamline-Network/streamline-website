@@ -1,4 +1,5 @@
 import { NextApiResponse } from 'next'
+import { STAFF_ROLES } from 'middleware'
 import { Session } from 'next-auth'
 import { db } from 'config/firebase'
 
@@ -22,7 +23,7 @@ export function hasPermission(
   if (isCollectionGroupRequest) {
     switch (parsedPath) {
       case 'types':
-        if (session.role === 'reviewer') return true
+        if (STAFF_ROLES.includes(session.role)) return true
     }
   }
 
@@ -32,15 +33,15 @@ export function hasPermission(
     case 'users':
       res.setHeader('Cache-Control', `max-age=${60 * 30} private`)
 
-      if (session.role === 'reviewer') return true
+      if (STAFF_ROLES.includes(session.role)) return true
       if (pathArr[1] === session.id) return true
 
     case 'applications':
-      if (session.role === 'reviewer') return true
+      if (STAFF_ROLES.includes(session.role)) return true
       if (pathArr[1] === session.id) return true
 
     case 'userState':
-      if (session.role === 'reviewer' || pathArr[1] === session.id) {
+      if (STAFF_ROLES.includes(session.role) || pathArr[1] === session.id) {
         return true
       }
 

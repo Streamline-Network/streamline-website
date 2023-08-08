@@ -11,7 +11,7 @@ export async function notifyUser(applicationData: QueryResponse, userIds: Databa
     return await sendDmMessage(
       userIds.providerAccountId,
       '```Unfortunately you have been denied.```',
-      [{ content: 'See why or re-apply', link: `${process.env.NEXTAUTH_URL}/account/apply` }]
+      [{ content: 'See why or re-apply', link: `${process.env.NEXTAUTH_URL}account/apply` }]
     )
   }
 
@@ -28,7 +28,7 @@ export async function notifyUser(applicationData: QueryResponse, userIds: Databa
       }> you have been accepted and whitelisted to Streamline SMP! ${
         rolesChannel ? `Feel free to choose your roles in the <#${rolesChannel}> channel!` : ''
       }`,
-      [{ content: 'View your application', link: `${process.env.NEXTAUTH_URL}/account/apply` }]
+      [{ content: 'View your application', link: `${process.env.NEXTAUTH_URL}account/apply` }]
     )
   }
 }

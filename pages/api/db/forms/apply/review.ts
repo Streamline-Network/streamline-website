@@ -11,8 +11,7 @@ import { getMessageToSend } from 'utils/discord/action-messages/staff-change'
 import { getServerSession } from 'next-auth'
 import { notifyUser } from 'utils/discord/action-messages/notify-user'
 import { setRoles } from 'utils/discord/add-role'
-
-// TODO: Whitelist them on MC server
+import whitelist from 'utils/minecraft/whitelist'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions)
@@ -69,12 +68,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             .update({ applicationStage: 1 }),
 
       applicationData.application.state === 'accepted' && setRoles(userIds, roleId),
+      applicationData.application.state === 'accepted' &&
+        whitelist({
+          type: 'add',
+          minecraftName: applicationData.application.submissionDetails.answers[
+            'What is your Minecraft Java Edition username?'
+          ] as string,
+        }),
 
       getMessageToSend(session, applicationData),
 
       notifyUser(applicationData, userIds),
     ])
-  } catch {
+  } catch (e) {
+    console.error(e)
     return res.status(500).end()
   }
 

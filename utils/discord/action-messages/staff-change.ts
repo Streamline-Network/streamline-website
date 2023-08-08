@@ -27,7 +27,7 @@ export async function getMessageToSend(session: Session, applicationData: QueryR
         [
           {
             content: getRandomMessage(),
-            link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
+            link: `${process.env.NEXTAUTH_URL}account/admin/review?q=${applicationData.application.minecraftUuid}`,
           },
         ]
       )
@@ -47,7 +47,7 @@ export async function getMessageToSend(session: Session, applicationData: QueryR
         [
           {
             content: getRandomMessage(),
-            link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
+            link: `${process.env.NEXTAUTH_URL}account/admin/review?q=${applicationData.application.minecraftUuid}`,
           },
         ]
       )
@@ -63,7 +63,7 @@ export async function getMessageToSend(session: Session, applicationData: QueryR
         [
           {
             content: getRandomMessage(),
-            link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
+            link: `${process.env.NEXTAUTH_URL}account/admin/review?q=${applicationData.application.minecraftUuid}`,
           },
         ]
       )
@@ -81,7 +81,7 @@ export async function getMessageToSend(session: Session, applicationData: QueryR
         [
           {
             content: getRandomMessage(),
-            link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${applicationData.application.minecraftUuid}`,
+            link: `${process.env.NEXTAUTH_URL}account/admin/review?q=${applicationData.application.minecraftUuid}`,
           },
         ]
       )
