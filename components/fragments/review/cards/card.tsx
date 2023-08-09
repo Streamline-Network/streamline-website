@@ -38,7 +38,9 @@ export default function ApplicationCard({
       className={classNames(card.wrapper, card[getClassName(state)], {
         [card.selected]: currentApplicationUuid === userUuid,
       })}>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        style={{ imageRendering: 'pixelated' }}
         draggable={false}
         className={card.minecraftSkin}
         src={`https://crafatar.com/avatars/${minecraftUuid}/?overlay=true&size=96`}
