@@ -63,7 +63,7 @@ export default function MinecraftInput({
       {currentImage ? (
         <Image
           className={blocks.minecraftSkin}
-          src={`https://crafatar.com/avatars/${currentImage}/?overlay`}
+          src={`https://crafatar.com/avatars/${currentImage}/?overlay=true&size=50`}
           alt="A MC Skin"
           width={50}
           height={50}

@@ -41,7 +41,7 @@ export default function ApplicationCard({
       <Image
         draggable={false}
         className={card.minecraftSkin}
-        src={`https://crafatar.com/avatars/${minecraftUuid}/?overlay`}
+        src={`https://crafatar.com/avatars/${minecraftUuid}/?overlay=true&size=96`}
         alt="A MC Skin"
         width={93}
         height={93}
