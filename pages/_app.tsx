@@ -2,7 +2,6 @@ import 'styles/style.scss'
 
 import AnalyticsWrapper from 'components/layout/analytics/analytics'
 import type { AppProps } from 'next/app'
-import Banners from 'components/layout/banners/banners'
 import CookieConsent from 'react-cookie-consent'
 import { DefaultSeo } from 'next-seo'
 import Footer from 'components/layout/footer/footer'

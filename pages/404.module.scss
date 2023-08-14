@@ -1,0 +1,21 @@
+@use 'styles/mixins.scss' as mixins;
+
+.title {
+  @include mixins.title;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-grow: 1;
+
+  h2 {
+    user-select: none;
+  }
+}
+
+.game {
+  border-radius: var(--border-radius-1);
+}
