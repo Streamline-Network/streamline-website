@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import custom404 from './404.module.scss'
 
-const NUMBER_OF_CLICKS_NEEDED = 10
+const NUMBER_OF_CLICKS_NEEDED = 5
 
 export default function Custom404() {
   const [height, setHeight] = useState('100px')
