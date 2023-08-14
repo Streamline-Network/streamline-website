@@ -1,5 +1,4 @@
 import { ApplyApplicationState } from 'pages/api/db/database'
-import Image from 'next/image'
 import card from './card-styles.module.scss'
 import classNames from 'classnames'
 import { getRelativeTime } from 'utils/misc'
