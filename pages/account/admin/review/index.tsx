@@ -1,4 +1,4 @@
-import Filter, { FilterTag } from '../../../../components/fragments/review/filter/filter'
+import Filter, { FilterTag } from 'components/fragments/review/filter/filter'
 import { useEffect, useRef, useState } from 'react'
 
 import ApplicationNavigation from 'components/fragments/review/application-navigation/application-navigation'

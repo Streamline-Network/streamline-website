@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { NextSeo } from 'next-seo'
 import classNames from 'classnames'
 import custom404 from './404.module.scss'
 
@@ -28,6 +29,8 @@ export default function Custom404() {
   }, [])
   return (
     <>
+      <NextSeo title="- 404 Page Not Found" description="Page was not found!" />
+
       <h1 className={classNames(custom404.title, 'red')}>An Error Has Occurred</h1>
       <div className={custom404.wrapper}>
         <h2

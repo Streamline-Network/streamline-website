@@ -14,8 +14,6 @@ export default function SignIn({
   callbackUrl,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  //! Add error condition
-
   return (
     <>
       <NextSeo title="Login" description="Login to the Streamline SMP website with Discord." />
