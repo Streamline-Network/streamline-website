@@ -19,12 +19,14 @@
   flex-direction: column;
   gap: var(--margin-1);
 
-  & button {
-    @include mixins.block-button;
-
+  .toggleBlockButton {
     @include mixins.mobile {
       width: 100%;
     }
+  }
+
+  & button {
+    @include mixins.block-button;
   }
 
   .error {
@@ -163,6 +165,12 @@
 
 .diffButton {
   @include mixins.button;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .commentTitle {

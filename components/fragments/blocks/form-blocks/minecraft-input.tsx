@@ -61,13 +61,17 @@ export default function MinecraftInput({
   return (
     <div className={blocks.minecraftSkinWrapper}>
       {currentImage ? (
-        <Image
-          className={blocks.minecraftSkin}
-          src={`https://crafatar.com/avatars/${currentImage}/?overlay`}
-          alt="A MC Skin"
-          width={50}
-          height={50}
-        />
+        <>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            style={{ imageRendering: 'pixelated' }}
+            className={blocks.minecraftSkin}
+            src={`https://crafatar.com/avatars/${currentImage}/?overlay=true&size=50`}
+            alt="A MC Skin"
+            width={50}
+            height={50}
+          />
+        </>
       ) : (
         <div className={blocks.minecraftSkin} />
       )}

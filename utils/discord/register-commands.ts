@@ -20,7 +20,7 @@ export default async function registerCommands() {
   const bulkInformation = commands.map(command => command.commandInformation)
 
   return await customFetch<undefined, RESTPutAPIApplicationCommandsJSONBody>(
-    `${process.env.DISCORD_API_URL}/applications/${process.env.DISCORD_CLIENT_ID}/guilds/775831180086870096/commands`,
+    `${process.env.DISCORD_API_URL}/applications/${process.env.DISCORD_CLIENT_ID}/commands`,
     'PUT',
     bulkInformation,
     discordAuthHeaders

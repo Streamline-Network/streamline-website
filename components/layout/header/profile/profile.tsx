@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { STAFF_ROLES } from 'middleware'
 import colorImage from './images/colors.png'
 import profileButton from './profile.module.scss'
-import profilePlaceholder from './images/profile-placeholder.webp'
+import profilePlaceholder from './images/profile-placeholder.png'
 import { useRouter } from 'next/router'
 
 export default function ProfileButton({ toggle }: ProfileButtonProps) {
@@ -82,7 +82,7 @@ export default function ProfileButton({ toggle }: ProfileButtonProps) {
               <Image
                 src={data.data.user?.image || profilePlaceholder}
                 className={profileButton.profileImg}
-                alt="Profile Placeholder"
+                alt="Profile Icon"
                 width={30}
                 height={30}
               />

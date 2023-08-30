@@ -1,4 +1,4 @@
-import { MouseEvent, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import Link from 'next/link'
 import ProfileButton from './profile/profile'

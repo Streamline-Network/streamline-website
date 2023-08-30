@@ -6,7 +6,11 @@ export default function ToggleBlocks({ blockArr }: BlockToggleProps) {
   function control(block: BlockToggle) {
     switch (block.controlType) {
       case 'button':
-        return <button onClick={block.click}>{block.buttonText}</button>
+        return (
+          <button className={blocks.toggleBlockButton} onClick={block.click}>
+            {block.buttonText}
+          </button>
+        )
       case 'switch':
         return <>Switch code goes here!</>
       case 'message':

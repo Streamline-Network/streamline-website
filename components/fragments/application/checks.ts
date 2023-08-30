@@ -57,7 +57,7 @@ const checks: Checks = [
       const MAX_DISCORD_NICKNAME_LENGTH = 32
 
       const username = formInfo['What is your Minecraft Java Edition username?'].trim()
-      let nickname = formInfo['Do you have a nickname you want to be called?']
+      let nickname = formInfo['If you have a nickname you want to show on Discord, put it here!']
 
       nickname && nickname.trim()
 
@@ -74,7 +74,7 @@ const checks: Checks = [
         return formatAndSetNickname(username, nickname)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       return CRITICAL_ERROR_MESSAGE + ' NICKNAME_CHECK'
     }
   },
