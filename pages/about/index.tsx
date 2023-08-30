@@ -55,7 +55,7 @@ export default function About() {
       answer: (
         <>
           No, there is no way to buy ways forward in the server using real money, if you donate you
-          only get things that don&amp;t affect your survival experience.
+          only get things that don&apos;t affect your survival experience.
         </>
       ),
       color: 'green',
@@ -119,7 +119,7 @@ export default function About() {
       answer: (
         <>
           Absolutely, yes you can definitely redo your application! Just go back to the{' '}
-          <Link target="_blank" href="https://dyno.gg/form/8ac19b49" className={about.blockLink}>
+          <Link target="_blank" href="./account/apply/reviewed" className={about.blockLink}>
             application
           </Link>{' '}
           and as long as your old one has been reviewed you will have the ability to submit a new
@@ -160,7 +160,7 @@ export default function About() {
           <Link href="/contact" className={about.blockLink}>
             please contact a staff member to ask!
           </Link>{' '}
-          That is the best way to make sure that you stay safe and don&amp;t risk getting banned!
+          That is the best way to make sure that you stay safe and don&apos;t risk getting banned!
         </>
       ),
       color: 'green',
@@ -213,7 +213,7 @@ export default function About() {
         <div className={about.subHeader}>
           <h3>Frequently Asked Questions</h3>
           <p>
-            Have a question? We have the answer! If you don&lsquo;t see your question here you can
+            Have a question? We have the answer! If you don&apos;t see your question here you can
             always hit us up at our{' '}
             <Link className={about.subHeaderLink} href="/contact">
               Contact Page
