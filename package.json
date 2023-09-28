@@ -26,7 +26,7 @@
     "react-icons": "^4.9.0",
     "sass": "^1.63.4",
 
-    "sharp": "^0.32.4",
+    "sharp": "^0.32.6",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
