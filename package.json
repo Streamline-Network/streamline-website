@@ -24,7 +24,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
     "react-icons": "^4.9.0",
-    "sass": "^1.65.1",
+    "sass": "^1.66.1",
 
     "sharp": "^0.32.6",
     "tweetnacl": "^1.0.3"
