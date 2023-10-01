@@ -256,7 +256,7 @@ export default function Rules() {
 
       <h1 className={classNames('orange', rules.title)}>Rules</h1>
       <div>
-        <h2 className={rules.subheader}>Page Contents:</h2>
+        <h2 className={rules.subheader}>Page Contents</h2>
         <div className={rules.block}>
           <ul className={rules.contentList}>
             {contentList.map((contentItem, i) => (
