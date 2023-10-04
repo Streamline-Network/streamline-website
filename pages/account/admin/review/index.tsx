@@ -47,7 +47,7 @@ export default function Review() {
   const [hasFetched, setHasFetched] = useState(false)
   const [refreshes, setRefreshes] = useState(0)
   const router = useRouter()
-  const refresherRef = useRef<NodeJS.Timer>()
+  const refresherRef = useRef<number>()
 
   useEffect(() => {
     setHasFetched(false)
@@ -70,7 +70,7 @@ export default function Review() {
           setApplicationData(data)
         })
       }
-    }, REFRESH_INTERVAL)
+    }, REFRESH_INTERVAL) as unknown as number
 
     return () => clearInterval(refresherRef.current)
   }, [applicationData?.length, hasFetched, refreshes])
