@@ -31,9 +31,7 @@ export default function CommentBlocks({
       senderPicture: data!.user!.image!,
     }
     setApplicationData(appData => {
-      const index = appData!.findIndex(
-        app => app.application.minecraftUuid === currentApplicationUuid
-      )
+      const index = appData!.findIndex(app => app.application.userUuid === currentApplicationUuid)
       const newArr = [...appData!]
 
       let comments = newArr[index].application.comments
@@ -68,7 +66,20 @@ export default function CommentBlocks({
       {comments ? (
         <>
           <div className={blocks.block}>
-            <h2>Comments about this application</h2>
+            <div className={blocks.commentHeader}>
+              <h2>Comments about this application</h2>
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(applicationData.application.minecraftUuid)
+                }}>
+                <Image
+                  src="/icons/copy-icon.svg"
+                  alt="Copy Minecraft UUID to clipboard."
+                  width={30}
+                  height={30}
+                />
+              </button>
+            </div>
           </div>
           {status === 'authenticated'
             ? comments.map(({ time, message, name, senderPicture, decision, userAction }, i) => {

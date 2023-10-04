@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import { Database } from 'pages/api/db/database'
-import Head from 'next/head'
 import Loading from 'components/fragments/application/loading'
+import { NextSeo } from 'next-seo'
 import ProgressTracker from 'components/fragments/progress-tracker/progress-tracker'
 import Reviewed from 'components/fragments/application/reviewed'
 import Status from 'components/fragments/application/status'
@@ -78,9 +78,10 @@ export default function Steps() {
 
   return (
     <>
-      <Head>
-        <title>Apply to join</title>
-      </Head>
+      <NextSeo
+        title="Application"
+        description="Fill out the application and see it's progress/status."
+      />
 
       <h1 className={classNames('blue', apply.header)}>Application</h1>
 

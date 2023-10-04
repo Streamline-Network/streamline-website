@@ -1,17 +1,17 @@
 import LimitedTable, { TableRow } from 'components/fragments/blocks/limited-table'
 
 import Blocks from 'components/fragments/blocks/blocks'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 import classNames from 'classnames'
 import rules from './rules.module.scss'
 
 export default function Rules() {
   const contentList: ContentItem[] = [
+    { scrollId: 'ret', name: 'What is a retribution?' },
     { scrollId: 'dc', name: 'Discord/Chat Rules' },
     { scrollId: 'm', name: 'Minecraft Rules' },
     { scrollId: 's', name: 'Spawn Rules' },
     { scrollId: 'ede', name: 'Ender Dragon Egg Rules' },
-    { scrollId: 'ret', name: 'What is a retribution?' },
   ]
 
   const discordRules: TableRow[] = [
@@ -188,6 +188,12 @@ export default function Rules() {
         'If you build something near one of the public North, South, East, or West Nether Paths, spawn proof it.',
       end: '0.5',
     },
+    {
+      start: '3.9',
+      content:
+        'Do not build in spawn without permission: spawn is reserved for community builds and shopping district plots.',
+      end: '0.5',
+    },
   ]
 
   const enderDragonRules: TableRow[] = [
@@ -243,12 +249,14 @@ export default function Rules() {
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Rules</title>
-      </Head>
+      <NextSeo
+        title="Rules"
+        description="Learn the rules of Streamline SMP, a vanilla whitelist-only Minecraft server. Respect other players, the environment and have fun."
+      />
+
       <h1 className={classNames('orange', rules.title)}>Rules</h1>
       <div>
-        <h2 className={rules.subheader}>Page Contents:</h2>
+        <h2 className={rules.subheader}>Page Contents</h2>
         <div className={rules.block}>
           <ul className={rules.contentList}>
             {contentList.map((contentItem, i) => (
@@ -258,38 +266,6 @@ export default function Rules() {
             ))}
           </ul>
         </div>
-
-        <h2 id="dc" className={rules.subheader}>
-          Discord/Chat Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={discordRules}
-        />
-
-        <h2 id="m" className={rules.subheader}>
-          Minecraft Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={minecraftServerRules}
-        />
-
-        <h2 id="s" className={rules.subheader}>
-          Spawn Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={spawnRules}
-        />
-
-        <h2 id="ede" className={rules.subheader}>
-          Ender Dragon Egg Rules
-        </h2>
-        <LimitedTable
-          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
-          rows={enderDragonRules}
-        />
 
         <h2 id="ret" className={rules.subheader}>
           Retributions and How They Work
@@ -305,8 +281,8 @@ export default function Rules() {
                       <>
                         Retributions are our way of keeping track of who breaks rules and who
                         doesn&apos;t. The more retributions you have, the worse. There is only one
-                        way to get a retribution, break a rule. See the #rules channel and click on
-                        the link to see the consequences for each rule broken.
+                        way to get a retribution, break a rule. You can see what consequences
+                        certain rules have below.
                       </>,
                     ],
                   },
@@ -342,6 +318,38 @@ export default function Rules() {
             </div>
           </div>
         </div>
+
+        <h2 id="dc" className={rules.subheader}>
+          Discord/Chat Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={discordRules}
+        />
+
+        <h2 id="m" className={rules.subheader}>
+          Minecraft Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={minecraftServerRules}
+        />
+
+        <h2 id="s" className={rules.subheader}>
+          Spawn Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={spawnRules}
+        />
+
+        <h2 id="ede" className={rules.subheader}>
+          Ender Dragon Egg Rules
+        </h2>
+        <LimitedTable
+          labels={{ start: 'Rule identifier', content: 'Rule', end: 'Punishment in retributions' }}
+          rows={enderDragonRules}
+        />
       </div>
     </>
   )

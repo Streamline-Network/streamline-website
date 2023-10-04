@@ -1,5 +1,5 @@
 import Checkboxes, { Checkbox } from './checkboxes/checkboxes'
-import { Checks, FormInfo, Section } from '../block-types'
+import { Checks, FormInfo, SaveData, Section } from '../block-types'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { Fragment, useState } from 'react'
 import { goToFirstError, isErrors } from './helpers'
@@ -70,10 +70,10 @@ export default function FormBlocks({
 
     const parsedData = parseData(data)
 
-    const error = await save({ submissionTime: Date.now(), answers: parsedData })
+    const saveData = await save({ submissionTime: Date.now(), answers: parsedData })
 
-    if (error) {
-      return setCustomError(error)
+    if ('error' in saveData) {
+      return setCustomError(saveData.error)
     }
 
     for (let i = 0; i < checks.length; i++) {
@@ -85,7 +85,7 @@ export default function FormBlocks({
       }
     }
 
-    submit.final({ submissionTime: Date.now(), answers: parsedData })
+    submit.final({ submissionTime: Date.now(), answers: parsedData }, saveData)
   }
 
   return (
@@ -103,10 +103,11 @@ export default function FormBlocks({
             return (
               <div className={blocks.block} key={i}>
                 <div className={blocks.questionWrapper}>
-                  <h3 className={blocks.title}>
-                    {(numbered ? `${String.fromCharCode(sectionIndex + 65)}${i + 1}. ` : '') +
-                      question.question}
-                  </h3>
+                  <span className={blocks.questionNumber}>
+                    {String.fromCharCode(sectionIndex + 65)}
+                    {i + 1}.
+                  </span>
+                  <h3 className={blocks.title}>{question.question}</h3>
                   {!question.required && <span>optional</span>}
                 </div>
 
@@ -178,7 +179,7 @@ export interface BlockFormProps {
 
   submit: {
     agreements?: { agreement: string; link?: string; required?: boolean }[]
-    final: (formInfo: FormInfo) => void
+    final: (formInfo: FormInfo, saveData: SaveData) => void
   }
-  save: (formInfo: FormInfo) => string | undefined | Promise<string | undefined>
+  save: (formInfo: FormInfo) => SaveData | { error: string } | Promise<SaveData | { error: string }>
 }

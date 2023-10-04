@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { Database } from 'pages/api/db/database'
 import FormBlocks from '../blocks/form-blocks/form-blocks'
+import Link from 'next/link'
 import Loading from './loading'
 import { Notify } from 'pages/api/discord/notify-staff'
 import { StateData } from 'pages/api/db/sets/state'
@@ -34,8 +35,11 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
       <div className={application.informationBlock}>
         <h2>Fill out the application</h2>
         <p>
-          Make sure to read the rules before doing the application! We have an acceptance rate of
-          about 70% so good luck.
+          Make sure to read the{' '}
+          <Link href="/rules" target={'_blank'}>
+            rules
+          </Link>{' '}
+          before doing the application! We have an acceptance rate of about 70% so good luck.
         </p>
       </div>
 
@@ -50,17 +54,11 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
           checks={checks}
           submit={{
             agreements: agreements,
-            final(formInfo) {
-              customFetch<ProfileData, ProfileBody>('/api/minecraft/profiles', 'POST', {
-                name: formInfo.answers['What is your Minecraft Java Edition username?'] as string,
-              }).then(({ data, response }) => {
-                if (!response.ok || 'error' in data)
-                  return setCustomError(CRITICAL_ERROR_MESSAGE + ' ID')
-
+            final(_, saveData) {
+              Promise.all([
                 customFetch<undefined, Notify>('/api/discord/notify-staff', 'POST', {
-                  minecraftUuid: data.uuid,
-                })
-
+                  minecraftUuid: saveData.minecraftUuid,
+                }),
                 customFetch<undefined, StateData>('/api/db/sets/state', 'POST', {
                   entries: { applicationStage: 1 },
                 })
@@ -72,8 +70,8 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                       setCustomError('There was an issue saving!')
                     }
                   })
-                  .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE'))
-              })
+                  .catch(() => setCustomError(CRITICAL_ERROR_MESSAGE + ' STAGE')),
+              ])
             },
           }}
           save={async formInfo => {
@@ -87,8 +85,17 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                 }
               )
 
-              if (!uuidData.response.ok || 'error' in uuidData.data || !uuidData.data.uuid) {
-                return 'Could not get UUID! Try again later.'
+              const userUuid = await customFetch<Database.UserIds>(
+                '/api/db/docs?path=userIds/{email}'
+              )
+
+              if (
+                !uuidData.response.ok ||
+                'error' in uuidData.data ||
+                !uuidData.data.uuid ||
+                !userUuid.response.ok
+              ) {
+                return { error: 'Could not get UUID! Try again later.' }
               }
 
               // Push to database.
@@ -98,19 +105,21 @@ export default function Submit({ setCurrentStepIndex }: SubmitProps) {
                 {
                   submissionDetails: formInfo,
                   minecraftUuid: uuidData.data.uuid,
+                  userUuid: userUuid.data.id,
                   type: 'apply',
                 }
               )
 
               if (response.ok) {
                 console.log('Form saved!', formInfo)
+                return { minecraftUuid: uuidData.data.uuid, userUuid: userUuid.data.id }
               } else {
                 console.warn(data)
-                return `An error occurred with the server! Please try again later.`
+                return { error: `An error occurred with the server! Please try again later.` }
               }
             } catch (error) {
               console.warn(error)
-              return CRITICAL_ERROR_MESSAGE + ' UUID'
+              return { error: CRITICAL_ERROR_MESSAGE + ' UUID' }
             }
           }}
         />

@@ -1,14 +1,16 @@
 import Blocks from 'components/fragments/blocks/blocks'
-import Head from 'next/head'
+import { NextSeo } from 'next-seo'
 import classnames from 'classnames'
 import privacy from './privacy.module.scss'
 
 export default function Privacy() {
   return (
     <>
-      <Head>
-        <title>Streamline SMP Privacy Policy</title>
-      </Head>
+      <NextSeo
+        title="Privacy Policy - How We Protect Your Data"
+        description="Read our privacy policy and learn how we protect your data on Streamline SMP, a vanilla whitelist-only Minecraft server."
+      />
+
       <h1 className={classnames('purple', privacy.title)}>Privacy Policy</h1>
       <div>
         <p className={privacy.block}>

@@ -1,7 +1,7 @@
 import Image, { StaticImageData } from 'next/image'
 
-import Head from 'next/head'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import classnames from 'classnames'
 import contact from './contact.module.scss'
 import discord from '/images/discord.png'
@@ -41,14 +41,11 @@ export default function Contact() {
 
   return (
     <>
-      <Head>
-        <title>Get in Touch with Streamline SMP</title>
-        <meta
-          name="description"
-          content="Become a part of a thriving Minecraft community on a Whitelist-Only Server. Meet new players, join crews and more. Apply today!"
-        />
-        <meta name="keywords" content="Contact the Minecraft server" />
-      </Head>
+      <NextSeo
+        title="Contact - Reach Out to Us"
+        description="Contact the admins of Streamline SMP, a vanilla whitelist-only Minecraft server. Send us an email or join our Discord server."
+      />
+
       <h1 className={classnames('orange', contact.title)}>Contact</h1>
       <div className={contact.grid}>
         <div className={contact.subHeader}>

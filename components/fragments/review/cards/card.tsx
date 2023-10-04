@@ -1,5 +1,4 @@
 import { ApplyApplicationState } from 'pages/api/db/database'
-import Image from 'next/image'
 import card from './card-styles.module.scss'
 import classNames from 'classnames'
 import { getRelativeTime } from 'utils/misc'
@@ -7,6 +6,7 @@ import { getRelativeTime } from 'utils/misc'
 export default function ApplicationCard({
   minecraftName,
   minecraftUuid,
+  userUuid,
   versions,
   age,
   appliedTime,
@@ -33,14 +33,16 @@ export default function ApplicationCard({
           setCurrentApplicationUuid(parsed)
         }
       }}
-      id={'uuid' + minecraftUuid}
+      id={'uuid' + userUuid}
       className={classNames(card.wrapper, card[getClassName(state)], {
-        [card.selected]: currentApplicationUuid === minecraftUuid,
+        [card.selected]: currentApplicationUuid === userUuid,
       })}>
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        style={{ imageRendering: 'pixelated' }}
         draggable={false}
         className={card.minecraftSkin}
-        src={`https://crafatar.com/avatars/${minecraftUuid}/?overlay`}
+        src={`https://crafatar.com/avatars/${minecraftUuid}/?overlay=true&size=96`}
         alt="A MC Skin"
         width={93}
         height={93}
@@ -63,6 +65,7 @@ export default function ApplicationCard({
 export interface ApplicationCardProps {
   minecraftName: string
   minecraftUuid: string
+  userUuid: string
   versions: string[]
   age: string
   appliedTime: number

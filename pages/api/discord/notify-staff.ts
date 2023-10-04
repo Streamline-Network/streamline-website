@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   await sendMessageToChannel(staffChannelId, `**${session.user.name} has applied!**`, [
     {
       content: getRandomMessage(),
-      link: `${process.env.NEXTAUTH_URL}/account/admin/review?q=${minecraftUuid}`,
+      link: `${process.env.NEXTAUTH_URL}account/admin/review?q=${minecraftUuid}`,
     },
   ])
 

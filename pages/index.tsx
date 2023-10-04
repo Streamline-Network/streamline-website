@@ -1,7 +1,7 @@
 import TitleBlock, { BlockProps } from 'components/fragments/blocks/title-block/title-block'
 
-import Head from 'next/head'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import index from './index.module.scss'
 
 export default function Index() {
@@ -60,18 +60,11 @@ export default function Index() {
 
   return (
     <>
-      <Head>
-        <title>Join the Best Vanilla SMP Whitelist-Only Minecraft Server 1.19.3</title>
-        <meta
-          name="description"
-          content="Experience the ultimate Minecraft adventure with the best Vanilla SMP Whitelist-Only Server 1.19.3. Join now for a guaranteed great time. Apply today!"
-        />
-        <meta name="keywords" content="minecraft-server vanilla smp whitelist-only 1.19.3" />
-        <meta
-          name="google-site-verification"
-          content="xfNSYxrRZ6uD9-uX0zoGMzyj_90lDdaLDihkRCLDdA0"
-        />
-      </Head>
+      <NextSeo
+        title="- A Vanilla Whitelist Minecraft Server"
+        description="Join Streamline SMP, a vanilla whitelist-only Minecraft server with a diamond-based economy and a friendly community."
+      />
+
       <h1 className={index.title}>Welcome to Streamline SMP</h1>
       <div>
         <p className={index.subtitle}>

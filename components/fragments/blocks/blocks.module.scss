@@ -19,12 +19,14 @@
   flex-direction: column;
   gap: var(--margin-1);
 
-  & button {
-    @include mixins.block-button;
-
+  .toggleBlockButton {
     @include mixins.mobile {
       width: 100%;
     }
+  }
+
+  & button {
+    @include mixins.block-button;
   }
 
   .error {
@@ -63,8 +65,13 @@
 .questionWrapper {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: var(--margin-1);
+
+  .questionNumber {
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin-right: -10px;
+  }
 
   > span {
     color: var(--light-gray);
@@ -158,6 +165,12 @@
 
 .diffButton {
   @include mixins.button;
+}
+
+.commentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .commentTitle {

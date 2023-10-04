@@ -13,8 +13,8 @@ const sections: Section[] = [
         required: true,
       },
       {
-        question: 'Do you have a nickname you want to be called?',
-        description: 'This will show in discord next to your Minecraft name.',
+        question: 'If you have a nickname you want to show on Discord, put it here!',
+        description: 'This will show in Discord next to your Minecraft name.',
         type: 'short-answer',
         required: false,
       },
@@ -106,7 +106,7 @@ const sections: Section[] = [
       },
       {
         question:
-          'At how many retributions do you get your first ban and at how many do you get permanently banned?',
+          'At how many retributions do you get your first ban and at how many do you get a season-long ban?',
         type: 'short-answer',
         required: true,
       },

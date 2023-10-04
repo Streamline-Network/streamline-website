@@ -1,4 +1,4 @@
-import Filter, { FilterTag } from '../../../../components/fragments/review/filter/filter'
+import Filter, { FilterTag } from 'components/fragments/review/filter/filter'
 import { useEffect, useRef, useState } from 'react'
 
 import ApplicationNavigation from 'components/fragments/review/application-navigation/application-navigation'
@@ -10,9 +10,9 @@ import { Database } from 'pages/api/db/database'
 import Decision from 'components/fragments/review/decision/decision'
 import FormBlocks from 'components/fragments/blocks/form-blocks/form-blocks'
 import FuzzySearch from 'fuzzy-search'
-import Head from 'next/head'
 import HistoryDropdown from 'components/fragments/review/history-dropdown/history-dropdown'
 import Loading from 'components/fragments/application/loading'
+import { NextSeo } from 'next-seo'
 import { QueryResponse } from 'pages/api/db/forms/apply/collection-group'
 import classNames from 'classnames'
 import customFetch from 'utils/fetch'
@@ -67,7 +67,6 @@ export default function Review() {
         customFetch<QueryResponse[]>(
           `/api/db/forms/apply/collection-group?applicationType=apply&limit=${applicationData?.length}&direction=desc`
         ).then(({ data }) => {
-          console.log(data)
           setApplicationData(data)
         })
       }
@@ -131,11 +130,16 @@ export default function Review() {
     if (!applicationData) return
 
     function getAllQuestions() {
+      const questionsToInclude = ['What is your Minecraft Java Edition username?']
+
       const questions = applicationData![0].application.submissionDetails.answers
 
       let final: string[] = []
       for (const question of Object.keys(questions)) {
-        final.push(`application.submissionDetails.answers.${question}`)
+        console.log(question)
+        if (questionsToInclude.includes(question)) {
+          final.push(`application.submissionDetails.answers.${question}`)
+        }
       }
 
       return final
@@ -143,7 +147,7 @@ export default function Review() {
 
     const searcher = new FuzzySearch(
       applicationData,
-      ['application.minecraftUuid', ...getAllQuestions()],
+      ['application.minecraftUuid', 'application.userUuid', ...getAllQuestions()],
       {
         sort: true,
       }
@@ -151,7 +155,7 @@ export default function Review() {
 
     const newData = searcher.search(query)
 
-    if (!newData.find(d => d.application.minecraftUuid === currentApplicationUuid)) {
+    if (!newData.find(d => d.application.userUuid === currentApplicationUuid)) {
       setCurrentApplicationUuid(-1)
     }
 
@@ -212,7 +216,7 @@ export default function Review() {
 
   function getSelectedFormData() {
     const currentApplication = applicationData!.find(
-      ({ application }) => application.minecraftUuid === currentApplicationUuid
+      ({ application }) => application.userUuid === currentApplicationUuid
     )!
 
     if (history) {
@@ -220,13 +224,13 @@ export default function Review() {
         app => app.submissionTime === history
       )
     }
-    console.log(currentApplication)
+
     return currentApplication.application.submissionDetails
   }
 
   function getSelectedData() {
     return applicationData!.find(
-      ({ application }) => application.minecraftUuid === currentApplicationUuid
+      ({ application }) => application.userUuid === currentApplicationUuid
     )
   }
 
@@ -234,14 +238,17 @@ export default function Review() {
     if (filteredApplicationData)
       return filteredApplicationData.map(({ application }) => application)
     if (queriedApplicationData) return queriedApplicationData.map(({ application }) => application)
+
     return applicationData!.map(({ application }) => application)
   }
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Review Applications</title>
-      </Head>
+      <NextSeo
+        title="Review Applications"
+        description="Review applications to join Streamline SMP."
+      />
+
       <h1 className={classNames(review.title, 'green')}>Applications</h1>
       <div>
         <h2 className={review.subheader}>Filter applications</h2>
@@ -251,8 +258,8 @@ export default function Review() {
               title: 'Search applications',
               paragraphs: [
                 <>
-                  Preform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by age,
-                  Minecraft name, Minecraft UUID, or any question response.
+                  Preform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by
+                  Minecraft name or Minecraft UUID.
                 </>,
                 <>
                   <input
@@ -336,7 +343,7 @@ export default function Review() {
               formInfo={getSelectedFormData()}
               sections={sections}
               save={() => {
-                return undefined
+                return { error: '' }
               }}
               submit={{ final: () => {} }}
               checks={[]}

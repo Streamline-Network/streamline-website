@@ -1,7 +1,7 @@
-import Head from 'next/head'
 import Link from 'next/link'
 import Loading from 'components/fragments/application/loading'
 import { MdRateReview } from 'react-icons/md'
+import { NextSeo } from 'next-seo'
 import classNames from 'classnames'
 import { getRelativeTime } from 'utils/misc'
 import panel from './panel.module.scss'
@@ -15,9 +15,8 @@ export default function Panel() {
 
   return (
     <>
-      <Head>
-        <title>Streamline SMP Staff Panel</title>
-      </Head>
+      <NextSeo title="Staff Panel" description="Do staff actions, review applications, and more." />
+
       <h1 className={classNames('green', panel.title)}>Staff Panel</h1>
       {status !== 'authenticated' ? (
         <Loading />

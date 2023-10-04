@@ -1,6 +1,7 @@
 import { Block } from 'components/fragments/blocks/block-types'
 import Blocks from 'components/fragments/blocks/blocks'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 import classNames from 'classnames'
 import join from './join.module.scss'
 
@@ -63,6 +64,11 @@ export default function Join() {
 
   return (
     <>
+      <NextSeo
+        title="Join - Apply to Play on Our Server"
+        description="Apply to join Streamline SMP, a vanilla whitelist-only Minecraft server. Fill out a simple form and wait for approval."
+      />
+
       <h1 className={classNames(join.title, 'green')}>JOIN THE SERVER</h1>
       <div>
         <div className={join.infoBlock}>

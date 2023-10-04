@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from 'next/image'
 
 import { Fragment } from 'react'
-import Head from 'next/head'
 import { default as NextLink } from 'next/link'
+import { NextSeo } from 'next-seo'
 import checkbox from './images/checkbox.png'
 import classnames from 'classnames'
 import community from './community.module.scss'
@@ -78,7 +78,7 @@ export default function Community() {
           classes: [community.button],
         },
         {
-          href: 'https://minecraft.buzz/vote/7012',
+          href: 'https://minecraft.buzz/vote/8102',
           src: checkbox,
           alt: 'MC Buzz',
           classes: [community.button],
@@ -111,14 +111,11 @@ export default function Community() {
 
   return (
     <>
-      <Head>
-        <title>Join the Exciting Minecraft Community on a Whitelist-Only Server</title>
-        <meta
-          name="description"
-          content="Become a part of a thriving Minecraft community on a Whitelist-Only Server. Meet new players, join crews and more. Apply today!"
-        />
-        <meta name="keywords" content="Minecraft community" />
-      </Head>
+      <NextSeo
+        title="Community - Connect with Us Online"
+        description="Connect with the Streamline SMP community online. Follow us on social media, check out our wiki and chat with other players."
+      />
+
       <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
       <div>
         {sections.map(({ title, links }, i) => (

@@ -48,6 +48,8 @@ export default async function handler(req: CustomRequest, res: NextApiResponse) 
 
   const safeData = data.docs.map(doc => ({ application: doc.data(), path: doc.ref.path }))
 
+  res.setHeader('Content-Type', 'application/json')
+
   return data
     ? res.status(200).send(safeData)
     : res.status(404).send({ error: message.COULD_NOT_FIND_DOCUMENT })

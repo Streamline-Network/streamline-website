@@ -10,15 +10,15 @@ export default function ApplicationNavigation({
   allLoaded,
 }: ApplicationNavigationProps) {
   const currentApplicationIndex = applicationData.findIndex(
-    app => app.application.minecraftUuid === currentApplicationUuid
+    app => app.application.userUuid === currentApplicationUuid
   )
 
   const prevApplicationId: undefined | string = useMemo(
-    () => applicationData[currentApplicationIndex - 1]?.application.minecraftUuid,
+    () => applicationData[currentApplicationIndex - 1]?.application.userUuid,
     [applicationData, currentApplicationIndex]
   )
   const nextApplicationId: undefined | string = useMemo(
-    () => applicationData[currentApplicationIndex + 1]?.application.minecraftUuid,
+    () => applicationData[currentApplicationIndex + 1]?.application.userUuid,
     [applicationData, currentApplicationIndex]
   )
 
