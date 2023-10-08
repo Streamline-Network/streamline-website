@@ -41,7 +41,7 @@ export default function Custom404() {
         </h2>
         {clickAmount >= NUMBER_OF_CLICKS_NEEDED && (
           <embed
-            src="https://minesweeper.streamlinesmp.com"
+            src="https://minesweeper.drakel.dev"
             className={custom404.game}
             width={'100%'}
             height={height}
