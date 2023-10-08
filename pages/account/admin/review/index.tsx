@@ -258,7 +258,7 @@ export default function Review() {
               title: 'Search applications',
               paragraphs: [
                 <>
-                  Preform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by
+                  Perform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by
                   Minecraft name or Minecraft UUID.
                 </>,
                 <>
