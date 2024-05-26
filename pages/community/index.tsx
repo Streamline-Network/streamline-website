@@ -43,7 +43,7 @@ export default function Community() {
           classes: [community.button],
         },
         {
-          href: 'https://www.reddit.com/r/StreamlineSMP/',
+          href: 'https://www.instagram.com/streamlinesmp/',
           src: instagram,
           alt: 'Instagram',
           classes: [community.button],
@@ -116,7 +116,9 @@ export default function Community() {
         description="Connect with the Streamline SMP community online. Follow us on social media, check out our wiki and chat with other players."
       />
 
-      <h1 className={classnames('red', community.title)}>Join The Conversation</h1>
+      <h1 className={classnames('red', community.title)}>
+        Join The Conversation
+      </h1>
       <div>
         {sections.map(({ title, links }, i) => (
           <Fragment key={i}>
