@@ -4,8 +4,13 @@ import customFetch from 'utils/fetch'
 
 export default async function whitelist(options: WhitelistParams) {
   const apiUrl = process.env.MINECRAFT_URL
+
+  // Allow accepting application when there is no MC server.
+  if (!apiUrl) return
+
   const secret = process.env.MINECRAFT_SECRET
-  if (!apiUrl || !secret) throw new Error("Minecraft Server's API URL or Secret Not Found.")
+  if (!secret)
+    throw new Error("Minecraft Server's API URL or Secret Not Found.")
 
   const body = {
     action: 'command',
