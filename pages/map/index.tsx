@@ -35,7 +35,7 @@ export default function Map() {
       <iframe
         style={{ height }}
         className={stats.frame}
-        src="http://54.37.245.35:26043/"
+        src="https://srv34.godlike.club:26043/"
       />
     </>
   )
