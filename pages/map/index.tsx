@@ -11,7 +11,12 @@ export default function Map() {
       const header = document.querySelector<HTMLElement>('header')!
       const footer = document.querySelector<HTMLElement>('footer')!
 
-      setHeight(window.innerHeight - (header.offsetHeight + footer.offsetHeight) - 4 + 'px')
+      setHeight(
+        window.innerHeight -
+          (header.offsetHeight + footer.offsetHeight) -
+          4 +
+          'px'
+      )
     }
 
     window.addEventListener('resize', getHeight)
@@ -27,7 +32,11 @@ export default function Map() {
         description="Explore the world of Streamline SMP, a vanilla whitelist-only Minecraft server. View our dynamic map and see what’s happening."
       />
 
-      <iframe style={{ height }} className={stats.frame} src="https://m.streamlinesmp.com/" />
+      <iframe
+        style={{ height }}
+        className={stats.frame}
+        src="http://54.37.245.35:26043/"
+      />
     </>
   )
 }
