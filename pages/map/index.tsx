@@ -39,7 +39,12 @@ export default function Map() {
         className={stats.frame}>
         <p style={{ textAlign: 'center' }}>
           Opened in new tab, if not click{' '}
-          <a href="http://srv34.godlike.club:26043/">here</a>.
+          <a
+            style={{ color: 'lightblue', textDecoration: 'underline' }}
+            href="http://srv34.godlike.club:26043/">
+            here
+          </a>
+          .
         </p>
       </div>
 
