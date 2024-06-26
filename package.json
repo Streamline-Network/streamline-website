@@ -2,6 +2,7 @@
   "name": "streamline-website",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@9.1.2",
   "scripts": {
     "dev": "next dev -p 3000",
     "localDev": "next dev -p 3000 -H 192.168.1.13",
