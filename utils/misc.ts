@@ -2,7 +2,10 @@ export function random(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-export function getRelativeTime(eventTime: number, rtf: Intl.RelativeTimeFormat) {
+export function getRelativeTime(
+  eventTime: number,
+  rtf: Intl.RelativeTimeFormat
+) {
   const secondsSince = Math.round((eventTime - Date.now()) / 1000)
   const minutesSince = Math.round(secondsSince / 60)
   const hoursSince = Math.round(minutesSince / 60)

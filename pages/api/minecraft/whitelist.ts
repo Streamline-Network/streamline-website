@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 import { authOptions } from '../auth/[...nextauth]'
 import { db } from 'config/firebase'
+import { formatUuid } from 'utils/minecraft/uuid'
 import { getServerSession } from 'next-auth'
 
 export default async function handler(
@@ -23,11 +24,29 @@ export default async function handler(
   if ('GET' !== req.method)
     return res.status(405).send({ error: message.WRONG_METHOD })
 
-  const query = db.collectionGroup('types').where('type', '==', 'apply')
+  const query = db
+    .collectionGroup('types')
+    .where('type', '==', 'apply')
+    .where('state', '==', 'accepted')
 
-  const data = await query.get()
+  const docs = (await query.get()).docs
 
-  res.status(200).json('')
+  const players: { uuid: string; name: string }[] = []
+
+  for (const application of docs) {
+    if (!application.exists) continue
+    const data = application.data()
+    console.log(data)
+
+    players.push({
+      uuid: formatUuid(data.minecraftUuid),
+      name: data.submissionDetails.answers[
+        'What is your Minecraft Java Edition username?'
+      ],
+    })
+  }
+
+  res.status(200).json(players)
 }
 
 interface CustomRequest extends NextApiRequest {
