@@ -11,7 +11,8 @@ const checks: Checks = [
   async formInfo => {
     const age = parseInt(formInfo['How old are you?'])
 
-    if (isNaN(age) || age < 13) return 'Invalid age or age in under our minimum age (13)!'
+    if (isNaN(age) || age < 13)
+      return 'Invalid age or age is under our minimum age (13)!'
 
     return undefined
   },
@@ -39,7 +40,9 @@ const checks: Checks = [
     const regex = /\((.*?)\)/
 
     async function formatAndSetNickname(username: string, nickname?: string) {
-      const finalNickname = nickname ? `${username} (${nickname.trim()})` : username
+      const finalNickname = nickname
+        ? `${username} (${nickname.trim()})`
+        : username
 
       const { response } = await customFetch<undefined, SetNicknameData>(
         '/api/discord/set-nickname',
@@ -56,8 +59,12 @@ const checks: Checks = [
       // Check if nickname with Minecraft name is too long.
       const MAX_DISCORD_NICKNAME_LENGTH = 32
 
-      const username = formInfo['What is your Minecraft Java Edition username?'].trim()
-      let nickname = formInfo['If you have a nickname you want to show on Discord, put it here!']
+      const username =
+        formInfo['What is your Minecraft Java Edition username?'].trim()
+      let nickname =
+        formInfo[
+          'If you have a nickname you want to show on Discord, put it here!'
+        ]
 
       nickname && nickname.trim()
 
