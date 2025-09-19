@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
 import { Database } from 'pages/api/db/database'
@@ -23,7 +25,9 @@ export const STEPS: Steps = {
 export default function Steps() {
   const router = useRouter()
   const step = router.query.step as string
-  const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(undefined)
+  const [currentStepIndex, setCurrentStepIndex] = useState<number | undefined>(
+    undefined
+  )
 
   function StepSwitcher({ stage }: { stage?: number }) {
     if (stage === undefined) return <Loading />

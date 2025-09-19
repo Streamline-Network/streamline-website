@@ -1,7 +1,11 @@
-import { FieldValues, UseFormClearErrors, UseFormRegister, UseFormSetError } from 'react-hook-form'
+import {
+  FieldValues,
+  UseFormClearErrors,
+  UseFormRegister,
+  UseFormSetError,
+} from 'react-hook-form'
 import { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react'
 
-import Image from 'next/image'
 import { ProfileBody } from 'pages/api/minecraft/profiles'
 import { Question } from '../block-types'
 import blocks from '../blocks.module.scss'
@@ -15,7 +19,7 @@ export default function MinecraftInput({
   clearErrors,
   defaultValue,
 }: MinecraftInputProps) {
-  const timeoutRef = useRef<NodeJS.Timeout>()
+  const timeoutRef = useRef<NodeJS.Timeout>(undefined)
   const [currentImage, setCurrentImage] = useState<string | false>(false)
 
   if (question.type !== 'minecraft-skin') throw new Error()

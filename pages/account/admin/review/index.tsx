@@ -27,11 +27,15 @@ const REFRESH_INTERVAL = 30000 // Get updated applications every 30 seconds
 export default function Review() {
   const [query, setQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
-  const [applicationData, setApplicationData] = useState<QueryResponse[] | undefined>()
-  const [currentApplicationUuid, setCurrentApplicationUuid] = useState<string | -1>(-1)
-  const [queriedApplicationData, setQueriedApplicationData] = useState<QueryResponse[] | undefined>(
-    undefined
-  )
+  const [applicationData, setApplicationData] = useState<
+    QueryResponse[] | undefined
+  >()
+  const [currentApplicationUuid, setCurrentApplicationUuid] = useState<
+    string | -1
+  >(-1)
+  const [queriedApplicationData, setQueriedApplicationData] = useState<
+    QueryResponse[] | undefined
+  >(undefined)
   const [filteredApplicationData, setFilteredApplicationData] = useState<
     QueryResponse[] | undefined
   >()
@@ -47,7 +51,7 @@ export default function Review() {
   const [hasFetched, setHasFetched] = useState(false)
   const [refreshes, setRefreshes] = useState(0)
   const router = useRouter()
-  const refresherRef = useRef<number>()
+  const refresherRef = useRef<number>(undefined)
 
   useEffect(() => {
     setHasFetched(false)
@@ -106,7 +110,8 @@ export default function Review() {
     const isFiltering = filters.findIndex(filter => filter.selected) !== -1
 
     if (!query && !isFiltering) {
-      if (!applicationData || applicationData.length === SEARCH_AMOUNT) setAllLoaded(false)
+      if (!applicationData || applicationData.length === SEARCH_AMOUNT)
+        setAllLoaded(false)
     }
   }, [applicationData, filters, query])
 
@@ -119,7 +124,10 @@ export default function Review() {
     }
 
     if (!isSearching) {
-      if (!applicationData || (applicationData.length < SEARCH_AMOUNT && !allLoaded)) {
+      if (
+        !applicationData ||
+        (applicationData.length < SEARCH_AMOUNT && !allLoaded)
+      ) {
         fetchSearchData()
       }
 
@@ -130,9 +138,12 @@ export default function Review() {
     if (!applicationData) return
 
     function getAllQuestions() {
-      const questionsToInclude = ['What is your Minecraft Java Edition username?']
+      const questionsToInclude = [
+        'What is your Minecraft Java Edition username?',
+      ]
 
-      const questions = applicationData![0].application.submissionDetails.answers
+      const questions =
+        applicationData![0].application.submissionDetails.answers
 
       let final: string[] = []
       for (const question of Object.keys(questions)) {
@@ -147,7 +158,11 @@ export default function Review() {
 
     const searcher = new FuzzySearch(
       applicationData,
-      ['application.minecraftUuid', 'application.userUuid', ...getAllQuestions()],
+      [
+        'application.minecraftUuid',
+        'application.userUuid',
+        ...getAllQuestions(),
+      ],
       {
         sort: true,
       }
@@ -177,7 +192,10 @@ export default function Review() {
     const isFiltering = filters.findIndex(filter => filter.selected) !== -1
 
     if (isFiltering) {
-      if ((!applicationData || applicationData.length < SEARCH_AMOUNT) && !allLoaded) {
+      if (
+        (!applicationData || applicationData.length < SEARCH_AMOUNT) &&
+        !allLoaded
+      ) {
         fetchSearchData()
       }
       setAllLoaded(true)
@@ -202,7 +220,8 @@ export default function Review() {
     if (!applicationData || allLoaded || isSearching) return
 
     const oldest =
-      applicationData[applicationData.length - 1].application.submissionDetails.submissionTime
+      applicationData[applicationData.length - 1].application.submissionDetails
+        .submissionTime
 
     setHasFetched(false)
     customFetch<QueryResponse[]>(
@@ -237,7 +256,8 @@ export default function Review() {
   function getFilteredApplications() {
     if (filteredApplicationData)
       return filteredApplicationData.map(({ application }) => application)
-    if (queriedApplicationData) return queriedApplicationData.map(({ application }) => application)
+    if (queriedApplicationData)
+      return queriedApplicationData.map(({ application }) => application)
 
     return applicationData!.map(({ application }) => application)
   }
@@ -258,8 +278,8 @@ export default function Review() {
               title: 'Search applications',
               paragraphs: [
                 <>
-                  Perform a fuzzy search on the {SEARCH_AMOUNT} newest applications, search by
-                  Minecraft name or Minecraft UUID.
+                  Perform a fuzzy search on the {SEARCH_AMOUNT} newest
+                  applications, search by Minecraft name or Minecraft UUID.
                 </>,
                 <>
                   <input
@@ -280,8 +300,9 @@ export default function Review() {
               title: 'Filter by status',
               paragraphs: [
                 <>
-                  Select one or multiple statuses to filter the newest {SEARCH_AMOUNT} applications.
-                  This also filters the results from search.
+                  Select one or multiple statuses to filter the newest{' '}
+                  {SEARCH_AMOUNT} applications. This also filters the results
+                  from search.
                 </>,
                 <>
                   <Filter filterTags={filters} setFilterTags={setFilters} />
@@ -316,7 +337,9 @@ export default function Review() {
               blockArr={[
                 {
                   title: `${
-                    getSelectedFormData()?.answers['What is your Minecraft Java Edition username?']
+                    getSelectedFormData()?.answers[
+                      'What is your Minecraft Java Edition username?'
+                    ]
                   }'s application history`,
                   paragraphs: [
                     <>
