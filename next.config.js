@@ -1,11 +1,11 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   redirects: () => [
     {
       source: '/donate',
-      destination: 'https://discord.com/channels/775831180086870096/role-subscriptions',
+      destination:
+        'https://discord.com/channels/775831180086870096/role-subscriptions',
       permanent: true,
     },
   ],
