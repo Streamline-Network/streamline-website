@@ -1,8 +1,15 @@
 import { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { Roles } from 'types'
-import { STEPS } from './pages/account/apply/[step]'
 import { getToken } from 'next-auth/jwt'
+
+type Steps = { [key: string]: number }
+
+export const STEPS: Steps = {
+  submit: 0,
+  status: 1,
+  reviewed: 2,
+}
 
 export const STAFF_ROLES: Roles[] = ['reviewer', 'admin']
 
