@@ -7,7 +7,7 @@ export default function Map() {
   const [height, setHeight] = useState('100px')
 
   useEffect(() => {
-    window.open('http://srv34.godlike.club:26914/', '_blank')
+    window.open(process.env.NEXT_PUBLIC_STATS_URL, '_blank')
 
     function getHeight() {
       const header = document.querySelector<HTMLElement>('header')!
@@ -40,7 +40,7 @@ export default function Map() {
           Opened in new tab, if not click{' '}
           <a
             style={{ color: 'lightblue', textDecoration: 'underline' }}
-            href="http://srv34.godlike.club:26914/">
+            href={process.env.NEXT_PUBLIC_STATS_URL}>
             here
           </a>
           .
